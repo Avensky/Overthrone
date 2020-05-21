@@ -7,6 +7,12 @@ module.exports = function(app, passport) {
 		res.render('index.ejs');
 	});
 
+	app.get('/api/current_user', (req, res) => {
+        if (req.user){
+            res.send(req.user);
+        }
+      });
+
 	// PROFILE SECTION =========================
 	app.get('/profile', isLoggedIn, function(req, res) {
 		res.render('profile.ejs', {

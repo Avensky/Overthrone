@@ -1,0 +1,3 @@
+export {
+    fetchUser
+} from './auth';
