@@ -25,7 +25,7 @@ export const fetchUserFail = (error) => {
 export const fetchUser = () => {
     return dispatch => {
         dispatch(fetchUserStart());
-        axios.get('/api/fethUser')
+        axios.get('/api/fetchUser')
         .then( result => {
             console.log(result)
             const payload = result.data

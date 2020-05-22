@@ -7,18 +7,18 @@ module.exports = function(app, passport) {
 		res.render('index.ejs');
 	});
 
-	app.get('/api/current_user', (req, res) => {
+	app.get('/api/fetchUser', (req, res) => {
         if (req.user){
             res.send(req.user);
         }
       });
 
 	// PROFILE SECTION =========================
-	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user : req.user
-		});
-	});
+	// app.get('/profile', isLoggedIn, function(req, res) {
+	// 	res.render('profile.ejs', {
+	// 		user : req.user
+	// 	});
+	// });
 
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {
@@ -37,7 +37,13 @@ module.exports = function(app, passport) {
 			res.render('login.ejs', { message: req.flash('loginMessage') });
 		});
 
-		// process the login form
+// =====================================
+// LOCAL ===============================
+// =====================================
+    
+    // =====================================
+    // LOGIN ===============================
+    // =====================================
 		app.post('/login', passport.authenticate('local-login', {
 			successRedirect : '/profile', // redirect to the secure profile section
 			failureRedirect : '/login', // redirect back to the signup page if there is an error
@@ -49,7 +55,9 @@ module.exports = function(app, passport) {
 		app.get('/signup', function(req, res) {
 			res.render('signup.ejs', { message: req.flash('loginMessage') });
 		});
-
+    // =====================================
+    // REGISTER ============================
+    // =====================================
 		// process the signup form
 		app.post('/signup', passport.authenticate('local-signup', {
 			successRedirect : '/profile', // redirect to the secure profile section
@@ -57,21 +65,26 @@ module.exports = function(app, passport) {
 			failureFlash : true // allow flash messages
 		}));
 
-	// facebook -------------------------------
-
-		// send to facebook to do the authentication
-		app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    // =====================================
+    // FACEBOOK ROUTES =====================
+    // =====================================
+    // route for facebook authentication and login
+		app.get('/auth/facebook', 
+		passport.authenticate('facebook', { 
+			scope : ['public_profile', 'email'] 
+		}));
 
 		// handle the callback after facebook has authenticated the user
 		app.get('/auth/facebook/callback',
 			passport.authenticate('facebook', {
 				successRedirect : '/profile',
-				failureRedirect : '/'
+				//failureRedirect : '/'
 			}));
 
-	// twitter --------------------------------
-
-		// send to twitter to do the authentication
+    // =====================================
+    // TWITTER ROUTES ======================
+    // =====================================
+    // route for twitter authentication and login
 		app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
 
 		// handle the callback after twitter has authenticated the user
@@ -82,9 +95,12 @@ module.exports = function(app, passport) {
 			}));
 
 
-	// google ---------------------------------
-
-		// send to google to do the authentication
+    // =====================================
+    // GOOGLE ROUTES =======================
+    // =====================================
+    // send to google to do the authentication
+    // profile gets us their basic information including their name
+    // email gets their emails
 		app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 		// the callback after google has authenticated the user

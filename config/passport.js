@@ -3,16 +3,15 @@ const LocalStrategy    = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy  = require('passport-twitter').Strategy;
 const GoogleStrategy   = require('passport-google-oauth20').Strategy;
-const mongoose          = require('mongoose')
+const mongoose         = require('mongoose')
 
 // load up the user model
-const User       = mongoose.model('User')
+const User             = mongoose.model('User')
 
 // load the auth variables
 const configAuth = require('./secrets'); // use this one for testing
 
-module.exports = function(passport) {
-
+module.exports         = function(passport) {
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
@@ -129,26 +128,33 @@ module.exports = function(passport) {
 
         clientID        : configAuth.facebookAuth.clientID,
         clientSecret    : configAuth.facebookAuth.clientSecret,
-        callbackURL     : configAuth.facebookAuth.callbackURL,
+//        callbackURL     : configAuth.facebookAuth.callbackURL,
+        callbackURL     : '/auth/facebook/callback',
         passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         profileFields   : ['id', 'displayName', 'photos', 'email','first_name', 'last_name'],
-//        enableProof     : true
+//        enableProof     : true,
+        proxy           : true
     },
-    function(req, token, refreshToken, profile, done) {
+    async (req, token, refreshToken, profile, done) => {
 
         // asynchronous
-        process.nextTick(function() {
+//        process.nextTick(function() {
 
             // check if the user is already logged in
             if (!req.user) {
 
                 User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
+
+                    // if there is an error, stop everything and return that
+                    // ie an error connecting to the database
                     if (err)
                         return done(err);
 
+                    // if the user is found, then log them in
                     if (user) {
 
                         // if there is a user id already but no token (user was linked at one point and then removed)
+                        // just add our token and profile information
                         if (!user.facebook.token) {
                             user.facebook.token = token;
                             user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
@@ -195,7 +201,7 @@ module.exports = function(passport) {
                 });
 
             }
-        });
+ //       });
 
     }));
 
@@ -207,6 +213,7 @@ module.exports = function(passport) {
         consumerKey     : configAuth.twitterAuth.consumerKey,
         consumerSecret  : configAuth.twitterAuth.consumerSecret,
         callbackURL     : configAuth.twitterAuth.callbackURL,
+        callbackURL     : '/auth/twitter/callback',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
     },
@@ -281,7 +288,8 @@ module.exports = function(passport) {
 
         clientID        : configAuth.googleAuth.clientID,
         clientSecret    : configAuth.googleAuth.clientSecret,
-        callbackURL     : configAuth.googleAuth.callbackURL,
+//        callbackURL     : configAuth.googleAuth.callbackURL,
+        callbackURL         : "/auth/google/callback",
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
     },
