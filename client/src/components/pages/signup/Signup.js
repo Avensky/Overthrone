@@ -60,8 +60,10 @@ class Login extends Component {
     }
     render () {
         let form = (
-            <form action="/auth/signup" method="post"
-                //onSubmit={this.signupHandler}
+            <form 
+                action="/auth/signup" 
+                // method="post"
+                // onSubmit={this.signupHandler}
             >
                 <div className="form-group">
                     <label>Email</label>

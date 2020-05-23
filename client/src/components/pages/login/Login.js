@@ -39,7 +39,10 @@ class Login extends Component {
 
     loginHandler = ( event ) => {
         event.preventDefault();
-        this.props.onLogin( this.state.controls.email.value, this.state.controls.password.value );
+        this.props.onLogin( 
+            this.state.controls.email.value, 
+            this.state.controls.password.value
+        );
     }
 
     render () {

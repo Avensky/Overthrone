@@ -38,8 +38,8 @@ app.use(
 // app.use(logger('dev')); // log every request to the console
 app.use(express.json())
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded({extended: false})) // get information from html forms
+//app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false})) // get information from html forms
 
 // required for passport
 app.use(session({ 

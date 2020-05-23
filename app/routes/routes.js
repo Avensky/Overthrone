@@ -1,7 +1,8 @@
 module.exports = function(app, passport) {
 
+// =============================================================================
 // normal routes ===============================================================
-
+// =============================================================================
 	// show the home page (will also have our login links)
 	app.get('/', function(req, res) {
 		res.render('index.ejs');
@@ -75,13 +76,19 @@ module.exports = function(app, passport) {
     // =====================================
 		// process the signup form
 		app.post('/auth/signup', passport.authenticate('local-signup', {
-//			successRedirect : '/login', // redirect to the secure profile section
-//			failureRedirect : '/', // redirect back to the signup page if there is an error
+			successRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/signup', // redirect back to the signup page if there is an error
 			failureFlash : true // allow flash messages
-		}),(req, res) => {
-			// Successful authentication, redirect home.
-			res.redirect('/profile');
-		})
+		}));
+
+
+		// process the signup form
+		app.post('/api/signup', passport.authenticate('local-signup', {
+			successRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/signup', // redirect back to the signup page if there is an error
+			failureFlash : true // allow flash messages
+		}));
+
 
     // =====================================
     // FACEBOOK ROUTES =====================
