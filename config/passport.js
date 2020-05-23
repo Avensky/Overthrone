@@ -68,18 +68,21 @@ module.exports         = function(passport) {
     // =========================================================================
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+        usernameField       : 'email',
+        passwordField       : 'password',
+        passReqToCallback   : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+//        proxy               : true
     },
-    function(req, email, password, done) {
+    async (req, email, password, done) => {
+        
+        console.log('user signup');
 
         // asynchronous
-        process.nextTick(function() {
+        //process.nextTick(function() {
 
             //  Whether we're signing up or connecting an account, we'll need
             //  to know if the email address is in use.
-            User.findOne({'local.email': email}, function(err, existingUser) {
+            User.findOne({'local.email': email}, (err, existingUser) => {
 
                 // if there are any errors, return the error
                 if (err)
@@ -107,7 +110,8 @@ module.exports         = function(passport) {
 
                     newUser.local.email    = email;
                     newUser.local.password = newUser.generateHash(password);
-
+                    // save the user
+                    console.log(newUser)
                     newUser.save(function(err) {
                         if (err)
                             throw err;
@@ -116,7 +120,7 @@ module.exports         = function(passport) {
                     });
                 }
 
-            });
+            // });
         });
 
     }));
@@ -212,7 +216,7 @@ module.exports         = function(passport) {
 
         consumerKey     : configAuth.twitterAuth.consumerKey,
         consumerSecret  : configAuth.twitterAuth.consumerSecret,
-        callbackURL     : configAuth.twitterAuth.callbackURL,
+//        callbackURL     : configAuth.twitterAuth.callbackURL,
         callbackURL     : '/auth/twitter/callback',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
@@ -345,17 +349,12 @@ module.exports         = function(passport) {
                 user.google.token = token;
                 user.google.name  = profile.displayName;
                 user.google.email = profile.emails[0].value; // pull the first email
-
                 user.save(function(err) {
                     if (err)
                         throw err;
                     return done(null, user);
                 });
-
             }
-
         });
-
     }));
-
 };

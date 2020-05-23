@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Route, Switch, withRouter} from 'react-router-dom';
-import { connect }    from 'react-redux';
 import * as actions   from '../../store/actions/index';
-import ConnectLocal from '../pages/connectLocal/connectLocal';
-import Home from '../pages/home/Home';
+import { connect }    from 'react-redux';
+import ConnectLocal   from '../pages/connectLocal/connectLocal';
+import Home           from '../pages/home/Home';
 import Login          from '../pages/login/Login';
 import Profile        from '../pages/profile/Profile';
 import Signup         from '../pages/signup/Signup';

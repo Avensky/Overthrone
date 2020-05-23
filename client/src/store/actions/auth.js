@@ -36,3 +36,50 @@ export const fetchUser = () => {
         });
     }
 }
+
+
+export const signupStart  = () =>{
+    return{
+        type: actionTypes.SIGNUP_START
+    }
+}
+
+export const signupFail = (error) => {
+    return {
+        type: actionTypes.SIGNUP_FAIL,
+        error: error
+    }
+}
+
+export const signupSuccess = (userData) => {
+    return {
+        type: actionTypes.SIGNUP_SUCCESS,
+        userData: userData
+    }
+}
+
+    
+export const signup = (email, password) => {
+    return dispatch => {
+        dispatch(signupStart())
+        const userData = {
+            email : email, 
+            password : password,
+        }
+        axios.post('/auth/signup', userData)
+            .then(response => {
+                console.log(response);
+//                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+//                localStorage.setItem('token', response.data.idToken);
+//                localStorage.setItem('expirationDate', expirationDate);
+//                localStorage.setItem('userId', response.data.localId);
+//                dispatch(signupSuccess(response.data.idToken, response.data.localId));
+//                dispatch(checkLoginTimeout(response.data.expiresIn));       
+                dispatch(signupSuccess(userData))        
+            })
+        .catch(err => {
+            console.log(err);
+            dispatch(signupFail(err))
+        })    
+    }
+}

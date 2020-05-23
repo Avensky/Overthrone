@@ -6,11 +6,11 @@ import Auxiliary from '../../../hoc/Auxiliary';
 class Login extends Component {
     render () {
         let body = (
-            <body>
+            <Auxiliary>
                 <div className="container">
                     <div className="page-header text-center">
                         <h1><span className="fa fa-anchor"></span> Profile Page</h1>
-                        <a href="/logout" className="btn btn-default btn-sm">Logout</a>
+                        <a href="/auth/logout" className="btn btn-default btn-sm">Logout</a>
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
@@ -72,7 +72,7 @@ class Login extends Component {
                             </div>
                         </div>
                     </div>
-                </body>
+                </Auxiliary>
             )
 
         return(

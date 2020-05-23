@@ -1,3 +1,4 @@
 export {
-    fetchUser
+    fetchUser,
+    signup
 } from './auth';

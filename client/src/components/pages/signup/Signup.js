@@ -1,38 +1,104 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
-
+// import { updateObject, checkValidity } from '../../../utility/utility';
+import * as actions from '../../../store/actions/index';
 
 class Login extends Component {
+    state = {
+        controls: {
+            email: {
+                value: '',
+                validation: {
+                    required: true,
+                    isEmail: true
+                },
+                valid: false,
+                touched: false
+            },
+            password: {
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 6
+                },
+                valid: false,
+                touched: false
+            },
+//            confirmPassword: {
+//                value: '',
+//                validation: {
+//                    required: true,
+//                    minLength: 6
+//                },
+//                valid: false,
+//                touched: false
+//            }
+        }
+    }
+
+    inputChangedHandler = ( event, controlName ) => {
+        const updatedControls = {
+            ...this.state.controls,
+            [controlName]: {
+                ...this.state.controls[controlName],
+                value: event.target.value,
+//                valid: this.checkValidity( event.target.value, this.state.controls[controlName].validation ),
+                touched: true
+            }
+        };
+        this.setState( { controls: updatedControls } );
+    }
+
+
+    signupHandler = ( event ) => {
+        event.preventDefault();
+        this.props.onSignup( 
+            this.state.controls.email.value, 
+            this.state.controls.password.value
+        )
+    }
     render () {
-        let body = (
-            <body>
+        let form = (
+            <form action="/auth/signup" method="post"
+                //onSubmit={this.signupHandler}
+            >
+                <div className="form-group">
+                    <label>Email</label>
+                    <input 
+                        type="text"
+                        className="form-control" 
+                        name="Email"
+                        onChange={(event) => this.inputChangedHandler( event, "email")}
+                        placeholder="Enter Email"
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input 
+                        type="password" 
+                        name="password"
+                        onChange={(event) => this.inputChangedHandler( event, "password")}
+                        className="form-control" 
+                        placeholder="Enter Password"
+                        />
+                </div>
+
+                <button className="btn btn-warning btn-lg">Signup</button>
+            </form>
+        )
+
+        return(
+            <Auxiliary>
                 <div className="container">
                     <div className="col-sm-6 col-sm-offset-3">
                         <h1><span className="fa fa-sign-in"></span> Signup</h1>
-                        <form action="/signup" method="post">
-                            <div className="form-group">
-                                <label>Email</label>
-                                <input type="text" className="form-control" name="email" />
-                            </div>
-                            <div className="form-group">
-                                <label>Password</label>
-                                <input type="password" className="form-control" name="password" />
-                            </div>
-
-                            <button type="submit" className="btn btn-warning btn-lg">Signup</button>
-                        </form>
+                        {form}
                         <hr />
                         <p>Already have an account? <a href="/login">Login</a></p>
                         <p>Or go <a href="/">home</a>.</p>
                     </div>
                 </div>
-            </body>
-        )
-
-        return(
-            <Auxiliary>
-                {body}
             </Auxiliary>
         )
     }
@@ -49,7 +115,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        onSignup: (email, password) => dispatch( actions.signup(actions.signup(email, password)))
     }
 }
 
