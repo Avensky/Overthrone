@@ -8,7 +8,14 @@ import Home           from '../pages/home/Home';
 import Login          from '../pages/login/Login';
 import Profile        from '../pages/profile/Profile';
 import Signup         from '../pages/signup/Signup';
-import Auxiliary      from '../../hoc/Auxiliary';
+import Wrapper        from '../Wrapper/Wrapper';
+import Layout         from '../Layout/Layout';
+import Books          from '../pages/Books/Books';
+import Authors        from '../pages/Authors/Authors';
+import Characters     from '../pages/Characters/Characters';
+import Sovereinty     from '../pages/Sovereinty/Sovereinty';
+import Faqs           from '../pages/Faqs/Faqs';
+import Purchase       from '../pages/Purchase/Purchase';
 
 class App extends Component {
   state = {
@@ -26,9 +33,15 @@ class App extends Component {
         <Route path="/connectLocal"     component={ConnectLocal} />
         <Route path="/home"             component={Home}  />
         <Route path="/login"            component={Login} />
-        <Route path="/profile"          component={Profile}  />
         <Route path="/signup"           component={Signup} />
-        <Route path="/"                 component={Home}  />
+        <Route path="/books"            component={Books}  />
+        <Route path="/authors"          component={Authors}  />
+        <Route path="/characters"       component={Characters}  />
+        <Route path="/sovereinty"       component={Sovereinty}  />
+        <Route path="/faqs"             component={Faqs}  />
+        <Route path="/purchase"         component={Purchase}  />
+        <Route path="/profile"          component={Profile}  />
+
         {/* <Redirect to="/home" />  */}              
       </Switch>
     );
@@ -47,9 +60,11 @@ class App extends Component {
     //   )
 
     return( 
-      <Auxiliary>
-        {routes}
-      </Auxiliary>
+      <Wrapper>
+        <Layout>
+          {routes}
+        </Layout>
+      </Wrapper>
     )
     
   }
