@@ -25,16 +25,24 @@ class Login extends Component {
                 valid: false,
                 touched: false
             },
-//            confirmPassword: {
-//                value: '',
-//                validation: {
-//                    required: true,
-//                    minLength: 6
-//                },
-//                valid: false,
-//                touched: false
-//            }
+            confirmPassword: {
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 6
+                },
+                valid: false,
+                touched: false
+            }
         }
+    }
+
+    signupHandler = ( event ) => {
+        event.preventDefault();
+        this.props.onSignup( 
+            this.state.controls.email.value, 
+            this.state.controls.password.value
+        )
     }
 
     inputChangedHandler = ( event, controlName ) => {
@@ -51,27 +59,16 @@ class Login extends Component {
     }
 
 
-    signupHandler = ( event ) => {
-        event.preventDefault();
-        this.props.onSignup( 
-            this.state.controls.email.value, 
-            this.state.controls.password.value
-        )
-    }
     render () {
         let form = (
-            <form 
-                action="/auth/signup" 
-                // method="post"
-                // onSubmit={this.signupHandler}
-            >
+            <form action="/auth/signup" method="post">
                 <div className="form-group">
                     <label>Email</label>
                     <input 
                         type="text"
                         className="form-control" 
-                        name="Email"
-                        onChange={(event) => this.inputChangedHandler( event, "email")}
+                        name="email"
+                        //onChange={(event) => this.inputChangedHandler( event, "email")}
                         placeholder="Enter Email"
                     />
                 </div>
@@ -80,13 +77,13 @@ class Login extends Component {
                     <input 
                         type="password" 
                         name="password"
-                        onChange={(event) => this.inputChangedHandler( event, "password")}
+                        //onChange={(event) => this.inputChangedHandler( event, "password")}
                         className="form-control" 
                         placeholder="Enter Password"
                         />
                 </div>
 
-                <button className="btn btn-warning btn-lg">Signup</button>
+                <button  type="submit" className="btn btn-warning btn-lg">Signup</button>
             </form>
         )
 
