@@ -5,8 +5,8 @@
 
 .Jumbotron {
     min-height: 80vh;
-    margin: 8vh 1vw 0;
-    padding: 100px 30px;
+    margin: 6vh 1vw 0;
+    padding: 10vh 30px;
     font-size: 21px;
     font-weight: 200;
     line-height: 2.1428571435;
@@ -17,19 +17,14 @@
 
 @media only screen and (min-width: 600px) {
     /* For tablets: */
+    .Jumbotron {
+        margin: 6vh 5vw 0;
+    }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1025px) {
     /* For desktop: */
     .Jumbotron {
-        min-height: 70vh;
-        padding: 30px;
-        margin: 0 10% 30px;
-        font-size: 21px;
-        font-weight: 200;
-        line-height: 2.1428571435;
-        color: inherit;
-        background-color: rgba(92, 91, 91, 0.726);
-        text-align: center;
+        margin: 6vh 20vw 0;
     }
 }
