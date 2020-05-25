@@ -16,7 +16,7 @@
 .NavItem a:hover,
 .NavItem a:active,
 .NavItem a.active {
-    color: #40A4C8;
+    color: rgb(161, 131, 103);
 }
 
 @media (min-width: 500px) {

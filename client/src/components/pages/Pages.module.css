@@ -1,6 +1,6 @@
 /* For mobile phones: */
 .Container { 
-    height: 100vh;
+    height: 100%;
 }
 
 .Jumbotron {
@@ -11,8 +11,120 @@
     font-weight: 200;
     line-height: 2.1428571435;
     color: inherit;
-    background-color: rgba(92, 91, 91, 0.726);
+    background-color: rgba(20, 19, 17, 0.788);
     text-align: center;
+}
+
+
+.Card {
+    margin: 0 5vw;
+    padding: 2vh 2vw;
+    background-color: rgba(20, 19, 17, 0.788);
+    display: grid;
+    grid-gap: .25em;
+	grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+		"title thumbnail"
+		"description thumbnail"
+        "details thumbnail"
+}
+
+.CardTitle {
+    font-size: 1.8em;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    grid-area: title;
+    display: flex;
+}
+
+
+.CardTitle h1{ 
+    margin: 0;
+    align-items: baseline;
+}
+
+
+.CardDetails {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-self: start;
+    align-items: center;
+    font-size: .85rem;
+    margin:0;
+
+}
+
+.CardDescription {
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    grid-area: description;
+}
+
+.CardThumbnail {
+    grid-area: thumbnail;
+    margin: 0;
+    text-align: center;
+	overflow: hidden;
+    text-align: center;
+}
+.CardThumbnail img {
+    height: 100%;
+    max-height: 12.5rem;
+}
+.CardThumbnail img:after  {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.Author {
+    margin: 16px 0;
+}
+
+
+
+
+.Edit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.Edit label {
+    display: block;
+    color: grey;
+}
+
+.Edit button {
+    border: none;
+    background-color: darkcyan;
+    width: 100%;
+    opacity: 0.9;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: white;
+}
+
+.Edit button:hover,
+.Edit button:active {
+    opacity:1;
+}
+
+.Edit button.Delete {
+    background-color: darkred;
+}
+
+.Edit button.Delete:hover,
+.Edit button.Delete:active {
+    opacity:1;
 }
 
 @media only screen and (min-width: 600px) {
@@ -28,3 +140,5 @@
         margin: 6vh 20vw 0;
     }
 }
+
+
