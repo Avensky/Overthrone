@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import Layout from '../../Layout/Layout';
-import Header from '../../Layout/Header/Header';
+import classes from '../Pages.module.css'
 class Login extends Component {
     render () {
         let body = (
-            <div className="jumbotron text-center">
-                <h1><span className="fa fa-lock"></span> Node Authentication</h1>
+            <div className={classes.Jumbotron}>
+                <h1><span className="fa fa-lock"></span> Authentication</h1>
                 <p>Login or Register with:</p>
                 <a href="/login"            className="btn btn-default"><span className="fa fa-user">       </span> Local Login</a>
                 <a href="/signup"           className="btn btn-default"><span className="fa fa-user">       </span> Local Signup</a>
@@ -17,7 +16,7 @@ class Login extends Component {
         )
 
         return(
-            <div className="container">
+            <div className={classes.Container}>
                 {body}
             </div>
         )

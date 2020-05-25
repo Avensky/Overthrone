@@ -7,7 +7,7 @@ import SidebarToggle from '../Sidebar/SidebarToggle/SidebarToggle';
 
 const navbar = ( props ) => (
     <div className={classes.Navbar}>
-        <SidebarToggle clicked={props.drawerSidebarleClicked} />
+        <SidebarToggle clicked={props.sidebarToggleClicked} />
         <div className={classes.Logo}>
             <Logo height="100%"/>
         </div>

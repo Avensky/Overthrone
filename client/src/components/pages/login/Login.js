@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
+import classes from './Login.module.css';
 
 
 class Login extends Component {
@@ -63,7 +64,7 @@ class Login extends Component {
 
         return(
             <Auxiliary>
-                <div className="container">
+                <div className={classes.Container}>
                     <div className="col-sm-6 col-sm-offset-3">
                         <h1><span className="fa fa-sign-in"></span> Login</h1>
                             {form}
