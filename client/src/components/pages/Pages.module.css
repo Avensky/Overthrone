@@ -20,22 +20,13 @@
     margin: 0 5vw;
     padding: 2vh 2vw;
     background-color: rgba(20, 19, 17, 0.788);
-    display: grid;
-    grid-gap: .25em;
-	grid-template-columns: 3fr 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas:
-		"title thumbnail"
-		"description thumbnail"
-        "details thumbnail"
 }
+
 
 .CardTitle {
     font-size: 1.8em;
-
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
     grid-area: title;
     display: flex;
 }
@@ -86,8 +77,6 @@
 .Author {
     margin: 16px 0;
 }
-
-
 
 
 .Edit {

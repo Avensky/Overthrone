@@ -1,9 +1,12 @@
 import React from 'react'
 import classes from '../../Pages.module.css'
+import myClasses from './Character.module.css'
 import myImg from '../../../../assets/images/character.jpg';
 
+let assignedClasses = [classes.Card, myClasses.Character].join(' ')
+
 const character = props => (
-    <div className={classes.Card}>
+    <div className={assignedClasses}>
         <figure className={classes.CardThumbnail}>
             <img src={myImg} alt="character"/>
         </figure>
