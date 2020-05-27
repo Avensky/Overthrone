@@ -12,7 +12,6 @@ class Faqs extends Component {
             <div className="container">
                 <div className="page-header text-center">
                     <h1><span className="fa fa-anchor"></span> Frequently Asked Questions</h1>
-                    <a href="/auth/logout" className="btn btn-default btn-sm">Logout</a>
                 </div>
             </div>
         )
@@ -20,12 +19,12 @@ class Faqs extends Component {
         let headlines = (
             <div className={myClasses.Headlines}>
                 <h4>Select for more info </h4>
-                <Headline headline= "Headline for my blog"/>
-                <Headline headline= "Headline for me"/>
-                <Headline headline= "Another headline" />
-                <Headline headline= "Headline for my blog"/>
-                <Headline headline= "Headline for my blog"/>
-                <Headline headline= "Another headline"/>
+                <Headline headline = "Headline for my blog"/>
+                <Headline headline = "Headline for me"/>
+                <Headline headline = "Another headline" />
+                <Headline headline = "Headline for my blog"/>
+                <Headline headline = "Headline for my blog"/>
+                <Headline headline = "Another headline"/>
             </div>
         )
         let assignedClasses = [classes.Card, myClasses.Faqs].join(' ')

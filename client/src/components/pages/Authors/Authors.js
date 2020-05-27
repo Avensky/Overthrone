@@ -10,8 +10,7 @@ class Authors extends Component {
             <div className="container">
                 <div className="page-header text-center">
                     <h1><span className="fa fa-anchor"></span> Authors Page</h1>
-                    <a href="/auth/logout" className="btn btn-default btn-sm">Logout</a>
-                </div>
+                 </div>
             </div>
         )
 

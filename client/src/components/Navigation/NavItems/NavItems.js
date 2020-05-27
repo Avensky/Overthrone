@@ -13,7 +13,7 @@ const navItems = ( props ) => (
         <NavItem link="/purchase" exact>Purchase</NavItem>
         {props.isAuthenticated ? <NavItem link="/profile">Profile</NavItem> : null}
         {!props.isAuthenticated
-            ? <NavItem link="/home">Authenticate</NavItem>
+            ? <NavItem link="/authentication">Authenticate</NavItem>
             : <NavItem link="/logout">Logout</NavItem>}
     </ul>
 );

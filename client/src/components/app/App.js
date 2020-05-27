@@ -4,7 +4,7 @@ import { Route, Switch, withRouter} from 'react-router-dom';
 import * as actions   from '../../store/actions/index';
 import { connect }    from 'react-redux';
 import ConnectLocal   from '../pages/connectLocal/connectLocal';
-import Home           from '../pages/home/Home';
+import Auth           from '../pages/Auth/Auth';
 import Login          from '../pages/login/Login';
 import Profile        from '../pages/profile/Profile';
 import Signup         from '../pages/signup/Signup';
@@ -31,7 +31,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/connectLocal"     component={ConnectLocal} />
-        <Route path="/home"             component={Home}  />
+        <Route path="/authentication"   component={Auth}  />
         <Route path="/login"            component={Login} />
         <Route path="/signup"           component={Signup} />
         <Route path="/books"            component={Books}  />

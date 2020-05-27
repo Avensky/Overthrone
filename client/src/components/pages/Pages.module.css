@@ -3,10 +3,13 @@
     height: 100%;
 }
 
+.inline {
+    display: inline-block;
+}
+
 .Jumbotron {
-    min-height: 80vh;
-    margin: 6vh 1vw 0;
-    padding: 10vh 30px;
+    margin: 0 5vw;
+    padding: 10vh 30px 20vh;
     font-size: 21px;
     font-weight: 200;
     line-height: 2.1428571435;

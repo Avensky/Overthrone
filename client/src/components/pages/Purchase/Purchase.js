@@ -9,7 +9,6 @@ class Purchase extends Component {
             <div className="container">
                 <div className="page-header text-center">
                     <h1><span className="fa fa-anchor"></span> Profile Page</h1>
-                    <a href="/auth/logout" className="btn btn-default btn-sm">Logout</a>
                 </div>
             </div>
         )
