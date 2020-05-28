@@ -1,8 +1,10 @@
 .Auth {
+    margin-top: 5vh;
     text-align: center;
     align-items: center;
     padding: 20px 5vw;
-    color: rgb(190, 190, 190);   
+    color: rgb(255, 255, 255);   
+    background-color: rgba(116, 116, 116, 0.39);
 }
 .Auth a { 
     width: 100%;
@@ -11,7 +13,7 @@
 }   
 
 .AuthInput {
-    color: rgb(190, 190, 190);   
+    color: rgb(255, 255, 255);   
     width: 100%;
     height: 34px;
     margin: 2vh 0;
@@ -19,12 +21,13 @@
     background-color: transparent;
     border: none;
     border-bottom-color:rgb(23, 4, 53);
+    border-bottom-color: rgb(255, 255, 255);
     border-bottom-width: 3px;
     border-bottom-style: solid;
 }
 
 .AuthBtn {
-    color: rgb(190, 190, 190);
+    color: rgb(255, 255, 255);   
     width: 100%;
     height: 45px;
     background-color: rgb(26, 8, 47);
@@ -35,12 +38,15 @@
     width: 50%;
     background-color: transparent;
     color: rgb(23, 4, 53);
+    color: rgb(255, 255, 255);   
     font-weight: bold;
     white-space: nowrap; 
 }
 
 .AuthSelected {
     border-bottom-color:rgb(23, 4, 53);
+    border-bottom-color: rgb(255, 255, 255);   
+    color: rgb(255, 255, 255);   
     border-bottom-width: 3px;
     border-bottom-style: solid;
 }
@@ -48,5 +54,5 @@
 button:focus {outline:0;}
 input:focus {outline:0;}
 input::placeholder{
-    color: rgb(146, 146, 146);   
+    color: rgb(255, 255, 255);   
   }

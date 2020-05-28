@@ -165,7 +165,7 @@ class Auth extends Component {
         let assignedClasses = [classes.Card, myClasses.Auth].join(' ')
         return(
             <div className={classes.Container}>
-                {body}
+    
                 <div className={assignedClasses}>
                     {auth}
                 </div>
