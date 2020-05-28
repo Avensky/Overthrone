@@ -1,0 +1,24 @@
+i {
+    margin: 0 0 0 5vw;
+}
+
+.filter {
+    display: flex;
+    margin-top: 2vh;
+    justify-content: space-between;
+}
+.filter label {
+    margin: 0 1vw;
+    padding: 1vh 2vw;
+    border: solid white 1px;
+}
+
+.Items {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.Store {
+    padding: 2vh 2vw;
+}

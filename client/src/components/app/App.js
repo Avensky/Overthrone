@@ -15,7 +15,7 @@ import Authors        from '../pages/Authors/Authors';
 import Characters     from '../pages/Characters/Characters';
 import Sovereinty     from '../pages/Sovereinty/Sovereinty';
 import Faqs           from '../pages/Faqs/Faqs';
-import Purchase       from '../pages/Purchase/Purchase';
+import Shop           from '../pages/Shop/Shop';
 
 class App extends Component {
   state = {
@@ -39,7 +39,7 @@ class App extends Component {
         <Route path="/characters"       component={Characters}  />
         <Route path="/sovereinty"       component={Sovereinty}  />
         <Route path="/faqs"             component={Faqs}  />
-        <Route path="/purchase"         component={Purchase}  />
+        <Route path="/shop"             component={Shop}  />
         <Route path="/profile"          component={Profile}  />
 
         {/* <Redirect to="/home" />  */}              

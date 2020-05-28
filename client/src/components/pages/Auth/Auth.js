@@ -99,14 +99,14 @@ class Auth extends Component {
                             type="email"
                             name="Email"
                             onChange={(event) => this.inputChangedHandler( event, "email")}
-                            placeholder="Enter Email"
+                            placeholder="Email Address"
                             className={myClasses.AuthInput}
                         />
                         <input 
                             type="Password"
                             name="Password"
                             onChange={(event) => this.inputChangedHandler( event, "password")}
-                            placeholder="Enter Password"
+                            placeholder="Password"
                             className={myClasses.AuthInput}
                         />
                         <input 
@@ -164,12 +164,12 @@ class Auth extends Component {
 
         let assignedClasses = [classes.Card, myClasses.Auth].join(' ')
         return(
-            <div className={classes.Container}>
-    
-                <div className={assignedClasses}>
-                    {auth}
-                </div>
+            <Auxiliary>
+            {body}
+            <div className={assignedClasses}>
+            {auth}
             </div>
+            </Auxiliary>
         )
     }
 }
