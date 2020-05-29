@@ -8,14 +8,6 @@ import Headline from './Headline/Headline'
 
 class Faqs extends Component {
     render () {
-        let body = (
-            <div className="container">
-                <div className="page-header text-center">
-                    <h1><span className="fa fa-anchor"></span> Frequently Asked Questions</h1>
-                </div>
-            </div>
-        )
-
         let headlines = (
             <div className={myClasses.Headlines}>
                 <h4>Select for more info </h4>
@@ -27,11 +19,15 @@ class Faqs extends Component {
                 <Headline headline = "Another headline"/>
             </div>
         )
-        let assignedClasses = [classes.Card, myClasses.Faqs].join(' ')
+
         return(
             <Auxiliary>
-                {body}
-                <div className={assignedClasses}>
+                <div className="container">
+                    <div className="page-header text-center">
+                        <h1><span className="fa fa-anchor"></span> Frequently Asked Questions</h1>
+                    </div>
+                </div>
+                <div className={[classes.Card, myClasses.Faqs].join(' ')}>
                     <Faq 
                         question="What is my order status?"
                         answer="You can view your order status by looking up your order."

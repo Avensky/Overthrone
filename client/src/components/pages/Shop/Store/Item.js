@@ -8,10 +8,10 @@ const Item = props => (
             <img src={props.img} alt="hat"/>
         </figure>
 
-        <div className={classes.CardTitle}>
+        <div>
             {props.title}
         </div>
-        <div className={classes.CardDescription}>{props.content}</div>
+        <div >{props.content}</div>
     </div>
 )
 

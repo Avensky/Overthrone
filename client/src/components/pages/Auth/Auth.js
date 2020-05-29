@@ -122,13 +122,6 @@ class Auth extends Component {
             )
         }
 
-        let body = (
-            <div className="container">
-                <div className="page-header text-center">
-                    <h1><span className="fa fa-lock"></span> Authentication</h1>
-                </div>
-            </div>
-        )
         let selected, unselected = myClasses.AuthToggle;
         if  ( this.state.authLogin === false){
             selected = myClasses.AuthToggle
@@ -140,35 +133,28 @@ class Auth extends Component {
 
         }
 
-        let auth = (
-            <div className={classes.Auth}>
-                
-                <button 
-                    onClick={this.loginToggleHandler}
-                    className={selected}
-                ><h2><i className="fa fa-sign-in"></i> Login</h2>
-                </button>
-
-                <button 
-                    onClick={this.registerToggleHandler}
-                    className={unselected}
-                ><h2><i className="fa fa-user-plus"></i> Signup</h2>
-                </button>               
-                {form}
-                <div className={classes.CardTitle}>Or continue with:</div>
-                <a href="/auth/facebook"    className="btn btn-primary"><span className="fa fa-facebook">   </span> Facebook</a>
-                <a href="/auth/twitter"     className="btn btn-info"   ><span className="fa fa-twitter">    </span> Twitter</a>
-                <a href="/auth/google"      className="btn btn-danger" ><span className="fa fa-google-plus"></span> Google+</a>
-            </div>
-        )
-
-        let assignedClasses = [classes.Card, myClasses.Auth].join(' ')
         return(
             <Auxiliary>
-            {body}
-            <div className={assignedClasses}>
-            {auth}
-            </div>
+                <div className={[classes.Card, myClasses.Auth].join(' ')}>
+                    <div className={myClasses.AuthNav}>
+                            <button 
+                                onClick={this.loginToggleHandler}
+                                className={selected}
+                            ><h2><span className="fa fa-sign-in" /> Login</h2>
+                            </button>
+
+                            <button 
+                                onClick={this.registerToggleHandler}
+                                className={unselected}
+                            ><h2><span className="fa fa-user-plus" /> Signup</h2>
+                            </button>   
+                    </div>            
+                    {form}
+                    <div className={classes.CardTitle}>Or continue with:</div>
+                    <a href="/auth/facebook"    className="btn btn-primary"><span className="fa fa-facebook">   </span> Facebook</a>
+                    <a href="/auth/twitter"     className="btn btn-info"   ><span className="fa fa-twitter">    </span> Twitter</a>
+                    <a href="/auth/google"      className="btn btn-danger" ><span className="fa fa-google-plus"></span> Google+</a>
+                </div>
             </Auxiliary>
         )
     }

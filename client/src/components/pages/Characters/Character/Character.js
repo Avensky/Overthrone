@@ -3,10 +3,8 @@ import classes from '../../Pages.module.css'
 import myClasses from './Character.module.css'
 import myImg from '../../../../assets/images/character.jpg';
 
-let assignedClasses = [classes.Card, myClasses.Character].join(' ')
-
 const character = props => (
-    <div className={assignedClasses}>
+    <div className={myClasses.Character}>
         <figure className={classes.CardThumbnail}>
             <img src={myImg} alt="character"/>
         </figure>

@@ -13,7 +13,7 @@
     display: block;
 }
 
-.NavItem a:hover,
+.NavItem a:hover
 .NavItem a:active,
 .NavItem a.active {
     color: rgb(161, 131, 103);

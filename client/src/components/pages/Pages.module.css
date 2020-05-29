@@ -3,8 +3,21 @@
     height: 100%;
 }
 
+.btn:hover{
+    color: white;
+}
+
 .inline {
-    display: inline-block;
+    display: inline;
+}
+.spread {
+    margin: 2.3vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left {
+    margin-left: 2vw;
 }
 
 .Jumbotron {
@@ -21,8 +34,7 @@
 
 .Card {
     margin: 0 5vw;
-    padding: 2vh 2vw;
-    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2vh 5vw;
 }
 
 
@@ -119,17 +131,18 @@
     opacity:1;
 }
 
+
+
 @media only screen and (min-width: 600px) {
     /* For tablets: */
-    .Jumbotron {
-        margin: 6vh 5vw 0;
+    .Card {
     }
 }
 
 @media only screen and (min-width: 1025px) {
     /* For desktop: */
-    .Jumbotron {
-        margin: 6vh 20vw 0;
+    .Card {
+
     }
 }
 

@@ -11,57 +11,62 @@ import Item from './Store/Item';
 
 class Purchase extends Component {
     render () {
-        let body = (
-            <div className="container">
-                <div className={'page-header text-right'}>
-                    <h1>
-                        <i class="fa fa-shopping-cart"></i>
-                        <i class="fa fa-user"></i>
-                    </h1>
-                </div>
-            </div>   
-        )
-
-        let form = (
-            <input type='textbox' placeholder="search the store" />
-        )
-     
         return(
-                <div className={[myClasses.Shop].join(' ')}>
-                    {body}
-                    <div className={[classes.Card, myClasses.Store].join(' ')}>
-                        {form}
-                        <div className={myClasses.filter}>
-                            <label>All</label>
-                            <label>Books</label>
-                            <label>Apparel</label>
-                            <label>Hats</label>
-                            <label>Misc</label>
-                        </div>
-                        <div className={myClasses.Items}>
-                            <Item
-                                img={myImg}
-                                title="Overthrown"
-                                content="$26.99 US"
-                            />
-                            <Item
-                                img={myBag}
-                                title="Overthrown"
-                                content="$26.99 US"
-                            />
-                            <Item
-                                img={myMug}
-                                title="Overthrown"
-                                content="$26.99 US"
-                            />
-                            <Item
-                                img={myShirt}
-                                title="Overthrown"
-                                content="$26.99 US"
-                            />
+            <Auxiliary>
+                <div className="container">
+                    <div className={['page-header', 'text-center', classes.spread].join(' ')}>
+                        <h1>Shop</h1>
+                        <h1>
+                            <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
+                            <span className={["fa", "fa-user", classes.left].join(' ')}/>
+                        </h1>
+                    </div>
+                </div>   
+                <div className={[classes.Card, myClasses.Shop].join(' ')}>
+                    <div className={classes.spread}>
+                        <input className={myClasses.Search} type='text' placeholder="search the store" />
+                        
+                        <div className={myClasses.dropdown}>
+                            <button className={myClasses.dropbtn}>OrderBy: </button>
+                            <div className={myClasses.dropdownContent}>
+                                <a href="#">Price</a>
+                                <a href="#">Most recent</a>
+                                <a href="#">Most Popular</a>
+                            </div>
                         </div>
                     </div>
+                    <div className={myClasses.filter}>
+                        <label><p>All</p></label>
+                        <label><p>Books</p></label>
+                        <label><p>Apparel</p></label>
+                        <label><p>Hats</p></label>
+                        <label><p>Misc</p></label>
+                    </div>
+
+                    <div className={myClasses.Items}>
+                        <Item
+                            img={myImg}
+                            title="Overthrown"
+                            content="$26.99 US"
+                        />
+                        <Item
+                            img={myBag}
+                            title="Overthrown"
+                            content="$26.99 US"
+                        />
+                        <Item
+                            img={myMug}
+                            title="Overthrown"
+                            content="$26.99 US"
+                        />
+                        <Item
+                            img={myShirt}
+                            title="Overthrown"
+                            content="$26.99 US"
+                        />
+                    </div>
                 </div>
+            </Auxiliary>
         )
     }
 }
