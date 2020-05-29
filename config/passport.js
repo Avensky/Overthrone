@@ -9,7 +9,7 @@ const mongoose         = require('mongoose')
 const User             = mongoose.model('User')
 
 // load the auth variables
-const configAuth = require('./secrets'); // use this one for testing
+const configAuth = require('./keys'); // use this one for testing
 
 module.exports         = function(passport) {
     // =========================================================================
@@ -130,9 +130,9 @@ module.exports         = function(passport) {
     // =========================================================================
     passport.use(new FacebookStrategy({
 
-        clientID        : configAuth.facebookAuth.clientID,
-        clientSecret    : configAuth.facebookAuth.clientSecret,
-//        callbackURL     : configAuth.facebookAuth.callbackURL,
+        clientID        : configAuth.facebookClientID,
+        clientSecret    : configAuth.facebookClientSecret,
+//        callbackURL     : configAuth.facebookCallbackURL,
         callbackURL     : '/auth/facebook/callback',
         passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         profileFields   : ['id', 'displayName', 'photos', 'email','first_name', 'last_name'],
@@ -214,9 +214,9 @@ module.exports         = function(passport) {
     // =========================================================================
     passport.use(new TwitterStrategy({
 
-        consumerKey     : configAuth.twitterAuth.consumerKey,
-        consumerSecret  : configAuth.twitterAuth.consumerSecret,
-//        callbackURL     : configAuth.twitterAuth.callbackURL,
+        consumerKey     : configAuth.twitterConsumerKey,
+        consumerSecret  : configAuth.twitterConsumerSecret,
+//        callbackURL     : configAuth.twitterCallbackURL,
         callbackURL     : '/auth/twitter/callback',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
@@ -290,9 +290,9 @@ module.exports         = function(passport) {
     // =========================================================================
     passport.use(new GoogleStrategy({
 
-        clientID        : configAuth.googleAuth.clientID,
-        clientSecret    : configAuth.googleAuth.clientSecret,
-//        callbackURL     : configAuth.googleAuth.callbackURL,
+        clientID        : configAuth.googleClientID,
+        clientSecret    : configAuth.googleClientSecret,
+//        callbackURL     : configAuth.googleCallbackURL,
         callbackURL         : "/auth/google/callback",
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
