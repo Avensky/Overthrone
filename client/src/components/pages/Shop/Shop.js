@@ -7,10 +7,29 @@ import myImg from '../../../assets/images/hat.jpg';
 import myBag from '../../../assets/images/bag.jpg';
 import myMug from '../../../assets/images/mug.jpg';
 import myShirt from '../../../assets/images/shirt.jpg';
-import Item from './Store/Item';
+import Item from './Item/Item';
 
 class Purchase extends Component {
+    handleClick = (id)=>{
+        this.props.addToCart(id); 
+    }
     render () {
+        let itemList = this.props.items.map(item=>{
+            return(
+                <div className="card" key={item.id}>
+                    <div className="card-image">
+                        <img src={item.img} alt={item.title}/>
+                        <span className="card-title">{item.title}</span>
+                        <span to="/" className="btn-floating halfway-fab waves-effect waves-light red" onClick={()=>{this.handleClick(item.id)}}><i className="material-icons">add</i></span>
+                    </div>
+
+                    <div className="card-content">
+                        <p>{item.desc}</p>
+                        <p><b>Price: {item.price}$</b></p>
+                    </div>
+                </div>
+            )
+        })
         return(
             <Auxiliary>
                 <div className="container">
@@ -73,11 +92,13 @@ class Purchase extends Component {
 
 const mapStateToProps = state => {
     return {
+        items: state.items
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        addToCart: (id)=>{dispatch(addToCart(id))}
     }
 }
 

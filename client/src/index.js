@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import * as serviceWorker from './serviceWorker';
 import authReducer from './store/reducers/auth';
+import cartReducer from './store/reducers/cart';
 
 // Development only axios helpers!
 import axios from 'axios';
@@ -18,6 +19,7 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    cart: cartReducer
 })
 
 const store = createStore(
