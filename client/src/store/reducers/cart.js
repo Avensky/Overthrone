@@ -4,8 +4,8 @@ import Item3 from '../images/item3.jpg'
 import Item4 from '../images/item4.jpg'
 import Item5 from '../images/item5.jpg'
 import Item6 from '../images/item6.jpg'
-import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING } from '../actions/actionTypes/cart'
-import * as actionTypes from '../actionTypes'
+//import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING } from '../actions/actionTypes/cart'
+import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
     items: [

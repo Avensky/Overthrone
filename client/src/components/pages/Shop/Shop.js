@@ -8,6 +8,7 @@ import myBag from '../../../assets/images/bag.jpg';
 import myMug from '../../../assets/images/mug.jpg';
 import myShirt from '../../../assets/images/shirt.jpg';
 import Item from './Item/Item';
+import * as actions from '../../../store/actions/index';
 
 class Purchase extends Component {
     handleClick = (id)=>{
@@ -92,13 +93,13 @@ class Purchase extends Component {
 
 const mapStateToProps = state => {
     return {
-        items: state.items
+        items: state.cart.items
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart: (id)=>{dispatch(addToCart(id))}
+        addToCart: ( id ) => { dispatch( actions.addToCart( id ) ) }
     }
 }
 
