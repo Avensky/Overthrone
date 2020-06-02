@@ -3,32 +3,31 @@ import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.css';
 import myClasses from './Shop.module.css';
-import myImg from '../../../assets/images/hat.jpg';
-import myBag from '../../../assets/images/bag.jpg';
-import myMug from '../../../assets/images/mug.jpg';
-import myShirt from '../../../assets/images/shirt.jpg';
+// import myImg from '../../../assets/images/hat.jpg';
+// import myBag from '../../../assets/images/bag.jpg';
+// import myMug from '../../../assets/images/mug.jpg';
+// import myShirt from '../../../assets/images/shirt.jpg';
 import Item from './Item/Item';
 import * as actions from '../../../store/actions/index';
 
 class Purchase extends Component {
     handleClick = (id)=>{
         this.props.addToCart(id); 
+        this.props.history.push('/item/' + id);
     }
     render () {
-        let itemList = this.props.items.map(item=>{
+        let itemList = this.props.items.map( item => {
             return(
-                <div className="card" key={item.id}>
-                    <div className="card-image">
-                        <img src={item.img} alt={item.title}/>
-                        <span className="card-title">{item.title}</span>
-                        <span to="/" className="btn-floating halfway-fab waves-effect waves-light red" onClick={()=>{this.handleClick(item.id)}}><i className="material-icons">add</i></span>
-                    </div>
-
-                    <div className="card-content">
-                        <p>{item.desc}</p>
-                        <p><b>Price: {item.price}$</b></p>
-                    </div>
-                </div>
+                <Item
+                    img     = {item.img}
+                    id      = {item.id}
+                    alt     = {item.title}
+                    title   = {item.title}
+                    to      = "/"
+                    clicked = {() => this.handleClick(item.id)}
+                    desc    = {item.desc}
+                    price   = {item.price}
+                />
             )
         })
         return(
@@ -62,28 +61,8 @@ class Purchase extends Component {
                         <label><p>Hats</p></label>
                         <label><p>Misc</p></label>
                     </div>
-
                     <div className={myClasses.Items}>
-                        <Item
-                            img={myImg}
-                            title="Overthrown"
-                            content="$26.99 US"
-                        />
-                        <Item
-                            img={myBag}
-                            title="Overthrown"
-                            content="$26.99 US"
-                        />
-                        <Item
-                            img={myMug}
-                            title="Overthrown"
-                            content="$26.99 US"
-                        />
-                        <Item
-                            img={myShirt}
-                            title="Overthrown"
-                            content="$26.99 US"
-                        />
+                        {itemList}
                     </div>
                 </div>
             </Auxiliary>

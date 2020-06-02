@@ -1,17 +1,21 @@
 import React from 'react';
 import classes from '../../Pages.module.css';
 import myClasses from './Item.module.css';
-
+//{classes.CardThumbnail}
 const Item = props => (
-    <div className={myClasses.Item}>
-        <figure className={classes.CardThumbnail}>
-            <img src={props.img} alt="hat"/>
-        </figure>
-
-        <div>
-            {props.title}
+    <div className={myClasses.Item} key={props.id}>
+        <div className={classes.CardThumbnail}>
+            <img src={props.img} alt={props.alt}/>
         </div>
-        <div >{props.content}</div>
+        <span className={["card-title", myClasses.CardTitle].join(' ')}>{props.title}</span>
+        <span 
+            className={myClasses.Btn}
+            onClick={props.clicked}>
+            <span className={["material-icons", myClasses.MaterialIcons].join(' ')}> add</span>
+        </span>
+
+        {/* <div><p>{props.desc}</p></div> */}
+        <div><p><b>Price: ${props.price}</b></p></div>
     </div>
 )
 
