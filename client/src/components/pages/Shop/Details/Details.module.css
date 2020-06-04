@@ -1,15 +1,9 @@
 .Item {
     margin: 2vh 0;
+    padding: 2vh 2vw;
+    width: 100%;
     text-align: center;
     align-items: center;
-}
-
-.Item.ShopItem {
-    width: 50%;
-}
-
-.Item.DetailsItem {
-    width: 100%;
 }
 
 .Item .CardImage .CardTitle{
@@ -29,13 +23,6 @@
 
 @media only screen and (min-width: 600px) {
     /* For tablets: */
-    .Item {
-        width: 25%;
-    }
-}
-
-@media only screen and (min-width: 1025px) {
-    /* For desktop: */
     .Item {
         width: 25%;
     }

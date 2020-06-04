@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {Route, Router} from 'react-router-dom';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.css';
 import myClasses from './Shop.module.css';
@@ -9,11 +10,12 @@ import myClasses from './Shop.module.css';
 // import myShirt from '../../../assets/images/shirt.jpg';
 import Item from './Item/Item';
 import * as actions from '../../../store/actions/index';
+// import Details from './Details/Details';
 
 class Purchase extends Component {
     handleClick = (id)=>{
         this.props.addToCart(id); 
-        this.props.history.push('/item/' + id);
+        this.props.history.push('/Details/' + id);
     }
     render () {
         let itemList = this.props.items.map( item => {
@@ -21,6 +23,7 @@ class Purchase extends Component {
                 <Item
                     img     = {item.img}
                     id      = {item.id}
+                    key     = {item.id}
                     alt     = {item.title}
                     title   = {item.title}
                     to      = "/"

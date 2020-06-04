@@ -3,7 +3,7 @@ import classes from '../../Pages.module.css';
 import myClasses from './Item.module.css';
 //{classes.CardThumbnail}
 const Item = props => (
-    <div className={myClasses.Item} key={props.id}>
+    <div className={[myClasses.Item, props.class].join(' ')} key={props.id}>
         <div className={classes.CardThumbnail}>
             <img src={props.img} alt={props.alt}/>
         </div>
@@ -11,7 +11,7 @@ const Item = props => (
         <span 
             className={myClasses.Btn}
             onClick={props.clicked}>
-            <span className={["material-icons", myClasses.MaterialIcons].join(' ')}> add</span>
+            <span className={[myClasses.MaterialIcons].join(' ')}> add</span>
         </span>
 
         {/* <div><p>{props.desc}</p></div> */}
