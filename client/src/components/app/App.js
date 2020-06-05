@@ -43,6 +43,12 @@ class App extends Component {
         <Route path="/shop"             component={Shop}  />
         <Route path="/profile"          component={Profile}  />
         <Route path="/details"          component={Details} />
+        <Route 
+          path="/details/:id"   
+          component={Details} 
+          location={this.props.location} 
+          key={this.props.location.key}
+        />
 
         {/* <Redirect to="/home" />  */}              
       </Switch>

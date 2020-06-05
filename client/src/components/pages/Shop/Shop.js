@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Route, Router} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.css';
 import myClasses from './Shop.module.css';
@@ -15,7 +15,7 @@ import * as actions from '../../../store/actions/index';
 class Purchase extends Component {
     handleClick = (id)=>{
         this.props.addToCart(id); 
-        this.props.history.push('/Details/' + id);
+        this.props.history.push('/details/' + id);
     }
     render () {
         let itemList = this.props.items.map( item => {
@@ -85,4 +85,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect (mapStateToProps, mapDispatchToProps)(Purchase);
+export default withRouter(connect (mapStateToProps, mapDispatchToProps)(Purchase));

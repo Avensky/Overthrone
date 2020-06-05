@@ -1,18 +1,27 @@
-import React, {Component } from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 import Item from '../Item/Item';
 import myClasses from './Details.module.css';
-import classes from '../../Pages.module.css';
+// import classes from '../../Pages.module.css';
 import * as actions from '../../../../store/actions/index';
 
 class Details extends Component {
-
-    componentDidUpdate() {
-  
+    state = {
+        id: null,
+        loading: false
     }
 
-    deletePostHandler = () => {
-
+    componentDidMount() {
+        if (this.props.match.params) {
+            try {
+                const id = this.props.match.params.id;
+                console.log(this.props.match.params.key);
+                this.setState({ id, loading: false })
+            } catch (err) {
+                this.setState({ loading: false, error: true })
+            }
+        }
     }
 
     render (){
@@ -28,15 +37,15 @@ class Details extends Component {
         if (item) {
             details = <Item
                 class   = 'myClasses.DetailsItem'
-                img     = {item[0].img}
-                id      = {item[0].id}
-                key     = {item[0].id}
-                alt     = {item[0].title}
-                title   = {item[0].title}
+                img     = {item.img}
+                id      = {item.id}
+                key     = {item.id}
+                alt     = {item.title}
+                title   = {item.title}
                 to      = "/"
                 clicked = {() => this.handleClick(item.id)}
-                desc    = {item[0].desc}
-                price   = {item[0].price}
+                desc    = {item.desc}
+                price   = {item.price}
                 className="Delete"
             />
         }
@@ -60,4 +69,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect (mapStateToProps, mapDispatchToProps) (Details);
+export default withRouter ( connect ( mapStateToProps, mapDispatchToProps ) ( Details ) );
