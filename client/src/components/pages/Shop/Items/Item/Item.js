@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../Pages.module.css';
+import classes from '../../../Pages.module.css';
 import myClasses from './Item.module.css';
 //{classes.CardThumbnail}
 const item = props => (

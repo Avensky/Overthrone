@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import Auxiliary from '../../../../hoc/Auxiliary';
 // import classes from '../Pages.module.css';
 import myClasses from '../Shop.module.css';
-import Item from '../Item/Item';
+import Item from './Item/Item';
 import * as actions from '../../../../store/actions/index';
 import Details from '../Details/Details';
 
