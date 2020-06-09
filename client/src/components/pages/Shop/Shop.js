@@ -46,8 +46,10 @@ class Purchase extends Component {
                         <label><p>Hats</p></label>
                         <label><p>Misc</p></label>
                     </div>
+
+                    {this.props.children}
                 <Switch>
-                    <Route path="/items" component={Items} />
+                    <Route path="/shop" component={Items} />
                     <Route render={() => <h1>Not found</h1>}/>
                     {/* <Redirect from="/" to="/posts" /> */}
                     {/* <Route path="/" component={Posts} /> */}

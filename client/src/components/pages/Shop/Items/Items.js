@@ -29,7 +29,7 @@ class Items extends Component {
     
     handleClick = ( id ) => {
 //        this.props.addToCart(id); 
-        this.props.history.push('/items/' + id);
+        this.props.history.push('/shop/' + id);
     }
     render () {
         let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
