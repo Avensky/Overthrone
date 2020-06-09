@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import axios from 'axios';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import Item from '../Item/Item';
@@ -7,45 +8,55 @@ import myClasses from './Details.module.css';
 import * as actions from '../../../../store/actions/index';
 
 class Details extends Component {
+
     state = {
         id: null,
-        loading: false
+        loadedItem: null
     }
 
-    componentDidMount() {
-        if (this.props.match.params) {
-            try {
-                const id = this.props.match.params.id;
-                console.log(this.props.match.params.key);
-                this.setState({ id, loading: false })
-            } catch (err) {
-                this.setState({ loading: false, error: true })
+    componentDidMount () {
+        console.log(this.props);
+        this.loadData();
+    }
+
+//    componentDidUpdate() {
+//        this.loadData();
+//    }
+
+    loadData () {
+        if ( this.props.match.params.id ) {
+            if ( !this.state.LoadedItem || (this.state.LoadedItem && this.state.LoadedItem.id !== +this.props.match.params.id) ) {
+                this.setState({ LoadedItem: this.props.items[this.props.match.params.id]})
             }
         }
     }
 
+//    deletePostHandler = () => {
+//        axios.delete('/posts/' + this.props.match.params.id)
+//            .then(response => {
+//                console.log(response);
+//            });
+//    }
+
     render (){
         let details = <p style={{textAlign: 'center'}}>Please select an item!</p>;
         
-        if (this.props.match.params.id) {
-            details = <p style={{textAlign: 'center'}}>Loading...!</p>;
+        if ( this.props.match.params.id ) {
+            details = <p style={{ textAlign: 'center' }}>Loading...!</p>;
         }
 
-        let item = this.props.items
-        console.log(item);
-
-        if (item) {
+        if ( this.state.loadedPost) {
             details = <Item
                 class   = 'myClasses.DetailsItem'
-                img     = {item.img}
-                id      = {item.id}
-                key     = {item.id}
-                alt     = {item.title}
-                title   = {item.title}
+                img     = {this.state.loadedPost.img}
+                id      = {this.state.loadedPost.id}
+                key     = {this.state.loadedPost.id}
+                alt     = {this.state.loadedPost.title}
+                title   = {this.state.loadedPost.title}
                 to      = "/"
-                clicked = {() => this.handleClick(item.id)}
-                desc    = {item.desc}
-                price   = {item.price}
+                clicked = {() => this.handleClick(this.state.loadedPost.id)}
+                desc    = {this.state.loadedPost.desc}
+                price   = {this.state.loadedPost.price}
                 className="Delete"
             />
         }

@@ -16,7 +16,8 @@ import Characters     from '../pages/Characters/Characters';
 import Sovereinty     from '../pages/Sovereinty/Sovereinty';
 import Faqs           from '../pages/Faqs/Faqs';
 import Shop           from '../pages/Shop/Shop';
-import Details        from '../pages/Shop/Details/Details';
+// import Details        from '../pages/Shop/Details/Details';
+import Items          from '../pages/Shop/Items/Items';
 
 class App extends Component {
   state = {
@@ -42,14 +43,7 @@ class App extends Component {
         <Route path="/faqs"             component={Faqs}  />
         <Route path="/shop"             component={Shop}  />
         <Route path="/profile"          component={Profile}  />
-        <Route path="/details"          component={Details} />
-        <Route 
-          path="/details/:id"   
-          component={Details} 
-          location={this.props.location} 
-          key={this.props.location.key}
-        />
-
+        <Route path="/items"            component={Items} />
         {/* <Redirect to="/home" />  */}              
       </Switch>
     );

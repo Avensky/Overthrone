@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.css';
 import myClasses from './Shop.module.css';
@@ -8,31 +8,13 @@ import myClasses from './Shop.module.css';
 // import myBag from '../../../assets/images/bag.jpg';
 // import myMug from '../../../assets/images/mug.jpg';
 // import myShirt from '../../../assets/images/shirt.jpg';
-import Item from './Item/Item';
+import Items from './Items/Items';
 import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details';
 
 class Purchase extends Component {
-    handleClick = (id)=>{
-        this.props.addToCart(id); 
-        this.props.history.push('/details/' + id);
-    }
     render () {
-        let itemList = this.props.items.map( item => {
-            return(
-                <Item
-                    img     = {item.img}
-                    id      = {item.id}
-                    key     = {item.id}
-                    alt     = {item.title}
-                    title   = {item.title}
-                    to      = "/"
-                    clicked = {() => this.handleClick(item.id)}
-                    desc    = {item.desc}
-                    price   = {item.price}
-                />
-            )
-        })
+
         return(
             <Auxiliary>
                 <div className="container">
@@ -51,9 +33,9 @@ class Purchase extends Component {
                         <div className={myClasses.dropdown}>
                             <button className={myClasses.dropbtn}>OrderBy: </button>
                             <div className={myClasses.dropdownContent}>
-                                <a href="#">Price</a>
-                                <a href="#">Most recent</a>
-                                <a href="#">Most Popular</a>
+                                <a href="/price">Price</a>
+                                <a href="/date">Most recent</a>
+                                <a href="/popular">Most Popular</a>
                             </div>
                         </div>
                     </div>
@@ -64,9 +46,12 @@ class Purchase extends Component {
                         <label><p>Hats</p></label>
                         <label><p>Misc</p></label>
                     </div>
-                    <div className={myClasses.Items}>
-                        {itemList}
-                    </div>
+                <Switch>
+                    <Route path="/items" component={Items} />
+                    <Route render={() => <h1>Not found</h1>}/>
+                    {/* <Redirect from="/" to="/posts" /> */}
+                    {/* <Route path="/" component={Posts} /> */}
+                </Switch>
                 </div>
             </Auxiliary>
         )
@@ -75,7 +60,7 @@ class Purchase extends Component {
 
 const mapStateToProps = state => {
     return {
-        items: state.cart.items
+//        items: state.cart.items
     };
 };
 
@@ -85,4 +70,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default withRouter(connect (mapStateToProps, mapDispatchToProps)(Purchase));
+export default connect (mapStateToProps, mapDispatchToProps)(Purchase);

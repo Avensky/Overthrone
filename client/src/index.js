@@ -13,6 +13,7 @@ import cartReducer from './store/reducers/cart';
 // Development only axios helpers!
 import axios from 'axios';
 window.axios = axios;
+
 //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose || compose;
 //const composeEnhancers = !__PROD__ ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose
