@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
 import { connect } from 'react-redux';
-import { withRouter } from "react-router-dom";
 import Item from '../Item/Item';
 import myClasses from './Details.module.css';
 // import classes from '../../Pages.module.css';
@@ -19,14 +18,15 @@ class Details extends Component {
         this.loadData();
     }
 
-//    componentDidUpdate() {
-//        this.loadData();
-//    }
+    componentDidUpdate() {
+        this.loadData();
+    }
 
     loadData () {
         if ( this.props.match.params.id ) {
-            if ( !this.state.LoadedItem || (this.state.LoadedItem && this.state.LoadedItem.id !== +this.props.match.params.id) ) {
-                this.setState({ LoadedItem: this.props.items[this.props.match.params.id]})
+            if ( !this.state.loadedItem || (this.state.loadedItem && this.state.loadedItem.id !== +this.props.match.params.id) ) {
+                const itemId = this.props.match.params.id - 1;
+                this.setState({ loadedItem: this.props.items[itemId]});
             }
         }
     }
@@ -45,18 +45,18 @@ class Details extends Component {
             details = <p style={{ textAlign: 'center' }}>Loading...!</p>;
         }
 
-        if ( this.state.loadedPost) {
+        if ( this.state.loadedItem) {
             details = <Item
                 class   = 'myClasses.DetailsItem'
-                img     = {this.state.loadedPost.img}
-                id      = {this.state.loadedPost.id}
-                key     = {this.state.loadedPost.id}
-                alt     = {this.state.loadedPost.title}
-                title   = {this.state.loadedPost.title}
+                img     = {this.state.loadedItem.img}
+                id      = {this.state.loadedItem.id}
+                key     = {this.state.loadedItem.id}
+                alt     = {this.state.loadedItem.title}
+                title   = {this.state.loadedItem.title}
                 to      = "/"
-                clicked = {() => this.handleClick(this.state.loadedPost.id)}
-                desc    = {this.state.loadedPost.desc}
-                price   = {this.state.loadedPost.price}
+                clicked = {() => this.handleClick(this.state.loadedItem.id)}
+                desc    = {this.state.loadedItem.desc}
+                price   = {this.state.loadedItem.price}
                 className="Delete"
             />
         }
@@ -74,10 +74,5 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addToCart: ( id ) => { dispatch( actions.addToCart( id ) ) }
-    }
-}
 
-export default withRouter ( connect ( mapStateToProps, mapDispatchToProps ) ( Details ) );
+export default connect ( mapStateToProps ) ( Details ) ;

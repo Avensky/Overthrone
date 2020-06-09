@@ -15,7 +15,8 @@ class Items extends Component {
 
     componentDidMount () {
         console.log( this.props );
-        const updatedItems = this.props.items.map( item => {
+        const items = this.props.items.slice( 0, 4 );
+        const updatedItems = items.map( item => {
             return {
                 ...item,
             }
