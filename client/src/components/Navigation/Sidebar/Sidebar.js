@@ -5,6 +5,7 @@ import NavItems from '../NavItems/NavItems';
 import classes from './Sidebar.module.css';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 import Auxiliary from '../../../hoc/Auxiliary';
+import { Link } from 'react-router-dom';
 
 const sidebar = ( props ) => {
     let attachedClasses = [classes.Sidebar, classes.Close];
@@ -17,10 +18,12 @@ const sidebar = ( props ) => {
             <div
                 className={attachedClasses.join(' ')} 
                 onClick={props.closed}
-            >
-                <div className={classes.Logo}>
-                    <Logo />
-                </div>
+            >   
+                <Link to="/">
+                    <div className={classes.Logo}>
+                        <Logo />
+                    </div>
+                </Link>
                 <nav>
                     <NavItems isAuthenticated={props.isAuth} />
                 </nav>
