@@ -7,7 +7,7 @@ import myClasses from '../Shop.module.css';
 import Item from './Item/Item';
 import * as actions from '../../../../store/actions/index';
 import Details from '../Details/Details';
-
+import { Link } from 'react-router-dom';
 class Items extends Component {
     state = {
         items : []
@@ -36,17 +36,19 @@ class Items extends Component {
         if ( !this.state.error ) {
             items = this.state.items.map( item => {
                 return(
-                    <Item
-                        img     = {item.img}
-                        id      = {item.id}
-                        key     = {item.id}
-                        alt     = {item.title}
-                        title   = {item.title}
-                        to      = "/"
-                        clicked = {() => this.handleClick(item.id)}
-                        desc    = {item.desc}
-                        price   = {item.price}
-                    />
+                    <Link to={'/details/' + item.id} key={item.id}>
+                        <Item
+                            img     = {item.img}
+                            id      = {item.id}
+                            key     = {item.id}
+                            alt     = {item.title}
+                            title   = {item.title}
+                            to      = "/"
+                            clicked = {() => this.handleClick(item.id)}
+                            desc    = {item.desc}
+                            price   = {item.price}
+                        />
+                    </Link>
                 )
             })
         }
@@ -55,7 +57,6 @@ class Items extends Component {
                 <div className={myClasses.Items}>
                     {items}
                 </div>
-                <Route path={this.props.match.url + '/:id'} exact component={Details} />
             </Auxiliary>
         )
     }

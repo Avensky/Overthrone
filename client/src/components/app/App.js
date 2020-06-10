@@ -16,7 +16,7 @@ import Characters     from '../pages/Characters/Characters';
 import Sovereinty     from '../pages/Sovereinty/Sovereinty';
 import Faqs           from '../pages/Faqs/Faqs';
 import Shop           from '../pages/Shop/Shop';
-// import Details        from '../pages/Shop/Details/Details';
+import Details        from '../pages/Shop/Details/Details';
 import Items          from '../pages/Shop/Items/Items';
 
 class App extends Component {
@@ -43,6 +43,7 @@ class App extends Component {
         <Route path="/faqs"             component={Faqs}  />
         <Route path="/shop"             component={Shop}  />
         <Route path="/profile"          component={Profile}  />
+        <Route path='/details/:id' exact component={Details} />
         {/* <Redirect to="/home" />  */}              
       </Switch>
     );
