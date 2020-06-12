@@ -29,14 +29,14 @@ class Items extends Component {
     
     handleClick = ( id ) => {
 //        this.props.addToCart(id); 
-        this.props.history.push('/shop/' + id);
+        this.props.history.push('/itemfull/' + id);
     }
     render () {
         let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
         if ( !this.state.error ) {
             items = this.state.items.map( item => {
                 return(
-                    <Link to={'/details/' + item.id} key={item.id}>
+                    <Link to={'/itemfull/' + item.id} key={item.id}>
                         <Item
                             img     = {item.img}
                             id      = {item.id}

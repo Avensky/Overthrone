@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { removeItem,addQuantity,subtractQuantity} from './actions/cartActions'
-import Recipe from './Recipe'
+import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
+import Recipe from './Recipe/Recipe'
 class Cart extends Component{
 
     //to remove the item completely

@@ -16,8 +16,10 @@ import Characters     from '../pages/Characters/Characters';
 import Sovereinty     from '../pages/Sovereinty/Sovereinty';
 import Faqs           from '../pages/Faqs/Faqs';
 import Shop           from '../pages/Shop/Shop';
+import ItemFull       from '../pages/Shop/ItemFull/ItemFull';
 import Details        from '../pages/Shop/Details/Details';
-import Items          from '../pages/Shop/Items/Items';
+// import Items          from '../pages/Shop/Items/Items';
+import Cart           from '../pages/Cart/Cart';
 
 class App extends Component {
   state = {
@@ -33,16 +35,18 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/connectLocal"     component={ConnectLocal} />
-        <Route path="/authentication"   component={Auth}  />
+        <Route path="/authentication"   component={Auth} />
         <Route path="/login"            component={Login} />
         <Route path="/signup"           component={Signup} />
-        <Route path="/books"            component={Books}  />
-        <Route path="/authors"          component={Authors}  />
-        <Route path="/characters"       component={Characters}  />
-        <Route path="/sovereinty"       component={Sovereinty}  />
-        <Route path="/faqs"             component={Faqs}  />
-        <Route path="/shop"             component={Shop}  />
-        <Route path="/profile"          component={Profile}  />
+        <Route path="/books"            component={Books} />
+        <Route path="/authors"          component={Authors} />
+        <Route path="/characters"       component={Characters} />
+        <Route path="/sovereinty"       component={Sovereinty} />
+        <Route path="/faqs"             component={Faqs} />
+        <Route path="/shop"             component={Shop} />
+        <Route path="/cart"             component={Cart} />        
+        <Route path="/itemfull/:id"         component={ItemFull} />        
+        <Route path="/profile"          component={Profile} />
         <Route path='/details/:id' exact component={Details} />
         {/* <Redirect to="/home" />  */}              
       </Switch>
@@ -50,7 +54,7 @@ class App extends Component {
 
     // if (this.props.fetchedUser) {
     //   routes = (
-    //     <Switch>
+    //     <Swi/tch>
     //       <Route path="/connect-local"    component={connect-local} />
     //       <Route path="/index"            component={index}  />
     //       <Route path="/logout"           component={Login} />
