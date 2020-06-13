@@ -59,10 +59,15 @@ class ItemFull extends Component {
             <Auxiliary>
                 <div className="container">
                     <div className={['page-header', 'text-center', classes.spread].join(' ')}>
-                        <h1>Shop</h1>
+                        <a href='/shop' ><h1>Shop</h1></a>
                         <h1>
+                            <a href='/cart'>
+                                <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
+                            </a>
                             <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
-                            <span className={["fa", "fa-user", classes.left].join(' ')}/>
+                            <a href='/authentication' >
+                                <span className={["fa", "fa-user", classes.left].join(' ')}/>
+                            </a>
                         </h1>
                     </div>
                 </div>   

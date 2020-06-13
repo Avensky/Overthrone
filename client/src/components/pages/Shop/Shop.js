@@ -18,11 +18,15 @@ class Purchase extends Component {
         return(
             <Auxiliary>
                 <div className="container">
-                    <div className={['page-header', 'text-center', classes.spread].join(' ')}>
-                        <h1>Shop</h1>
+                <div className={['page-header', 'text-center', classes.spread].join(' ')}>
+                        <a href='/shop' ><h1>Shop</h1></a>
                         <h1>
-                            <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
-                            <span className={["fa", "fa-user", classes.left].join(' ')}/>
+                            <a href='/cart'>
+                                <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
+                            </a>
+                            <a href='/authentication' >
+                                <span className={["fa", "fa-user", classes.left].join(' ')}/>
+                            </a>
                         </h1>
                     </div>
                 </div>   
