@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+//import { Route, Switch } from 'react-router-dom';
 import Auxiliary from '../../../../hoc/Auxiliary';
-import classes from '../../Pages.module.css';
+//import classes from '../../Pages.module.css';
 import myClasses from './ItemFull.module.css';
 import * as actions from '../../../../store/actions/index';
-import Details from '../Details/Details';
+//import Details from '../Details/Details';
 import Item from '../Items/Item/Item'
 
 class ItemFull extends Component {
@@ -57,30 +57,8 @@ class ItemFull extends Component {
         }
         return(
             <Auxiliary>
-                <div className="container">
-                    <div className={['page-header', 'text-center', classes.spread].join(' ')}>
-                        <a href='/shop' ><h1>Shop</h1></a>
-                        <h1>
-                            <a href='/cart'>
-                                <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
-                            </a>
-                            <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
-                            <a href='/authentication' >
-                                <span className={["fa", "fa-user", classes.left].join(' ')}/>
-                            </a>
-                        </h1>
-                    </div>
-                </div>   
-                <div className={[classes.Card, myClasses.Shop].join(' ')}>
                 <div className={myClasses.Item}>
                     {details}
-                </div>
-                <Switch>
-                    <Route path="/ItemFull" component={Details} />
-                    <Route render={() => <h1>Not found</h1>}/>
-                    {/* <Redirect from="/" to="/posts" /> */}
-                    {/* <Route path="/" component={Posts} /> */}
-                </Switch>
                 </div>
             </Auxiliary>
         )

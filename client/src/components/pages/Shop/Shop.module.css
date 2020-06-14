@@ -2,6 +2,10 @@
     background-color: rgb(34, 26, 0);
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
 .filter {
     display: flex;
     margin: 2vh 0;

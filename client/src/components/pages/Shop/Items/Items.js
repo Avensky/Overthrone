@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Route } from 'react-router-dom';
 import Auxiliary from '../../../../hoc/Auxiliary';
-// import classes from '../Pages.module.css';
+import classes from '../../Pages.module.css';
 import myClasses from '../Shop.module.css';
 import Item from './Item/Item';
 import * as actions from '../../../../store/actions/index';
@@ -36,7 +36,8 @@ class Items extends Component {
         if ( !this.state.error ) {
             items = this.state.items.map( item => {
                 return(
-                    <Link to={'/itemfull/' + item.id} key={item.id}>
+                    //<Link to={'/itemfull/' + item.id} key={item.id}>
+                    <Link to={'/shop/itemfull/' + item.id} key={item.id}>
                         <Item
                             img     = {item.img}
                             id      = {item.id}
@@ -54,6 +55,25 @@ class Items extends Component {
         }
         return(
             <Auxiliary>
+                <div className={classes.spread}>
+                    <input className={myClasses.Search} type='text' placeholder="search the store" />
+                    
+                    <div className={myClasses.dropdown}>
+                        <button className={myClasses.dropbtn}>OrderBy: </button>
+                        <div className={myClasses.dropdownContent}>
+                            <a href="/price">Price</a>
+                            <a href="/date">Most recent</a>
+                            <a href="/popular">Most Popular</a>
+                        </div>
+                    </div>
+                </div>
+                <div className={myClasses.filter}>
+                    <label><p>All</p></label>
+                    <label><p>Books</p></label>
+                    <label><p>Apparel</p></label>
+                    <label><p>Hats</p></label>
+                    <label><p>Misc</p></label>
+                </div>
                 <div className={myClasses.Items}>
                     {items}
                 </div>

@@ -4,11 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.css';
 import myClasses from './Shop.module.css';
-// import myImg from '../../../assets/images/hat.jpg';
-// import myBag from '../../../assets/images/bag.jpg';
-// import myMug from '../../../assets/images/mug.jpg';
-// import myShirt from '../../../assets/images/shirt.jpg';
 import Items from './Items/Items';
+import ItemFull from './ItemFull/ItemFull';
+import Cart from '../Cart/Cart';
 import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details';
 
@@ -17,11 +15,11 @@ class Purchase extends Component {
 
         return(
             <Auxiliary>
-                <div className="container">
+                <div className="heading">
                 <div className={['page-header', 'text-center', classes.spread].join(' ')}>
                         <a href='/shop' ><h1>Shop</h1></a>
                         <h1>
-                            <a href='/cart'>
+                            <a href='/shop/cart'>
                                 <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>
                             </a>
                             <a href='/authentication' >
@@ -31,29 +29,11 @@ class Purchase extends Component {
                     </div>
                 </div>   
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
-                    <div className={classes.spread}>
-                        <input className={myClasses.Search} type='text' placeholder="search the store" />
-                        
-                        <div className={myClasses.dropdown}>
-                            <button className={myClasses.dropbtn}>OrderBy: </button>
-                            <div className={myClasses.dropdownContent}>
-                                <a href="/price">Price</a>
-                                <a href="/date">Most recent</a>
-                                <a href="/popular">Most Popular</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={myClasses.filter}>
-                        <label><p>All</p></label>
-                        <label><p>Books</p></label>
-                        <label><p>Apparel</p></label>
-                        <label><p>Hats</p></label>
-                        <label><p>Misc</p></label>
-                    </div>
-
                     {this.props.children}
                 <Switch>
-                    <Route path="/shop" component={Items} />
+                    <Route path="/shop" exact component={Items} />
+                    <Route path="/shop/cart" exact component={Cart} />
+                    <Route path="/shop/itemfull/:id"   exact   component={ItemFull} />
                     <Route render={() => <h1>Not found</h1>}/>
                     {/* <Redirect from="/" to="/posts" /> */}
                     {/* <Route path="/" component={Posts} /> */}

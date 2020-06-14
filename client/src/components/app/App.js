@@ -44,8 +44,7 @@ class App extends Component {
         <Route path="/sovereinty"       component={Sovereinty} />
         <Route path="/faqs"             component={Faqs} />
         <Route path="/shop"             component={Shop} />
-        <Route path="/cart"             component={Cart} />        
-        <Route path="/itemfull/:id"         component={ItemFull} />        
+        <Route path="/cart"             component={Cart} />                
         <Route path="/profile"          component={Profile} />
         <Route path='/details/:id' exact component={Details} />
         {/* <Redirect to="/home" />  */}              
