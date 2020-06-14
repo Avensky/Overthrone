@@ -8,10 +8,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 5vw;
     box-sizing: border-box;
     z-index: 90;
     color: white;
+    white-space: nowrap;
 }
 
 .Navbar a {
@@ -53,8 +54,12 @@ a:hover {
     .DesktopOnly {
         display: inherit;
     }
-    .Navbar .MobileLinks {
+    .Navbar .MobileLinks, .Navbar .Logo {
         display: none;
+    }
+
+    .Navbar {
+        justify-content: center;
     }
 }
 
@@ -63,7 +68,15 @@ a:hover {
     .DesktopOnly {
         display: inherit;
     }
-    .Navbar .MobileLinks {
+    .Navbar .MobileLinks, .Navbar .Logo {
         display: none;
+    }
+    .Navbar {
+        justify-content: center;
+    }
+
+    a {
+        padding: 0;
+        
     }
 }

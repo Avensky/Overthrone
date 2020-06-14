@@ -1,5 +1,4 @@
 import React from 'react';
-
 import classes from './NavItems.module.css';
 import NavItem from './NavItem/NavItem';
 
@@ -8,13 +7,18 @@ const navItems = ( props ) => (
         <NavItem link="/books"          exact>Books</NavItem>
         <NavItem link="/authors"        exact>Authors</NavItem>
         <NavItem link="/characters"     exact>Characters</NavItem>
-        <NavItem link="/sovereinty"     exact>The Sovereinty</NavItem>
+        <NavItem link="/sovereinty"     exact>The Sovereignty</NavItem>
         <NavItem link="/faqs"           exact>FAQs</NavItem>
-        <NavItem link="/shop"           exact>Shop</NavItem>
-        {props.isAuthenticated ? <NavItem link="/profile">Profile</NavItem> : null}
+        <NavItem link="/shop"           exact>Purchase</NavItem>
+        {props.isAuthenticated 
+            ? <NavItem link="/profile"          >Profile</NavItem> : null}
         {!props.isAuthenticated
-            ? <NavItem link="/authentication">Authenticate</NavItem>
-            : <NavItem link="/logout">Logout</NavItem>}
+            ? <NavItem link="/authentication"   >Cotact <span style={{fontSize:'1.5rem'}}>&#8713;</span> Sign-Up</NavItem>
+            : <NavItem link="/logout"           >Logout</NavItem>}
+        <NavItem  link="/shop/cart">
+            <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>    
+        </NavItem >
+
     </ul>
 );
 

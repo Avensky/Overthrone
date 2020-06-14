@@ -39,7 +39,6 @@ class Items extends Component {
                     <Item
                         img     = {item.img}
                         id      = {item.id}
-                        key     ={item.id}
                         key     = {item.id}
                         alt     = {item.title}
                         title   = {item.title}

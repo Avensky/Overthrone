@@ -14,9 +14,6 @@ const navbar = ( props ) => (
                 <Logo />    
             </NavLink >
         </div>
-        <div className= {classes.DesktopOnly}>
-            <h1>Overthrone</h1>
-        </div>
         <div className={[classes.MobileLinks, classes.Mobile].join(' ')}>
             <h1>            
                 <NavLink  to="/shop/cart">
