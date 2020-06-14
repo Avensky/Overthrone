@@ -4,15 +4,25 @@ import classes from './Navbar.module.css';
 import Logo from '../../UI/Logo/Logo';
 import NavItems from '../NavItems/NavItems';
 import SidebarToggle from '../Sidebar/SidebarToggle/SidebarToggle';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const navbar = ( props ) => (
     <div className={classes.Navbar}>
-        <SidebarToggle clicked={props.sidebarToggleClicked} />
-        <div className={classes.Logo}>
-            <Link to="/">
-                <Logo height="100%"/>    
-            </Link>
+        <SidebarToggle clicked={props.sidebarToggleClicked} />    
+        <div className={classes.Mobile}>
+            <NavLink  to="/">
+                <Logo />    
+            </NavLink >
+        </div>
+        <div className={classes.Mobile}>
+            <h1>            
+                <NavLink  to="/shop/cart">
+                    <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>    
+                </NavLink >
+                <NavLink  to="/authentication">
+                    <span className={["fa", "fa-user", classes.left].join(' ')}/> 
+                </NavLink >
+            </h1>
         </div>
         <nav className={classes.DesktopOnly}>
             <NavItems isAuthenticated={props.isAuth} />

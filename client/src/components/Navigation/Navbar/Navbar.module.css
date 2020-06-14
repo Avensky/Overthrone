@@ -13,14 +13,35 @@
     z-index: 90;
 }
 
+.Navbar a {
+    height: 100%;
+}
+
 .Navbar nav {
     height: 100%;
 }
 
-.Logo {
-    height: 80%;
+
+.Navbar .Mobile {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0;
 }
 
+.Mobile a {
+    height: 80%;
+    padding: 0 0 0 2vw;
+}
+
+.Navbar h1 {
+    margin: 0;
+}
+
+
+a:hover {
+    color: white;
+}
 @media (max-width: 499px) {
     .DesktopOnly {
         display: none;
