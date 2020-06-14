@@ -33,6 +33,10 @@ class ItemFull extends Component {
         }
     }
 
+    handleClick = (id)=>{
+        this.props.addToCart(id); 
+    }
+
     render () {
         let details = <p style={{textAlign: 'center'}}>Please select an item!</p>;
         
