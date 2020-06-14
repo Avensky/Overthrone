@@ -11,6 +11,7 @@
     padding: 0 20px;
     box-sizing: border-box;
     z-index: 90;
+    color: white;
 }
 
 .Navbar a {
@@ -42,8 +43,27 @@
 a:hover {
     color: white;
 }
-@media (max-width: 499px) {
+
+.DesktopOnly {
+    display: none;
+}
+
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
     .DesktopOnly {
+        display: inherit;
+    }
+    .Navbar .MobileLinks {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    /* For desktop: */
+    .DesktopOnly {
+        display: inherit;
+    }
+    .Navbar .MobileLinks {
         display: none;
     }
 }

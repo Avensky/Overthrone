@@ -8,13 +8,16 @@ import { NavLink } from 'react-router-dom';
 
 const navbar = ( props ) => (
     <div className={classes.Navbar}>
-        <SidebarToggle clicked={props.sidebarToggleClicked} />    
-        <div className={classes.Mobile}>
+        <SidebarToggle clicked={props.sidebarToggleClicked} />   
+        <div className={[classes.Logo, classes.Mobile].join(' ')}>
             <NavLink  to="/">
                 <Logo />    
             </NavLink >
         </div>
-        <div className={classes.Mobile}>
+        <div className= {classes.DesktopOnly}>
+            <h1>Overthrone</h1>
+        </div>
+        <div className={[classes.MobileLinks, classes.Mobile].join(' ')}>
             <h1>            
                 <NavLink  to="/shop/cart">
                     <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>    
