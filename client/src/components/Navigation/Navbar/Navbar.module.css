@@ -54,6 +54,7 @@ a:hover {
     .DesktopOnly {
         display: inherit;
     }
+
     .Navbar .MobileLinks, .Navbar .Logo {
         display: none;
     }
@@ -68,9 +69,11 @@ a:hover {
     .DesktopOnly {
         display: inherit;
     }
+
     .Navbar .MobileLinks, .Navbar .Logo {
         display: none;
     }
+    
     .Navbar {
         justify-content: center;
     }
