@@ -71,9 +71,13 @@ class Items extends Component {
                     <label><p>Hats</p></label>
                     <label><p>Misc</p></label>
                 </div>
-                <div className={myClasses.Items}>
-                    {items}
+                <div className="container">
+                    <h3 className="center">Our items</h3>
+                    <div className={['box', /*myClasses.Items*/ ].join(' ')}>
+                        {items}
+                    </div>
                 </div>
+
             </Auxiliary>
         )
     }
