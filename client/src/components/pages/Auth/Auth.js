@@ -68,7 +68,6 @@ class Auth extends Component {
         this.setState( { controls: updatedControls } );
     }
     render () {
-        let btnClasses = ['btn', myClasses.AuthBtn ].join(' ')
         let form = (
             <form action="/auth/login" method="post">
                 <input 
@@ -87,7 +86,12 @@ class Auth extends Component {
                 />
             
             <p className="text-right">Forgot Password?</p>
-                    <button className={btnClasses}><span className="fa fa-user"></span> Sign In</button>
+            
+                <button className={[myClasses.Btn, myClasses.AuthBtn ].join(' ')}>
+                    <div className={myClasses.BtnDiv}>
+                        <span className="fa fa-user"></span> Sign In
+                    </div>
+                </button>
             </form>
         )    
 
@@ -116,7 +120,7 @@ class Auth extends Component {
                             placeholder="Confirm Password"
                             className={myClasses.AuthInput}
                         />
-                        <button className={btnClasses}><span className="fa fa-user">       </span> Sign Up</button>
+                        <button className={[myClasses.Btn, myClasses.AuthBtn ].join(' ')}><span className={[myClasses.BtnDiv,"fa fa-user"].join(' ')}></span> Sign Up</button>
                     </form>
                 </Auxiliary>
             )
@@ -140,20 +144,26 @@ class Auth extends Component {
                             <button 
                                 onClick={this.loginToggleHandler}
                                 className={selected}
-                            ><h2><span className="fa fa-sign-in" /> Login</h2>
+                            ><h5><span className="fa fa-sign-in" /> Login</h5>
                             </button>
 
                             <button 
                                 onClick={this.registerToggleHandler}
                                 className={unselected}
-                            ><h2><span className="fa fa-user-plus" /> Signup</h2>
+                            ><h5><span className="fa fa-user-plus" /> Signup</h5>
                             </button>   
                     </div>            
                     {form}
                     <div className={classes.CardTitle}>Or continue with:</div>
-                    <a href="/auth/facebook"    className="btn btn-primary"><span className="fa fa-facebook">   </span> Facebook</a>
-                    <a href="/auth/twitter"     className="btn btn-info"   ><span className="fa fa-twitter">    </span> Twitter</a>
-                    <a href="/auth/google"      className="btn btn-danger" ><span className="fa fa-google-plus"></span> Google+</a>
+                    <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
+                        <a href="/auth/facebook"><span className="fa fa-facebook" /> Facebook</a>
+                    </button>
+                    <button className={[myClasses.Btn, "btn-info"].join(' ')}>
+                        <a href="/auth/twitter"><span className="fa fa-twitter" /> Twitter</a>
+                    </button>
+                    <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
+                        <a href="/auth/google"><span className="fa fa-google-plus" /> Google+</a>
+                    </button>
                 </div>
             </Auxiliary>
         )

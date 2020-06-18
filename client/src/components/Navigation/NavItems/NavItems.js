@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './NavItems.module.css';
+import classes from './NavItems.module.css'
 import NavItem from './NavItem/NavItem';
 
 const navItems = ( props ) => (
@@ -13,10 +13,10 @@ const navItems = ( props ) => (
         {props.isAuthenticated 
             ? <NavItem link="/profile"          >Profile</NavItem> : null}
         {!props.isAuthenticated
-            ? <NavItem link="/authentication"   >Cotact <span style={{fontSize:'1.5rem'}}>&#8713;</span> Sign-Up</NavItem>
+            ? <NavItem link="/authentication"   >Cotact <span style={{fontSize:'1.2rem'}}>&#8713;</span> Sign-Up</NavItem>
             : <NavItem link="/logout"           >Logout</NavItem>}
         <NavItem  link="/shop/cart">
-            <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>    
+            <span className={["fa", classes.fa, "fa-shopping-cart", classes.left].join(' ')}/>    
         </NavItem >
 
     </ul>

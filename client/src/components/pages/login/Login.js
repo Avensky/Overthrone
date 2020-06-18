@@ -66,7 +66,7 @@ class Login extends Component {
             <Auxiliary>
                 <div className={classes.Container}>
                     <div className="col-sm-6 col-sm-offset-3">
-                        <h1><span className="fa fa-sign-in"></span> Login</h1>
+                        <h4><span className="fa fa-sign-in"></span> Login</h4>
                             {form}
                             <hr />
                         <p>Need an account? <a href="/signup">Signup</a></p>

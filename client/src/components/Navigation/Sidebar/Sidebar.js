@@ -24,9 +24,9 @@ const sidebar = ( props ) => {
                         <Logo />
                     </div>
                 </Link>
-                <nav>
+                <div>
                     <NavItems isAuthenticated={props.isAuth} />
-                </nav>
+                </div>
             </div>
         </Auxiliary>
     );

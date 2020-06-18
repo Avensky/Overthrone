@@ -11,7 +11,7 @@ class Authors extends Component {
             <Auxiliary>
                 <div className="container">
                     <div className="page-header text-center">
-                        <h1><span className="fa fa-anchor"></span> Authors Page</h1>
+                        <h3>Authors</h3>
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Authors].join(' ')}>

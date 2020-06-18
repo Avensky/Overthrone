@@ -13,7 +13,7 @@ class Characters extends Component {
             <Auxiliary>
                 <div className="container">
                     <div className="page-header text-center">
-                        <h1><span className="fa fa-anchor"></span> Character's Page</h1>
+                        <h3>Characters</h3>
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Characters].join(' ')}>

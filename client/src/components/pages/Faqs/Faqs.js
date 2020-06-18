@@ -24,7 +24,7 @@ class Faqs extends Component {
             <Auxiliary>
                 <div className="container">
                     <div className="page-header text-center">
-                        <h1><span className="fa fa-anchor"></span> Frequently Asked Questions</h1>
+                        <h3>Frequently Asked Questions</h3>
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Faqs].join(' ')}>

@@ -12,7 +12,7 @@ class Books extends Component {
             <Auxiliary>
                 <div className="container">
                     <div className="page-header text-center">
-                        <h1><span className="fa fa-anchor"></span> Book's Page</h1>
+                        <h3>Books</h3>
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Books].join(' ')}>

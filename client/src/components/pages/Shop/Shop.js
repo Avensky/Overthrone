@@ -17,7 +17,7 @@ class Purchase extends Component {
             <Auxiliary>
                 <div className="container">
                     <div className={['page-header', 'text-center', classes.spread].join(' ')}>
-                        <a href='/shop' ><h1>Shop</h1></a>
+                        <a href='/shop' ><h3>Shop</h3></a>
                     </div>
                 </div>   
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
