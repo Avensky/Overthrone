@@ -15,14 +15,14 @@ const navbar = ( props ) => (
             </NavLink >
         </div>
         <div className={[classes.MobileLinks, classes.Mobile].join(' ')}>
-            <h4>            
+            <h2>            
                 <NavLink  to="/shop/cart">
                     <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/>    
                 </NavLink >
                 <NavLink  to="/authentication">
                     <span className={["fa", classes.fa, "fa-user", classes.left].join(' ')}/> 
                 </NavLink >
-            </h4>
+            </h2>
         </div>
         <div className={classes.DesktopOnly}>
             <NavItems isAuthenticated={props.isAuth} />

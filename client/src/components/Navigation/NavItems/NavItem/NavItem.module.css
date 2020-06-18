@@ -2,7 +2,7 @@
     margin: 0;
     width: 100%;
     height: 6vh;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     display: block;
     box-sizing: border-box;
 }
@@ -33,7 +33,7 @@
     .NavItem a {
         color: white;
         height: 100%;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         padding: 1.6vh 1vw;
         border-bottom: 4px solid transparent;
         align-items: center;

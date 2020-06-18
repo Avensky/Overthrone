@@ -1,12 +1,18 @@
 /* For mobile phones: */
 .Layout {
-    padding: 6vh 0;
+    padding: 3vh 0;
 }
 
 @media only screen and (min-width: 600px) {
     /* For tablets: */
+    .Layout {
+        padding: 6vh 0;
+    }
 }
 
 @media only screen and (min-width: 768px) {
     /* For desktop: */
+    .Layout {
+        padding: 6vh 0;
+    }
 }

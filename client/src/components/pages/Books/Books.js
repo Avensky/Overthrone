@@ -10,11 +10,6 @@ class Books extends Component {
     render () {
         return(
             <Auxiliary>
-                <div className="container">
-                    <div className="page-header text-center">
-                        <h3>Books</h3>
-                    </div>
-                </div>
                 <div className={[classes.Card, myClasses.Books].join(' ')}>
                     <Book 
                         title="Overthrown"
