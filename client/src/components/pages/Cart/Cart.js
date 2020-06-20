@@ -57,23 +57,22 @@ class Cart extends Component{
                                 </div>
  
                                 {/* Price */}
-                                <div className={myClasses.CardPrice}><b>${item.price}</b></div>
+                                <div className={myClasses.CardPrice}><b>X ${item.price}</b></div>
                             </div>
                         </div>
                     )
                 })
             ):
 
-             (
+             (  
                 <p>Nothing.</p>
              )
         return(
             <div className={myClasses.Cart}>
                 {/* Title */}
                 <div className={myClasses.Title}>
-                    <h3>My Cart:</h3>
+                    <h3>My Shopping Cart:</h3>
                 </div>
-                <h4>You have ordered:</h4>
                 <div className={myClasses.Collection}>
                     {addedItems}
                     <Recipe />  

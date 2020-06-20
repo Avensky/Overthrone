@@ -1,22 +1,16 @@
 .Item {
-    margin: 2vh 2vw;
-    text-align: center;
+    margin: 0 0 2vh;
     align-items: center;
-}
-
-.Item.ShopItem {
-    width: 50%;
-}
-
-.Item {
     width: 100%;
     display: grid;
-    grid-template-columns: 1rem;
-    grid-template-areas: 
-        'thumbnail description';            
-    ;
+    gap: 2vw;
 
+    grid-template-columns: 1fr 150px 1fr 1fr;
+    grid-template-areas: 
+        "img desc quant price";  
 }
+   
+
 
 .Item .CardImage .CardTitle{
     color: black;
@@ -29,15 +23,71 @@
 }
 
 .ItemDesc{
-    align-self:center;
+  
+
+    
 }
 
-.card{
-    width: 300px;
-}
+
 .CardTitle{
     font-weight: 400
 }
+
+ul {
+    list-style: none;
+    list-style-type: none;
+}
+
+img {
+    max-height: 70px;
+}
+
+
+
+
+
+
+
+
+.Cart {
+    margin: 0 auto;
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+    border-radius: 6px;
+}
+
+
+.Remove {
+    grid-area: del;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.CardThumbnail {
+    grid-area: img;
+    display: flex;
+    align-items: center;
+}
+
+.CardDescription {
+    grid-area: desc;
+}
+
+.CardQuantity {
+    grid-area: quant;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.CardPrice {
+    grid-area: price;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+
 
 
 @media only screen and (min-width: 600px) {

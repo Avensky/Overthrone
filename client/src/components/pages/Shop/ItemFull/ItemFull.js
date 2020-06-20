@@ -52,6 +52,7 @@ class ItemFull extends Component {
                 key     = {this.state.loadedItem.id}
                 alt     = {this.state.loadedItem.title}
                 title   = {this.state.loadedItem.title}
+                link    = {"/shop/itemfull/" + this.state.loadedItem.id}
                 to      = "/"
                 clicked = {() => this.handleClick(this.state.loadedItem.id)}
                 desc    = {this.state.loadedItem.desc}

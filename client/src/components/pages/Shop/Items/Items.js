@@ -42,6 +42,7 @@ class Items extends Component {
                         key     = {item.id}
                         alt     = {item.title}
                         title   = {item.title}
+                        link    = {"/shop/"}
                         to      = "/"
                         clicked = {() => this.handleClick(item.id)}
                         desc    = {item.desc}
