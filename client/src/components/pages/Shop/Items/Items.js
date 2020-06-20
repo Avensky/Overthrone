@@ -73,7 +73,7 @@ class Items extends Component {
                 </div>
                 <div className="container">
                     <h3 className="center">Our items</h3>
-                    <div className={['box', /*myClasses.Items*/ ].join(' ')}>
+                    <div className={['box', myClasses.Items ].join(' ')}>
                         {items}
                     </div>
                 </div>

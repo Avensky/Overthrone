@@ -8,8 +8,14 @@
     width: 50%;
 }
 
-.Item.DetailsItem {
+.Item {
     width: 100%;
+    display: grid;
+    grid-template-columns: 1rem;
+    grid-template-areas: 
+        'thumbnail description';            
+    ;
+
 }
 
 .Item .CardImage .CardTitle{

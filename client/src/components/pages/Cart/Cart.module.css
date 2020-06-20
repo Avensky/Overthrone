@@ -4,5 +4,117 @@ ul {
 }
 
 img {
-    height: 150px;
+    max-height: 70px;
 }
+
+
+
+
+
+
+
+
+.Cart {
+    margin: 0 auto;
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+    border-radius: 6px;
+}
+
+
+.Item {
+    padding: 1vh 0;
+    display: grid;
+    gap: 2vw;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "del img desc quant price";
+}
+   
+  .Item:nth-child(3) {
+    border-top:  1px solid #E1E8EE;
+    border-bottom:  1px solid #E1E8EE;
+  }
+
+
+
+.Remove {
+    grid-area: del;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.CardThumbnail {
+    grid-area: img;
+    display: flex;
+    align-items: center;
+}
+
+.CardDescription {
+    grid-area: desc;
+
+
+}
+
+.CardQuantity {
+    grid-area: quant;
+    display: flex;
+    align-items: center;
+}
+
+.CardPrice {
+    grid-area: price;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+
+
+.Title {
+    border-bottom: 1px solid #E1E8EE;
+    padding: 0;
+  }
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+.buttons {
+    position: relative;
+    padding-top: 30px;
+    margin-right: 60px;
+  }
+  .deleteBtn,
+  .likeBtn {
+    display: inline-block;
+    Cursor: pointer;
+  }
+  .deleteBtn {
+    width: 18px;
+    height: 17px;
+    background: url(&quot;delete-icn.svg&quot;) no-repeat center;
+  }
+   
+  .likeBtn {
+    position: absolute;
+    top: 9px;
+    left: 15px;
+
+    width: 60px;
+    height: 60px;
+    background-size: 2900%;
+    background-repeat: no-repeat;
+  }

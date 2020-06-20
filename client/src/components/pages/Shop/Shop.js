@@ -15,21 +15,22 @@ class Purchase extends Component {
 
         return(
             <Auxiliary>
-                <div className="container">
-                    <div className={['page-header', 'text-center', classes.spread].join(' ')}>
-                        <a href='/shop' ><h3>Shop</h3></a>
+                <div className={classes.Heading}>
+                    <div className={['page-header', 'text-center'].join(' ')}>
+                        <a href='/shop' ><h2>Shop</h2></a>
                     </div>
-                </div>   
+                </div>
+
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
                     {this.props.children}
-                <Switch>
-                    <Route path="/shop" exact component={Items} />
-                    <Route path="/shop/cart" exact component={Cart} />
-                    <Route path="/shop/itemfull/:id"   exact   component={ItemFull} />
-                    <Route render={() => <h1>Not found</h1>}/>
-                    {/* <Redirect from="/" to="/posts" /> */}
-                    {/* <Route path="/" component={Posts} /> */}
-                </Switch>
+                    <Switch>
+                        <Route path="/shop" exact component={Items} />
+                        <Route path="/shop/cart" exact component={Cart} />
+                        <Route path="/shop/itemfull/:id"   exact   component={ItemFull} />
+                        <Route render={() => <h1>Not found</h1>}/>
+                        {/* <Redirect from="/" to="/posts" /> */}
+                        {/* <Route path="/" component={Posts} /> */}
+                    </Switch>
                 </div>
             </Auxiliary>
         )

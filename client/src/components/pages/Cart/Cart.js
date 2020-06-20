@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
 import Recipe from './Recipe/Recipe'
-// import classes from '../Pages.module.css'
+import classes from '../Pages.module.css'
 import myClasses from './Cart.module.css'
+import Item from '../Shop/Items/Item/Item'
+import Auxiliary from '../../../hoc/Auxiliary'
+
 class Cart extends Component{
 
     //to remove the item completely
@@ -25,28 +28,38 @@ class Cart extends Component{
             (  
                 this.props.items.map(item=>{
                     return(
-                       
-                        <li className={["collection-item avatar", myClasses.Cart].join(' ')} key={item.id}>
-                                    <div className="item-img"> 
-                                        <img src={item.img} alt={item.img} className=""/>
-                                    </div>
+                         <div className={myClasses.Cart} key={item.id}>
+                            {/* Product */}
+                            <div className={myClasses.Item}>
+                                {/* Remove */}
+                                <div className={myClasses.Remove}>
+                                    <i className="material-icons" onClick={()=>{this.handleRemove(item.id)}}>clear</i>
+                                </div>
+
+                                {/* Image */}
+                                <div className={myClasses.CardThumbnail}>
+                                    <img src={item.img} alt={item.alt} />
+                                </div>
                                 
-                                    <div className="item-desc">
-                                        <span className="title">{item.title}</span>
-                                        <p>{item.desc}</p>
-                                        <p><b>Price: {item.price}$</b></p> 
-                                        <p>
-                                            <b>Quantity: {item.quantity}</b> 
-                                        </p>
-                                        <div className="add-remove">
-                                            <Link to="/cart"><i className="material-icons" onClick={()=>{this.handleAddQuantity(item.id)}}>arrow_drop_up</i></Link>
-                                            <Link to="/cart"><i className="material-icons" onClick={()=>{this.handleSubtractQuantity(item.id)}}>arrow_drop_down</i></Link>
-                                        </div>
-                                        <button className="waves-effect waves-light btn pink remove" onClick={()=>{this.handleRemove(item.id)}}>Remove</button>
-                                    </div>
-                                    
-                                </li>
-                         
+                                {/* Description */}
+                                <div className={myClasses.CardDescription}>
+                                    <b>
+                                    <span className="title">{item.title}</span>
+                                    </b>
+                                    <p>{item.desc}</p>
+                                </div>
+
+                                 {/* Quantity */}
+                                <div className={myClasses.CardQuantity}>
+                                    <Link to="/shop/cart"><i className="material-icons" onClick={()=>{this.handleSubtractQuantity(item.id)}}>arrow_drop_down</i></Link>
+                                    <p><b>{item.quantity}</b></p>
+                                    <Link to="/shop/cart"><i className="material-icons" onClick={()=>{this.handleAddQuantity(item.id)}}>arrow_drop_up</i></Link>                                    
+                                </div>
+ 
+                                {/* Price */}
+                                <div className={myClasses.CardPrice}><b>${item.price}</b></div>
+                            </div>
+                        </div>
                     )
                 })
             ):
@@ -54,15 +67,17 @@ class Cart extends Component{
              (
                 <p>Nothing.</p>
              )
-       return(
-            <div className="container">
-                <div className="cart">
-                    <h5>You have ordered:</h5>
-                    <ul className="collection">
-                        {addedItems}
-                    </ul>
-                </div> 
-                <Recipe />          
+        return(
+            <div className={myClasses.Cart}>
+                {/* Title */}
+                <div className={myClasses.Title}>
+                    <h3>My Cart:</h3>
+                </div>
+                <h4>You have ordered:</h4>
+                <div className={myClasses.Collection}>
+                    {addedItems}
+                    <Recipe />  
+                </div>
             </div>
        )
     }
