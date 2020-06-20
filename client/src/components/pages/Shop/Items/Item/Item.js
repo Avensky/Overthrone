@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import classes from '../../../Pages.module.css';
+// import classes from '../../../Pages.module.css';
 import myClasses from './Item.module.css';
 //{classes.CardThumbnail}
 const item = props => (
     <div 
         key={props.id}
-        className={["card", myClasses.Item, props.class].join(' ')} 
-        key={props.id}
+        className={["card", myClasses.Item, props.class].join(' ')}
     >
 
         

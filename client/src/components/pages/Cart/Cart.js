@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
 import Recipe from './Recipe/Recipe'
-import classes from '../Pages.module.css'
+//import classes from '../Pages.module.css'
 import myClasses from './Cart.module.css'
-import Item from '../Shop/Items/Item/Item'
-import Auxiliary from '../../../hoc/Auxiliary'
+//import Item from '../Shop/Items/Item/Item'
+//import Auxiliary from '../../../hoc/Auxiliary'
 
 class Cart extends Component{
 
