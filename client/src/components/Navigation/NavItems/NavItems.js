@@ -16,7 +16,7 @@ const navItems = ( props ) => (
             ? <NavItem link="/authentication"   >Cotact <span>&#8713;</span> Sign-Up</NavItem>
             : <NavItem link="/logout"           >Logout</NavItem>}
         <NavItem  link="/shop/cart">
-            <span className={["fa", classes.fa, "fa-shopping-cart", classes.left].join(' ')}/>    
+            <span className={["fa", classes.fa, "fa-shopping-cart", classes.left].join(' ')}/>
         </NavItem >
 
     </ul>

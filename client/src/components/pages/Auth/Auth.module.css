@@ -1,5 +1,4 @@
 .Auth {       
-    margin-top: 5vh;
     text-align: center;
     align-items: center;
     color: rgb(255, 255, 255);
@@ -76,14 +75,13 @@ input::placeholder{
   @media only screen and (min-width: 600px) {
     /* For tablets: */
     .Auth {
-        margin: 10vh 25vw 0;
+        margin: 0 20vw 0;
     }
 }
 
 @media only screen and (min-width: 1025px) {
     /* For desktop: */
     .Auth {
-        margin: 10vh 35vw 0;
-        padding: 7vh 5vw;
+        margin: 0 30vw 0;
     }
 }

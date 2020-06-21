@@ -15,7 +15,7 @@ class Purchase extends Component {
 
         return(
             <Auxiliary>
-                <div className={classes.Heading}>
+                <div className='container'>
                     <div className={['page-header', 'text-center'].join(' ')}>
                         <a href='/shop' ><h2>Shop</h2></a>
                     </div>

@@ -1,16 +1,14 @@
 .Item {
-    margin: 0 0 2vh;
+    margin: 0 0 4vh;
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+    border-radius: 6px;
     align-items: center;
-    width: 100%;
     display: grid;
     gap: 2vw;
-
     grid-template-columns: 1fr 150px 1fr 1fr;
     grid-template-areas: 
         "img desc quant price";  
 }
-   
-
 
 .Item .CardImage .CardTitle{
     color: black;
@@ -20,12 +18,6 @@
 .MaterialIcons {
 /*    font-size: 2.4em; */
     cursor: pointer;
-}
-
-.ItemDesc{
-  
-
-    
 }
 
 
@@ -51,8 +43,6 @@ img {
 
 .Cart {
     margin: 0 auto;
-    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
-    border-radius: 6px;
 }
 
 
@@ -85,6 +75,7 @@ img {
     display: flex;
     align-items: center;
     margin: auto;
+    white-space: nowrap;
 }
 
 
@@ -92,10 +83,27 @@ img {
 
 @media only screen and (min-width: 600px) {
     /* For tablets: */
+    .Item {
+        grid-template-columns: 1fr 250px 1fr 1fr;
+    }
+       
+    img {
+        max-height: 100px;
+    }
+    
+    
 
 }
 
 @media only screen and (min-width: 1025px) {
     /* For desktop: */
+    .Item {
+        grid-template-columns: 1fr 350px 1fr 1fr;
+    }
+       
+    img {
+        max-height: 130px;
+    }
+    
 
 }

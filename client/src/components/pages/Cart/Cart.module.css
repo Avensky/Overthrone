@@ -1,19 +1,3 @@
-ul {
-    list-style: none;
-    list-style-type: none;
-}
-
-img {
-    max-height: 70px;
-}
-
-
-
-
-
-
-
-
 .Cart {
     margin: 0 auto;
     box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
@@ -25,7 +9,7 @@ img {
     padding: 1vh 0;
     display: grid;
     gap: 2vw;
-    grid-template-columns: 1fr;
+    grid-template-columns: 25px 1fr 100px 1fr 1fr;
     grid-template-areas: 
     "del img desc quant price";
 }
@@ -66,11 +50,8 @@ img {
     grid-area: price;
     display: flex;
     align-items: center;
+    white-space: nowrap;
 }
-
-
-
-
 
 
 
@@ -79,15 +60,6 @@ img {
     padding: 0;
   }
    
-
-
-
-
-
-
-
-
-
 
 
 
@@ -118,3 +90,17 @@ img {
     background-size: 2900%;
     background-repeat: no-repeat;
   }
+
+  @media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .Item {
+        grid-template-columns: 25px 1fr 200px 1fr 1fr;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    /* For desktop: */
+    .Item {
+        grid-template-columns: 25px 1fr 250px 1fr 1fr;
+    }
+}

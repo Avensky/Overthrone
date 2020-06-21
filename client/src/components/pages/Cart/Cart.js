@@ -57,7 +57,7 @@ class Cart extends Component{
                                 </div>
  
                                 {/* Price */}
-                                <div className={myClasses.CardPrice}><b>X ${item.price}</b></div>
+                                <div className={myClasses.CardPrice}><b> ${item.price}</b></div>
                             </div>
                         </div>
                     )

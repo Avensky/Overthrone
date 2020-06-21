@@ -23,7 +23,7 @@ const item = props => (
             <p>{props.desc}</p>
         </div>
 
-            {/* Quantity */}
+        {/* Quantity */}
         <div className={myClasses.CardQuantity}>
             <Link to={props.link}><i className="material-icons" onClick={props.clicked}>add</i></Link>
         </div>
