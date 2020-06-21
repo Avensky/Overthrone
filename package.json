@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Code for the entire scotch.io tutorial series: Complete Guide to Node Authentication",
   "main": "server.js",
   "engines": {
     "node": "13.0.1",
@@ -35,5 +35,14 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Avensky/Overthrone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Avensky/Overthrone/issues"
+  },
+  "homepage": "https://github.com/Avensky/Overthrone#readme"
 }

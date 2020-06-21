@@ -45,6 +45,21 @@ a:hover {
     color: white;
 }
 
+a:active {
+    color: white;
+    text-decoration: none;
+
+}
+
+a:link {
+    text-decoration: white;
+}
+  
+a:visited {
+    text-decoration: white;
+}
+
+
 .DesktopOnly {
     display: none;
 }
