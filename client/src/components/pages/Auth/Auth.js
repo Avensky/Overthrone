@@ -85,7 +85,7 @@ class Auth extends Component {
                     className={myClasses.AuthInput}
                 />
             
-            <p className="text-right">Forgot Password?</p>
+            <p className="text-left">Forgot Password?</p>
             
                 <button className={[myClasses.Btn, myClasses.AuthBtn ].join(' ')}>
                     <div className={myClasses.BtnDiv}>
@@ -146,17 +146,17 @@ class Auth extends Component {
                 </div>
                 <div className={[classes.Card, myClasses.Auth].join(' ')}>
                     <div className={myClasses.AuthNav}>
-                            <button 
-                                onClick={this.loginToggleHandler}
-                                className={selected}
-                            ><h2><span className="fa fa-sign-in" /> Login</h2>
-                            </button>
+                        <button 
+                            onClick={this.loginToggleHandler}
+                            className={selected}
+                        ><h2><span className="fa fa-sign-in" /> Login</h2>
+                        </button>
 
-                            <button 
-                                onClick={this.registerToggleHandler}
-                                className={unselected}
-                            ><h2><span className="fa fa-user-plus" /> Signup</h2>
-                            </button>   
+                        <button 
+                            onClick={this.registerToggleHandler}
+                            className={unselected}
+                        ><h2><span className="fa fa-user-plus" /> Signup</h2>
+                        </button>   
                     </div>            
                     {form}
                     <div className={classes.CardTitle}>Or continue with:</div>
