@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
-import './Home.module.css';
+import './Home.module.scss';
+import classes from './Home.module.css';
 
 class Sovereinty extends Component {
+    componentDidMount() {
+        
+    }
     render () {
         let body = (
-            <div className="container">
+            <div className={["container", classes.container].join(' ')}>
                 <div className="page-header text-center">
                     <h2>Sovereinty</h2>
                 </div>
@@ -14,18 +18,8 @@ class Sovereinty extends Component {
         )
 
         return(
-            <Auxiliary>
+            <Auxiliary className='Home'>
                 {body}
-                <header>
-                    <h1>CSS-Only Parallax Effect</h1>
-                </header>
-                <section class="section1">
-                    <h1>Section w/o parallax effect</h1>
-                </section>
-                <section class="section2">
-                    <h1>Section w/ parallax effect</h1>
-                </section>
-                <div class="author"><a href="https://twitter.com/yagoestevez" target="_blank" rel="noopener noreferrer" title="Link to author's Twitter Profile">Yago Estévez</a></div>
             </Auxiliary>
         )
     }
