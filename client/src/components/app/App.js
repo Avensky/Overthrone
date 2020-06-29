@@ -20,6 +20,7 @@ import Shop           from '../pages/Shop/Shop';
 import Details        from '../pages/Shop/Details/Details';
 // import Items          from '../pages/Shop/Items/Items';
 import Cart           from '../pages/Cart/Cart';
+import Home           from '../pages/Home/Home';
 
 class App extends Component {
   state = {
@@ -44,6 +45,8 @@ class App extends Component {
         <Route path="/sovereinty"       component={Sovereinty} />
         <Route path="/faqs"             component={Faqs} />
         <Route path="/shop"             component={Shop} />
+        <Route path="/home"             component={Home} /> 
+        <Route path="/"                 component={Home}  />               
         <Route path="/cart"             component={Cart} />                
         <Route path="/profile"          component={Profile} />
         <Route path='/details/:id' exact component={Details} />

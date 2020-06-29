@@ -15,10 +15,7 @@ const sidebar = ( props ) => {
     return (
         <Auxiliary>
             <Backdrop show={props.open} clicked={props.closed}/>
-            <div
-                className={attachedClasses.join(' ')} 
-                onClick={props.closed}
-            >   
+            <div className={attachedClasses.join(' ')} onClick={props.closed}>   
                 <Link to="/">
                     <div className={classes.Logo}>
                         <Logo />
