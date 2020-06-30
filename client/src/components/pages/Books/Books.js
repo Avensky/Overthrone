@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import Book from './Book/Book';
-import classes from '../Pages.module.css';
-import myClasses from './Books.module.css';
+import classes from '../Pages.module.scss';
+import myClasses from './Books.module.scss';
 
 
 class Books extends Component {

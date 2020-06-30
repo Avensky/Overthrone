@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './NavItems.module.css'
+import classes from './NavItems.module.scss'
 import NavItem from './NavItem/NavItem';
 
 const navItems = ( props ) => (

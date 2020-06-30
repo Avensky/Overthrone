@@ -1,6 +1,6 @@
 import React from 'react';
-import classes from '../../Pages.module.css';
-import myClasses from './Faq.module.css';
+import classes from '../../Pages.module.scss';
+import myClasses from './Faq.module.scss';
 import Auxiliary from '../../../../hoc/Auxiliary';
 
 let assignedClasses = [myClasses.Faq].join(' ')

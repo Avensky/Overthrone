@@ -1,20 +1,12 @@
-.container {
-  padding: 0vh 0;
-  margin: 0;
-}
 
-html {
-  font-size: 0.5vw; 
-}
 
 body {
   position: relative;
   background-color: #F2EEDD;
-  background-image: linear-gradient(to bottom, #7DE2FC 0%, #ffecd2 100%);
+  background-image: linear-gradient(to bottom, #ecd500 0%, #d2f2ff 100%);
   height: 400rem;
   min-height: 300vh;
-  display: flex;
-  align-items: center;
+  display: flex; 
   justify-content: center;
 }
 

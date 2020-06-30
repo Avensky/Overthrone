@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import Character from './Character/Character';
-import myClasses from './Characters.module.css';
-import classes from '../Pages.module.css';
+import myClasses from './Characters.module.scss';
+import classes from '../Pages.module.scss';
 
 
 

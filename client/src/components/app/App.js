@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import { Route, Switch, withRouter} from 'react-router-dom';
 import * as actions   from '../../store/actions/index';
 import { connect }    from 'react-redux';

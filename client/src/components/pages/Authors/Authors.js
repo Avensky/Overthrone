@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import Author from '../Authors/Author/Author';
-import classes from '../Pages.module.css';
-import myClasses from './Authors.module.css';
+import classes from '../Pages.module.scss';
+import myClasses from './Authors.module.scss';
 
 class Authors extends Component {
     render () {

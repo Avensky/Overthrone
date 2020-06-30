@@ -1,7 +1,7 @@
 import React from 'react';
 
 import myLogo from '../../../assets/images/crystal.png';
-import classes from './Logo.module.css';
+import classes from './Logo.module.scss';
 
 const logo = (props) => (
     <div className={classes.Logo} style={{height: props.height}}>

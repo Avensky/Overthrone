@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 // import axios from 'axios';
 import { connect } from 'react-redux';
 import Item from '../Items/Item/Item';
-import myClasses from './Details.module.css';
-// import classes from '../../Pages.module.css';
+import myClasses from './Details.module.scss';
+// import classes from '../../Pages.module.scss';
 // import * as actions from '../../../../store/actions/index';
 
 class Details extends Component {

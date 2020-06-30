@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
-import classes from './Login.module.css';
+import classes from './Login.module.scss';
 
 
 class Login extends Component {

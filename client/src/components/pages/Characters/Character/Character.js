@@ -1,6 +1,6 @@
 import React from 'react'
-import classes from '../../Pages.module.css'
-import myClasses from './Character.module.css'
+import classes from '../../Pages.module.scss'
+import myClasses from './Character.module.scss'
 import myImg from '../../../../assets/images/character.jpg';
 
 const character = props => (

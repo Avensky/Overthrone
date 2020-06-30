@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 //import { Route, Switch } from 'react-router-dom';
 import Auxiliary from '../../../../hoc/Auxiliary';
-//import classes from '../../Pages.module.css';
-import myClasses from './ItemFull.module.css';
+//import classes from '../../Pages.module.scss';
+import myClasses from './ItemFull.module.scss';
 import * as actions from '../../../../store/actions/index';
 //import Details from '../Details/Details';
 import Item from '../Items/Item/Item'

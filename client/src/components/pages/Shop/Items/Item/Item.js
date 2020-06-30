@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import classes from '../../../Pages.module.css';
-import myClasses from './Item.module.css';
+// import classes from '../../../Pages.module.scss';
+import myClasses from './Item.module.scss';
 //{classes.CardThumbnail}
 const item = props => (
     <div 

@@ -1,6 +1,6 @@
 import React from 'react'
-import classes from '../../Pages.module.css'
-import myClasses from './Author.module.css'
+import classes from '../../Pages.module.scss'
+import myClasses from './Author.module.scss'
 import myImg from '../../../../assets/images/author.jpg';
 
 

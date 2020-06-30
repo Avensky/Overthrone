@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from '../../Pages.module.css'
+import classes from '../../Pages.module.scss'
 
 const Pages = props => (
     <div className="container">

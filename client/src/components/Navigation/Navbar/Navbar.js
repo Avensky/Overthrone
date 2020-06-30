@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import classes from './Navbar.module.css';
+import classes from './Navbar.module.scss';
 import Logo from '../../UI/Logo/Logo';
 import NavItems from '../NavItems/NavItems';
 import SidebarToggle from '../Sidebar/SidebarToggle/SidebarToggle';

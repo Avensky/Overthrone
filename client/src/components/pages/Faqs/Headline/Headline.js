@@ -1,5 +1,5 @@
 import React from 'react';
-import myClasses from './Headline.module.css';
+import myClasses from './Headline.module.scss';
 
 const headline = props => (
     <div className={myClasses.Headline}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Background.module.css';
+import classes from './Background.module.scss';
 // import myVid from '../../../assets/videos/myVid.mp4';
 import myImg from '../../../assets/images/background2.jpg';
 

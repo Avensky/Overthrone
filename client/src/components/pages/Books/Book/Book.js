@@ -1,6 +1,6 @@
 import React from 'react'
-import classes from '../../Pages.module.css'
-import myClasses from './Book.module.css'
+import classes from '../../Pages.module.scss'
+import myClasses from './Book.module.scss'
 import myImg from '../../../../assets/images/book2.jpg';
 //import Auxiliary from '../../../../hoc/Auxiliary';
 

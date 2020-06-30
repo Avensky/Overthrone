@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
-import classes from '../Pages.module.css';
-import myClasses from './Faqs.module.css';
+import classes from '../Pages.module.scss';
+import myClasses from './Faqs.module.scss';
 import Faq from './Faq/Faq';
 import Headline from './Headline/Headline'
 
