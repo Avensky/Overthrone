@@ -85,13 +85,9 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading,
-        error: state.auth.error,
-        isLoggedIn: state.auth.user,
-        payload: state.auth.payload,
-        loginRedirectPath: state.auth.loginRedirectPath
-    };
-};
+
+    }
+}
 
 const mapDispatchToProps = dispatch => {
     return {

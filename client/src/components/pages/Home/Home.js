@@ -14,7 +14,7 @@ class Sovereinty extends Component {
                 <div className="page-header text-center">
                     <h2>Home</h2>
                 </div>
-                <section class="paragraph">
+                <section className="paragraph">
              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas omnis accusamus unde deserunt. Sapiente laboriosam sequi cupiditate sint debitis veritatis exercitationem dignissimos est enim molestias accusamus, suscipit nostrum asperiores minus!
              Eligendi ab fugiat dignissimos ipsam minima necessitatibus provident repellendus neque odit numquam aliquam expedita suscipit doloribus nesciunt facilis, molestiae quibusdam! Odit excepturi ab iure, aspernatur nemo aut repudiandae? Doloribus, earum?
              Eius blanditiis maxime impedit harum quasi pariatur atque beatae omnis expedita dolorum, vero explicabo numquam mollitia libero ut ratione, sit, amet assumenda voluptatem deserunt magnam rem facilis. Dolor, porro non?

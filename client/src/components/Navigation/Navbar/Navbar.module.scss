@@ -26,6 +26,7 @@
 
 .Navbar .Mobile {
     display: flex;
+    text-align: center;
     align-items: center;
     height: 100%;
     margin: 0;
@@ -33,7 +34,7 @@
 
 .Mobile a {
     height: 80%;
-    padding: 0 0 0 2vw;
+    padding: 0;
 }
 
 .Navbar h2 {
@@ -73,6 +74,9 @@ a:visited {
 .Logo {
     height: 100%;
     padding: 1px;
+    display: flex;
+    text-align: center;
+    align-items: center;
 }
 
 
