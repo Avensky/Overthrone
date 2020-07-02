@@ -47,5 +47,5 @@ ReactDOM.render(app, document.getElementById('root') );
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-//console.log('Stripe Key is', process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
-//console.log('Environment Key is', process.env.NODE_ENV)
+console.log('Stripe Key is', process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
+console.log('Environment Key is', process.env.NODE_ENV)

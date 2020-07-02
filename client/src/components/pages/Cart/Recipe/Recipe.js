@@ -22,7 +22,7 @@ class Recipe extends Component{
     }
 
     render(){
-  
+        debugger;
         return(
             <div className={myClasses.Recipe}>
                 <div className={myClasses.Collection}>
@@ -35,7 +35,12 @@ class Recipe extends Component{
                     </div>
                     <div className="checkout">
 {/*                 <button className="waves-effect waves-light btn">Checkout</button>              */}       
-                        <StripeCheckout className="waves-effect waves-light btn" />
+                        <StripeCheckout 
+                            // className="waves-effect waves-light btn" 
+                            amount={this.props.total}
+                            token={token => console.log(token)}
+                            stripeKey = {process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}
+                        />
                     </div>
                  </div>
         )
