@@ -12,7 +12,7 @@ class Sovereinty extends Component {
         let body = (
             <div className={["container", classes.container].join(' ')}>
                 <div className="page-header text-center">
-                    <h2>Sovereinty</h2>
+                    <h2>Home</h2>
                 </div>
                 <section class="paragraph">
              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas omnis accusamus unde deserunt. Sapiente laboriosam sequi cupiditate sint debitis veritatis exercitationem dignissimos est enim molestias accusamus, suscipit nostrum asperiores minus!
