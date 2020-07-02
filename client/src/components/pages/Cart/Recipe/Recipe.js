@@ -34,8 +34,8 @@ class Recipe extends Component{
                     <div className="collection-item"><b>Total: {this.props.total} $</b></div>
                     </div>
                     <div className="checkout">
-                        <button className="waves-effect waves-light btn">Checkout</button>
-                        <StripeCheckout />
+{/*                 <button className="waves-effect waves-light btn">Checkout</button>              */}       
+                        <StripeCheckout className="waves-effect waves-light btn" />
                     </div>
                  </div>
         )

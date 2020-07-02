@@ -159,7 +159,7 @@ class Auth extends Component {
                         <button 
                             onClick={this.registerToggleHandler}
                             className={unselected}
-                        ><h2><span className="fa fa-user-plus" /> Signup</h2>
+                        ><h2><span className="fa fa-user" /> Signup</h2>
                         </button>   
                     </div>            
                     {form}

@@ -12,7 +12,7 @@ const navbar = ( props ) => (
         <div className={[classes.MobileLinks, classes.Mobile].join(' ')}>
             <h2>            
                 <NavLink  to="/shop/cart">
-                    <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/> ({props.items.length})
+                     <span className={["fa", "fa-shopping-cart", classes.left].join(' ')}/> {/*  ({props.items.length})  */}
                 </NavLink >
                 <NavLink  to="/authentication">
                     <span className={["fa", classes.fa, "fa-user", classes.left].join(' ')}/> 
@@ -20,7 +20,9 @@ const navbar = ( props ) => (
             </h2>
             <div className={[classes.Logo, classes.Mobile].join(' ')}>
             <NavLink  to="/">
-                <Logo />    
+                <div className={classes.Logo}>
+                    <Logo />
+                </div>  
             </NavLink >
         </div>
         </div>
