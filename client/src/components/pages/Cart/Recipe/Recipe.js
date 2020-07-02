@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import myClasses from './Recipe.module.scss'
 //import { addShipping } from './actions/cartActions'
+
+import StripeCheckout from 'react-stripe-checkout';
+
 class Recipe extends Component{
     
     componentWillUnmount() {
@@ -32,6 +35,7 @@ class Recipe extends Component{
                     </div>
                     <div className="checkout">
                         <button className="waves-effect waves-light btn">Checkout</button>
+                        <StripeCheckout />
                     </div>
                  </div>
         )

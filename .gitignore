@@ -7,7 +7,8 @@ client/node_modules
 .pnp.js
 config/dev.js
 config/secrets.js
-
+.env.development
+.env.production
 # testing
 /coverage
 
