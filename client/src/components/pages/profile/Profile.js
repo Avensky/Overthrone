@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
+import Link from './Link/Link';
 
 
 class Login extends Component {
@@ -12,6 +13,12 @@ class Login extends Component {
                         <h1><span className="fa fa-anchor"></span> Profile Page</h1>
                         <a href="/auth/logout" className="btn btn-default btn-sm">Logout</a>
                     </div>
+                    <Link 
+                        id = "id"
+                        link = "Local"
+                        email = "Email"
+                        password = "password"
+                    />
                     <div className="row">
                         <div className="col-sm-6">
                             <div className="well">
@@ -25,7 +32,7 @@ class Login extends Component {
                                     <a href="/connect/local" className="btn btn-default">Connect Local</a>
                             </div>
                         </div>
-                    </div>
+               
                         <div className="col-sm-6">
                             <div className="well">
                                 <h3 className="text-primary"><span className="fa fa-facebook"></span> Facebook</h3>
@@ -71,7 +78,8 @@ class Login extends Component {
                                 <a href="/connect/google" className="btn btn-danger">Connect Google</a>
                             </div>
                         </div>
-                    </div>
+                    </div> 
+                </div>                  
                 </Auxiliary>
             )
 
