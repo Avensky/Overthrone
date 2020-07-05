@@ -7,6 +7,7 @@ import Link from './Link/Link';
 
 class Login extends Component {
     render () {
+        
         let body = (
             <Auxiliary>
                 <div className="container">
@@ -14,12 +15,13 @@ class Login extends Component {
                         <h1><span className="fa fa-anchor"></span> Profile Page</h1>
                         <a href="/auth/logout" className="btn btn-default btn-sm">Logout</a>
                     </div>
-                            
+
                     <Link 
                         id = "id"
                         link = "Local"
                         email = "Email"
                         name = "Name"
+                        icon = "fa-user"
                     />
 
                     <Link 
@@ -28,6 +30,7 @@ class Login extends Component {
                         email = "Email"
                         token = "Token"
                         name = "name"
+                        icon = "fa-facebook"
                     />
                     <Link 
                         id = "id"
@@ -35,6 +38,7 @@ class Login extends Component {
                         displayName = "displayName"
                         token = "token"
                         username = "username"
+                        icon = "fa-twitter"
                     />
                     <Link 
                         id = "id"
@@ -42,6 +46,7 @@ class Login extends Component {
                         email = "Email"
                         token = "token"
                         name = "name"
+                        icon = "fa-google-plus"
                     />
 
                 </div>                  
