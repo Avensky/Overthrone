@@ -3,7 +3,7 @@ import myClasses from './Link.module.scss';
 import classes from '../../Pages.module.scss'
 
 const link = (props) => (
-    <div className={[myClasses.link, classes.Card].join(' ')}>
+    <div className={[classes.Card, myClasses.Link].join(' ')}>
 
             <h3><span className="fa fa-user"></span> {props.link}</h3>
             <p>
