@@ -87,7 +87,7 @@ class Auth extends Component {
             
             <p className="text-left">Forgot Password?</p>
             
-                <button className={[myClasses.Btn, myClasses.AuthBtn ].join(' ')}>
+                <button className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}>
                     <div className={myClasses.BtnDiv}>
                         <span className="fa fa-user"></span> Sign In
                     </div>
@@ -120,7 +120,7 @@ class Auth extends Component {
                             placeholder="Confirm Password"
                             className={myClasses.AuthInput}
                         />
-                        <button className={[myClasses.Btn, myClasses.AuthBtn ].join(' ')}>
+                        <button className={[myClasses.Btn, classes.AuthBtn, 'auth-btn' ].join(' ')}>
                             <div className={myClasses.BtnDiv}>
                                 <span className="fa fa-user"></span> Sign Up
                             </div>

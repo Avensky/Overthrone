@@ -12,3 +12,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.auth-btn {
+  background-color: rgb(45, 17, 77);
+  background-color: #6623d3;
+}
+
+.auth-btn:hover {
+  color: rgb(255, 255, 255);
+  background-color: #5b1fbd;
+}
+
+.my-auth-btn {
+  color: #6623d3;
+}
+
+.my-btn-primary {
+  color:#357ebd;
+}
+
+.my-btn-info{
+  color: #5bc0de;
+}
+
+.my-btn-danger{
+  color: #d9534f;
+}

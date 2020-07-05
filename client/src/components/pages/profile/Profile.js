@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import Link from './Link/Link';
-
-
+import classes from '../Pages.module.scss';
+import myClasses from './Profile.module.scss';
 
 class Login extends Component {
     render () {
@@ -12,16 +12,18 @@ class Login extends Component {
             <Auxiliary>
                 <div className="container">
                     <div className="page-header text-center">
-                        <h1><span className="fa fa-anchor"></span> Profile Page</h1>
-                        <a href="/auth/logout" className="btn btn-default btn-sm">Logout</a>
+                    <h2><span className="fa fa-anchor"></span> Profile Page</h2>
+        
                     </div>
-
+                </div>
+                <div className={[classes.Card, myClasses.Profile].join(' ')}>
                     <Link 
                         id = "id"
                         link = "Local"
                         email = "Email"
                         name = "Name"
                         icon = "fa-user"
+                        style = "auth-btn"
                     />
 
                     <Link 
@@ -31,6 +33,7 @@ class Login extends Component {
                         token = "Token"
                         name = "name"
                         icon = "fa-facebook"
+                        style = "btn-primary"
                     />
                     <Link 
                         id = "id"
@@ -39,6 +42,7 @@ class Login extends Component {
                         token = "token"
                         username = "username"
                         icon = "fa-twitter"
+                        style = "btn-info"
                     />
                     <Link 
                         id = "id"
@@ -47,6 +51,7 @@ class Login extends Component {
                         token = "token"
                         name = "name"
                         icon = "fa-google-plus"
+                        style = "btn-danger"
                     />
 
                 </div>                  
