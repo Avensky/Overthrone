@@ -8,7 +8,7 @@ class Sovereinty extends Component {
         let body = (
             <div className="container">
                 <div className="page-header text-center">
-                    <h2>Sovereinty</h2>
+                    <h2>History of the Sovereignty</h2>
                 </div>
             </div>
         )

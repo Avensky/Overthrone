@@ -10,13 +10,9 @@ const author = props => (
             <img src={myImg} alt="author cover"/>
         </figure>
         <div className={classes.CardTitle}>
-            {props.title}
+            {props.author}
         </div>
         <div className={classes.CardDescription}>{props.content}</div>
-        <div className={classes.CardDetails}>
-            By {props.author}
-            on {props.published}
-        </div>
     </div>
 )
 
