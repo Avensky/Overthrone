@@ -17,6 +17,7 @@ const flash         = require('connect-flash')
 // configuration ===============================================================
 //==============================================================================
 require('./app/models/user');
+require('./app/models/character');
 require('./config/passport')(passport); // pass passport for configuration
 
 mongoose.Promise = global.Promise;// connect to our database
