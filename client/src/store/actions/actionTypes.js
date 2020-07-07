@@ -16,4 +16,10 @@ export const SIGNUP_SUCCESS     = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAIL        = 'SIGNUP_FAIL'
 export const SIGNUP             = 'SIGNUP'
 
+export const NEW_POST_START     = 'NEW_POST_START'
+export const NEW_POST_SUCCESS   = 'NEW_POST_SUCCESS'
+export const NEW_POST_FAIL      = 'NEW_POST_FAIL'
+export const NEW_POST           = 'NEW_POST'
+
+
 

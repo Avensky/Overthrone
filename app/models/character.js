@@ -10,7 +10,7 @@ const characterSchema = new Schema({
         type: String
     },
     age : {
-        type: Number
+        type: String
     },
     bio : {
         type: String

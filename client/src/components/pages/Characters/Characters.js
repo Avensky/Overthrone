@@ -4,6 +4,8 @@ import Auxiliary from '../../../hoc/Auxiliary';
 import Character from './Character/Character';
 import myClasses from './Characters.module.scss';
 import classes from '../Pages.module.scss';
+import NewCharacter from './NewCharacter/NewCharacter';
+
 
 
 
@@ -15,6 +17,9 @@ class Characters extends Component {
                     <div className="page-header text-center">
                         <h2>Characters</h2>
                     </div>
+                </div>
+                <div className={[classes.Card, myClasses.Characters].join(' ')}>
+                    <NewCharacter />
                 </div>
                 <div className={[classes.Card, myClasses.Characters].join(' ')}>
                     <Character 

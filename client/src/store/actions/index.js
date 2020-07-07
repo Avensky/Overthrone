@@ -9,3 +9,7 @@ export {
     subtractQuantity,
     addQuantity
 } from './cart';
+
+export {
+    newCharacter
+} from './newCharacter';

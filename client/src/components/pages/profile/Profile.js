@@ -23,7 +23,7 @@ class Login extends Component {
                         email = "Email"
                         name = "Name"
                         icon = "fa-user"
-                        style = "auth-btn"
+                        mystyle = "auth-btn"
                     />
 
                     <Link 
@@ -33,7 +33,7 @@ class Login extends Component {
                         token = "Token"
                         name = "name"
                         icon = "fa-facebook"
-                        style = "btn-primary"
+                        mystyle = "btn-primary"
                     />
                     <Link 
                         id = "id"
@@ -42,7 +42,7 @@ class Login extends Component {
                         token = "token"
                         username = "username"
                         icon = "fa-twitter"
-                        style = "btn-info"
+                        mystyle = "btn-info"
                     />
                     <Link 
                         id = "id"
@@ -51,7 +51,7 @@ class Login extends Component {
                         token = "token"
                         name = "name"
                         icon = "fa-google-plus"
-                        style = "btn-danger"
+                        mystyle = "btn-danger"
                     />
 
                 </div>                  
