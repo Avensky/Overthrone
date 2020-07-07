@@ -7,8 +7,9 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import * as serviceWorker from './serviceWorker';
-import authReducer from './store/reducers/auth';
-import cartReducer from './store/reducers/cart';
+import authReducer  from './store/reducers/auth';
+import cartReducer  from './store/reducers/cart';
+import characterReducer    from './store/reducers/newCharacter';
 
 // Development only axios helpers!
 import axios from 'axios';
@@ -19,8 +20,9 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 //const composeEnhancers = !__PROD__ ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    cart: cartReducer
+    auth        : authReducer,
+    cart        : cartReducer,
+    character   : characterReducer
 })
 
 const store = createStore(

@@ -16,10 +16,10 @@ export const SIGNUP_SUCCESS     = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAIL        = 'SIGNUP_FAIL'
 export const SIGNUP             = 'SIGNUP'
 
-export const NEW_POST_START     = 'NEW_POST_START'
-export const NEW_POST_SUCCESS   = 'NEW_POST_SUCCESS'
-export const NEW_POST_FAIL      = 'NEW_POST_FAIL'
-export const NEW_POST           = 'NEW_POST'
+export const NEW_CHARACTER_START     = 'NEW_CHARACTER_START'
+export const NEW_CHARACTER_SUCCESS   = 'NEW_CHARACTER_SUCCESS'
+export const NEW_CHARACTER_FAIL      = 'NEW_CHARACTER_FAIL'
+export const NEW_CHARACTER           = 'NEW_CHARACTER'
 
 
 

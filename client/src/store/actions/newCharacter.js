@@ -3,20 +3,20 @@ import axios from 'axios';
 
 export const newCharacterStart  = () =>{
     return{
-        type: actionTypes.NEW_POST_START
+        type: actionTypes.NEW_CHARACTER_START
     }
 }
 
 export const newCharacterFail = (error) => {
     return {
-        type: actionTypes.NEW_POST_FAIL,
+        type: actionTypes.NEW_CHARACTER_FAIL,
         error: error
     }
 }
 
 export const newCharacterSuccess = (characterData) => {
     return {
-        type: actionTypes.NEW_POST_SUCCESS,
+        type: actionTypes.NEW_CHARACTER_SUCCESS,
         characterData: characterData
     }
 }
