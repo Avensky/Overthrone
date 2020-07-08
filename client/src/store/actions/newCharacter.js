@@ -23,13 +23,21 @@ export const newCharacterSuccess = (characterData) => {
 
 export const newCharacter = (name, age, bio, relatives) => {
     return dispatch => {
-        const characterData = {name, age, bio, relatives}
         dispatch(newCharacterStart())
+
+        const characterData = {
+            name        : name, 
+            age         : age, 
+            bio         : bio, 
+            relatives   : relatives
+        }
+
         axios.post('/api/addCharacter', characterData)
             .then(response => {
                 console.log(response);
                 dispatch(newCharacterSuccess(characterData))
         })
+        
         .catch(error => {
             console.log(error);
             dispatch(newCharacterFail(error))

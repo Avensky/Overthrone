@@ -1,8 +1,11 @@
-const character = require('../../app/models/character');
-const mongoose = require('mongoose');
-const Character = mongoose.model('characters');
+// load all the things we need
+const mongoose         = require('mongoose')
 
-module.exports = app => {
+// load up the user model
+const Character            = mongoose.model('Character')
+
+
+module.exports = function(app) {
 app.get('/api/characters', (req,res) =>{          //get all characters info from db
     Character.find({},(err,doc)=>{
         if(doc)
@@ -13,7 +16,7 @@ app.get('/api/characters', (req,res) =>{          //get all characters info from
     })
 });
 
-app.character('/api/addCharacter',(req,res) => {        //add a new character
+app.post('/api/addCharacter',(req,res) => {        //add a new character
 //    const { title, author, content} = req.body;
 const characterObj = new Character({
     name        : req.body.name,
@@ -42,7 +45,7 @@ Character.findOne({_id : req.params.characterid},{},(err,doc)=>{
 })
 });   
 
-app.character('/api/update',(req,res)=>{          //update a character data
+app.post('/api/update',(req,res)=>{          //update a character data
 Character.findOneAndUpdate({characterId : req.body.characterid},{$set:{publisher : req.body.publisher}},(err,doc)=>{
     if(doc)
         res.send('Character updated successfully!');

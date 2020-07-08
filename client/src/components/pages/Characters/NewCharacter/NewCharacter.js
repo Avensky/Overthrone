@@ -90,19 +90,19 @@ class NewCharacter extends Component {
                 <input 
                     type="text" 
                     onChange={(event) => this.inputChangedHandler( event, "name")}
-                    placeholder="Blog Title"
+               
                 />
                 <label>Age</label>
                 <input 
-                    type="age" 
+                    type="text" 
                     onChange={(event) => this.inputChangedHandler( event, "age")}
-                    placeholder="Blog Title"
+             
                 />
                 <label>Relatives</label>
                 <input 
                     type="text" 
                     onChange={(event) => this.inputChangedHandler( event, "relatives")}
-                    placeholder="Blog Title"
+                
                 />
                 <label>Bio</label>
                 <textarea

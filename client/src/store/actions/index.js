@@ -11,5 +11,7 @@ export {
 } from './cart';
 
 export {
-    newCharacter
+    newCharacter,
+    newCharacterStart
+
 } from './newCharacter';
