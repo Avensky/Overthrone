@@ -22,8 +22,9 @@ const characterObj = new Character({
     name        : req.body.name,
     age         : req.body.age,
 //        characterId : req.body.characterid,
+    relatives   : req.body.relatives,
     bio         : req.body.bio,
-    relatives   : req.body.relatives
+
 })
 characterObj.save((err)=>{
     if(err){

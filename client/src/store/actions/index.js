@@ -12,6 +12,8 @@ export {
 
 export {
     newCharacter,
-    newCharacterStart
+    newCharacterStart,
+    getCharacters,
+    getCharactersStart
 
 } from './newCharacter';

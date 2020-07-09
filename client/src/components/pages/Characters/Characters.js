@@ -5,12 +5,35 @@ import Character from './Character/Character';
 import myClasses from './Characters.module.scss';
 import classes from '../Pages.module.scss';
 import NewCharacter from './NewCharacter/NewCharacter';
+import * as actions from '../../../store/actions/index';
 
 
 
 
 class Characters extends Component {
+
+    componentDidMount() {
+        console.log(this.props)
+        this.props.onGetCharacters()
+    }
+
     render () {
+        let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
+
+        if (!this.props.error) {
+            characters = this.props.chars.map( char => {
+                return (
+                    <Character
+                        key         = {char._id}                       
+                        name        = {char.name}
+                        age         = {char.age}
+                        bio         = {char.bio}
+                        relatives   = {char.relatives}
+                    />
+                )
+            })
+        }
+
         return(
             <Auxiliary>
                 <div className="container">
@@ -19,16 +42,10 @@ class Characters extends Component {
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Characters].join(' ')}>
+                    {characters}
                     <NewCharacter />
                 </div>
-                <div className={[classes.Card, myClasses.Characters].join(' ')}>
-                    <Character 
-                        title="Overthrown"
-                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                        author="suzie"
-                        published="12-02-1990"
-                    />
-                </div>
+               
             </Auxiliary>
         )
     }
@@ -36,11 +53,13 @@ class Characters extends Component {
 
 const mapStateToProps = state => {
     return {
+        chars : state.char.characters
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        onGetCharacters: () => dispatch( actions.getCharacters())
     }
 }
 

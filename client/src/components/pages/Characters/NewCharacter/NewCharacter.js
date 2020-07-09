@@ -33,7 +33,7 @@ class NewCharacter extends Component {
             relatives: {
                 value: '',
                 validation: {
-                    required: true,
+                    required: false,
                 }
             }
         },
@@ -124,7 +124,7 @@ class NewCharacter extends Component {
 
 const mapStateToProps = state => {
     return {
-        //error: state.newCharacter.error,
+        error: state.char.error,
         isLoggedIn: state.auth.payload !== null,
         payload: state.auth.payload,
         userId: state.auth.userId,
@@ -133,7 +133,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onNewCharacter: (name, age, bio, relatives) => dispatch(actions.newCharacter(name, age, bio, relatives)),
+        onNewCharacter: (name, age, relatives, bio) => dispatch(actions.newCharacter(name, age, relatives, bio)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NewCharacter);

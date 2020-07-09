@@ -9,12 +9,12 @@ const character = props => (
             <img src={myImg} alt="character"/>
         </figure>
         <div className={classes.CardTitle}>
-            {props.title}
+            {props.name} ({props.age})
         </div>
-        <div className={classes.CardDescription}>{props.content}</div>
+        <div className={classes.CardDescription}>{props.bio}</div>
         <div className={classes.CardDetails}>
-            By {props.author}
-            on {props.published}
+            By {props.age}
+            on {props.relatives}
         </div>
     </div>
 )

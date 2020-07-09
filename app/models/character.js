@@ -12,10 +12,10 @@ const characterSchema = new Schema({
     age : {
         type: String
     },
-    bio : {
+    relatives : {
         type: String
     },
-    relatives : {
+    bio : {
         type: String
     }
 
