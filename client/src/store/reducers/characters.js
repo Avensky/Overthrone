@@ -4,7 +4,7 @@ import { updateObject } from '../../utility/utility';
 const initialState = {
     characters: [],
     loading: false,
-    posted: false
+    posted: false,
 };
 
 const newCharacterStart = (state, action) => {
@@ -21,6 +21,8 @@ const newCharacterFail = (state, action) => {
     return updateObject( state, { 
         loading: false })}
 
+
+
 const getCharactersStart = (state, action) => {
     return updateObject( state, { 
         loading: true })}
@@ -31,7 +33,29 @@ const getCharactersFail = (state, action) => {
   
 const getCharactersSuccess = (state, action) => {
     return updateObject(state, {
-        characters: action.characters })}    
+        characters: action.characters })}
+        
+        
+
+const deleteCharStart = (state, action) => {
+    return updateObject( state, {
+        loading: true
+    })
+}
+
+const deleteCharFail = (state, action) => {
+    return updateObject( state, {
+        loading: false
+    })
+}
+const deleteCharSuccess = (state, action) => {
+    return updateObject( state, {
+        getCharById: null,
+        loading: false,
+    })
+}
+
+
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
@@ -41,6 +65,11 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.GET_CHARACTERS_SUCCESS  : return getCharactersSuccess(state, action);
         case actionTypes.GET_CHARACTERS_FAIL     : return getCharactersFail(state, action);
         case actionTypes.GET_CHARACTERS_START    : return getCharactersStart(state, action);
+        
+        case actionTypes.DELETE_CHAR_SUCCESS  : return deleteCharSuccess(state, action);
+        case actionTypes.DELETE_CHAR_FAIL     : return deleteCharFail(state, action);
+        case actionTypes.DELETE_CHAR_START    : return deleteCharStart(state, action);
+        
         default: return state;
     }
 };

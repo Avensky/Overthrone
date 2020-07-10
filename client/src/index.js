@@ -9,7 +9,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import * as serviceWorker from './serviceWorker';
 import authReducer  from './store/reducers/auth';
 import cartReducer  from './store/reducers/cart';
-import characterReducer    from './store/reducers/newCharacter';
+import characterReducer    from './store/reducers/characters';
 
 // Development only axios helpers!
 import axios from 'axios';

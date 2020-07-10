@@ -17,6 +17,12 @@ class Characters extends Component {
         this.props.onGetCharacters()
     }
 
+    charClickedHandler = (id) => {
+        //        this.setState({selectedPostId: id});
+        // this.props.history.push('/blog');
+        this.props.onDeleteChar(id);
+            }
+
     render () {
         let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
 
@@ -29,6 +35,7 @@ class Characters extends Component {
                         age         = {char.age}
                         bio         = {char.bio}
                         relatives   = {char.relatives}
+                        click     = {() => this.charClickedHandler(char._id)}
                     />
                 )
             })
@@ -53,13 +60,16 @@ class Characters extends Component {
 
 const mapStateToProps = state => {
     return {
-        chars : state.char.characters
+        chars : state.char.characters,
+        getCharById: state.char.getCharById
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onGetCharacters: () => dispatch( actions.getCharacters())
+        onGetCharacters: () => dispatch( actions.getCharacters()),
+        onGetCharById: (id) => dispatch( actions.getCharById(id)),
+        onDeleteChar: (id) => dispatch( actions.deleteChar(id))
     }
 }
 

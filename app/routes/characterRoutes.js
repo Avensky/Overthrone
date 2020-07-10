@@ -36,7 +36,7 @@ characterObj.save((err)=>{
 })
 });
 
-app.get('/api/getcharacterDetails/:characterid',(req,res)=>{              //get a character details
+app.get('/api/getcharDetails/:characterid',(req,res)=>{              //get a character details
 Character.findOne({_id : req.params.characterid},{},(err,doc)=>{
     if(doc)
         res.json(doc);
@@ -56,7 +56,7 @@ Character.findOneAndUpdate({characterId : req.body.characterid},{$set:{publisher
 })
 });
 
-app.delete('/api/deletecharacter/:characterid',(req,res)=>{           //delete a perticular character
+app.delete('/api/deletechar/:characterid',(req,res)=>{           //delete a perticular character
 Character.findOneAndRemove({_id : req.params.characterid},{},(err,doc)=>{
     if(doc)
         res.json(doc);

@@ -14,6 +14,8 @@ export {
     newCharacter,
     newCharacterStart,
     getCharacters,
-    getCharactersStart
+    getCharactersStart,
+    getCharById,
+    deleteChar
 
-} from './newCharacter';
+} from './characters';

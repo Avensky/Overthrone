@@ -28,4 +28,16 @@ export const GET_CHARACTERS_FAIL      = 'GET_CHARACTER_FAIL'
 export const GET_CHARACTERS           = 'GET_CHARACTER'
 
 
+export const GET_CHAR_BY_ID_START     = 'GET_CHAR_BY_ID_START'
+export const GET_CHAR_BY_ID_SUCCESS   = 'GET_CHAR_BY_ID_SUCCESS'
+export const GET_CHAR_BY_ID_FAIL      = 'GET_CHAR_BY_ID_FAIL'
+export const GET_CHAR_BY_ID           = 'GET_CHAR_BY_ID'
+
+
+export const DELETE_CHAR_START     = 'DELETE_CHAR_START'
+export const DELETE_CHAR_SUCCESS   = 'DELETE_CHAR_SUCCESS'
+export const DELETE_CHAR_FAIL      = 'DELETE_CHAR_FAIL'
+export const DELETE_CHAR           = 'DELETE_CHAR'
+
+
 

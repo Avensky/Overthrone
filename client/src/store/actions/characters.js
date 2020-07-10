@@ -84,3 +84,79 @@ export const getCharacters = () => {
             } );
     };
 }
+
+
+
+
+export const getCharByIdSuccess = (fetchedPostsById) => {
+    return {
+        type:  actionTypes.GET_CHAR_BY_ID_SUCCESS,
+        fetchedPostsById: fetchedPostsById,
+    }
+}
+export const getCharByIdFail = (error) => {
+    return {
+        type:  actionTypes.GET_CHAR_BY_ID_FAIL, 
+        error: error
+    }
+}
+export const getCharByIdStart = () => {
+    return {
+        type:  actionTypes.GET_CHAR_BY_ID_START
+    }
+}
+export const getCharById = (id) => {
+    return dispatch => {
+        dispatch(getCharByIdStart());
+        axios.get( '/api/getcharDetails/' + id)
+        .then( result => {
+            console.log(result)
+            const fetchedPostsById = result.data
+//            const fetchedPostsById = {id: id}
+//            const obj = {...post, ...fetchedPostsById}
+            dispatch(getCharByIdSuccess(fetchedPostsById));
+        })
+        .catch( error => {
+            dispatch(getCharByIdFail(error));
+        });
+    };
+}
+
+
+
+export const deleteCharStart  = () =>{
+    return{
+        type: actionTypes.DELETE_CHAR_START
+    }
+}
+
+export const deleteCharFail = (error) => {
+    return {
+        type: actionTypes.DELETE_CHAR_FAIL,
+        error: error
+    }
+}
+
+export const deleteCharSuccess = () => {
+    return {
+        type: actionTypes.DELETE_CHAR_SUCCESS,
+    }
+}
+    
+export const deleteChar = (id) => {
+    return dispatch => {
+        dispatch(deleteCharStart())
+        axios.delete('/api/deletechar/'+ id)
+            .then(response => {
+                console.log(response);
+                dispatch(deleteCharSuccess())
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(deleteCharFail(error))
+        })    
+    }
+}
+
+
+

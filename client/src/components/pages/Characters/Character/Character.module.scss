@@ -1,10 +1,7 @@
 .Character {
-    display: grid;
-    grid-gap: .25em;
-	grid-template-columns: 3fr 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas:
-		"title thumbnail"
-		"description thumbnail"
-        "details thumbnail"
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2vh;
+    border-bottom: 1px solid ;
+    margin-bottom: 3vh;
 }
