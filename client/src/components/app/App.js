@@ -21,6 +21,8 @@ import Details        from '../pages/Shop/Details/Details';
 // import Items          from '../pages/Shop/Items/Items';
 import Cart           from '../pages/Cart/Cart';
 import Home           from '../pages/Home/Home';
+// import CharacterEdit  from '../pages/Characters/CharacterEdit/CharacterEdit';
+import CharacterList from '../pages/Characters/CharacterList/CharacterList';
 
 class App extends Component {
   state = {
@@ -30,6 +32,7 @@ class App extends Component {
 
   componentDidMount () {
       this.props.onFetchUser();
+      this.props.onGetCharacters();
   }
 
   render() {
@@ -47,7 +50,8 @@ class App extends Component {
         <Route path="/home"                 component={Home} />          
         <Route path="/cart"                 component={Cart} />                
         <Route path="/profile"              component={Profile} />
-        <Route path='/details/:id'    exact component={Details} />
+        <Route path='/details/:id'          exact component={Details} />
+        <Route path='/CharacterList/'    exact component={CharacterList} />
         <Route path="/"                 component={Home}  />      
         {/* <Redirect to="/home" />  */}              
       </Switch>
@@ -86,7 +90,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchUser : () => dispatch(actions.fetchUser()),
+    onGetCharacters : () => dispatch( actions.getCharacters()),
+    onFetchUser     : () => dispatch(actions.fetchUser()),
   };
 };
 

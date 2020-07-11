@@ -1,45 +1,24 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
-import Character from './Character/Character';
+//import Character from './Character/Character';
 import myClasses from './Characters.module.scss';
 import classes from '../Pages.module.scss';
-import NewCharacter from './NewCharacter/NewCharacter';
+//import NewCharacter from './NewCharacter/NewCharacter';
 import * as actions from '../../../store/actions/index';
+import CharacterEdit from './CharacterEdit/CharacterEdit';
+import CharacterList from './CharacterList/CharacterList';
+import { Route, Switch } from 'react-router-dom';
 
 
 
 
 class Characters extends Component {
-
-    componentDidMount() {
-        console.log(this.props)
-        this.props.onGetCharacters()
+    state = {
+        characters : []
     }
 
-    charClickedHandler = (id) => {
-        //        this.setState({selectedPostId: id});
-        // this.props.history.push('/blog');
-        this.props.onDeleteChar(id);
-            }
-
     render () {
-        let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
-
-        if (!this.props.error) {
-            characters = this.props.chars.map( char => {
-                return (
-                    <Character
-                        key         = {char._id}                       
-                        name        = {char.name}
-                        age         = {char.age}
-                        bio         = {char.bio}
-                        relatives   = {char.relatives}
-                        click     = {() => this.charClickedHandler(char._id)}
-                    />
-                )
-            })
-        }
 
         return(
             <Auxiliary>
@@ -49,8 +28,16 @@ class Characters extends Component {
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Characters].join(' ')}>
-                    {characters}
-                    <NewCharacter />
+                {this.props.children}
+                <Switch>
+                        <Route path="/characters" exact component={CharacterList} />
+                        <Route path="/characters/characterEdit/:id"   exact   component={CharacterEdit} />
+                        <Route render={() => <h1>Not found</h1>}/>
+                        {/* <Redirect from="/" to="/posts" /> */}
+                        {/* <Route path="/" component={Posts} /> */}
+                </Switch>
+                
+            
                 </div>
                
             </Auxiliary>

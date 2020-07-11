@@ -88,10 +88,10 @@ export const getCharacters = () => {
 
 
 
-export const getCharByIdSuccess = (fetchedPostsById) => {
+export const getCharByIdSuccess = (charById) => {
     return {
         type:  actionTypes.GET_CHAR_BY_ID_SUCCESS,
-        fetchedPostsById: fetchedPostsById,
+        charById: charById,
     }
 }
 export const getCharByIdFail = (error) => {
@@ -111,15 +111,61 @@ export const getCharById = (id) => {
         axios.get( '/api/getcharDetails/' + id)
         .then( result => {
             console.log(result)
-            const fetchedPostsById = result.data
+            const charById = result.data
 //            const fetchedPostsById = {id: id}
 //            const obj = {...post, ...fetchedPostsById}
-            dispatch(getCharByIdSuccess(fetchedPostsById));
+            dispatch(getCharByIdSuccess(charById));
         })
         .catch( error => {
             dispatch(getCharByIdFail(error));
         });
     };
+}
+
+
+
+export const updateCharStart  = () =>{
+    return{
+        type: actionTypes.UPDATE_CHAR_START
+    }
+}
+
+export const updateCharFail = (error) => {
+    return {
+        type: actionTypes.UPDATE_CHAR_FAIL,
+        error: error
+    }
+}
+
+export const updateCharSuccess = (characterData) => {
+    return {
+        type: actionTypes.UPDATE_CHAR_SUCCESS,
+        characterData: characterData
+    }
+}
+    
+export const updateChar = (id, name, age, relatives, bio) => {
+    return dispatch => {
+        dispatch(updateCharStart())
+
+        const characterData = {
+            id          : id,
+            name        : name, 
+            age         : age, 
+            relatives   : relatives,
+            bio         : bio, 
+        }
+
+        axios.delete('/api/updatechar/'+ characterData)
+            .then(response => {
+                console.log(response);
+                dispatch(updateCharSuccess(characterData))
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(updateCharFail(error))
+        })    
+    }
 }
 
 

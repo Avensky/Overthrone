@@ -46,23 +46,32 @@ Character.findOne({_id : req.params.characterid},{},(err,doc)=>{
 })
 });   
 
-app.post('/api/update',(req,res)=>{          //update a character data
-Character.findOneAndUpdate({characterId : req.body.characterid},{$set:{publisher : req.body.publisher}},(err,doc)=>{
-    if(doc)
-        res.send('Character updated successfully!');
-    else {
-        res.err(err.message);
-    }
-})
+app.post('/api/updatechar',(req,res)=>{          //update a character data
+    Character.findOneAndUpdate({
+        characterId : req.body.id
+    },{
+        $set:{
+            name : req.body.name,
+            age : req.body.age,
+            relatives : req.body.relatives,
+            bio : req.body.bio
+        }
+    },(err,doc)=>{
+        if(doc)
+            res.send('Character updated successfully!');
+        else {
+            res.err(err.message);
+        }
+    })
 });
 
 app.delete('/api/deletechar/:characterid',(req,res)=>{           //delete a perticular character
-Character.findOneAndRemove({_id : req.params.characterid},{},(err,doc)=>{
-    if(doc)
-        res.json(doc);
-    else {
-        res.status(404).send('Ops! Character not found');
-    }
-})
-});
+    Character.findOneAndRemove({_id : req.params.characterid},{},(err,doc)=>{
+        if(doc)
+            res.json(doc);
+        else {
+            res.status(404).send('Ops! Character not found');
+        }
+    })
+    });
 }

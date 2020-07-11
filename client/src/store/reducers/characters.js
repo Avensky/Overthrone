@@ -5,6 +5,7 @@ const initialState = {
     characters: [],
     loading: false,
     posted: false,
+    charById: []
 };
 
 const newCharacterStart = (state, action) => {
@@ -35,7 +36,25 @@ const getCharactersSuccess = (state, action) => {
     return updateObject(state, {
         characters: action.characters })}
         
-        
+  
+const getCharByIdStart = (state, action) => {
+    return updateObject( state, {
+        loading: true
+    })
+}
+
+const getCharByIdFail = (state, action) => {
+    return updateObject( state, {
+        loading: false
+    })
+}
+const getCharByIdSuccess = (state, action) => {
+    return updateObject( state, {
+        charById: action.charById,
+        loading: false,
+    })
+}
+
 
 const deleteCharStart = (state, action) => {
     return updateObject( state, {
@@ -62,6 +81,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.NEW_CHARACTER_SUCCESS   : return newCharacterSuccess(state, action);
         case actionTypes.NEW_CHARACTER_FAIL      : return newCharacterFail(state, action);
         case actionTypes.NEW_CHARACTER_START     : return newCharacterStart(state, action);
+        
         case actionTypes.GET_CHARACTERS_SUCCESS  : return getCharactersSuccess(state, action);
         case actionTypes.GET_CHARACTERS_FAIL     : return getCharactersFail(state, action);
         case actionTypes.GET_CHARACTERS_START    : return getCharactersStart(state, action);
@@ -69,6 +89,10 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.DELETE_CHAR_SUCCESS  : return deleteCharSuccess(state, action);
         case actionTypes.DELETE_CHAR_FAIL     : return deleteCharFail(state, action);
         case actionTypes.DELETE_CHAR_START    : return deleteCharStart(state, action);
+        
+        case actionTypes.GET_CHAR_BY_ID_SUCCESS  : return getCharByIdSuccess(state, action);
+        case actionTypes.GET_CHAR_BY_ID_FAIL     : return getCharByIdFail(state, action);
+        case actionTypes.GET_CHAR_BY_ID_START    : return getCharByIdStart(state, action);
         
         default: return state;
     }

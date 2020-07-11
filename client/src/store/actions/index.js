@@ -16,6 +16,7 @@ export {
     getCharacters,
     getCharactersStart,
     getCharById,
-    deleteChar
+    deleteChar, 
+    updateChar,
 
 } from './characters';

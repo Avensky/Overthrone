@@ -22,7 +22,6 @@ class Recipe extends Component{
     }
 
     render(){
-        debugger;
         return(
             <div className={myClasses.Recipe}>
                 <div className={myClasses.Collection}>

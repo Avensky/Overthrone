@@ -27,7 +27,7 @@ class ItemFull extends Component {
     loadData () {
         if ( this.props.match.params.id ) {
             if ( !this.state.loadedItem || (this.state.loadedItem && this.state.loadedItem.id !== +this.props.match.params.id) ) {
-                const itemId = this.props.match.params.id - 1;
+                const itemId = this.props.match.params.id;
                 this.setState({ loadedItem: this.props.items[itemId]});
             }
         }
