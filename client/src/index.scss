@@ -38,3 +38,11 @@ code {
 .my-btn-danger{
   color: #d9534f;
 }
+
+
+
+button:focus {outline:0;}
+input:focus {outline:0;}
+input::placeholder{
+    color: rgb(255, 255, 255);   
+  }

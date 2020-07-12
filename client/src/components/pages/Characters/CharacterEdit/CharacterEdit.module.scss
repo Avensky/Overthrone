@@ -1,0 +1,31 @@
+.Line {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1vw;
+    margin: 0 1vw;
+}
+.MidLine {
+    display: flex;
+}
+
+.Left {
+    width: 20%;
+}
+
+.Right {
+    width: 80%;
+}
+
+input {
+    padding: 0 1vw;
+    margin: 0 1vw;
+
+}
+button {
+    width: 50%;
+}
+
+legend {
+    color: white;
+}

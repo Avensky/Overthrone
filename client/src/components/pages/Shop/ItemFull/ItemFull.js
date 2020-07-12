@@ -18,11 +18,7 @@ class ItemFull extends Component {
     componentDidMount () {
         console.log(this.props);
         this.loadData();
-    }
-
-    componentDidUpdate() {
-        this.loadData();
-    }
+    }z
 
     loadData () {
         if ( this.props.match.params.id ) {

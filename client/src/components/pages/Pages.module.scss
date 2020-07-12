@@ -138,6 +138,17 @@
 
 }
 
+:focus-visible {
+    background-color: white;
+}
+
+button:focus {outline:0;}
+input:focus {outline:0;}
+input::placeholder{
+    color: rgb(255, 255, 255);   
+  }
+
+
 @media only screen and (min-width: 600px) {
     /* For tablets: */
     .Card {
