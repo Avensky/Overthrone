@@ -10,18 +10,16 @@ const initialState = {
 
 const newCharacterStart = (state, action) => {
     return updateObject( state, { posted: false });}
+
+const newCharacterFail = (state, action) => {
+    return updateObject( state, { 
+        loading: false })}
   
 const newCharacterSuccess = (state, action) => {
     const newCharacter = updateObject(action.characterData, { id: action.characterId })
     return updateObject(state, {
         loading: false,
-        characters: state.characters.concat( newCharacter )
-    })}
-
-const newCharacterFail = (state, action) => {
-    return updateObject( state, { 
-        loading: false })}
-
+        characters: state.characters.concat( newCharacter ) })}
 
 
 const getCharactersStart = (state, action) => {
@@ -36,43 +34,32 @@ const getCharactersSuccess = (state, action) => {
     return updateObject(state, {
         characters: action.characters })}
         
-  
+
 const getCharByIdStart = (state, action) => {
     return updateObject( state, {
-        loading: true
-    })
-}
+        loading: true})}
 
 const getCharByIdFail = (state, action) => {
     return updateObject( state, {
-        loading: false
-    })
-}
+        loading: false})}
+
 const getCharByIdSuccess = (state, action) => {
     return updateObject( state, {
         charById: action.charById,
-        loading: false,
-    })
-}
+        loading: false,})}
 
 
 const deleteCharStart = (state, action) => {
     return updateObject( state, {
-        loading: true
-    })
-}
+        loading: true})}
 
 const deleteCharFail = (state, action) => {
     return updateObject( state, {
-        loading: false
-    })
-}
+        loading: false})}
+
 const deleteCharSuccess = (state, action) => {
     return updateObject( state, {
-        getCharById: null,
-        loading: false,
-    })
-}
+        loading: false,})}
 
 
 

@@ -18,6 +18,13 @@ class Characters extends Component {
         characters : []
     }
 
+    componentDidMount () {
+        this.props.onGetCharacters();
+    }
+
+
+
+
     render () {
 
         return(

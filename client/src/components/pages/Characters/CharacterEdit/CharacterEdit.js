@@ -60,7 +60,7 @@ class CharacterEdit extends Component {
     }
 
     updateCharHandler = (event) => {
-        event.preventDefault();
+//        event.preventDefault();
         //this.props.onSetAuthRedirectPath('/checkout');
 //        this.props.history.push('/characters');
 //         const author =  this.props.payload.username;

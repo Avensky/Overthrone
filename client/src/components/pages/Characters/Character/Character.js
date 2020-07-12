@@ -17,14 +17,19 @@ const character = props => (
             {props.name} ({props.age})
         </div>
         <div className={classes.CardDescription}>{props.bio}</div>
-        <button 
-            className={classes.Edit}
-            onClick={props.editClick}
-        ><Link to={'/characters/characterEdit/' + props.id}>Edit</Link></button>
-        <button 
-            className={classes.Delete}
-            onClick={props.click}
-        >Delete</button>
+        <div className={myClasses.List}>
+            <Link to={'/characters/characterEdit/' + props.id}>
+                <button 
+                    className={["btn-warning", classes.Left].join(' ')}
+                    onClick={props.editClick}
+                >EDIT</button>
+            </Link>
+            <button 
+                className={['btn-danger', classes.Right].join(' ')}
+                onClick={props.deleteClick}
+            >DELETE</button>            
+        </div>
+
     </div>
 )
 

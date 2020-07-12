@@ -29,6 +29,9 @@ class Characters extends Component {
         this.setState({ characters: updatedChars})
     }
 
+    deleteCharHandler = (id) => {
+        this.props.onDeleteChar(id);
+    }
 
     render () {
         let chars = <p style={{textAlign: 'center'}}>Something went wrong!</p>
@@ -43,6 +46,7 @@ class Characters extends Component {
                         age         = {char.age}
                         bio         = {char.bio}
                         relatives   = {char.relatives}
+                        deleteClick  = {() => this.deleteCharHandler(char._id)}
                     />
                 )
             })
@@ -51,7 +55,6 @@ class Characters extends Component {
         return(
             <Auxiliary>
                 <div className={myClasses.Items}>
-                    <h3 className="center">Our items</h3>
                     <div className={['box', myClasses.Items ].join(' ')}></div>
                     <NewCharacter />
                     {chars}

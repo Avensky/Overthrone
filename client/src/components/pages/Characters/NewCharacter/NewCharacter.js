@@ -86,31 +86,48 @@ class NewCharacter extends Component {
             <form onSubmit={this.newCharacterHandler}>
                 <legend>Add a Character</legend>
                 {errorMessage}
-                <label>Name</label>
-                <input 
-                    type="text" 
-                    onChange={(event) => this.inputChangedHandler( event, "name")}
-               
-                />
-                <label>Age</label>
-                <input 
-                    type="text" 
-                    onChange={(event) => this.inputChangedHandler( event, "age")}
-             
-                />
-                <label>Relatives</label>
-                <input 
-                    type="text" 
-                    onChange={(event) => this.inputChangedHandler( event, "relatives")}
-                
-                />
-                <label>Bio</label>
-                <textarea
-                    type="textarea"
-                    rows="4" 
-                    onChange={(event) => this.inputChangedHandler( event, "bio")}/>
-                <button className={classes.btn}>Add Character</button>
-            </form>
+                <div className={myClasses.MidLine}>
+                    <label className={myClasses.Left}>Name: </label> 
+                    <input 
+                        type="text" 
+                        onChange={(event) => this.inputChangedHandler( event, "name")}
+                        //placeholder="Name"
+                        className={myClasses.Right}
+                    />
+                </div>
+                <div className={myClasses.MidLine}>
+                    <label className={myClasses.Left}>Age: </label>
+                    <input 
+                            type="text" 
+                            onChange={(event) => this.inputChangedHandler( event, "age")}
+                            //placeholder="Age"
+                            className={myClasses.Right}
+                        />                    
+                </div>
+                <div className={myClasses.MidLine}>
+                    <label className={myClasses.Left}>Relatives: </label>
+                    <input 
+                        type="text" 
+                        onChange={(event) => this.inputChangedHandler( event, "relatives")}
+                        //placeholder="Relatives"
+                        className={myClasses.Right}
+                    />
+                </div>
+                <div className={myClasses.MidLine}>
+                    <label className={myClasses.Left}>Bio: </label>
+                    <textarea
+                        type="textarea"
+                        rows="4" 
+                        //placeholder="Bio"
+                        className={myClasses.Right}
+                        onChange={(event) => this.inputChangedHandler( event, "bio")}
+                    />
+                </div>
+                <div className={myClasses.MidLine}>
+                    <label className={myClasses.Left} />
+                    <button className={["auth-btn", classes.btn, myClasses.Right].join(' ')}>Add Character</button>
+                </div>
+                           </form>
         )
         
         return (

@@ -3,10 +3,12 @@
     display: flex;
     align-items: center;
     padding: 0 1vw;
-    margin: 0 1vw;
+    margin: 0 0 2vw;
 }
 .MidLine {
     display: flex;
+    align-items: center;
+    margin: 0 0 2vw;
 }
 
 .Left {
@@ -28,4 +30,8 @@ button {
 
 legend {
     color: white;
+}
+
+textarea {
+    padding: .25vh 1vw;
 }
