@@ -20,3 +20,13 @@ export {
     updateChar,
 
 } from './characters';
+
+export {
+    newFaq,
+    getFaqs,
+    getFaqsStart,
+    getFaqById,
+    deleteFaq, 
+    updateFaq,
+
+} from './faq';

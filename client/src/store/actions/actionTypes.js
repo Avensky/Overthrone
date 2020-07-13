@@ -47,3 +47,33 @@ export const UPDATE_CHAR           = 'UPDATE_CHAR'
 
 
 
+
+
+export const NEW_FAQ_START     = 'NEW_CHARACTER_START'
+export const NEW_FAQ_SUCCESS   = 'NEW_CHARACTER_SUCCESS'
+export const NEW_FAQ_FAIL      = 'NEW_CHARACTER_FAIL'
+export const NEW_FAQ           = 'NEW_CHARACTER'
+
+
+export const GET_FAQS_START     = 'GET_CHARACTERS_START'
+export const GET_FAQS_SUCCESS   = 'GET_CHARACTERS_SUCCESS'
+export const GET_FAQS_FAIL      = 'GET_CHARACTERS_FAIL'
+export const GET_FAQS           = 'GET_CHARACTERS'
+
+
+export const GET_FAQ_BY_ID_START     = 'GET_CHAR_BY_ID_START'
+export const GET_FAQ_BY_ID_SUCCESS   = 'GET_CHAR_BY_ID_SUCCESS'
+export const GET_FAQ_BY_ID_FAIL      = 'GET_CHAR_BY_ID_FAIL'
+export const GET_FAQ_BY_ID           = 'GET_CHAR_BY_ID'
+
+
+export const DELETE_FAQ_START     = 'DELETE_CHAR_START'
+export const DELETE_FAQ_SUCCESS   = 'DELETE_CHAR_SUCCESS'
+export const DELETE_FAQ_FAIL      = 'DELETE_CHAR_FAIL'
+export const DELETE_FAQ           = 'DELETE_CHAR'
+
+
+export const UPDATE_FAQ_START     = 'UPDATE_CHAR_START'
+export const UPDATE_FAQ_SUCCESS   = 'UPDATE_CHAR_SUCCESS'
+export const UPDATE_FAQ_FAIL      = 'UPDATE_CHAR_FAIL'
+export const UPDATE_FAQ           = 'UPDATE_CHAR'

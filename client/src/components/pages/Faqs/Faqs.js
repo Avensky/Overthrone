@@ -4,7 +4,8 @@ import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
 import myClasses from './Faqs.module.scss';
 import Faq from './Faq/Faq';
-import Headline from './Headline/Headline'
+import Headline from './Headline/Headline';
+import NewFaq from './NewFaq/NewFaq';
 
 class Faqs extends Component {
     render () {
@@ -28,6 +29,8 @@ class Faqs extends Component {
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Faqs].join(' ')}>
+                    
+                    <NewFaq />
                     <Faq 
                         question="What is my order status?"
                         answer="You can view your order status by looking up your order."
