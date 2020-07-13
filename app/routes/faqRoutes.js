@@ -1,8 +1,8 @@
 // load all the things we need
-const mongoose         = require('mongoose')
+const mongoose              = require('mongoose')
 
-// load up the user model
-const Faq            = mongoose.model('Faq')
+// load up the faq model
+const Faq                   = mongoose.model('Faq')
 
 
 module.exports = function(app) {

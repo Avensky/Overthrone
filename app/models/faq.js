@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 // define the schema for our user model
-const characterSchema = new Schema({
+const faqSchema = new Schema({
     question : {
         type: String
     },

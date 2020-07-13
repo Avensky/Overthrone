@@ -72,7 +72,7 @@ class NewFaq extends Component {
                     <label className={myClasses.Left}>Question: </label> 
                     <input 
                         type="text" 
-                        onChange={(event) => this.inputChangedHandler( event, "questions")}
+                        onChange={(event) => this.inputChangedHandler( event, "question")}
                         //placeholder="Name"
                         className={myClasses.Right}
                     />
@@ -115,7 +115,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onNewFaq: (name, age, relatives, bio) => dispatch(actions.newFaq(name, age, relatives, bio)),
+        onNewFaq: (question, answer) => dispatch(actions.newFaq(question, answer)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NewFaq);

@@ -1,8 +1,8 @@
 // load all the things we need
-const mongoose         = require('mongoose')
+const mongoose              = require('mongoose')
 
 // load up the user model
-const Character            = mongoose.model('Character')
+const Character             = mongoose.model('Character')
 
 
 module.exports = function(app) {

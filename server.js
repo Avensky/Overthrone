@@ -18,6 +18,7 @@ const flash         = require('connect-flash')
 //==============================================================================
 require('./app/models/user');
 require('./app/models/character');
+require('./app/models/faq');
 require('./config/passport')(passport); // pass passport for configuration
 
 mongoose.Promise = global.Promise;// connect to our database
@@ -59,6 +60,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 //==============================================================================
 require('./app/routes/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./app/routes/characterRoutes.js')(app); // load our routes and pass in our app and fully configured passport
+require('./app/routes/faqRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 
 //==============================================================================
 // launch ======================================================================

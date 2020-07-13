@@ -23,6 +23,7 @@ export {
 
 export {
     newFaq,
+    newFaqStart,
     getFaqs,
     getFaqsStart,
     getFaqById,

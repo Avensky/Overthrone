@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import authReducer  from './store/reducers/auth';
 import cartReducer  from './store/reducers/cart';
 import characterReducer    from './store/reducers/characters';
+import faqReducer from './store/reducers/faq';
 
 // Development only axios helpers!
 import axios from 'axios';
@@ -22,7 +23,8 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 const rootReducer = combineReducers({
     auth        : authReducer,
     cart        : cartReducer,
-    char        : characterReducer
+    char        : characterReducer,
+    faq         : faqReducer
 })
 
 const store = createStore(

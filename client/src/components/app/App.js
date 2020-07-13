@@ -14,13 +14,13 @@ import Books          from '../pages/Books/Books';
 import Authors        from '../pages/Authors/Authors';
 import Characters     from '../pages/Characters/Characters';
 import Sovereinty     from '../pages/Sovereinty/Sovereinty';
-import Faqs           from '../pages/Faqs/Faqs';
 import Shop           from '../pages/Shop/Shop';
 //import ItemFull       from '../pages/Shop/ItemFull/ItemFull';
 import Details        from '../pages/Shop/Details/Details';
 // import Items          from '../pages/Shop/Items/Items';
 import Cart           from '../pages/Cart/Cart';
 import Home           from '../pages/Home/Home';
+import Faqs            from '../pages/Faqs/Faqs';
 // import CharacterEdit  from '../pages/Characters/CharacterEdit/CharacterEdit';
 import CharacterList from '../pages/Characters/CharacterList/CharacterList';
 

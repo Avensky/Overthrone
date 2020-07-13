@@ -9,7 +9,7 @@ const faq = props => (
     <Auxiliary>
         <div className={assignedClasses}>
             <div className={classes.CardTitle}>
-                {props.question}
+                <h5>{props.question}</h5>
             </div>
             <div className={classes.CardList}>
                 {props.answer}

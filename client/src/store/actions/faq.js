@@ -1,25 +1,20 @@
 import * as actionTypes from './actionTypes'
 import axios from 'axios';
 
+
 export const newFaqStart  = () =>{
-    return{
-        type: actionTypes.NEW_FAQ_START
-    }
-}
+    return {
+        type: actionTypes.NEW_FAQ_START}}
 
 export const newFaqFail = (error) => {
     return {
         type: actionTypes.NEW_FAQ_FAIL,
-        error: error
-    }
-}
+        error: error}}
 
 export const newFaqSuccess = (faqData) => {
     return {
         type: actionTypes.NEW_FAQ_SUCCESS,
-        faqData: faqData
-    }
-}
+        faqData: faqData}}
 
 export const newFaq = (question, answer) => {
     return dispatch => {
@@ -27,7 +22,7 @@ export const newFaq = (question, answer) => {
 
         const faqData = {
             question        : question, 
-            answer          : answer
+            answer          : answer,
         }
 
         axios.post('/api/addFaq', faqData)
@@ -42,6 +37,8 @@ export const newFaq = (question, answer) => {
         })    
     }
 }
+
+
 
 
 export const getFaqsSuccess = (faqs) => {
