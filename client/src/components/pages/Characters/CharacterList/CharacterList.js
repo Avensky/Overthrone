@@ -8,7 +8,7 @@ import NewCharacter from '../NewCharacter/NewCharacter';
 import * as actions from '../../../../store/actions/index';
 //import CharacterEdit from './CharacterEdit/CharacterEdit';
 //import { Route, Switch } from 'react-router-dom';
-
+import Search from '../../../Search/Search';
 
 
 
@@ -57,6 +57,7 @@ class Characters extends Component {
                 <div className={myClasses.Items}>
                     <div className={['box', myClasses.Items ].join(' ')}></div>
                     <NewCharacter />
+                    <Search/>
                     {chars}
                 </div>
 
