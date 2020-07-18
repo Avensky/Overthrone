@@ -49,16 +49,16 @@ export const UPDATE_CHAR           = 'UPDATE_CHAR'
 
 
 
-export const NEW_FAQ_START     = 'NEW_FAQ_START'
-export const NEW_FAQ_SUCCESS   = 'NEW_FAQ_SUCCESS'
-export const NEW_FAQ_FAIL      = 'NEW_FAQ_FAIL'
-export const NEW_FAQ           = 'NEW_FAQ'
+export const NEW_FAQ_START         = 'NEW_FAQ_START'
+export const NEW_FAQ_SUCCESS       = 'NEW_FAQ_SUCCESS'
+export const NEW_FAQ_FAIL          = 'NEW_FAQ_FAIL'
+export const NEW_FAQ               = 'NEW_FAQ'
 
 
-export const GET_FAQS_START     = 'GET_FAQS_START'
-export const GET_FAQS_SUCCESS   = 'GET_FAQS_SUCCESS'
-export const GET_FAQS_FAIL      = 'GET_FAQS_FAIL'
-export const GET_FAQS           = 'GET_FAQS'
+export const GET_FAQS_START         = 'GET_FAQS_START'
+export const GET_FAQS_SUCCESS       = 'GET_FAQS_SUCCESS'
+export const GET_FAQS_FAIL          = 'GET_FAQS_FAIL'
+export const GET_FAQS               = 'GET_FAQS'
 
 
 export const GET_FAQ_BY_ID_START     = 'GET_FAQ_BY_ID_START'

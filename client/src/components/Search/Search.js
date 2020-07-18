@@ -23,19 +23,19 @@ class Search extends React.Component {
 	}
 
 
-	/**
-	 * Get the Total Pages count.
-	 *
-	 * @param total
-	 * @param denominator Count of results per page
-	 * @return {number}
-	 */
-	getPageCount = ( total, denominator ) => {
-		const divisible	= 0 === total % denominator;
-		const valueToBeAdded = divisible ? 0 : 1;
-		return Math.floor( total/denominator ) + valueToBeAdded;
-	};
-
+//	/**
+//	 * Get the Total Pages count.
+//	 *
+//	 * @param total
+//	 * @param denominator Count of results per page
+//	 * @return {number}
+//	 */
+//	getPageCount = ( total, denominator ) => {
+//		const divisible	= 0 === total % denominator;
+//		const valueToBeAdded = divisible ? 0 : 1;
+//		return Math.floor( total/denominator ) + valueToBeAdded;
+//	};
+//
 	/**
 	 * Fetch the search results and update the state with the result.
 	 * Also cancels the previous query before making the new one.
@@ -82,56 +82,89 @@ class Search extends React.Component {
 			} )
 	};
 
-	handleOnInputChange = ( event ) => {
+
+	handleOnInputChange = (event) => {
 		const query = event.target.value;
 		if ( ! query ) {
-			this.setState( { query, results: {}, message: '', totalPages: 0, totalResults: 0 } );
+			this.setState({ query, results: {}, message: '' } );
 		} else {
-			this.setState( { query, loading: true, message: '' }, () => {
-				this.fetchSearchResults( 1, query );
-			} );
+			this.setState({ query, loading: true, message: '' }, () => {
+				this.fetchSearchResults(1, query);
+			});
 		}
 	};
 
-	/**
-	 * Fetch results according to the prev or next page requests.
-	 *
-	 * @param {String} type 'prev' or 'next'
-	 */
-	handlePageClick = ( type ) => {
-		event.preventDefault();
-		const updatePageNo = 'prev' === type
-			? this.state.currentPageNo - 1
-			: this.state.currentPageNo + 1;
+//	handleOnInputChange = ( event ) => {
+//		const query = event.target.value;
+//		if ( ! query ) {
+//			this.setState( { query, results: {}, message: '', totalPages: 0, totalResults: 0 } );
+//		} else {
+//			this.setState( { query, loading: true, message: '' }, () => {
+//				this.fetchSearchResults( 1, query );
+//			} );
+//		}
+//	};
+//
+//	/**
+//	 * Fetch results according to the prev or next page requests.
+//	 *
+//	 * @param {String} type 'prev' or 'next'
+//	 */
+//	handlePageClick = ( type ) => {
+//		event.preventDefault();
+//		const updatePageNo = 'prev' === type
+//			? this.state.currentPageNo - 1
+//			: this.state.currentPageNo + 1;
+//
+//		if( ! this.state.loading  ) {
+//			this.setState( { loading: true, message: '' }, () => {
+//				this.fetchSearchResults( updatePageNo, this.state.query );
+//			} );
+//		}
+//	};
 
-		if( ! this.state.loading  ) {
-			this.setState( { loading: true, message: '' }, () => {
-				this.fetchSearchResults( updatePageNo, this.state.query );
-			} );
-		}
-	};
 
-	renderSearchResults = () => {
-		const { results } = this.state;
+renderSearchResults = () => {
+	const {results} = this.state;
+	if (Object.keys(results).length && results.length) {
+		return (
+			<div className="results-container">
+				{results.map((result) => {
+					return (
+						<a key={result.id} href={result.previewURL} className="result-items">
+							<h6 className="image-username">{result.user}</h6>
+							<div className="image-wrapper">
+								<img className="image" src={result.previewURL} alt={result.user}/>
+							</div>
+						</a>
+					);
+				})}
+			</div>
+		);
+	}
+};
 
-		if ( Object.keys( results ).length && results.length ) {
-			return (
-				<div className="results-container">
-					{ results.map( result => {
-						return (
-							<a key={ result.id } href={ result.previewURL } className="result-item">
-								<h6 className="image-username">{result.user}</h6>
-								<div className="image-wrapper">
-									<img className="image" src={ result.previewURL } alt={`${result.username} image`}/>
-								</div>
-							</a>
-						)
-					} ) }
-
-				</div>
-			)
-		}
-	};
+//	renderSearchResults = () => {
+//		const { results } = this.state;
+//
+//		if ( Object.keys( results ).length && results.length ) {
+//			return (
+//				<div className="results-container">
+//					{ results.map( result => {
+//						return (
+//							<a key={ result.id } href={ result.previewURL } className="result-item">
+//								<h6 className="image-username">{result.user}</h6>
+//								<div className="image-wrapper">
+//									<img className="image" src={ result.previewURL } alt={`${result.username} image`}/>
+//								</div>
+//							</a>
+//						)
+//					} ) }
+//
+//				</div>
+//			)
+//		}
+//	};
 
 	render() {
 		const { query, loading, message, currentPageNo, totalPages } = this.state;
@@ -167,8 +200,8 @@ class Search extends React.Component {
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
-				handlePrevClick={ () => this.handlePageClick('prev', event )}
-				handleNextClick={ () => this.handlePageClick('next', event )}
+//				handlePrevClick={ () => this.handlePageClick('prev', event )}
+//				handleNextClick={ () => this.handlePageClick('next', event )}
 			/>
 
 			{/*	Result*/}
@@ -179,8 +212,8 @@ class Search extends React.Component {
 				loading={loading}
 				showPrevLink={showPrevLink}
 				showNextLink={showNextLink}
-				handlePrevClick={ () => this.handlePageClick('prev', event )}
-				handleNextClick={ () => this.handlePageClick('next', event )}
+//				handlePrevClick={ () => this.handlePageClick('prev', event )}
+//				handleNextClick={ () => this.handlePageClick('next', event )}
 			/>
 
 			</div>
