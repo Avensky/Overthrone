@@ -21,12 +21,20 @@ class Characters extends Component {
         console.log(this.props)
         
         const characters = this.props.chars;
+        characters.sort(function(a, b) {
+            var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
         const updatedChars = characters.map( char => {
             return {
                 ...char,
             }
         });
         this.setState({ characters: updatedChars})
+
+        console.log('characters: ' + characters)
     }
 
     deleteCharHandler = (id) => {
@@ -37,7 +45,7 @@ class Characters extends Component {
         let chars = <p style={{textAlign: 'center'}}>Something went wrong!</p>
 
         if (!this.props.error) {
-            chars = this.props.chars.map( char => {
+            chars = this.state.characters.map( char => {
                 return (
                     <Character
                         key         = {char._id}  

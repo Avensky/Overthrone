@@ -46,6 +46,18 @@ Character.findOne({_id : req.params.characterid},{},(err,doc)=>{
 })
 });   
 
+
+app.get('/api/getcharSearch/',(req,res)=>{              //get a character details
+Character.find({},(err,doc)=>{
+    if(doc)
+        res.json(doc);
+    else {
+        res.status(404).send('Ops!Detail not found');
+    }
+})
+});   
+
+
 app.post('/api/updatechar',(req,res)=>{          //update a character data
     Character.findOneAndUpdate({
         characterId : req.body.id
