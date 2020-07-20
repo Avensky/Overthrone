@@ -17,6 +17,8 @@ const character = props => (
             {props.name} ({props.age})
         </div>
         <div className={classes.CardDescription}>{props.bio}</div>
+        
+        {/*
         <div className={myClasses.List}>
             <Link to={'/characters/characterEdit/' + props.id}>
                 <button 
@@ -29,6 +31,7 @@ const character = props => (
                 onClick={props.deleteClick}
             >DELETE</button>            
         </div>
+        */}
 
     </div>
 )

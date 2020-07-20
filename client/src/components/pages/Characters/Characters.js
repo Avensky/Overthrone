@@ -10,21 +10,8 @@ import CharacterEdit from './CharacterEdit/CharacterEdit';
 import CharacterList from './CharacterList/CharacterList';
 import { Route, Switch } from 'react-router-dom';
 
-
-
-
 class Characters extends Component {
-    state = {
-        characters : []
-    }
-
-    componentDidMount () {
-        this.props.onGetCharacters();
-    }
-
-
-
-
+    
     render () {
 
         return(
@@ -54,8 +41,7 @@ class Characters extends Component {
 
 const mapStateToProps = state => {
     return {
-        chars : state.char.characters,
-        getCharById: state.char.getCharById
+
     };
 };
 

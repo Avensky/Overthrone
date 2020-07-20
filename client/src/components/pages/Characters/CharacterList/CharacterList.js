@@ -10,38 +10,47 @@ import * as actions from '../../../../store/actions/index';
 //import { Route, Switch } from 'react-router-dom';
 import Search from '../../../Search/Search';
 
-
-
 class Characters extends Component {
     state = {
         characters : []
     }
 
-    componentDidMount() {
-        console.log(this.props)
+    componentDidMount () {
+        this.props.onGetCharacters();
+        this.sortAlphHandler();
     }
 
-    componentDidUpdate() {
-
+    componentDidUpdate () {
+        
     }
 
     deleteCharHandler = (id) => {
         this.props.onDeleteChar(id);
     }
 
+    sortAlphHandler = () => {
+        let chars = this.props.chars
+
+        chars.sort(function(a, b){
+            if(a.name < b.name) { return -1; }
+            if(a.name > b.name) { return 1; }
+            return 0;
+        })
+        this.setState({characters : chars});
+        console.log("characters: " + this.state.characters)
+    }
+
+    sortAlphDescHandler = () => {
+        let chars = this.state.characters
+        const reversed = chars.reverse();
+        this.setState({characters : reversed});
+    }
+
     render () {
         let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
-
         if (!this.props.error) {
-            let chars = this.props.chars
-
-            chars.sort(function(a, b){
-                if(a.name < b.name) { return -1; }
-                if(a.name > b.name) { return 1; }
-                return 0;
-            })
-
-            characters = chars.map( char => {
+            
+            characters = this.state.characters.map( char => {
                 return (
                     <Character
                         key         = {char._id}  
@@ -60,13 +69,13 @@ class Characters extends Component {
             <Auxiliary>
                 <div className={myClasses.Items}>
                     <div className={['box', myClasses.Items ].join(' ')}></div>
-                    <NewCharacter />
+                    {/* <NewCharacter /> */}
                     <div className={classes.spread}>
                     <Search className={myClasses.Search} />
                     <div className={myClasses.dropdown}>
                         <button className={myClasses.dropbtn}>OrderBy: </button>
                         <div className={myClasses.dropdownContent}>
-                            <a href="/price">Alphabetical</a>
+                            <a onClick={this.sortAlphDescHandler}>Alphabetical</a>
                             <a href="/price">Price</a>
                             <a href="/date">Most recent</a>
                             <a href="/popular">Most Popular</a>

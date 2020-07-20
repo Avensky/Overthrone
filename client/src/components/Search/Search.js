@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Search.module.scss';
-import axios from 'axios';
+//import axios from 'axios';
 import Loader from '../../components/UI/Spinner/loader.gif';
 import PageNavigation from '../PageNavigation/PageNavigation';
 
@@ -55,8 +55,6 @@ class Search extends Component {
 
 		return (
 			<div className="container">
-			{/*	Heading*/}
-			<h2 className="heading">Live Search: React Application</h2>
 			{/* Search Input*/}
 			<label className="search-label" htmlFor="search-input">
 				<input
