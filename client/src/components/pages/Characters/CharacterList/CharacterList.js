@@ -17,7 +17,9 @@ class Characters extends Component {
 
     componentDidMount () {
         this.props.onGetCharacters();
-        this.sortAlphHandler();
+        let chars = this.props.chars
+        this.setState({characters : chars});
+
     }
 
     componentDidUpdate () {
@@ -39,18 +41,29 @@ class Characters extends Component {
         this.setState({characters : chars});
         console.log("characters: " + this.state.characters)
     }
+    sortNumHandler = () => {
+        let chars = this.props.chars
+
+        chars.sort(function(a, b){
+            if(a.age < b.age) { return -1; }
+            if(a.age > b.age) { return 1; }
+            return 0;
+        })
+        this.setState({characters : chars});
+        console.log("characters: " + this.state.characters)
+    }
 
     sortAlphDescHandler = () => {
         let chars = this.state.characters
         const reversed = chars.reverse();
-        this.setState({characters : reversed});
+        this.setState({characters : chars});
     }
 
     render () {
         let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
         if (!this.props.error) {
             
-            characters = this.state.characters.map( char => {
+            characters = this.props.chars.map( char => {
                 return (
                     <Character
                         key         = {char._id}  
@@ -76,7 +89,7 @@ class Characters extends Component {
                         <button className={myClasses.dropbtn}>OrderBy: </button>
                         <div className={myClasses.dropdownContent}>
                             <a onClick={this.sortAlphDescHandler}>Alphabetical</a>
-                            <a href="/price">Price</a>
+                            <a onClick={this.sortNumHandler}>Age</a>
                             <a href="/date">Most recent</a>
                             <a href="/popular">Most Popular</a>
                         </div>
