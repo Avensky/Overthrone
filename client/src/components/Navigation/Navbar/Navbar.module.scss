@@ -17,6 +17,8 @@
 
 .Navbar a {
     height: 100%;
+    margin: 0;
+    align-items: center;
 }
 
 .Navbar nav {
@@ -37,7 +39,8 @@
     padding: 0;
 }
 
-.Navbar h2 {
+.Navbar h2,
+.Navbar h3 {
     margin: 0;
 }
 

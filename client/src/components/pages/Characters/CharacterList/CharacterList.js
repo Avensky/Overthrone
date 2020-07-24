@@ -4,7 +4,7 @@ import Auxiliary from '../../../../hoc/Auxiliary';
 import Character from '../Character/Character';
 import myClasses from './CharacterList.module.scss';
 import classes from '../../Pages.module.scss';
-import NewCharacter from '../NewCharacter/NewCharacter';
+//import NewCharacter from '../NewCharacter/NewCharacter';
 import * as actions from '../../../../store/actions/index';
 //import CharacterEdit from './CharacterEdit/CharacterEdit';
 //import { Route, Switch } from 'react-router-dom';
@@ -56,7 +56,7 @@ class Characters extends Component {
     sortAlphDescHandler = () => {
         let chars = this.state.characters
         const reversed = chars.reverse();
-        this.setState({characters : chars});
+        this.setState({characters : reversed});
     }
 
     render () {

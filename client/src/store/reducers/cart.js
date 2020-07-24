@@ -17,22 +17,26 @@ const initialState = {
         {id:6,title:'Blues', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",price:90,img: Item6}
     ],
     addedItems:[],
-    total: 0
+    total: 0,
+    totalItems: 0
 
 }
 
 const addToCart= ( state, action ) => {
+ 
     let addedItem = state.items.find(item=> item.id === action.id)
     //check if the action id exists in the addedItems
-   let existed_item= state.addedItems.find(item=> action.id === item.id)
-   if(existed_item)
-   {
-      addedItem.quantity += 1 
-       return{
-          ...state,
-           total: state.total + addedItem.price 
-            }
-  }
+    let existed_item= state.addedItems.find(item=> action.id === item.id)
+    if(existed_item)
+    {
+        addedItem.quantity += 1
+        return{
+            ...state,
+            total: state.total + addedItem.price ,
+            totalItems: state.totalItems +1
+        }
+    }
+
    else{
       addedItem.quantity = 1;
       //calculating the total
@@ -41,7 +45,8 @@ const addToCart= ( state, action ) => {
       return{
           ...state,
           addedItems: [...state.addedItems, addedItem],
-          total : newTotal
+          total : newTotal,
+          totalItems: state.totalItems +1
       }
       
   }
@@ -67,7 +72,7 @@ const addQuantity = ( state, action ) => {
     let newTotal = state.total + addedItem.price
     return{
         ...state,
-        total: newTotal
+        total: newTotal,
     }
 }
 const subQuantity = ( state, action ) => {
@@ -79,7 +84,8 @@ const subQuantity = ( state, action ) => {
         return{
             ...state,
             addedItems: new_items,
-            total: newTotal
+            total: newTotal,
+            totalItems: state.totalItems -1
         }
     }
     else {
@@ -87,7 +93,8 @@ const subQuantity = ( state, action ) => {
         let newTotal = state.total - addedItem.price
         return{
             ...state,
-            total: newTotal
+            total: newTotal,        
+            totalItems: state.totalItems -1
         }
     }
 }
@@ -104,6 +111,7 @@ const subShipping = ( state, action ) => {
         total: state.total - 6 
     }
 }
+
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.ADD_TO_CART       : return addToCart(state, action);
