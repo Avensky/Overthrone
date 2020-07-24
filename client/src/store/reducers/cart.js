@@ -54,6 +54,7 @@ const addToCart= ( state, action ) => {
 
 const removeItem = ( state, action ) => {
     let itemToRemove= state.addedItems.find(item=> action.id === item.id)
+    let quantityToRemove= itemToRemove.quantity
     let new_items = state.addedItems.filter(item=> action.id !== item.id)
     
     //calculating the total
@@ -62,7 +63,8 @@ const removeItem = ( state, action ) => {
     return{
         ...state,
         addedItems: new_items,
-        total: newTotal
+        total: newTotal,
+        totalItems: state.totalItems - quantityToRemove
     }
 }
 
@@ -73,6 +75,7 @@ const addQuantity = ( state, action ) => {
     return{
         ...state,
         total: newTotal,
+        totalItems: state.totalItems + 1
     }
 }
 const subQuantity = ( state, action ) => {
