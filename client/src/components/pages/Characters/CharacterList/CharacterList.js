@@ -12,7 +12,9 @@ import Search from '../../../Search/Search';
 
 class Characters extends Component {
     state = {
-        characters : []
+        characters : [],
+        order: true, 
+        sortedData: 'name asc'
     }
 
     componentDidMount () {
@@ -30,19 +32,42 @@ class Characters extends Component {
         this.props.onDeleteChar(id);
     }
 
+    getSortedData =() => {
+            
+        if (this.state.sortedData !== 'name asc') {
+            //this.sortAlphDescHandler()
+            this.sortAlphHandler()
+            this.setState({order: true, sortedData: 'name asc' });
+        } else {
+            this.sortAlphDescHandler()
+            //this.sortAlphHandler()
+        }
+    }
+
     sortAlphHandler = () => {
         let chars = this.props.chars
-
         chars.sort(function(a, b){
             if(a.name < b.name) { return -1; }
             if(a.name > b.name) { return 1; }
             return 0;
         })
-        this.setState({characters : chars});
+        this.setState({characters : chars, order: true, sortedData: 'name asc'});
         console.log("characters: " + this.state.characters)
     }
-    sortNumHandler = () => {
+
+    sortAlphDescHandler = () => {
         let chars = this.props.chars
+        chars.sort(function(a, b){
+            if(a.name < b.name) { return -1; }
+            if(a.name > b.name) { return 1; }
+            return 0;
+        })
+        const reversed = chars.reverse();
+        this.setState({characters : reversed, order: true, sortedData: 'name desc'});
+    }
+
+    sortNumHandler = () => {
+        let chars = this.state.characters
 
         chars.sort(function(a, b){
             if(a.age < b.age) { return -1; }
@@ -51,12 +76,6 @@ class Characters extends Component {
         })
         this.setState({characters : chars});
         console.log("characters: " + this.state.characters)
-    }
-
-    sortAlphDescHandler = () => {
-        let chars = this.state.characters
-        const reversed = chars.reverse();
-        this.setState({characters : reversed});
     }
 
     render () {
@@ -88,10 +107,8 @@ class Characters extends Component {
                     <div className={myClasses.dropdown}>
                         <button className={myClasses.dropbtn}>OrderBy: </button>
                         <div className={myClasses.dropdownContent}>
-                            <a onClick={this.sortAlphDescHandler}>Alphabetical</a>
+                            <a onClick={this.getSortedData}>Alphabetical</a>
                             <a onClick={this.sortNumHandler}>Age</a>
-                            <a href="/date">Most recent</a>
-                            <a href="/popular">Most Popular</a>
                         </div>
                     </div>
                 </div>
