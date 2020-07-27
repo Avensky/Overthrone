@@ -66,6 +66,17 @@ class Characters extends Component {
         this.setState({characters : reversed, order: true, sortedData: 'name desc'});
     }
 
+    getSortedNum = () => {
+            
+        if (this.state.sortedData !== 'num asc') {
+            //this.sortAlphDescHandler()
+            this.sortNumHandler()
+            this.setState({order: true, sortedData: 'num asc' });
+        } else {
+            this.sortNumDescHandler()
+            //this.sortAlphHandler()
+        }
+    }
     sortNumHandler = () => {
         let chars = this.state.characters
 
@@ -76,6 +87,19 @@ class Characters extends Component {
         })
         this.setState({characters : chars});
         console.log("characters: " + this.state.characters)
+    }
+
+    sortNumDescHandler = () => {
+        let chars = this.state.characters
+
+        chars.sort(function(a, b){
+            if(a.age < b.age) { return -1; }
+            if(a.age > b.age) { return 1; }
+            return 0;
+        })
+
+        const reversed = chars.reverse();
+        this.setState({characters : reversed, order: true, sortedData: 'num desc'});
     }
 
     render () {
