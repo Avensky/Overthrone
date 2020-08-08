@@ -154,7 +154,7 @@ class Faqs extends Component {
                         {/* <Redirect from="/" to="/posts" /> */}
                         {/* <Route path="/" component={Posts} /> */}
                     </Switch>
-                    <hr />
+                    {/* <hr />  */}
             
                 </div>
             </Auxiliary>

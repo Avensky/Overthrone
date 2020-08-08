@@ -161,20 +161,21 @@ class Auth extends Component {
                             className={unselected}
                         ><h2><span className="fa fa-user" /> Signup</h2>
                         </button>   
-                    </div>            
-                    {form}
-                    <div className={classes.CardTitle}>Or continue with:</div>
-                    <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
-                        <a href="/auth/facebook"><span className="fa fa-facebook" /> Facebook</a>
-                    </button>
-                    <button className={[myClasses.Btn, "btn-info"].join(' ')}>
-                        <a href="/auth/twitter"><span className="fa fa-twitter" /> Twitter</a>
-                    </button>
-                    <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
-                        <a href="/auth/google"><span className="fa fa-google-plus" /> Google+</a>
-                    </button>
-                </div>
-            </Auxiliary>
+                    </div>
+                </div>          
+                {form}
+                <div className={classes.CardTitle}>Or continue with:</div>
+                <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
+                    <a href="/auth/facebook"><span className="fa fa-facebook" /> Facebook</a>
+                </button>
+                <button className={[myClasses.Btn, "btn-info"].join(' ')}>
+                    <a href="/auth/twitter"><span className="fa fa-twitter" /> Twitter</a>
+                </button>
+                <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
+                    <a href="/auth/google"><span className="fa fa-google-plus" /> Google+</a>
+                </button>
+            
+        </Auxiliary>
         )
     }
 }

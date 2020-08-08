@@ -33,13 +33,12 @@ class navbar extends Component {
                         <div className={myClasses.Logo}>
                             <Logo />
                         </div>  
+                
                     </NavLink >
                 </div>
                 </div>
                 <div className={myClasses.DesktopOnly}>
-                    <NavItems 
-                    isAuthenticated={this.props.isAuth} 
-                    />
+                    <NavItems isAuthenticated={this.props.isAuth} />
                 </div>
             </div>
         )

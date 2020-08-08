@@ -49,9 +49,9 @@ class App extends Component {
         <Route path="/home"                 component={Home} />          
         <Route path="/cart"                 component={Cart} />                
         <Route path="/profile"              component={Profile} />
-        <Route path='/details/:id'          exact component={Details} />
-        <Route path='/CharacterList/'    exact component={CharacterList} />
-        <Route path="/"                 component={Home}  />      
+        <Route path='/details/:id'    exact component={Details} />
+        <Route path='/CharacterList/' exact component={CharacterList} />
+        <Route path="/"                     component={Home}  />      
         {/* <Redirect to="/home" />  */}              
       </Switch>
     );

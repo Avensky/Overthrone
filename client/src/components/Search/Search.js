@@ -54,7 +54,7 @@ class Search extends Component {
 
 
 		return (
-			<div className="container">
+			<div className="">
 			{/* Search Input*/}
 			<label className="search-label" htmlFor="search-input">
 				<input

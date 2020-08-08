@@ -14,7 +14,7 @@ const character = props => (
         </figure>
         */}
         <div className={classes.CardTitle}>
-            {props.name} ({props.age})
+            {props.name}  {props.age}
         </div>
         <div className={classes.CardDescription}>{props.bio}</div>
         

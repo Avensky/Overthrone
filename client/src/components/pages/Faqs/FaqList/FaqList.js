@@ -54,7 +54,7 @@ class Faqs extends Component {
             <Auxiliary>
                 <div className={myClasses.Items}>
                     <div className={['box', myClasses.Items ].join(' ')}></div>
-                    <NewFaq />
+                    {/* <NewFaq /> */}
                     {faqs}
                 </div>
 

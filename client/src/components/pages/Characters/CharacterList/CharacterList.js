@@ -21,11 +21,6 @@ class Characters extends Component {
         this.props.onGetCharacters();
         let chars = this.props.chars
         this.setState({characters : chars});
-
-    }
-
-    componentDidUpdate () {
-        
     }
 
     deleteCharHandler = (id) => {
@@ -33,14 +28,11 @@ class Characters extends Component {
     }
 
     getSortedData =() => {
-            
         if (this.state.sortedData !== 'name asc') {
-            //this.sortAlphDescHandler()
             this.sortAlphHandler()
             this.setState({order: true, sortedData: 'name asc' });
         } else {
             this.sortAlphDescHandler()
-            //this.sortAlphHandler()
         }
     }
 
@@ -51,7 +43,7 @@ class Characters extends Component {
             if(a.name > b.name) { return 1; }
             return 0;
         })
-        this.setState({characters : chars, order: true, sortedData: 'name asc'});
+        this.setState({characters : chars});
         console.log("characters: " + this.state.characters)
     }
 
@@ -75,38 +67,34 @@ class Characters extends Component {
         } else {
             this.sortNumDescHandler()
             //this.sortAlphHandler()
+            //this.setState({order: true, sortedData: 'num desc' });
         }
     }
-    sortNumHandler = () => {
-        let chars = this.state.characters
 
-        chars.sort(function(a, b){
-            if(a.age < b.age) { return -1; }
-            if(a.age > b.age) { return 1; }
-            return 0;
-        })
+    sortNumHandler = () => {
+        let chars = this.props.chars
+        chars.sort(function(a, b) {
+            return (a.age === "") - (b.age === "") || a.age - b.age;
+        });          
         this.setState({characters : chars});
-        console.log("characters: " + this.state.characters)
+        console.log("num asc: " + chars)
     }
 
     sortNumDescHandler = () => {
-        let chars = this.state.characters
-
-        chars.sort(function(a, b){
-            if(a.age < b.age) { return -1; }
-            if(a.age > b.age) { return 1; }
-            return 0;
-        })
-
-        const reversed = chars.reverse();
-        this.setState({characters : reversed, order: true, sortedData: 'num desc'});
+        let chars = this.props.chars
+        chars.sort(function(a, b) {
+            return (a.age === "") - (b.age === "") || a.age - b.age;
+        });    
+        let reversed = chars.reverse();
+        this.setState({characters : reversed, order: true, sortedData: 'num desc' });
+        console.log("num desc: " + reversed)
     }
 
     render () {
         let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
         if (!this.props.error) {
             
-            characters = this.props.chars.map( char => {
+            characters = this.state.characters.map( char => {
                 return (
                     <Character
                         key         = {char._id}  
@@ -124,18 +112,21 @@ class Characters extends Component {
         return(
             <Auxiliary>
                 <div className={myClasses.Items}>
-                    <div className={['box', myClasses.Items ].join(' ')}></div>
+                    {/* <div className={['box', myClasses.Items ].join(' ')}></div>
                     {/* <NewCharacter /> */}
-                    <div className={classes.spread}>
+                    {/*  <div className={classes.spread}>*/}
                     <Search className={myClasses.Search} />
+                    
+                    {/*
                     <div className={myClasses.dropdown}>
                         <button className={myClasses.dropbtn}>OrderBy: </button>
                         <div className={myClasses.dropdownContent}>
                             <a onClick={this.getSortedData}>Alphabetical</a>
-                            <a onClick={this.sortNumHandler}>Age</a>
+                            <a onClick={this.getSortedNum}>Age</a>
                         </div>
                     </div>
-                </div>
+                    */}
+                {/* </div> */}
                     {characters}
                 </div>
 

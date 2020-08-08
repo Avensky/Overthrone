@@ -30,7 +30,7 @@ class Wrapper extends Component {
                     sidebarToggleClicked={this.sidebarToggleHandler} 
                 />
                 <Sidebar 
-                    isLogged={this.state.isLoggedIn}
+                    isLogged={this.props.isLoggedIn}
                     open={this.state.showSidebar} 
                     closed={this.sidebarClosedHandler} 
                 />
