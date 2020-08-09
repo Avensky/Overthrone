@@ -162,7 +162,7 @@ class Auth extends Component {
                         ><h2><span className="fa fa-user" /> Signup</h2>
                         </button>   
                     </div>
-                </div>          
+                         
                 {form}
                 <div className={classes.CardTitle}>Or continue with:</div>
                 <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
@@ -174,7 +174,7 @@ class Auth extends Component {
                 <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
                     <a href="/auth/google"><span className="fa fa-google-plus" /> Google+</a>
                 </button>
-            
+            </div> 
         </Auxiliary>
         )
     }

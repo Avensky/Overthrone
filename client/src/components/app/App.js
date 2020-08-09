@@ -32,6 +32,7 @@ class App extends Component {
 
   componentDidMount () {
       this.props.onFetchUser();
+//      this.props.onGetCharacters();
   }
 
   render() {

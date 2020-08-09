@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Auxiliary from '../../../../hoc/Auxiliary';
 import Character from '../Character/Character';
 import myClasses from './CharacterList.module.scss';
-import classes from '../../Pages.module.scss';
+//import classes from '../../Pages.module.scss';
 //import NewCharacter from '../NewCharacter/NewCharacter';
 import * as actions from '../../../../store/actions/index';
 //import CharacterEdit from './CharacterEdit/CharacterEdit';
