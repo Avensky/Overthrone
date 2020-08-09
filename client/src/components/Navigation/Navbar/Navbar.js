@@ -38,7 +38,7 @@ class navbar extends Component {
                 </div>
                 </div>
                 <div className={myClasses.DesktopOnly}>
-                    <NavItems isAuthenticated={this.props.isAuth} />
+                    <NavItems isAuthenticated={this.props.isAuth} cart={this.props.totalItems}/>
                 </div>
             </div>
         )

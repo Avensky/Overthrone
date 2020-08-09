@@ -38,7 +38,8 @@ class Login extends Component {
                     <Link 
                     id          = {this.props.payload['twitter'].id}
                     link        = "Twitter"
-                    displayName = {this.props.payload['twitter'].displayName}                        token       = "token"
+                    displayName = {this.props.payload['twitter'].displayName}                        
+                    //token       = "token"
                     username    = {this.props.payload['twitter'].username}
                     token       = {this.props.payload['twitter'].token}
                     icon        = "fa-twitter"

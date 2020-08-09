@@ -4,7 +4,7 @@ import Auxiliary from '../../../../hoc/Auxiliary';
 import Faq from '../Faq/Faq';
 import myClasses from './FaqList.module.scss';
 //import classes from '../../Pages.module.scss';
-import NewFaq from '../NewFaq/NewFaq';
+//import NewFaq from '../NewFaq/NewFaq';
 import * as actions from '../../../../store/actions/index';
 //import FaqEdit from './FaqEdit/FaqEdit';
 //import { Route, Switch } from 'react-router-dom';

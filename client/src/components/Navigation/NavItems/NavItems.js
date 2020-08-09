@@ -1,9 +1,9 @@
 import React from 'react';
-import classes from './NavItems.module.scss'
+import myClasses from './NavItems.module.scss'
 import NavItem from './NavItem/NavItem';
-
+import classes from '../../pages/Pages.module.scss';
 const navItems = ( props ) => (
-    <ul className={classes.NavItems}>
+    <ul className={myClasses.NavItems}>
         <NavItem link="/books"          exact>Books</NavItem>
         <NavItem link="/authors"        exact>Authors</NavItem>
         <NavItem link="/characters"     exact>Characters</NavItem>
@@ -16,9 +16,14 @@ const navItems = ( props ) => (
         {!props.isAuthenticated
             ? <NavItem link="/authentication"   >Cotact <span>&#8713;</span> Sign-Up</NavItem>
             : <NavItem link="/logout"           >Logout</NavItem>}
-        <NavItem  link="/shop/cart">
-            <span className={["fa", classes.fa, "fa-shopping-cart", classes.left].join(' ')}/>
-        </NavItem >
+        
+        {props.cart > 0 
+            ? <NavItem  link="/shop/cart" myClass={classes.line}>
+                <span className={["fa", myClasses.fa, "fa-shopping-cart", classes.inline].join(' ')}/>
+                <p className={classes.inline}>({props.cart})</p>
+                </NavItem > : null
+        }
+        
 
     </ul>
 );
