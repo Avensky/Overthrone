@@ -119,14 +119,13 @@ class Characters extends Component {
                 <Search className={myClasses.Search} />
                 {characters}
                 {this.props.children}
-                <Switch>
-                        {/* <Route path="/characters" exact component={CharacterList} /> */}
+{/*                <Switch>
+                        <Route path="/characters" exact component={CharacterList} />
                         <Route path="/characters/characterEdit/:id"   exact   component={CharacterEdit} />
                         <Route render={() => <h1>Not found</h1>}/>
-                        {/* <Redirect from="/" to="/posts" /> */}
-                        {/* <Route path="/" component={Posts} /> */}
-                </Switch>
-                
+                        <Redirect from="/" to="/posts" />
+                        <Route path="/" component={Posts} /> 
+                </Switch> */}                
             
                 </div>
                
