@@ -118,8 +118,8 @@ class Characters extends Component {
                 <div className={[classes.Card, myClasses.Characters].join(' ')}>
                 <Search className={myClasses.Search} />
                 {characters}
-                {this.props.children}
-{/*                <Switch>
+{/*                 {this.props.children}
+               <Switch>
                         <Route path="/characters" exact component={CharacterList} />
                         <Route path="/characters/characterEdit/:id"   exact   component={CharacterEdit} />
                         <Route render={() => <h1>Not found</h1>}/>

@@ -8,6 +8,7 @@ import Item from './Item/Item';
 import * as actions from '../../../../store/actions/index';
 // import Details from '../Details/Details';
 // import { Link } from 'react-router-dom';
+import Search from '../../../Search/Search';
 class Items extends Component {
     state = {
         items : []
@@ -54,8 +55,8 @@ class Items extends Component {
         return(
             <Auxiliary>
                 <div className={classes.spread}>
-                    <input className={myClasses.Search} type='text' placeholder="search the store" />
-                    
+                    {/* <input className={myClasses.Search} type='text' placeholder="search the store" /> */}
+                    <Search />
                     <div className={myClasses.dropdown}>
                         <button className={myClasses.dropbtn}>OrderBy: </button>
                         <div className={myClasses.dropdownContent}>

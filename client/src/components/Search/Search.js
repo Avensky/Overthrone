@@ -55,7 +55,7 @@ class Search extends Component {
 
 		return (
 			<div className="">
-			{/* Search Input*/}
+			{/* Search Input */}
 			<label className="search-label" htmlFor="search-input">
 				<input
 					type="text"
@@ -69,7 +69,7 @@ class Search extends Component {
 				/>
 
 				  
-				<i className="fa fa-search search-icon" aria-hidden="true"/>
+			<i className="fa fa-search search-icon" aria-hidden="true"/>   
 			</label>
 
 			{/*	Error Message*/}

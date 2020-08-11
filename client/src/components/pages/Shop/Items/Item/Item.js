@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import classes from '../../../Pages.module.scss';
+import classes from '../../../Pages.module.scss';
 import myClasses from './Item.module.scss';
 //{classes.CardThumbnail}
 const item = props => (
@@ -25,7 +25,7 @@ const item = props => (
 
         {/* Quantity */}
         <div className={myClasses.CardQuantity}>
-            <Link to={props.link}><i className="material-icons" onClick={props.clicked}>add</i></Link>
+            <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')}onClick={props.clicked}>add</i>
         </div>
 
         {/* Price */}

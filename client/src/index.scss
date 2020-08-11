@@ -38,3 +38,16 @@ code {
 .my-btn-danger{
   color: #d9534f;
 }
+
+
+a ::selection {
+  color: white !important;
+}
+
+a :active {
+  color: white !important;
+}
+
+input {
+  color: black !important;
+}

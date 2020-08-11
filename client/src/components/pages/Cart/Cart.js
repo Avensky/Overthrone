@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
 import Recipe from './Recipe/Recipe'
-//import classes from '../Pages.module.scss'
+import classes from '../Pages.module.scss'
 import myClasses from './Cart.module.scss'
 //import Item from '../Shop/Items/Item/Item'
 //import Auxiliary from '../../../hoc/Auxiliary'
@@ -51,9 +51,9 @@ class Cart extends Component{
 
                                  {/* Quantity */}
                                 <div className={myClasses.CardQuantity}>
-                                    <Link to="/shop/cart"><i className="material-icons" onClick={()=>{this.handleSubtractQuantity(item.id)}}>arrow_drop_down</i></Link>
+                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{this.handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
                                     <p><b>{item.quantity}</b></p>
-                                    <Link to="/shop/cart"><i className="material-icons" onClick={()=>{this.handleAddQuantity(item.id)}}>arrow_drop_up</i></Link>                                    
+                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{this.handleAddQuantity(item.id)}}>arrow_drop_up</i>                                   
                                 </div>
  
                                 {/* Price */}
