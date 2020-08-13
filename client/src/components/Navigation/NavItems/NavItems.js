@@ -7,7 +7,7 @@ const navItems = ( props ) => (
         <NavItem link="/books"          exact>Books</NavItem>
         <NavItem link="/authors"        exact>Authors</NavItem>
         <NavItem link="/characters"     exact>Characters</NavItem>
-        <NavItem link="/sovereinty"     exact>The Sovereignty</NavItem>
+        <NavItem link="/sovereignty"     exact>The Sovereignty</NavItem>
         <NavItem link="/faqs"           exact>FAQs</NavItem>
         <NavItem link="/shop"           exact>Purchase</NavItem>
         {/* <NavItem link="/profile"        exact>Profile</NavItem> */}

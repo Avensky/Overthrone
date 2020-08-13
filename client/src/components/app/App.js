@@ -13,7 +13,7 @@ import Layout         from '../Layout/Layout';
 import Books          from '../pages/Books/Books';
 import Authors        from '../pages/Authors/Authors';
 import Characters     from '../pages/Characters/Characters';
-import Sovereinty     from '../pages/Sovereinty/Sovereinty';
+import Sovereignty     from '../pages/Sovereignty/Sovereignty';
 import Shop           from '../pages/Shop/Shop';
 //import ItemFull       from '../pages/Shop/ItemFull/ItemFull';
 import Details        from '../pages/Shop/Details/Details';
@@ -44,7 +44,7 @@ class App extends Component {
         <Route path="/books"                component={Books} />
         <Route path="/authors"              component={Authors} />
         <Route path="/characters"           component={Characters} />
-        <Route path="/sovereinty"           component={Sovereinty} />
+        <Route path="/sovereignty"          component={Sovereignty} />
         <Route path="/faqs"                 component={Faqs} />
         <Route path="/shop"                 component={Shop} />
         <Route path="/home"                 component={Home} />          
@@ -52,7 +52,7 @@ class App extends Component {
         <Route path="/profile"              component={Profile} />
         <Route path='/details/:id'    exact component={Details} />
         <Route path='/CharacterList/' exact component={CharacterList} />
-        <Route path="/"                     component={Home}  />      
+        <Route path="/"                     component={Books}  />      
         {/* <Redirect to="/home" />  */}              
       </Switch>
     );
