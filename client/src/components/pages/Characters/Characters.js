@@ -6,9 +6,9 @@ import myClasses from './Characters.module.scss';
 import classes from '../Pages.module.scss';
 //import NewCharacter from './NewCharacter/NewCharacter';
 import * as actions from '../../../store/actions/index';
-import CharacterEdit from './CharacterEdit/CharacterEdit';
+//import CharacterEdit from './CharacterEdit/CharacterEdit';
 import Character from './Character/Character';
-import { Route, Switch } from 'react-router-dom';
+//import { Route, Switch } from 'react-router-dom';
 import Search from '../../Search/Search';
 
 class Characters extends Component {

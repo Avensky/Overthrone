@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
 import Recipe from './Recipe/Recipe'
 import classes from '../Pages.module.scss'
@@ -91,9 +91,9 @@ const mapStateToProps = (state)=>{
 }
 const mapDispatchToProps = (dispatch)=>{
     return{
-        removeItem: (id)=>{dispatch(removeItem(id))},
-        addQuantity: (id)=>{dispatch(addQuantity(id))},
-        subtractQuantity: (id)=>{dispatch(subtractQuantity(id))}
+        removeItem       : (id)=>{dispatch(removeItem(id))},
+        addQuantity      : (id)=>{dispatch(addQuantity(id))},
+        subtractQuantity : (id)=>{dispatch(subtractQuantity(id))}
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Cart)
