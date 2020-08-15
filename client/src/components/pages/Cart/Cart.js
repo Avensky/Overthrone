@@ -6,7 +6,7 @@ import Recipe from './Recipe/Recipe'
 import classes from '../Pages.module.scss'
 import myClasses from './Cart.module.scss'
 //import Item from '../Shop/Items/Item/Item'
-//import Auxiliary from '../../../hoc/Auxiliary'
+import Auxiliary from '../../../hoc/Auxiliary'
 
 class Cart extends Component{
 
@@ -68,16 +68,26 @@ class Cart extends Component{
                 <p>Nothing.</p>
              )
         return(
-            <div className={myClasses.Cart}>
-                {/* Title */}
-                <div className={myClasses.Title}>
-                    <h3>My Shopping Cart:</h3>
+            <Auxiliary>
+                <div className='container'>
+                    <div className={['page-header', 'text-center'].join(' ')}>
+                        <a href='/shop' ><h2>Shop</h2></a>
+                    </div>
                 </div>
-                <div className={myClasses.Collection}>
-                    {addedItems}
-                    <Recipe />  
+
+                <div className={[classes.Card, myClasses.Shop].join(' ')}>
+                    <div className={myClasses.Cart}>
+                        {/* Title */}
+                        <div className={myClasses.Title}>
+                            <h3>My Shopping Cart:</h3>
+                        </div>
+                        <div className={myClasses.Collection}>
+                            {addedItems}
+                            <Recipe />  
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </Auxiliary>
        )
     }
 }
