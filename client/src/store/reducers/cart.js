@@ -32,6 +32,7 @@ const addToCart= ( state, action ) => {
         addedItem.quantity += 1
         return{
             ...state,
+            //update state to update count in real time
             addedItems: [...state.addedItems, addedItem],
             total: state.total + addedItem.price ,
             totalItems: state.totalItems +1, 
@@ -77,6 +78,7 @@ const addQuantity = ( state, action ) => {
     let newTotal = state.total + addedItem.price
     return{
         ...state,
+        addedItems: [...state.addedItems, addedItem],
         total: newTotal,
         totalItems: state.totalItems + 1
     }
@@ -99,6 +101,7 @@ const subQuantity = ( state, action ) => {
         let newTotal = state.total - addedItem.price
         return{
             ...state,
+            addedItems: [...state.addedItems, addedItem],
             total: newTotal,        
             totalItems: state.totalItems -1
         }
