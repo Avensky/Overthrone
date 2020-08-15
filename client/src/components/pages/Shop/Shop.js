@@ -42,7 +42,7 @@ class Purchase extends Component {
         let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
         if ( !this.state.error ) {
             //items = this.props.items.slice( 0, 4 );
-            items = this.props.items.map( item => {
+            items = this.props.items.slice( 0, 4 ).map( item => {
                 return(
                     <Item
                         img         = {item.img}
