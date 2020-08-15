@@ -23,10 +23,11 @@ class Cart extends Component{
         this.props.subtractQuantity(id);
     }
     render(){
-              
+        let cart = this.props.items;
+        let uniqueChars = [...new Set(cart)];
         let addedItems = this.props.items.length ?
             (  
-                this.props.items.map(item=>{
+                uniqueChars.map(item=>{
                     return(
                          <div className={myClasses.Cart} key={item.id}>
                             {/* Product */}
