@@ -18,15 +18,15 @@ class Purchase extends Component {
     }
 
     componentDidMount () {
-        console.log( this.props );
-        const items = this.props.items.slice( 0, 4 );
-        const updatedItems = items.map( item => {
-            return {
-                ...item,
-            }
-        } );
-        this.setState({ items: updatedItems })
-        console.log( this.state.items );
+        //console.log( this.props );
+        //const items = this.props.items.slice( 0, 4 );
+        //const updatedItems = items.map( item => {
+        //    return {
+        //        ...item,
+        //    }
+        //} );
+        //this.setState({ items: updatedItems })
+        //console.log( this.state.items );
     }
 
     componentDidUpdate () {
@@ -41,7 +41,8 @@ class Purchase extends Component {
     render () {
         let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
         if ( !this.state.error ) {
-            items = this.state.items.map( item => {
+            //items = this.props.items.slice( 0, 4 );
+            items = this.props.items.map( item => {
                 return(
                     <Item
                         img         = {item.img}
@@ -89,7 +90,6 @@ class Purchase extends Component {
                     <label><p>Misc</p></label>
                 </div>
                 <div className={myClasses.Items}>
-                    <h3 className="center">Our items</h3>
                     <div className={['box', myClasses.Items ].join(' ')}>
                         {items}
                     </div>
@@ -116,7 +116,9 @@ class Purchase extends Component {
 
 const mapStateToProps = state => {
     return {
-        items: state.cart.items
+        items       : state.cart.items,
+        addedItems  : state.cart.addedItems,
+        totalItems  : state.cart.totalItems
     };
 };
 

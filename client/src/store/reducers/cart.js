@@ -9,16 +9,16 @@ import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
     items: [
-        {id:1,title:'Winter body', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.", price:110,img:Item1},
-        {id:2,title:'Adidas', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.", price:80,img: Item2},
-        {id:3,title:'Vans', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",price:120,img: Item3},
-        {id:4,title:'White', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.", price:260,img:Item4},
-        {id:5,title:'Cropped-sho', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.", price:160,img: Item5},
-        {id:6,title:'Blues', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",price:90,img: Item6}
+        {id:1,title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0},
+        {id:2,title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0},
+        {id:3,title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0},
+        {id:4,title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0},
+        {id:5,title:'Cropped-sho',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0},
+        {id:6,title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0}
     ],
-    addedItems:[],
-    total: 0,
-    totalItems: 0
+    addedItems  :[],
+    total       : 0,
+    totalItems  : 0
 
 }
 
@@ -32,8 +32,10 @@ const addToCart= ( state, action ) => {
         addedItem.quantity += 1
         return{
             ...state,
+            addedItems: [...state.addedItems, addedItem],
             total: state.total + addedItem.price ,
-            totalItems: state.totalItems +1
+            totalItems: state.totalItems +1, 
+//            items: state.addedItem.quantity +1
         }
     }
 
@@ -46,7 +48,8 @@ const addToCart= ( state, action ) => {
           ...state,
           addedItems: [...state.addedItems, addedItem],
           total : newTotal,
-          totalItems: state.totalItems +1
+          totalItems: state.totalItems +1,
+//          items: state.items.quantity +1
       }
       
   }

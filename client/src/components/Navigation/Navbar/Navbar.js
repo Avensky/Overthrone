@@ -12,7 +12,7 @@ class navbar extends Component {
         let cart;         
         if (this.props.items.length>0) {
             cart = (
-                <NavLink  to="/shop/cart" className={classes.line}> 
+                <NavLink  to="/cart" className={classes.line}> 
                     <span className={["fa", "fa-shopping-cart", classes.left, classes.inline].join(' ')}/>
                     <h3 className={classes.inline}>({this.props.totalItems})</h3>
                 </NavLink > 
