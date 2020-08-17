@@ -4,62 +4,58 @@ import Auxiliary from '../../../hoc/Auxiliary';
 import Link from './Link/Link';
 import classes from '../Pages.module.scss';
 import myClasses from './Profile.module.scss';
-
+import * as actions from '../../../store/actions/index';
 class Login extends Component {
+    componentDidMount() {
+        this.props.onFetchUser();
+        console.log('payload: ' + this.props.payload)
+    }
     render () {
-            let payload = this.props.payload
+         
             let local, facebook, twitter, google = '';
-            if (this.props.payload['local']) {
-                local = (
-                <Link 
-                    id = {this.props.payload['_id']}
-                    link = "Local"
-                    email = {this.props.paylfoad['local'].email}
-                    token = {this.props.payload['local'].token}
-                    name = "Name"
-                    icon = "fa-user"
-                    mystyle = "auth-btn"
-                />)
+            if (this.props.payload){
+                if (this.props.payload['facebook']){
+                    facebook = (
+                        <Link 
+                        id      = {this.props.payload['facebook'].id}
+                        link    = "Facebook"
+                        email   = {this.props.payload['facebook'].email}
+                        token   = {this.props.payload['facebook'].token}
+                        name    = {this.props.payload['facebook'].name}
+                        icon    = "fa-facebook"
+                        mystyle = "btn-primary"
+                    />                )
+                }
+                if (this.props.payload['twitter']){
+                    twitter = (
+                        <Link 
+                        id          = {this.props.payload['twitter'].id}
+                        link        = "Twitter"
+                        displayName = {this.props.payload['twitter'].displayName}                        
+                        //token       = "token"
+                        username    = {this.props.payload['twitter'].username}
+                        token       = {this.props.payload['twitter'].token}
+                        icon        = "fa-twitter"
+                        mystyle     = "btn-info"
+                    />
+                    )
+                }
+                if (this.props.payload['google']){
+                    google =(
+                        <Link 
+                        id = {this.props.payload['google'].id}
+                        link = "Google"
+                        email = {this.props.payload['google'].email}
+                        token = {this.props.payload['google'].token}
+                        name = {this.props.payload['google'].name}
+                        icon = "fa-google-plus"
+                        mystyle = "btn-danger"
+                    />
+                    )
+                }
+
             }
-            if (this.props.payload['facebook']){
-                facebook = (
-                    <Link 
-                    id      = {this.props.payload['facebook'].id}
-                    link    = "Facebook"
-                    email   = {this.props.payload['facebook'].email}
-                    token   = {this.props.payload['facebook'].token}
-                    name    = {this.props.payload['facebook'].name}
-                    icon    = "fa-facebook"
-                    mystyle = "btn-primary"
-                />                )
-            }
-            if (this.props.payload['twitter']){
-                twitter = (
-                    <Link 
-                    id          = {this.props.payload['twitter'].id}
-                    link        = "Twitter"
-                    displayName = {this.props.payload['twitter'].displayName}                        
-                    //token       = "token"
-                    username    = {this.props.payload['twitter'].username}
-                    token       = {this.props.payload['twitter'].token}
-                    icon        = "fa-twitter"
-                    mystyle     = "btn-info"
-                />
-                )
-            }
-            if (this.props.payload['google']){
-                google =(
-                    <Link 
-                    id = {this.props.payload['google'].id}
-                    link = "Google"
-                    email = {this.props.payload['google'].email}
-                    token = {this.props.payload['google'].token}
-                    name = {this.props.payload['google'].name}
-                    icon = "fa-google-plus"
-                    mystyle = "btn-danger"
-                />
-                )
-            }
+            
             let body = (
                 <Auxiliary>
                     <div className="container">
@@ -94,7 +90,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        onFetchUser     : () => dispatch(actions.fetchUser()),
     }
 }
 
