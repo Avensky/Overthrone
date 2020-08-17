@@ -49,7 +49,6 @@ class App extends Component {
         <Route path="/shop"                 component={Shop} />
         <Route path="/home"                 component={Home} />          
         <Route path="/cart"                 component={Cart} />                
-        <Route path="/profile"              component={Profile} />
         <Route path='/details/:id'    exact component={Details} />
         <Route path='/CharacterList/' exact component={CharacterList} />
         <Route path="/"                     component={Books}  />      
@@ -57,18 +56,29 @@ class App extends Component {
       </Switch>
     );
 
-    // if (this.props.fetchedUser) {
-    //   routes = (
-    //     <Swi/tch>
-    //       <Route path="/connect-local"    component={connect-local} />
-    //       <Route path="/index"            component={index}  />
-    //       <Route path="/logout"           component={Login} />
-    //       <Route path="/profile"          component={profile}  />
-    //       <Route path="/signup"           component={signup} />
-    //       <Route path="/"                 component={index}  />
-    //       {/* <Redirect to="/home" /> */}              
-    //     </Switch>
-    //   )
+    if (this.props.fetchedUser) {
+      routes = (
+        <Switch>
+          <Route path="/connectLocal"         component={ConnectLocal} />
+          <Route path="/authentication"       component={Auth} />
+          <Route path="/signup"               component={Signup} />
+          <Route path="/books"                component={Books} />
+          <Route path="/authors"              component={Authors} />
+          <Route path="/characters"           component={Characters} />
+          <Route path="/sovereignty"          component={Sovereignty} />
+          <Route path="/faqs"                 component={Faqs} />
+          <Route path="/shop"                 component={Shop} />
+          <Route path="/home"                 component={Home} />          
+          <Route path="/cart"                 component={Cart} />                
+          <Route path='/details/:id'    exact component={Details} />
+          <Route path='/CharacterList/' exact component={CharacterList} />
+          {/*<Route path="/connect-local"    component={connect-local} />*/}       
+          <Route path="/profile"              component={Profile}  />
+          {/* <Redirect to="/home" /> */}
+          <Route path="/"                     component={Books}  />             
+        </Switch>
+      )
+    }
 
     return( 
       <Wrapper>

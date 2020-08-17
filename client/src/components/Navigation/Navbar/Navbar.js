@@ -49,7 +49,8 @@ const mapStateToProps = state => {
     return {
         addedItems: state.addedItems,
         items: state.cart.addedItems,
-        totalItems: state.cart.totalItems
+        totalItems: state.cart.totalItems,
+        isAuth: state.auth.payload
     };
 };
 
