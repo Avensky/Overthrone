@@ -14,16 +14,32 @@ class Login extends Component {
          
             let local, facebook, twitter, google = '';
             if (this.props.payload){
+                if (this.props.payload['local']){
+
+                    local = (
+                        <Link 
+                        id          = {this.props.payload['local'].id}
+                        link        = "Local"
+                        email       = {this.props.payload['local'].email}
+                        token       = {this.props.payload['local'].token}
+                        name        = {this.props.payload['local'].name}
+                        icon        = "fa-user"
+                        mystyle     = "btn-primary"
+                        provider    = 'local'
+                    />                )
+                }
                 if (this.props.payload['facebook']){
+
                     facebook = (
                         <Link 
-                        id      = {this.props.payload['facebook'].id}
-                        link    = "Facebook"
-                        email   = {this.props.payload['facebook'].email}
-                        token   = {this.props.payload['facebook'].token}
-                        name    = {this.props.payload['facebook'].name}
-                        icon    = "fa-facebook"
-                        mystyle = "btn-primary"
+                        id          = {this.props.payload['facebook'].id}
+                        link        = "Facebook"
+                        email       = {this.props.payload['facebook'].email}
+                        token       = {this.props.payload['facebook'].token}
+                        name        = {this.props.payload['facebook'].name}
+                        icon        = "fa-facebook"
+                        mystyle     = "btn-primary"
+                        provider    = 'facebook'
                     />                )
                 }
                 if (this.props.payload['twitter']){
@@ -37,6 +53,7 @@ class Login extends Component {
                         token       = {this.props.payload['twitter'].token}
                         icon        = "fa-twitter"
                         mystyle     = "btn-info"
+                        provider    = 'facebook'
                     />
                     )
                 }
@@ -50,6 +67,7 @@ class Login extends Component {
                         name = {this.props.payload['google'].name}
                         icon = "fa-google-plus"
                         mystyle = "btn-danger"
+                        provider= 'google'
                     />
                     )
                 }
