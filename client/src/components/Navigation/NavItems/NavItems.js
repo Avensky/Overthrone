@@ -15,7 +15,7 @@ const navItems = ( props ) => (
             ? <NavItem link="/profile"          >Profile</NavItem> : null}
         {!props.isAuthenticated
             ? <NavItem link="/authentication"   >Cotact <span>&#8713;</span> Sign-Up</NavItem>
-            : <a href="/auth/logout">Logout</a>}
+            : <div className={myClasses.NavItem}><a  href="/auth/logout">Logout</a></div>}
         
         {props.cart > 0 
             ? <NavItem  link="/cart" myClass={classes.line}>
