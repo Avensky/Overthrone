@@ -19,8 +19,8 @@ const link = (props) => (
                 { props.token       ? <strong>Token:         {props.token}<br /></strong>        : null }
                 { props.password    ? <strong>Password:      {props.password}<br /></strong>     : null }
             </p>
-            <a href="/unlink/local" className="btn btn-default">Unlink</a>
-            <a href="/connect/local" className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a>
+            <a href={props.providerUnlink} className="btn btn-default">Unlink</a>
+            <a href={props.provider} className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a>
     
     </div>
 )

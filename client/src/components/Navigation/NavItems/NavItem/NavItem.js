@@ -7,7 +7,6 @@ import myClasses from './NavItem.module.scss';
 const navigationItem = ( props ) => (
     <li className={myClasses.NavItem}>
             <NavLink 
-                href = {props.href}
                 to={props.link}
                 exact={props.exact}
                 activeClassName={myClasses.active}

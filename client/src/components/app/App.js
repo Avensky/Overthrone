@@ -59,7 +59,6 @@ class App extends Component {
     if (this.props.fetchedUser) {
       routes = (
         <Switch>
-          <Route path="/connectLocal"         component={ConnectLocal} />
           <Route path="/authentication"       component={Auth} />
           <Route path="/signup"               component={Signup} />
           <Route path="/books"                component={Books} />
