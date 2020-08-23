@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
+import * as actions from '../../../store/actions/index';
 
 class Auth extends Component {
     state = {
@@ -67,12 +68,37 @@ class Auth extends Component {
         };
         this.setState( { controls: updatedControls } );
     }
+
+    loginHandler = () => {
+    //    event.preventDefault();
+        this.props.onLogin( 
+            this.state.controls.email.value, 
+            this.state.controls.password.value, 
+            this.state.authLogin 
+        );
+    }
+
+    newUserHandler = () => {
+        // event.preventDefault();
+        const pic = 'https://lh3.googleusercontent.com/a-/AOh14Gjyf9dG_HQji_W8Js4Kps0_nxl5RyobebP6Nqeg';
+        this.props.onNewUser(
+            this.state.controls.username.value, 
+            this.state.controls.givenName.value,
+            this.state.controls.familyName.value, 
+            this.state.controls.email.value, 
+            this.state.controls.password.value, 
+//            this.state.controls.picture.value,
+            pic
+        );
+    }
+
     render () {
         let form = (
-            <form action="/auth/login" method="post">
+            <form action="/auth/login" 
+            method="post">
                 <input 
-                    type="email"
-                    name="email"
+                    type="text"
+                    name="email"    
                     onChange={(event) => this.inputChangedHandler( event, "email")}
                     placeholder="Email Address"
                     className={myClasses.AuthInput}
@@ -87,7 +113,11 @@ class Auth extends Component {
             
             <p className="text-left">Forgot Password?</p>
             
-                <button className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}>
+                <button 
+                    //onClick={this.loginHandler} 
+                    className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                    type="submit"
+                >
                     <div className={myClasses.BtnDiv}>
                         <span className="fa fa-user"></span> Sign In
                     </div>
@@ -98,29 +128,34 @@ class Auth extends Component {
         if (!this.state.authLogin){
             form = (
                 <Auxiliary>
-                    <form  action="/auth/signup" method="post">
+                    <form  action="/auth/signup" 
+                    method="post"
+                    >
                         <input 
-                            type="email"
-                            name="Email"
+                            type="text"
+                            name="email"
                             onChange={(event) => this.inputChangedHandler( event, "email")}
                             placeholder="Email Address"
                             className={myClasses.AuthInput}
                         />
                         <input 
-                            type="Password"
-                            name="Password"
+                            type="password"
+                            name="password"
                             onChange={(event) => this.inputChangedHandler( event, "password")}
                             placeholder="Password"
                             className={myClasses.AuthInput}
                         />
                         <input 
-                            type="Password"
-                            name="Confirm Password"
+                            type="password"
+                            name="confirm password"
                             onChange={(event) => this.inputChangedHandler( event, "confirmPassword")}
                             placeholder="Confirm Password"
                             className={myClasses.AuthInput}
                         />
-                        <button className={[myClasses.Btn, classes.AuthBtn, 'auth-btn' ].join(' ')}>
+                        <button 
+                        //onClick={this.newUserHandler()} 
+                        className={[myClasses.Btn, classes.AuthBtn, 'auth-btn' ].join(' ')}
+                        type="submit">
                             <div className={myClasses.BtnDiv}>
                                 <span className="fa fa-user"></span> Sign Up
                             </div>
@@ -188,4 +223,12 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect (mapStateToProps)(Auth);
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: (email, password, isSignup) => dispatch(actions.login(email, password, isSignup)),
+        onSetLoginRedirectPath: () => dispatch(actions.setLoginRedirectPath('/blog')),
+        onNewUser: (username, givenName, familyName, email, password, picture) => dispatch(actions.signup(username, givenName, familyName, email, password, picture))
+    }
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(Auth);

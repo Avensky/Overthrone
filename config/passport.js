@@ -68,21 +68,18 @@ module.exports         = function(passport) {
     // =========================================================================
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        usernameField       : 'email',
-        passwordField       : 'password',
-        passReqToCallback   : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-//        proxy               : true
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
-    async (req, email, password, done) => {
-        
-        console.log('user signup');
+    function(req, email, password, done) {
 
         // asynchronous
-        //process.nextTick(function() {
+        process.nextTick(function() {
 
             //  Whether we're signing up or connecting an account, we'll need
             //  to know if the email address is in use.
-            User.findOne({'local.email': email}, (err, existingUser) => {
+            User.findOne({'local.email': email}, function(err, existingUser) {
 
                 // if there are any errors, return the error
                 if (err)
@@ -110,8 +107,7 @@ module.exports         = function(passport) {
 
                     newUser.local.email    = email;
                     newUser.local.password = newUser.generateHash(password);
-                    // save the user
-                    console.log(newUser)
+
                     newUser.save(function(err) {
                         if (err)
                             throw err;
@@ -120,7 +116,7 @@ module.exports         = function(passport) {
                     });
                 }
 
-            // });
+            });
         });
 
     }));

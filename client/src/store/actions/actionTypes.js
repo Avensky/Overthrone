@@ -77,3 +77,10 @@ export const UPDATE_FAQ_START     = 'UPDATE_FAQ_START'
 export const UPDATE_FAQ_SUCCESS   = 'UPDATE_FAQ_SUCCESS'
 export const UPDATE_FAQ_FAIL      = 'UPDATE_FAQ_FAIL'
 export const UPDATE_FAQ           = 'UPDATE_FAQ'
+
+
+export const LOGIN_START = 'LOGIN_START'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAIL = 'LOGIN_FAIL'
+export const LOGOUT = 'LOGOUT'
+export const SET_LOGIN_REDIRECT_PATH = 'SET_LOGIN_REDIRECT_PATH'

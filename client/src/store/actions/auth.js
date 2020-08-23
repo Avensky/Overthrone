@@ -38,6 +38,73 @@ export const fetchUser = () => {
 }
 
 
+
+export const loginStart = () => {
+    return {
+        type: actionTypes.LOGIN_START
+    }
+}
+
+export const loginSuccess = (token, userId) => {
+    return {
+        type: actionTypes.LOGIN_SUCCESS, 
+        idToken: token,
+        userId: userId
+    }
+}
+
+export const loginFail = (error) => {
+    return {
+        type: actionTypes.LOGIN_FAIL,
+        error: error
+    }
+}
+
+export const logout = () => {
+    axios.get('/auth/logout')
+    //localStorage.removeItem('token');
+    //localStorage.removeItem('expirationDate');
+    //localStorage.removeItem('userId');
+    return {
+        type: actionTypes.LOGOUT
+    }
+}
+
+export const checkLoginTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        }, expirationTime * 1000);
+    };
+};
+
+export const login = (email, password, isSignup) => {
+    return dispatch => {
+        dispatch(loginStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }        
+        axios.post('/auth/login', authData)
+            .then(response => {
+                console.log(response);
+                //const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+                //localStorage.setItem('token', response.data.idToken);
+                //localStorage.setItem('expirationDate', expirationDate);
+                //localStorage.setItem('userId', response.data.localId); 
+                //dispatch(loginSuccess(response.data.idToken, response.data.localId));
+                //dispatch(checkLoginTimeout(response.data.expiresIn));
+                dispatch(loginSuccess(response)) 
+})
+            .catch(err => {
+                console.log(err);
+                dispatch(loginFail(err));
+            });
+    }
+}
+
+
 export const signupStart  = () =>{
     return{
         type: actionTypes.SIGNUP_START
@@ -83,3 +150,10 @@ export const signup = (email, password) => {
         })    
     }
 }
+
+export const setLoginRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_LOGIN_REDIRECT_PATH,
+        path: path
+    };
+};
