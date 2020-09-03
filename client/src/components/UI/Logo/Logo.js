@@ -1,6 +1,6 @@
 import React from 'react';
 
-import myLogo from '../../../assets/images/crystal.png';
+import myLogo from '../../../assets/images/logo.png';
 import classes from './Logo.module.scss';
 
 const logo = (props) => (

@@ -339,7 +339,7 @@ module.exports         = function(passport) {
 
             } else {
                 // user already exists and is logged in, we have to link accounts
-                var user               = req.user; // pull the user out of the session
+                var user          = req.user; // pull the user out of the session
 
                 user.google.id    = profile.id;
                 user.google.token = token;
