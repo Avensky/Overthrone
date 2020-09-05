@@ -11,6 +11,7 @@ import Signup         from '../pages/signup/Signup';
 import Wrapper        from '../Wrapper/Wrapper';
 import Layout         from '../Layout/Layout';
 import Books          from '../pages/Books/Books';
+import Connect        from '../pages/Connect/Connect';
 import Authors        from '../pages/Authors/Authors';
 import Characters     from '../pages/Characters/Characters';
 import Sovereignty     from '../pages/Sovereignty/Sovereignty';
@@ -73,6 +74,7 @@ class App extends Component {
           <Route path='/CharacterList/' exact component={CharacterList} />
           {/*<Route path="/connect-local"    component={connect-local} />*/}       
           <Route path="/profile"              component={Profile}  />
+          <Route path="/connectlocal"         component={Connect}  />
           {/* <Redirect to="/home" /> */}
           <Route path="/"                     component={Books}  />             
         </Switch>

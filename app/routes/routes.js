@@ -146,7 +146,7 @@ module.exports = function(app, passport) {
 		});
 		app.post('/connect/local', passport.authenticate('local-signup', {
 			successRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/connect/local', // redirect back to the signup page if there is an error
+			failureRedirect : '/connectlocal', // redirect back to the signup page if there is an error
 			failureFlash : true // allow flash messages
 		}));
 
