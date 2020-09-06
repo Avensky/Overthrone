@@ -13,7 +13,7 @@ const navbar = ( props ) => {
         cart = (
             <NavLink  to="/cart" className={classes.line}> 
                 <span className={["fa", "fa-shopping-cart", classes.left, classes.inline].join(' ')}/>
-                <h3 className={classes.inline}>({props.totalItems})</h3>
+                <h3 className={classes.inline}>({props.cart})</h3>
             </NavLink > 
         )
     }

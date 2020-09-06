@@ -36,6 +36,7 @@ class Wrapper extends Component {
                     isAuth={this.props.isAuth}
                     open={this.state.showSidebar} 
                     closed={this.sidebarClosedHandler} 
+                    cart={this.props.totalItems}
                 />
                 <main className={classes.Wrapper}>
                     {this.props.children}

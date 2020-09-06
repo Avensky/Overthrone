@@ -18,7 +18,8 @@ const navItems = ( props ) => (
             : <div className={myClasses.NavItem}><a  href="/auth/logout">Logout</a></div>}
         
         {props.cart > 0 
-            ? <NavItem  link="/cart" myClass={classes.line}>
+            ? <NavItem  link="/cart" myClass={classes.line}
+                >
                 <span className={["fa", myClasses.fa, "fa-shopping-cart", classes.inline].join(' ')}/>
                 <p className={classes.inline}>({props.cart})</p>
                 </NavItem > : null
