@@ -49,9 +49,9 @@ module.exports = function(app, passport) {
 	// locally --------------------------------
 		// LOGIN ===============================
 		// show the login form
-			app.get('/login', function(req, res) {
-				res.render('login.ejs', { message: req.flash('loginMessage') });
-			});
+			//app.get('/login', function(req, res) {
+			//	res.render('login.ejs', { message: req.flash('loginMessage') });
+			//});
 
 // =====================================
 // LOCAL ===============================
@@ -68,9 +68,9 @@ module.exports = function(app, passport) {
 		// SIGNUP ==============================
 		// =====================================
 		// show the signup form
-		app.get('/signup', function(req, res) {
-			res.render('signup.ejs', { message: req.flash('loginMessage') });
-		});
+		// app.get('/signup', function(req, res) {
+		// 	res.render('signup.ejs', { message: req.flash('loginMessage') });
+		// });
     // =====================================
     // REGISTER ============================
     // =====================================
@@ -140,10 +140,10 @@ module.exports = function(app, passport) {
 // =============================================================================
 
 	// locally --------------------------------
-		app.get('/connect/local', function(req, res) {
-			//res.render('connect-local.ejs', { message: req.flash('loginMessage') });
-			res.render('/authentication')
-		});
+		//app.get('/connect/local', function(req, res) {
+		//	//res.render('connect-local.ejs', { message: req.flash('loginMessage') });
+		//	res.render('/authentication')
+		//});
 		app.post('/connect/local', passport.authenticate('local-signup', {
 			successRedirect : '/profile', // redirect to the secure profile section
 			failureRedirect : '/connectlocal', // redirect back to the signup page if there is an error

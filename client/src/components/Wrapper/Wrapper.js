@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Auxiliary from '../../hoc/Auxiliary';
 import classes from './Wrapper.module.scss';
 import Navbar from '../Navigation/Navbar/Navbar';
@@ -26,11 +27,13 @@ class Wrapper extends Component {
             <Auxiliary>
                 <Background />
                 <Navbar 
-                    isLogged={this.props.isLoggedIn}
-                    sidebarToggleClicked={this.sidebarToggleHandler} 
+                    isAuth={this.props.isAuth}
+                    sidebarToggleClicked={this.sidebarToggleHandler}
+                    items = {this.props.items}
+                    cart={this.props.totalItems}
                 />
                 <Sidebar 
-                    isLogged={this.props.isLoggedIn}
+                    isAuth={this.props.isAuth}
                     open={this.state.showSidebar} 
                     closed={this.sidebarClosedHandler} 
                 />
@@ -42,5 +45,14 @@ class Wrapper extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        addedItems: state.addedItems,
+        items: state.cart.addedItems,
+        totalItems: state.cart.totalItems,
+        isAuth: state.auth.payload
+    };
+};
 
-export default Wrapper;
+
+export default  connect (mapStateToProps, null)(Wrapper);
