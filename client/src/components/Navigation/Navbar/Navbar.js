@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 
 const navbar = ( props ) => {
     let cart;         
-    if (props.items.length>0) {
+    if (props.items.length || props.items.length >0) {
         cart = (
             <NavLink  to="/cart" className={classes.line}> 
                 <span className={["fa", "fa-shopping-cart", classes.left, classes.inline].join(' ')}/>
