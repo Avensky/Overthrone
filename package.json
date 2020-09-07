@@ -36,7 +36,8 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.4"
+    "passport-twitter": "^1.0.4",
+    "react-stripe-checkout": "^2.6.3"
   },
   "devDependencies": {},
   "repository": {

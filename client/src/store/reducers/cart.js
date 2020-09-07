@@ -17,7 +17,7 @@ const initialState = {
         {id:6,title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0}
     ],
     addedItems  :[],
-    total       : 0,
+    total       : 0.00,
     totalItems  : 0,
     totalPrice  : 0
 }

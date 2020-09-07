@@ -36,7 +36,7 @@ class Recipe extends Component{
 {/*                 <button className="waves-effect waves-light btn">Checkout</button>              */}       
                         <StripeCheckout 
                             // className="waves-effect waves-light btn" 
-                            amount={this.props.total}
+                            amount={this.props.total*100}
                             token={token => console.log(token)}
                             stripeKey = {process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}
                         />
