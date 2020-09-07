@@ -18,7 +18,8 @@ const initialState = {
     ],
     addedItems  :[],
     total       : 0,
-    totalItems  : 0
+    totalItems  : 0,
+    totalPrice  : 0
 }
 
 const addToCart= ( state, action ) => {

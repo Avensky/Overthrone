@@ -26,11 +26,11 @@ class Recipe extends Component{
             <div className={myClasses.Recipe}>
                 <div className={myClasses.Collection}>
                     <label className="collection-item">
-                        <input type="checkbox" ref="shipping" onChange= {this.handleChecked} />
-                        <span>Shipping(+6$)</span>
+                     <input type="checkbox" ref="shipping" onChange= {this.handleChecked} />
+                        <span>+Shipping($6)</span>
                     </label>
 
-                    <div className="collection-item"><b>Total: {this.props.total} $</b></div>
+                    <div className="collection-item"><b>Total: ${this.props.total}</b></div>
                     </div>
                     <div className="checkout">
 {/*                 <button className="waves-effect waves-light btn">Checkout</button>              */}       
@@ -48,8 +48,8 @@ class Recipe extends Component{
 
 const mapStateToProps = (state)=>{
     return{
-        addedItems: state.addedItems,
-        total: state.total
+        addedItems: state.cart.addedItems,
+        total: state.cart.total
     }
 }
 
