@@ -73,7 +73,7 @@ class App extends Component {
           <Route path='/details/:id'    exact component={Details} />
           <Route path='/CharacterList/' exact component={CharacterList} />
           {/*<Route path="/connect-local"    component={connect-local} />*/}       
-          <Route path="/profile"              component={Profile}  />
+          <Route path="/profile/"         component={Profile}  />
           <Route path="/connectlocal"         component={Connect}  />
           {/* <Redirect to="/home" /> */}
           <Route path="/"                     component={Books}  />             

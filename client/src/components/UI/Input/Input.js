@@ -13,6 +13,8 @@ const input = ( props ) => {
     switch ( props.elementType ) {
         case ( 'input' ):
             inputElement = <input
+                type={props.types}
+                name={props.names}
                 className={inputClasses.join(' ')}
                 {...props.elementConfig}
                 value={props.value}

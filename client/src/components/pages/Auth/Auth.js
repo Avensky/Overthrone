@@ -3,11 +3,12 @@ import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
-import SimpleReactValidator from 'simple-react-validator';
+// import SimpleReactValidator from 'simple-react-validator';
 import * as actions from '../../../store/actions/index';
 import {updateObject, checkValidity} from '../../../utility/utility';
 import Input from '../../UI/Input/Input';
 import Spinner from '../../UI/Spinner/Spinner';
+import { Redirect } from 'react-router-dom';
 
 
 class Auth extends Component {
@@ -17,31 +18,39 @@ class Auth extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'email',
-                    placeholder: 'Mail Address'
+                    placeholder: 'Email Address'
                 },
                 value: '',
                 validation: {
                     required: true,
                     isEmail: true
                 },
-                placeholder:"Email Address",
                 valid: false,
                 touched: false
             },
             password: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    placeholder: 'Password'
+                },
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 6
+                    minLength: 6,
                 },
-                placeholder:"Password ",
                 valid: false,
                 touched: false
             },
             confirmPassword: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    placeholder:"Confirm Password"
+                },
                 value: '',
                 validation: {
-                    required: true,
+                    required: false,
                     minLength: 6
                 },
                 valid: false,
@@ -49,10 +58,6 @@ class Auth extends Component {
             }
         },
         authLogin: true
-    }
-
-    componentWillMount() {
-        this.validator = new SimpleReactValidator();
     }
 
     componentDidUpdate() {
@@ -84,31 +89,11 @@ class Auth extends Component {
         this.setState( { controls: updatedControls } );
     }
 
-    loginHandler = () => {
-    //    event.preventDefault();
-        this.props.onLogin( 
-            this.state.controls.email.value, 
-            this.state.controls.password.value, 
-            this.state.authLogin 
-        );
+    submitHandler = ( event ) => {
+        event.preventDefault();
+        this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.authLogin);
     }
-
-    newUserHandler = () => {
-        // event.preventDefault();
-        const pic = 'https://lh3.googleusercontent.com/a-/AOh14Gjyf9dG_HQji_W8Js4Kps0_nxl5RyobebP6Nqeg';
-        this.props.onNewUser(
-            this.state.controls.username.value, 
-            this.state.controls.givenName.value,
-            this.state.controls.familyName.value, 
-            this.state.controls.email.value, 
-            this.state.controls.password.value, 
-//            this.state.controls.picture.value,
-            pic
-        );
-    }
-
     render () {
-        this.validator.purgeFields();
         const formElementsArray = [];
         for ( let key in this.state.controls ) {
             formElementsArray.push( {
@@ -118,6 +103,8 @@ class Auth extends Component {
         }
         let form = formElementsArray.map( formElement => 
                 <Input
+                names={formElement.config.name}
+                type={formElement.config.type}
                 key={formElement.id}
                 elementType={formElement.config.elementType}
                 elementConfig={formElement.config.elementConfig}
@@ -128,35 +115,23 @@ class Auth extends Component {
                 placeholder={formElement.config.placeholder}
                 className={myClasses.AuthInput}
                 changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
-        )    
+        )
 
-        if (!this.state.authLogin){
-            form = (
-                <Auxiliary>
-                    <input 
-                        type="text"
-                        name="email"
-                        onChange={(event) => this.inputChangedHandler( event, "email")}
-                        placeholder="Email Address"
-                        className={myClasses.AuthInput}
-                    />
-                    {this.validator.message('email', this.state.controls.email.value, 'required|email', { className: 'text-danger' })}
-                    <input 
-                        type="password"
-                        name="password"
-                        onChange={(event) => this.inputChangedHandler( event, "password")}
-                        placeholder="Password"
-                        className={myClasses.AuthInput}
-                    />
-                    <input 
-                        type="password"
-                        name="confirm password"
-                        onChange={(event) => this.inputChangedHandler( event, "confirmPassword")}
-                        placeholder="Confirm Password"
-                        className={myClasses.AuthInput}
-                    />
-                </Auxiliary>
-            )
+        if ( this.props.loading ) {
+            form = <Spinner />
+        }
+
+        let errorMessage = null;
+
+        if ( this.props.error ) {
+            errorMessage = (
+                <p>{this.props.error.message}</p>
+            );
+        }
+
+        let authRedirect = null;
+        if ( this.props.isAuthenticated ) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
         }
 
         let selected, unselected = myClasses.AuthToggle;
@@ -169,7 +144,7 @@ class Auth extends Component {
             unselected = myClasses.AuthToggle
 
         }
-
+        
         return(
             <Auxiliary>
                 <div className='container'>
@@ -178,6 +153,8 @@ class Auth extends Component {
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Auth].join(' ')}>
+                {authRedirect}
+                {errorMessage}
                     <div className={myClasses.AuthNav}>
                         <button 
                             onClick={this.loginToggleHandler}
@@ -192,7 +169,9 @@ class Auth extends Component {
                         </button>   
                     </div>
                     
-                    <form action="/auth/login" method="post">                    
+                    <form //action={"/auth/" + act} 
+                        //method="post"
+                        onSubmit={this.submitHandler}>                    
                         {form}
                         <p className="text-left">Forgot Password?</p>
             
@@ -202,7 +181,7 @@ class Auth extends Component {
                         type="submit"
                     >
                         <div className={myClasses.BtnDiv}>
-                            <span className="fa fa-user"></span> Sign In
+                            <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
                         </div>
                     </button>
                     </form>
@@ -227,13 +206,15 @@ const mapStateToProps = state => {
         loading: state.auth.loading,
         error: state.auth.error,
         isLoggedIn: state.auth.user,
+        isAuthenticated: state.auth.token !== null,
+        authRedirectPath: state.auth.authRedirectPath
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: (email, password, isSignup) => dispatch(actions.login(email, password, isSignup)),
-        onSetLoginRedirectPath: () => dispatch(actions.setLoginRedirectPath('/blog')),
+        onAuth: (email, password, authLogin) => dispatch(actions.auth(email, password, authLogin)),
+        onSetLoginRedirectPath: () => dispatch(actions.setLoginRedirectPath('/')),
         onNewUser: (username, givenName, familyName, email, password, picture) => dispatch(actions.signup(username, givenName, familyName, email, password, picture))
     }
 }

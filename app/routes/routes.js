@@ -60,8 +60,8 @@ module.exports = function(app, passport) {
     	// LOGIN ===============================
     	// =====================================
 		app.post('/auth/login', passport.authenticate('local-login', {
-			successRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/authentication', // redirect back to the signup page if there is an error
+			//successRedirect : '/profile', // redirect to the secure profile section
+			// failureRedirect : '/authentication', // redirect back to the signup page if there is an error
 			failureFlash : true // allow flash messages
 		}));
 		// =====================================

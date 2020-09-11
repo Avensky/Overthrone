@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import * as actionTypes from './actionTypes'
 
 export const fetchUserStart = () => {
@@ -36,7 +37,6 @@ export const fetchUser = () => {
         });
     }
 }
-
 
 
 export const loginStart = () => {
@@ -78,15 +78,19 @@ export const checkLoginTimeout = (expirationTime) => {
     };
 };
 
-export const login = (email, password, isSignup) => {
+export const auth = (email, password, authLogin) => {
     return dispatch => {
         dispatch(loginStart());
         const authData = {
             email: email,
             password: password,
             returnSecureToken: true
-        }        
-        axios.post('/auth/login', authData)
+        } 
+        let url = '/auth/login';
+        if (!authLogin) {
+            url = '/auth/signup';
+        }       
+        axios.post(url, authData)
             .then(response => {
                 console.log(response);
                 //const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
@@ -95,11 +99,11 @@ export const login = (email, password, isSignup) => {
                 //localStorage.setItem('userId', response.data.localId); 
                 //dispatch(loginSuccess(response.data.idToken, response.data.localId));
                 //dispatch(checkLoginTimeout(response.data.expiresIn));
-                dispatch(loginSuccess(response)) 
+                dispatch(loginSuccess(response, response.data.idToken, response.data.localId)) 
 })
             .catch(err => {
-                console.log(err);
-                dispatch(loginFail(err));
+                //console.log(err);
+                dispatch(loginFail(err.response.data.error));
             });
     }
 }
@@ -150,6 +154,27 @@ export const signup = (email, password) => {
         })    
     }
 }
+
+export const authStart = () => {
+    return {
+        type: actionTypes.AUTH_START
+    };
+};
+
+export const authSuccess = (token, userId) => {
+    return {
+        type: actionTypes.AUTH_SUCCESS,
+        idToken: token,
+        userId: userId
+    };
+};
+
+export const authFail = (error) => {
+    return {
+        type: actionTypes.AUTH_FAIL,
+        error: error
+    };
+};
 
 export const setLoginRedirectPath = (path) => {
     return {
