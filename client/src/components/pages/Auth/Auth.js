@@ -3,17 +3,28 @@ import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
+import SimpleReactValidator from 'simple-react-validator';
 import * as actions from '../../../store/actions/index';
+import {updateObject, checkValidity} from '../../../utility/utility';
+import Input from '../../UI/Input/Input';
+import Spinner from '../../UI/Spinner/Spinner';
+
 
 class Auth extends Component {
     state = {
         controls: {
             email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Mail Address'
+                },
                 value: '',
                 validation: {
                     required: true,
                     isEmail: true
                 },
+                placeholder:"Email Address",
                 valid: false,
                 touched: false
             },
@@ -23,6 +34,7 @@ class Auth extends Component {
                     required: true,
                     minLength: 6
                 },
+                placeholder:"Password ",
                 valid: false,
                 touched: false
             },
@@ -37,6 +49,10 @@ class Auth extends Component {
             }
         },
         authLogin: true
+    }
+
+    componentWillMount() {
+        this.validator = new SimpleReactValidator();
     }
 
     componentDidUpdate() {
@@ -57,15 +73,14 @@ class Auth extends Component {
 
 
     inputChangedHandler = ( event, controlName ) => {
-        const updatedControls = {
-            ...this.state.controls,
-            [controlName]: {
-                ...this.state.controls[controlName],
+        const updatedControls = updateObject( this.state.controls, {
+            [controlName]: updateObject( 
+                this.state.controls[controlName], {
                 value: event.target.value,
-//                valid: this.checkValidity( event.target.value, this.state.controls[controlName].validation ),
+                valid: checkValidity( event.target.value, this.state.controls[controlName].validation ),
                 touched: true
-            }
-        };
+            } )
+        } );
         this.setState( { controls: updatedControls } );
     }
 
@@ -93,74 +108,53 @@ class Auth extends Component {
     }
 
     render () {
-        let form = (
-            <form action="/auth/login" 
-            method="post">
-                <input 
-                    type="text"
-                    name="email"    
-                    onChange={(event) => this.inputChangedHandler( event, "email")}
-                    placeholder="Email Address"
-                    className={myClasses.AuthInput}
-                />
-                <input 
-                    type="password"
-                    name="password"
-                    onChange={(event) => this.inputChangedHandler( event, "password")}
-                    placeholder="Password"
-                    className={myClasses.AuthInput}
-                />
-            
-            <p className="text-left">Forgot Password?</p>
-            
-                <button 
-                    //onClick={this.loginHandler} 
-                    className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
-                    type="submit"
-                >
-                    <div className={myClasses.BtnDiv}>
-                        <span className="fa fa-user"></span> Sign In
-                    </div>
-                </button>
-            </form>
+        this.validator.purgeFields();
+        const formElementsArray = [];
+        for ( let key in this.state.controls ) {
+            formElementsArray.push( {
+                id: key,
+                config: this.state.controls[key]
+            } );
+        }
+        let form = formElementsArray.map( formElement => 
+                <Input
+                key={formElement.id}
+                elementType={formElement.config.elementType}
+                elementConfig={formElement.config.elementConfig}
+                value={formElement.config.value}
+                invalid={!formElement.config.valid}
+                shouldValidate={formElement.config.validation}
+                touched={formElement.config.touched}
+                placeholder={formElement.config.placeholder}
+                className={myClasses.AuthInput}
+                changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
         )    
 
         if (!this.state.authLogin){
             form = (
                 <Auxiliary>
-                    <form  action="/auth/signup" 
-                    method="post"
-                    >
-                        <input 
-                            type="text"
-                            name="email"
-                            onChange={(event) => this.inputChangedHandler( event, "email")}
-                            placeholder="Email Address"
-                            className={myClasses.AuthInput}
-                        />
-                        <input 
-                            type="password"
-                            name="password"
-                            onChange={(event) => this.inputChangedHandler( event, "password")}
-                            placeholder="Password"
-                            className={myClasses.AuthInput}
-                        />
-                        <input 
-                            type="password"
-                            name="confirm password"
-                            onChange={(event) => this.inputChangedHandler( event, "confirmPassword")}
-                            placeholder="Confirm Password"
-                            className={myClasses.AuthInput}
-                        />
-                        <button 
-                        //onClick={this.newUserHandler()} 
-                        className={[myClasses.Btn, classes.AuthBtn, 'auth-btn' ].join(' ')}
-                        type="submit">
-                            <div className={myClasses.BtnDiv}>
-                                <span className="fa fa-user"></span> Sign Up
-                            </div>
-                        </button>
-                    </form>
+                    <input 
+                        type="text"
+                        name="email"
+                        onChange={(event) => this.inputChangedHandler( event, "email")}
+                        placeholder="Email Address"
+                        className={myClasses.AuthInput}
+                    />
+                    {this.validator.message('email', this.state.controls.email.value, 'required|email', { className: 'text-danger' })}
+                    <input 
+                        type="password"
+                        name="password"
+                        onChange={(event) => this.inputChangedHandler( event, "password")}
+                        placeholder="Password"
+                        className={myClasses.AuthInput}
+                    />
+                    <input 
+                        type="password"
+                        name="confirm password"
+                        onChange={(event) => this.inputChangedHandler( event, "confirmPassword")}
+                        placeholder="Confirm Password"
+                        className={myClasses.AuthInput}
+                    />
                 </Auxiliary>
             )
         }
@@ -197,20 +191,33 @@ class Auth extends Component {
                         ><h2><span className="fa fa-user" /> Signup</h2>
                         </button>   
                     </div>
-                         
-                {form}
-                <div className={classes.CardTitle}>Or continue with:</div>
-                <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
-                    <a href="/auth/facebook"><span className="fa fa-facebook" /> Facebook</a>
-                </button>
-                <button className={[myClasses.Btn, "btn-info"].join(' ')}>
-                    <a href="/auth/twitter"><span className="fa fa-twitter" /> Twitter</a>
-                </button>
-                <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
-                    <a href="/auth/google"><span className="fa fa-google-plus" /> Google+</a>
-                </button>
-            </div> 
-        </Auxiliary>
+                    
+                    <form action="/auth/login" method="post">                    
+                        {form}
+                        <p className="text-left">Forgot Password?</p>
+            
+                    <button 
+                        //onClick={this.loginHandler} 
+                        className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                        type="submit"
+                    >
+                        <div className={myClasses.BtnDiv}>
+                            <span className="fa fa-user"></span> Sign In
+                        </div>
+                    </button>
+                    </form>
+                    <div className={classes.CardTitle}>Or continue with:</div>
+                    <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
+                        <a href="/auth/facebook"><span className="fa fa-facebook" /> Facebook</a>
+                    </button>
+                    <button className={[myClasses.Btn, "btn-info"].join(' ')}>
+                        <a href="/auth/twitter"><span className="fa fa-twitter" /> Twitter</a>
+                    </button>
+                    <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
+                        <a href="/auth/google"><span className="fa fa-google-plus" /> Google+</a>
+                    </button>
+                </div> 
+            </Auxiliary>
         )
     }
 }

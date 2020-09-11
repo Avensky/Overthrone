@@ -37,7 +37,8 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "react-stripe-checkout": "^2.6.3"
+    "react-stripe-checkout": "^2.6.3",
+    "simple-react-validator": "^1.5.0"
   },
   "devDependencies": {},
   "repository": {
