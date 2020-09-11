@@ -186,7 +186,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         //onLogin: (email, password, isSignup) => dispatch(actions.onAuth(email, password, isSignup)),
-        onSetLoginRedirectPath: () => dispatch(actions.setLoginRedirectPath('/blog')),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/blog')),
         onNewUser: (username, givenName, familyName, email, password, picture) => dispatch(actions.signup(username, givenName, familyName, email, password, picture))
     }
 }

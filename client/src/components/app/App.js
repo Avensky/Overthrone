@@ -33,6 +33,10 @@ class App extends Component {
 
   componentDidMount () {
       this.props.onFetchUser();
+      if ( //!this.props.buildingBurger && 
+        this.props.authRedirectPath !== '/' ) {
+        this.props.onSetAuthRedirectPath();
+    }
 //      this.props.onGetCharacters();
   }
 
@@ -103,6 +107,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onGetCharacters : () => dispatch( actions.getCharacters()),
     onFetchUser     : () => dispatch(actions.fetchUser()),
+    onSetAuthRedirectPath: () => dispatch( actions.setAuthRedirectPath( '/' ) )
   };
 };
 

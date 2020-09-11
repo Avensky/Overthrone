@@ -60,8 +60,8 @@ module.exports = function(app, passport) {
     	// LOGIN ===============================
     	// =====================================
 		app.post('/auth/login', passport.authenticate('local-login', {
-			//successRedirect : '/profile', // redirect to the secure profile section
-			// failureRedirect : '/authentication', // redirect back to the signup page if there is an error
+			successRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/authentication', // redirect back to the signup page if there is an error
 			failureFlash : true // allow flash messages
 		}));
 		// =====================================
@@ -81,6 +81,21 @@ module.exports = function(app, passport) {
 			failureFlash : true // allow flash messages
 		}));
 
+		// app.post('/auth/signup', function(req, res, next) {
+		// 	passport.authenticate('local-signup', function(err, user, info) {
+		// 	  if (err) return next(err);
+		// 	  if (user) {
+		// 		req.logIn(user, function(err) {
+		// 		  if (err) return next(err);
+		// 		  emailVerification.send(req.user.email, res, req);
+		// 		  createSendToken(req.user, res);
+		// 		});
+		// 	  // Register failed, flash message is in info
+		// 	  } else {
+		// 		res.status(400).json(info);
+		// 	  }
+		// 	})(req, res, next);
+		//   });
 
 		// process the signup form
 		app.post('/api/signup', passport.authenticate('local-signup', {

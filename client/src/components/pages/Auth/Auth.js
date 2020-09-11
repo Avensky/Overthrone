@@ -18,6 +18,7 @@ class Auth extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'email',
+                    name: 'email',
                     placeholder: 'Email Address'
                 },
                 value: '',
@@ -32,6 +33,7 @@ class Auth extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'password',
+                    name: 'password',
                     placeholder: 'Password'
                 },
                 value: '',
@@ -59,7 +61,11 @@ class Auth extends Component {
         },
         authLogin: true
     }
-
+    componentDidMount () {
+        if ( this.props.authRedirectPath !== '/' ) {
+            this.props.onSetAuthRedirectPath();
+        }
+    }
     componentDidUpdate() {
         console.log("Auth Login: " + this.state.authLogin)
     }
@@ -102,7 +108,7 @@ class Auth extends Component {
             } );
         }
         let form = formElementsArray.map( formElement => 
-                <Input
+            <Input
                 names={formElement.config.name}
                 type={formElement.config.type}
                 key={formElement.id}
@@ -145,6 +151,10 @@ class Auth extends Component {
 
         }
         
+        let act = '/login';
+        if (! this.state.authLogin) {
+            act = '/singup'
+        }
         return(
             <Auxiliary>
                 <div className='container'>
@@ -169,9 +179,10 @@ class Auth extends Component {
                         </button>   
                     </div>
                     
-                    <form //action={"/auth/" + act} 
-                        //method="post"
-                        onSubmit={this.submitHandler}>                    
+                    <form action={"/auth/" + act} 
+                        method="post"
+                        // onSubmit={this.submitHandler}
+                    >                    
                         {form}
                         <p className="text-left">Forgot Password?</p>
             
@@ -214,7 +225,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password, authLogin) => dispatch(actions.auth(email, password, authLogin)),
-        onSetLoginRedirectPath: () => dispatch(actions.setLoginRedirectPath('/')),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
         onNewUser: (username, givenName, familyName, email, password, picture) => dispatch(actions.signup(username, givenName, familyName, email, password, picture))
     }
 }

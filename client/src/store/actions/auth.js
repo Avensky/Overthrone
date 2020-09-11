@@ -80,7 +80,7 @@ export const checkLoginTimeout = (expirationTime) => {
 
 export const auth = (email, password, authLogin) => {
     return dispatch => {
-        dispatch(loginStart());
+        dispatch(authStart());
         const authData = {
             email: email,
             password: password,
@@ -91,23 +91,22 @@ export const auth = (email, password, authLogin) => {
             url = '/auth/signup';
         }       
         axios.post(url, authData)
-            .then(response => {
-                console.log(response);
-                //const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                //localStorage.setItem('token', response.data.idToken);
-                //localStorage.setItem('expirationDate', expirationDate);
-                //localStorage.setItem('userId', response.data.localId); 
-                //dispatch(loginSuccess(response.data.idToken, response.data.localId));
-                //dispatch(checkLoginTimeout(response.data.expiresIn));
-                dispatch(loginSuccess(response, response.data.idToken, response.data.localId)) 
-})
-            .catch(err => {
-                //console.log(err);
-                dispatch(loginFail(err.response.data.error));
-            });
+        //    .then(response => {
+        //        console.log(response);
+        //        //const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+        //        //localStorage.setItem('token', response.data.idToken);
+        //        //localStorage.setItem('expirationDate', expirationDate);
+        //        //localStorage.setItem('userId', response.data.localId); 
+        //        //dispatch(loginSuccess(response.data.idToken, response.data.localId));
+        //        //dispatch(checkLoginTimeout(response.data.expiresIn));
+        //        dispatch(authSuccess(response.data.idToken, response.data.localId)) 
+        //    })
+        //    .catch(err => {
+        //        //console.log(err);
+        //        dispatch(authFail(err.response.data.error));
+        //    });
     }
 }
-
 
 export const signupStart  = () =>{
     return{
@@ -128,7 +127,6 @@ export const signupSuccess = (userData) => {
         userData: userData
     }
 }
-
     
 export const signup = (email, password) => {
     return dispatch => {
@@ -176,9 +174,9 @@ export const authFail = (error) => {
     };
 };
 
-export const setLoginRedirectPath = (path) => {
+export const setAuthRedirectPath = (path) => {
     return {
-        type: actionTypes.SET_LOGIN_REDIRECT_PATH,
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
         path: path
     };
 };
