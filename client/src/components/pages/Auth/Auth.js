@@ -151,9 +151,9 @@ class Auth extends Component {
 
         }
         
-        let act = '/login';
+        let act = 'login';
         if (! this.state.authLogin) {
-            act = '/singup'
+            act = 'signup'
         }
         return(
             <Auxiliary>
