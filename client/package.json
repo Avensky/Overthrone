@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "http-proxy-middleware": "^1.0.3",
+    "indicative": "^7.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
