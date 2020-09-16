@@ -157,23 +157,34 @@ class Auth extends Component {
 
     submitHandler = ( event ) => {
         event.preventDefault();
-        //this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.authLogin);
+        //this.props.onAuth( this.state.email.value, this.state.password.value,this.state.confirmPassword.value, this.state.authLogin);
         console.log(this.state);
         
         //validating user using indicatice package
         //take the input data from state
         const data = this.state;
-        const schema = {
+
+        let schema = {
 //            name: 'required|string',
             email: 'required|email',
-            password: 'required|string|min:6|confirmed' //confirmed will check for the password confirmation
+            password: 'required|string|min:6' //confirmed will check for the password confirmation
         }
+
+        if (! this.state.authLogin) {
+            schema = {
+                email: 'required|email',
+                password: 'required|string|min:6|confirmed' //confirmed will check for the password confirmation
+            }
+        }
+
         const messages = {
             required            : '{{field}} is required.',
             'email.email'       : 'The email is invalid.',
             'password.min': 'Password is too short',
             'password.confirmed': 'The password does not match'
         }
+        
+
         
         validate( data, schema, messages )
             .then(()=> {
@@ -224,7 +235,7 @@ class Auth extends Component {
                     placeholder="Email Address"
                     className={myClasses.AuthInput}
                 />
-                <div class="alert-danger">{error['email']}</div>
+                <div className="alert-danger">{error['email']}</div>
                 <input 
                     type="password"
                     name="password"
@@ -233,7 +244,10 @@ class Auth extends Component {
                     placeholder="Password"
                     className={myClasses.AuthInput}
                 />
-                <div class="alert-danger">{error['password']}</div>
+                <div className={myClasses.AuthInput2}>
+                    <p className="text-left">Forgot Password?</p>
+                </div>
+                <div className="alert-danger">{error['password']}</div>
             </Auxiliary>
         )
         if(!this.state.authLogin) form = (
@@ -248,7 +262,7 @@ class Auth extends Component {
                     className={myClasses.AuthInput}
                     //className="form-control"
                 />
-                <div class="alert-danger">{error['email']}</div>                  
+                <div className="alert-danger">{error['email']}</div>                  
 
                 <input 
                     type="password"
@@ -260,7 +274,7 @@ class Auth extends Component {
                     className={myClasses.AuthInput}
                     //className="form-control"
                 />  
-                <div class="alert-danger">{error['password']}</div>                  
+                <div className="alert-danger">{error['password']}</div>                  
 
                 <input 
                     type="password"
@@ -333,19 +347,18 @@ class Auth extends Component {
                     </div>
                     
                     <form 
-                        className="form-type-material"
-                        //action={"/auth/" + act} 
-                        //smethod="post"
+                        //className="form-type-material"
+                        action={"/auth/" + act} 
+                        method="post"
                         onSubmit={this.submitHandler}
                     >
-                        {form}
-                        <p className="text-left">Forgot Password?</p>
+                    {form}
             
-                        <button 
-                            onClick={this.loginHandler} 
-                            className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
-                            type="submit"
-                        >
+                    <button 
+                        //onClick={this.loginHandler} 
+                        className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                        type="submit"
+                    >
                         <div className={myClasses.BtnDiv}>
                             <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
                         </div>
