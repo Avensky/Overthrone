@@ -60,7 +60,8 @@ class Auth extends Component {
             touched: false
             
         },
-        authLogin: true
+        authLogin: true,
+        myErrors: {},
     }
 //    state = {
 //        controls: {
@@ -119,6 +120,7 @@ class Auth extends Component {
     }
     componentDidUpdate() {
         console.log("Auth Login: " + this.state.authLogin)
+        console.log("errors", this.state.myErrors)
     }
 
     loginToggleHandler = () => {
@@ -162,12 +164,12 @@ class Auth extends Component {
         //take the input data from state
         const data = this.state;
         const schema = {
-            name: 'required|string',
+//            name: 'required|string',
             email: 'required|email',
             password: 'required|string|min:6|confirmed' //confirmed will check for the password confirmation
         }
         const messages = {
-            required            : 'This {{ field }} is required.',
+            required            : '{{field}} is required.',
             'email.email'       : 'The email is invalid.',
             'password.min': 'Password is too short',
             'password.confirmed': 'The password does not match'
@@ -183,7 +185,7 @@ class Auth extends Component {
              //show errors to user
              const formattedErrors = {}
              errors.forEach( error => formattedErrors[error.field] = error.message )
-             this.setState({ errors: formattedErrors })
+             this.setState({ myErrors: formattedErrors })
          })
     }
 
@@ -211,57 +213,65 @@ class Auth extends Component {
         //         changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
         // )
 
-        
+        let error = this.state.myErrors
         let form = (
             <Auxiliary>
                 <input 
                     type="text"
                     name="email"    
-                    onChange={(event) => this.inputChangeHandler( event, "email")}
+                    onChange={(event) => this.inputChangeHandler( event//, "email"
+                    )}
                     placeholder="Email Address"
                     className={myClasses.AuthInput}
                 />
+                <div class="alert-danger">{error['email']}</div>
                 <input 
                     type="password"
                     name="password"
-                    onChange={(event) => this.inputChangeHandler( event, "password")}
+                    onChange={(event) => this.inputChangeHandler( event//, "password"
+                    )}
                     placeholder="Password"
                     className={myClasses.AuthInput}
                 />
+                <div class="alert-danger">{error['password']}</div>
             </Auxiliary>
         )
         if(!this.state.authLogin) form = (
             <Auxiliary>
-                <div className="form-group">
-                    <input 
-                        type="text"
-                        name="email"    
-                        onChange={(event) => this.inputChangeHandler( event, "email")}
-                        placeholder="Email Address"
-                        //className={["form-control", myClasses.AuthInput].join(' ')}
-                        className="form-control"
-                    />                    
-                </div>
-                <div className="form-group">
-                    <input 
-                        type="password"
-                        name="password"
-                        onChange={(event) => this.inputChangeHandler( event, "password")}
-                        placeholder="Password"
-                        //className={["form-control", myClasses.AuthInput].join(' ')}
-                        className="form-control"
-                    />                    
-                </div>
-                <div className="form-group">
-                    <input 
-                        type="password"
-                        name="password_confirmation"
-                        onChange={(event) => this.inputChangeHandler( event, "password")}
-                        placeholder="Confirm Password"
-                        //className={["form-control", myClasses.AuthInput].join(' ')}
-                        className="form-control"
-                    />                    
-                </div>
+                <input 
+                    type="text"
+                    name="email"    
+                    onChange={(event) => this.inputChangeHandler( event
+                        //, "email"
+                        )}
+                    placeholder="Email Address"
+                    className={myClasses.AuthInput}
+                    //className="form-control"
+                />
+                <div class="alert-danger">{error['email']}</div>                  
+
+                <input 
+                    type="password"
+                    name="password"
+                    onChange={(event) => this.inputChangeHandler( event
+                        //, "password"
+                        )}
+                    placeholder="Password"
+                    className={myClasses.AuthInput}
+                    //className="form-control"
+                />  
+                <div class="alert-danger">{error['password']}</div>                  
+
+                <input 
+                    type="password"
+                    name="password_confirmation"
+                    onChange={(event) => this.inputChangeHandler( event
+                        // , "password"
+                        )}
+                    placeholder="Confirm Password"
+                    className={myClasses.AuthInput}
+                    //className="form-control"
+                />              
             </Auxiliary>
         )
 
@@ -297,6 +307,7 @@ class Auth extends Component {
         if (! this.state.authLogin) {
             act = 'signup'
         }
+
         return(
             <Auxiliary>
                 <div className='container'>
@@ -321,20 +332,20 @@ class Auth extends Component {
                         </button>   
                     </div>
                     
-                <form 
-                    className="form-type-material"
-                    action={"/auth/" + act} 
-                    method="post"
+                    <form 
+                        className="form-type-material"
+                        //action={"/auth/" + act} 
+                        //smethod="post"
                         onSubmit={this.submitHandler}
-                    >                    
+                    >
                         {form}
                         <p className="text-left">Forgot Password?</p>
             
-                    <button 
-                        onClick={this.loginHandler} 
-                        className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
-                        type="submit"
-                    >
+                        <button 
+                            onClick={this.loginHandler} 
+                            className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                            type="submit"
+                        >
                         <div className={myClasses.BtnDiv}>
                             <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
                         </div>
