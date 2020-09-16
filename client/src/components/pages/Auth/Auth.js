@@ -157,7 +157,6 @@ class Auth extends Component {
 
     submitHandler = ( event ) => {
         event.preventDefault();
-        //this.props.onAuth( this.state.email.value, this.state.password.value,this.state.confirmPassword.value, this.state.authLogin);
         console.log(this.state);
         
         //validating user using indicatice package
@@ -188,7 +187,8 @@ class Auth extends Component {
         
         validate( data, schema, messages )
             .then(()=> {
-            console.log('success')
+                console.log('success')
+                this.props.onAuth( this.state.email.value, this.state.password.value, this.state.authLogin);
             })
         //    .catch(console.error)
              .catch(errors => {
@@ -350,7 +350,7 @@ class Auth extends Component {
                         //className="form-type-material"
                         action={"/auth/" + act} 
                         method="post"
-                        onSubmit={this.submitHandler}
+                        //onSubmit={this.submitHandler}
                     >
                     {form}
             
