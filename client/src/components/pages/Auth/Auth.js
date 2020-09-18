@@ -350,7 +350,7 @@ class Auth extends Component {
                         //className="form-type-material"
                         action={"/auth/" + act} 
                         method="post"
-                        //onSubmit={this.submitHandler}
+                        onSubmit={this.submitHandler}
                     >
                     {form}
             
