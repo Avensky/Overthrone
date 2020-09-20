@@ -82,7 +82,7 @@ export const auth = (email, password, authLogin) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
-            email: email,
+            email   : email,
             password: password,
             returnSecureToken: true
         } 

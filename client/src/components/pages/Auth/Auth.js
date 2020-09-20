@@ -1,117 +1,66 @@
 import React, { Component } from 'react';
-import { validate } from 'indicative/validator';
-import { sanitize } from 'indicative/sanitizer'
+import { useForm } from "react-hook-form";
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
-// import SimpleReactValidator from 'simple-react-validator';
 import * as actions from '../../../store/actions/index';
 import {updateObject, checkValidity} from '../../../utility/utility';
-import Input from '../../UI/Input/Input';
+//import Input from '../../UI/Input/Input';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 
 
 class Auth extends Component {
     state = {
-        email: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'email',
-                name: 'email',
-                placeholder: 'Email Address'
+        controls: {
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    name: 'email',
+                    placeholder: 'Email Address'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    isEmail: true
+                },
+                valid: false,
+                touched: false
             },
-            value: '',
-            validation: {
-                required: true,
-                isEmail: true
+            password: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    name: 'password',
+                    placeholder: 'Password'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 6,
+                },
+                valid: false,
+                touched: false
             },
-            valid: false,
-            touched: false
+            confirmPassword: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'password',
+                    placeholder:"Confirm Password"
+                },
+                value: '',
+                validation: {
+                    required: false,
+                    minLength: 6
+                },
+                valid: false,
+                touched: false
+            }
         },
-        password: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'password',
-                name: 'password',
-                placeholder: 'Password'
-            },
-            value: '',
-            validation: {
-                required: true,
-                minLength: 6,
-            },
-            valid: false,
-            touched: false
-        },
-        confirmPassword: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'password',
-                placeholder:"Confirm Password"
-            },
-            value: '',
-            validation: {
-                required: false,
-                minLength: 6
-            },
-            valid: false,
-            touched: false
-            
-        },
-        authLogin: true,
-        myErrors: {},
+        authLogin: true
     }
-//    state = {
-//        controls: {
-//            email: {
-//                elementType: 'input',
-//                elementConfig: {
-//                    type: 'email',
-//                    name: 'email',
-//                    placeholder: 'Email Address'
-//                },
-//                value: '',
-//                validation: {
-//                    required: true,
-//                    isEmail: true
-//                },
-//                valid: false,
-//                touched: false
-//            },
-//            password: {
-//                elementType: 'input',
-//                elementConfig: {
-//                    type: 'password',
-//                    name: 'password',
-//                    placeholder: 'Password'
-//                },
-//                value: '',
-//                validation: {
-//                    required: true,
-//                    minLength: 6,
-//                },
-//                valid: false,
-//                touched: false
-//            },
-//            confirmPassword: {
-//                elementType: 'input',
-//                elementConfig: {
-//                    type: 'password',
-//                    placeholder:"Confirm Password"
-//                },
-//                value: '',
-//                validation: {
-//                    required: false,
-//                    minLength: 6
-//                },
-//                valid: false,
-//                touched: false
-//            }
-//        },
-//        authLogin: true
-//    }
     
     componentDidMount () {
         if ( this.props.authRedirectPath !== '/' ) {
@@ -158,47 +107,9 @@ class Auth extends Component {
     submitHandler = ( event ) => {
         event.preventDefault();
         console.log(this.state);
-        
-        //validating user using indicatice package
-        //take the input data from state
-        const data = this.state;
-
-        let schema = {
-//            name: 'required|string',
-            email: 'required|email',
-            password: 'required|string|min:6' //confirmed will check for the password confirmation
-        }
-
-        if (! this.state.authLogin) {
-            schema = {
-                email: 'required|email',
-                password: 'required|string|min:6|confirmed' //confirmed will check for the password confirmation
-            }
-        }
-
-        const messages = {
-            required            : '{{field}} is required.',
-            'email.email'       : 'The email is invalid.',
-            'password.min': 'Password is too short',
-            'password.confirmed': 'The password does not match'
-        }
-        
-
-        
-        validate( data, schema, messages )
-            .then(()=> {
-                console.log('success')
-                this.props.onAuth( this.state.email.value, this.state.password.value, this.state.authLogin);
-            })
-        //    .catch(console.error)
-             .catch(errors => {
-             console.log(errors);
-             //show errors to user
-             const formattedErrors = {}
-             errors.forEach( error => formattedErrors[error.field] = error.message )
-             this.setState({ myErrors: formattedErrors })
-         })
+        this.props.onAuth( this.state.email.value, this.state.password.value, this.state.authLogin);
     }
+
 
     render () {
         const formElementsArray = [];
@@ -223,6 +134,9 @@ class Auth extends Component {
         //         className={myClasses.AuthInput}
         //         changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
         // )
+        
+        const { register, handleSubmit, watch, errors } = useForm();
+        const onSubmit = data => console.log(data);
 
         let error = this.state.myErrors
         let form = (
@@ -230,20 +144,23 @@ class Auth extends Component {
                 <input 
                     type="text"
                     name="email"    
-                    onChange={(event) => this.inputChangeHandler( event//, "email"
+                    onChange={(event) => this.inputChangeHandler( event, "email"
                     )}
                     placeholder="Email Address"
                     className={myClasses.AuthInput}
+                    ref={register({ required: true })}
                 />
-                <div className="alert-danger">{error['email']}</div>
+                {errors.email && <span>This field is required</span>}
                 <input 
                     type="password"
                     name="password"
-                    onChange={(event) => this.inputChangeHandler( event//, "password"
+                    onChange={(event) => this.inputChangeHandler( event, "password"
                     )}
                     placeholder="Password"
                     className={myClasses.AuthInput}
+                    ref={register({ required: true })}
                 />
+                {errors.password && <span>This field is required</span>}  
                 <div className={myClasses.AuthInput2}>
                     <p className="text-left">Forgot Password?</p>
                 </div>
@@ -255,37 +172,35 @@ class Auth extends Component {
                 <input 
                     type="text"
                     name="email"    
-                    onChange={(event) => this.inputChangeHandler( event
-                        //, "email"
-                        )}
+                    onChange={(event) => this.inputChangeHandler( event, "email")}
                     placeholder="Email Address"
                     className={myClasses.AuthInput}
                     //className="form-control"
+                    ref={register({ required: true })}
                 />
-                <div className="alert-danger">{error['email']}</div>                  
+                {errors.email && <span>This field is required</span>}              
 
                 <input 
                     type="password"
                     name="password"
-                    onChange={(event) => this.inputChangeHandler( event
-                        //, "password"
-                        )}
+                    onChange={(event) => this.inputChangeHandler( event, "password")}
                     placeholder="Password"
                     className={myClasses.AuthInput}
                     //className="form-control"
+                    ref={register({ required: true })}
                 />  
-                <div className="alert-danger">{error['password']}</div>                  
+                {errors.password && <span>This field is required</span>}                
 
                 <input 
                     type="password"
                     name="password_confirmation"
-                    onChange={(event) => this.inputChangeHandler( event
-                        // , "password"
-                        )}
+                    onChange={(event) => this.inputChangeHandler( event, "password")}
                     placeholder="Confirm Password"
                     className={myClasses.AuthInput}
                     //className="form-control"
-                />              
+                    ref={register({ required: true })}
+                />   
+                {errors.password_confirmation && <span>This field is required</span>}             
             </Auxiliary>
         )
 
@@ -321,7 +236,6 @@ class Auth extends Component {
         if (! this.state.authLogin) {
             act = 'signup'
         }
-
         return(
             <Auxiliary>
                 <div className='container'>
@@ -347,14 +261,15 @@ class Auth extends Component {
                     </div>
                     
                     <form 
-                        //className="form-type-material"
-                        action={"/auth/" + act} 
-                        method="post"
-                        onSubmit={this.submitHandler}
+                        // className="form-type-material"
+                        // action={"/auth/" + act} 
+                        // method="post"
+                        // onSubmit={this.submitHandler}
+                        onSubmit={handleSubmit(onSubmit)}
                     >
                     {form}
             
-                    <button 
+                    <input  
                         //onClick={this.loginHandler} 
                         className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                         type="submit"
@@ -362,7 +277,7 @@ class Auth extends Component {
                         <div className={myClasses.BtnDiv}>
                             <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
                         </div>
-                    </button>
+                    </input>
                     </form>
                     <div className={classes.CardTitle}>Or continue with:</div>
                     <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
