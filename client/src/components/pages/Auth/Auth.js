@@ -59,7 +59,7 @@ class Auth extends Component {
                 touched: false
             }
         },
-        authLogin: true
+        authLogin: true,
     }
     
     componentDidMount () {
@@ -135,8 +135,8 @@ class Auth extends Component {
         //         changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
         // )
         
-        const { register, handleSubmit, watch, errors } = useForm();
-        const onSubmit = data => console.log(data);
+        //const { register, handleSubmit, watch, errors } = useForm();
+        //const onSubmit = data => console.log(data);
 
         let error = this.state.myErrors
         let form = (
@@ -148,9 +148,9 @@ class Auth extends Component {
                     )}
                     placeholder="Email Address"
                     className={myClasses.AuthInput}
-                    ref={register({ required: true })}
+                    //ref={register({ required: true })}
                 />
-                {errors.email && <span>This field is required</span>}
+                {/*errors.email && <span>This field is required</span>*/}
                 <input 
                     type="password"
                     name="password"
@@ -158,13 +158,12 @@ class Auth extends Component {
                     )}
                     placeholder="Password"
                     className={myClasses.AuthInput}
-                    ref={register({ required: true })}
+                    //ref= m{register({ required: true })}
                 />
-                {errors.password && <span>This field is required</span>}  
+                {/*errors.password && <span>This field is required</span>*/}  
                 <div className={myClasses.AuthInput2}>
                     <p className="text-left">Forgot Password?</p>
                 </div>
-                <div className="alert-danger">{error['password']}</div>
             </Auxiliary>
         )
         if(!this.state.authLogin) form = (
@@ -176,9 +175,9 @@ class Auth extends Component {
                     placeholder="Email Address"
                     className={myClasses.AuthInput}
                     //className="form-control"
-                    ref={register({ required: true })}
+                    //ref={register({ required: true })}
                 />
-                {errors.email && <span>This field is required</span>}              
+                {/*errors.email && <span>This field is required</span>*/}              
 
                 <input 
                     type="password"
@@ -187,9 +186,9 @@ class Auth extends Component {
                     placeholder="Password"
                     className={myClasses.AuthInput}
                     //className="form-control"
-                    ref={register({ required: true })}
+                    //ref={register({ required: true })}
                 />  
-                {errors.password && <span>This field is required</span>}                
+                {/*errors.password && <span>This field is required</span>*/}                
 
                 <input 
                     type="password"
@@ -198,9 +197,9 @@ class Auth extends Component {
                     placeholder="Confirm Password"
                     className={myClasses.AuthInput}
                     //className="form-control"
-                    ref={register({ required: true })}
+                    //ref={register({ required: true })}
                 />   
-                {errors.password_confirmation && <span>This field is required</span>}             
+                {/*errors.password_confirmation && <span>This field is required</span*/}             
             </Auxiliary>
         )
 
@@ -265,11 +264,11 @@ class Auth extends Component {
                         // action={"/auth/" + act} 
                         // method="post"
                         // onSubmit={this.submitHandler}
-                        onSubmit={handleSubmit(onSubmit)}
+                        // onSubmit={handleSubmit(onSubmit)}
                     >
                     {form}
             
-                    <input  
+                    <button  
                         //onClick={this.loginHandler} 
                         className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                         type="submit"
@@ -277,7 +276,7 @@ class Auth extends Component {
                         <div className={myClasses.BtnDiv}>
                             <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
                         </div>
-                    </input>
+                    </button>
                     </form>
                     <div className={classes.CardTitle}>Or continue with:</div>
                     <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
