@@ -33,3 +33,8 @@ export {
     updateFaq,
 
 } from './faq';
+
+
+export { 
+    setContacts 
+} from './contacts';
