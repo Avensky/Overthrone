@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { useForm } from "react-hook-form";
+//import { useForm } from "react-hook-form";
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
@@ -9,6 +9,13 @@ import {updateObject, checkValidity} from '../../../utility/utility';
 //import Input from '../../UI/Input/Input';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
+
+import { Formik } from 'formik';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import * as yup from 'yup';
 
 
 class Auth extends Component {
