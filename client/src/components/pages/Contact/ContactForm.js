@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { addContact, editContact, getContacts } from './requests';
 import { connect } from 'react-redux';
 import { setContacts } from './actionCreators';
+
 const schema = yup.object({
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('Last name is required'),
@@ -252,7 +253,4 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   setContacts: contacts => dispatch(setContacts(contacts))
 })
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ContactForm);
+export default connect( mapStateToProps, mapDispatchToProps )( ContactForm );

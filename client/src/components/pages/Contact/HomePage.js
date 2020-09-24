@@ -5,7 +5,7 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import ContactForm from './ContactForm';
-import './HomePage.css';
+// import './HomePage.css';
 import { connect } from 'react-redux';
 import { getContacts, deleteContact } from './requests';
 function HomePage() {

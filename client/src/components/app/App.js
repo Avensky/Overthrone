@@ -24,7 +24,7 @@ import Home           from '../pages/Home/Home';
 import Faqs            from '../pages/Faqs/Faqs';
 // import CharacterEdit  from '../pages/Characters/CharacterEdit/CharacterEdit';
 import CharacterList from '../pages/Characters/CharacterList/CharacterList';
-
+import HomePage       from '../pages/Contact/HomePage';
 class App extends Component {
   state = {
     loggedIn: false,
@@ -56,6 +56,7 @@ class App extends Component {
         <Route path="/cart"                 component={Cart} />                
         <Route path='/details/:id'    exact component={Details} />
         <Route path='/CharacterList/' exact component={CharacterList} />
+        <Route path="/homepage"             component={HomePage}  />      
         <Route path="/"                     component={Books}  />      
         {/* <Redirect to="/home" />  */}              
       </Switch>
