@@ -10,12 +10,7 @@ import {updateObject, checkValidity} from '../../../utility/utility';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 
-import { Formik } from 'formik';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Button from 'react-bootstrap/Button';
-import * as yup from 'yup';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 
 class Auth extends Component {
@@ -146,6 +141,43 @@ class Auth extends Component {
         //const onSubmit = data => console.log(data);
 
         let error = this.state.myErrors
+        let formik =(
+            <Auxiliary>
+                <Formik
+                    initialValues={{ email: '', password: '' }}
+                    validate={values => {
+                        const errors = {};
+                        if (!values.email) {
+                        errors.email = 'Required';
+                        } else if (
+                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                        ) {
+                        errors.email = 'Invalid email address';
+                        }
+                        return errors;
+                    }}
+                    onSubmit={(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                        alert(JSON.stringify(values, null, 2));
+                        setSubmitting(false);
+                        }, 400);
+                    }}
+                    >
+                    {({ isSubmitting }) => (
+                        <Form>
+                        <Field type="email" name="email" />
+                        <ErrorMessage name="email" component="div" />
+                        <Field type="password" name="password" />
+                        <ErrorMessage name="password" component="div" />
+                        <button type="submit" disabled={isSubmitting}>
+                            Submit
+                        </button>
+                        </Form>
+                    )}
+                </Formik>
+
+            </Auxiliary>
+        )
         let form = (
             <Auxiliary>
                 <input 
@@ -273,7 +305,7 @@ class Auth extends Component {
                         // onSubmit={this.submitHandler}
                         // onSubmit={handleSubmit(onSubmit)}
                     >
-                    {form}
+                    {formik}
             
                     <button  
                         //onClick={this.loginHandler} 
