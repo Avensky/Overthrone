@@ -76,9 +76,9 @@ class Purchase extends Component {
                     <div className={myClasses.dropdown}>
                         <button className={myClasses.dropbtn}>OrderBy: </button>
                         <div className={myClasses.dropdownContent}>
-                            <a href="#">Price</a>
-                            <a href="#">Most recent</a>
-                            <a href="#">Most Popular</a>
+                            <a href="/">Price</a>
+                            <a href="/">Most recent</a>
+                            <a href="/">Most Popular</a>
                         </div>
                     </div>
                 </div>

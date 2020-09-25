@@ -60,7 +60,7 @@ const removeItem = ( state, action ) => {
     let itemToRemove        = state.addedItems.find(item=> action.id === item.id)
     let quantityToRemove    = itemToRemove.quantity
     let new_items           = state.addedItems.filter(item=> action.id !== item.id)
-    let addedItem           = state.items.find(item=> item.id === action.id)
+    //let addedItem           = state.items.find(item=> item.id === action.id)
     
     //calculating the total
     let newTotal = state.total - (itemToRemove.price * itemToRemove.quantity )

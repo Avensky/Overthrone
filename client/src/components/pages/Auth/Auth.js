@@ -71,7 +71,7 @@ class Auth extends Component {
     }
     componentDidUpdate() {
         console.log("Auth Login: " + this.state.authLogin)
-        console.log("errors", this.state.myErrors)
+        //console.log("errors", this.state.myErrors)
     }
 
     loginToggleHandler = () => {
@@ -105,7 +105,6 @@ class Auth extends Component {
         })
     }
 
-
     submitHandler = ( event ) => {
         event.preventDefault();
         console.log(this.state);
@@ -114,13 +113,13 @@ class Auth extends Component {
 
 
     render () {
-        const formElementsArray = [];
-        for ( let key in this.state.controls ) {
-            formElementsArray.push( {
-                id: key,
-                config: this.state.controls[key]
-            } );
-        }
+        // const formElementsArray = [];
+        // for ( let key in this.state.controls ) {
+        //     formElementsArray.push( {
+        //         id: key,
+        //         config: this.state.controls[key]
+        //     } );
+        // }
         // let form = formElementsArray.map( formElement => 
         //     <Input
         //         names={formElement.config.name}
@@ -140,9 +139,12 @@ class Auth extends Component {
         //const { register, handleSubmit, watch, errors } = useForm();
         //const onSubmit = data => console.log(data);
 
-        let error = this.state.myErrors
+        // let error = this.state.myErrors
+        let act = 'login';
+        if (! this.state.authLogin) {
+            act = 'signup'
+        }
         let formik =(
-            <Auxiliary>
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validate={values => {
@@ -156,94 +158,124 @@ class Auth extends Component {
                         }
                         return errors;
                     }}
-                    onSubmit={(values, { setSubmitting }) => {
+                    //action={"/auth/" + act} 
+                    //method="post"
+                    onSubmit={ ( values, { setSubmitting }) => {
                         setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
+                            console.log(this.state);
+                            alert(JSON.stringify(values, null, 2));
+                            setSubmitting(false);
                         }, 400);
+                        this.props.onAuth(values.email, values.password, this.state.authLogin)
                     }}
                     >
                     {({ isSubmitting }) => (
-                        <Form>
-                        <Field type="email" name="email" />
-                        <ErrorMessage name="email" component="div" />
-                        <Field type="password" name="password" />
-                        <ErrorMessage name="password" component="div" />
-                        <button type="submit" disabled={isSubmitting}>
-                            Submit
-                        </button>
+
+                        <Form 
+                            onSubmit={formik.handleSubmit}
+                        >
+                            <Field 
+                                type="email" 
+                                name="email" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.email}
+                                placeholder="Email Address"
+                                className={myClasses.AuthInput}
+                            />
+                            <ErrorMessage name="email" component="div" />
+                            <Field 
+                                type="password" 
+                                name="password" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.password}
+                                placeholder="Password"
+                                className={myClasses.AuthInput}
+                            />
+                            <ErrorMessage name="password" component="div" />
+                            <button  
+                                //onClick={this.loginHandler} 
+                                className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
+                                <div className={myClasses.BtnDiv}>
+                                    <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
+                                </div>
+                            </button>
                         </Form>
                     )}
-                </Formik>
-
-            </Auxiliary>
-        )
-        let form = (
-            <Auxiliary>
-                <input 
-                    type="text"
-                    name="email"    
-                    onChange={(event) => this.inputChangeHandler( event, "email"
-                    )}
-                    placeholder="Email Address"
-                    className={myClasses.AuthInput}
-                    //ref={register({ required: true })}
-                />
-                {/*errors.email && <span>This field is required</span>*/}
-                <input 
-                    type="password"
-                    name="password"
-                    onChange={(event) => this.inputChangeHandler( event, "password"
-                    )}
-                    placeholder="Password"
-                    className={myClasses.AuthInput}
-                    //ref= m{register({ required: true })}
-                />
-                {/*errors.password && <span>This field is required</span>*/}  
-                <div className={myClasses.AuthInput2}>
-                    <p className="text-left">Forgot Password?</p>
-                </div>
-            </Auxiliary>
-        )
-        if(!this.state.authLogin) form = (
-            <Auxiliary>
-                <input 
-                    type="text"
-                    name="email"    
-                    onChange={(event) => this.inputChangeHandler( event, "email")}
-                    placeholder="Email Address"
-                    className={myClasses.AuthInput}
-                    //className="form-control"
-                    //ref={register({ required: true })}
-                />
-                {/*errors.email && <span>This field is required</span>*/}              
-
-                <input 
-                    type="password"
-                    name="password"
-                    onChange={(event) => this.inputChangeHandler( event, "password")}
-                    placeholder="Password"
-                    className={myClasses.AuthInput}
-                    //className="form-control"
-                    //ref={register({ required: true })}
-                />  
-                {/*errors.password && <span>This field is required</span>*/}                
-
-                <input 
-                    type="password"
-                    name="password_confirmation"
-                    onChange={(event) => this.inputChangeHandler( event, "password")}
-                    placeholder="Confirm Password"
-                    className={myClasses.AuthInput}
-                    //className="form-control"
-                    //ref={register({ required: true })}
-                />   
-                {/*errors.password_confirmation && <span>This field is required</span*/}             
-            </Auxiliary>
-        )
+                </Formik>)
+        // let form = (
+        //     <Auxiliary>
+        //         <input 
+        //             type="text"
+        //             name="email"    
+        //             onChange={(event) => this.inputChangeHandler( event, "email"
+        //             )}
+        //             placeholder="Email Address"
+        //             className={myClasses.AuthInput}
+        //             //ref={register({ required: true })}
+        //         />
+        //         {/*errors.email && <span>This field is required</span>*/}
+        //         <input 
+        //             type="password"
+        //             name="password"
+        //             onChange={(event) => this.inputChangeHandler( event, "password"
+        //             )}
+        //             placeholder="Password"
+        //             className={myClasses.AuthInput}
+        //             //ref= m{register({ required: true })}
+        //         />
+        //         {/*errors.password && <span>This field is required</span>*/}  
+        //         <div className={myClasses.AuthInput2}>
+        //             <p className="text-left">Forgot Password?</p>
+        //         </div>
+        //     </Auxiliary>
+        // )
+        
+        //if(!this.state.authLogin) form = (
+        //    <Auxiliary>
+        //        <input 
+        //            type="text"
+        //            name="email"    
+        //            onChange={(event) => this.inputChangeHandler( event, "email")}
+        //            placeholder="Email Address"
+        //            className={myClasses.AuthInput}
+        //            //className="form-control"
+        //            //ref={register({ required: true })}
+        //        />
+        //        {/*errors.email && <span>This field is required</span>*/}              
+//
+        //        <input 
+        //            type="password"
+        //            name="password"
+        //            onChange={(event) => this.inputChangeHandler( event, "password")}
+        //            placeholder="Password"
+        //            className={myClasses.AuthInput}
+        //            //className="form-control"
+        //            //ref={register({ required: true })}
+        //        />  
+        //        {/*errors.password && <span>This field is required</span>*/}                
+//
+        //        <input 
+        //            type="password"
+        //            name="password_confirmation"
+        //            onChange={(event) => this.inputChangeHandler( event, "password")}
+        //            placeholder="Confirm Password"
+        //            className={myClasses.AuthInput}
+        //            //className="form-control"
+        //            //ref={register({ required: true })}
+        //        />   
+        //        {/*errors.password_confirmation && <span>This field is required</span*/}             
+        //    </Auxiliary>
+        //)
 
         if ( this.props.loading ) {
-            form = <Spinner />
+            //form = <Spinner />
+            formik = <Spinner />
+
         }
 
         let errorMessage = null;
@@ -270,10 +302,6 @@ class Auth extends Component {
 
         }
         
-        let act = 'login';
-        if (! this.state.authLogin) {
-            act = 'signup'
-        }
         return(
             <Auxiliary>
                 <div className='container'>
@@ -298,25 +326,8 @@ class Auth extends Component {
                         </button>   
                     </div>
                     
-                    <form 
-                        // className="form-type-material"
-                        // action={"/auth/" + act} 
-                        // method="post"
-                        // onSubmit={this.submitHandler}
-                        // onSubmit={handleSubmit(onSubmit)}
-                    >
                     {formik}
-            
-                    <button  
-                        //onClick={this.loginHandler} 
-                        className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
-                        type="submit"
-                    >
-                        <div className={myClasses.BtnDiv}>
-                            <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
-                        </div>
-                    </button>
-                    </form>
+
                     <div className={classes.CardTitle}>Or continue with:</div>
                     <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
                         <a href="/auth/facebook"><span className="fa fa-facebook" /> Facebook</a>
