@@ -105,10 +105,11 @@ class Auth extends Component {
         })
     }
 
-    submitHandler = ( event ) => {
+    submitHandler = ( values, event ) => {
         event.preventDefault();
         console.log(this.state);
-        this.props.onAuth( this.state.email.value, this.state.password.value, this.state.authLogin);
+        //this.props.onAuth( this.state.email.value, this.state.password.value, this.state.authLogin);
+        this.props.onAuth( values.email, values.password, this.state.authLogin)
     }
 
 
@@ -150,36 +151,38 @@ class Auth extends Component {
                     validate={values => {
                         const errors = {};
                         if (!values.email) {
-                        errors.email = 'Required';
-                        } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                        ) {
-                        errors.email = 'Invalid email address';
-                        }
-                        return errors;
-                    }}
-                    //action={"/auth/" + act} 
-                    //method="post"
-                    onSubmit={ ( values, { setSubmitting }) => {
+                            errors.email = 'Required';} 
+
+                        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                            errors.email = 'Invalid email address'}
+
+                        return errors;}}
+
+                    onSubmit={ async ( values, { setSubmitting }) => {
+                        //this.props.onAuth( values.email, values.password, this.state.authLogin);
+                        //this.submitHandler(values)
                         setTimeout(() => {
                             console.log(this.state);
-                            alert(JSON.stringify(values, null, 2));
+                            //alert(JSON.stringify(values, null, 2));
+                            this.props.onAuth( values.email, values.password, this.state.authLogin)
                             setSubmitting(false);
                         }, 400);
-                        this.props.onAuth(values.email, values.password, this.state.authLogin)
                     }}
+                    
                     >
                     {({ isSubmitting }) => (
 
                         <Form 
-                            onSubmit={formik.handleSubmit}
+                            // onSubmit={formik.handleSubmit}
+                            // action={"/auth/" + act} 
+                            // method="post"
                         >
                             <Field 
                                 type="email" 
                                 name="email" 
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.email}
+                                //onChange={formik.handleChange}
+                                //onBlur={formik.handleBlur}
+                                //value={formik.values.email}
                                 placeholder="Email Address"
                                 className={myClasses.AuthInput}
                             />
@@ -187,9 +190,9 @@ class Auth extends Component {
                             <Field 
                                 type="password" 
                                 name="password" 
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.password}
+                                //onChange={formik.handleChange}
+                                //onBlur={formik.handleBlur}
+                                //value={formik.values.password}
                                 placeholder="Password"
                                 className={myClasses.AuthInput}
                             />
@@ -207,70 +210,72 @@ class Auth extends Component {
                         </Form>
                     )}
                 </Formik>)
-        // let form = (
-        //     <Auxiliary>
-        //         <input 
-        //             type="text"
-        //             name="email"    
-        //             onChange={(event) => this.inputChangeHandler( event, "email"
-        //             )}
-        //             placeholder="Email Address"
-        //             className={myClasses.AuthInput}
-        //             //ref={register({ required: true })}
-        //         />
-        //         {/*errors.email && <span>This field is required</span>*/}
-        //         <input 
-        //             type="password"
-        //             name="password"
-        //             onChange={(event) => this.inputChangeHandler( event, "password"
-        //             )}
-        //             placeholder="Password"
-        //             className={myClasses.AuthInput}
-        //             //ref= m{register({ required: true })}
-        //         />
-        //         {/*errors.password && <span>This field is required</span>*/}  
-        //         <div className={myClasses.AuthInput2}>
-        //             <p className="text-left">Forgot Password?</p>
-        //         </div>
-        //     </Auxiliary>
-        // )
-        
-        //if(!this.state.authLogin) form = (
-        //    <Auxiliary>
-        //        <input 
-        //            type="text"
-        //            name="email"    
-        //            onChange={(event) => this.inputChangeHandler( event, "email")}
-        //            placeholder="Email Address"
-        //            className={myClasses.AuthInput}
-        //            //className="form-control"
-        //            //ref={register({ required: true })}
-        //        />
-        //        {/*errors.email && <span>This field is required</span>*/}              
-//
-        //        <input 
-        //            type="password"
-        //            name="password"
-        //            onChange={(event) => this.inputChangeHandler( event, "password")}
-        //            placeholder="Password"
-        //            className={myClasses.AuthInput}
-        //            //className="form-control"
-        //            //ref={register({ required: true })}
-        //        />  
-        //        {/*errors.password && <span>This field is required</span>*/}                
-//
-        //        <input 
-        //            type="password"
-        //            name="password_confirmation"
-        //            onChange={(event) => this.inputChangeHandler( event, "password")}
-        //            placeholder="Confirm Password"
-        //            className={myClasses.AuthInput}
-        //            //className="form-control"
-        //            //ref={register({ required: true })}
-        //        />   
-        //        {/*errors.password_confirmation && <span>This field is required</span*/}             
-        //    </Auxiliary>
-        //)
+
+         let form = (
+             <Auxiliary>
+                 <input 
+                     type="text"
+                     name="email"    
+                     onChange={(event) => this.inputChangeHandler( event, "email"
+                     )}
+                     placeholder="Email Address"
+                     className={myClasses.AuthInput}
+                     //ref={register({ required: true })}
+                 />
+                 {/*errors.email && <span>This field is required</span>*/}
+                 <input 
+                     type="password"
+                     name="password"
+                     onChange={(event) => this.inputChangeHandler( event, "password"
+                     )}
+                     placeholder="Password"
+                     className={myClasses.AuthInput}
+                     //ref= m{register({ required: true })}
+                 />
+                 {/*errors.password && <span>This field is required</span>*/}  
+                 <div className={myClasses.AuthInput2}>
+                     <p className="text-left">Forgot Password?</p>
+                 </div>
+             </Auxiliary>
+         )
+
+
+        if(!this.state.authLogin) form = (
+            <Auxiliary>
+                <input 
+                    type="text"
+                    name="email"    
+                    onChange={(event) => this.inputChangeHandler( event, "email")}
+                    placeholder="Email Address"
+                    className={myClasses.AuthInput}
+                    //className="form-control"
+                    //ref={register({ required: true })}
+                />
+                {/*errors.email && <span>This field is required</span>*/}              
+
+                <input 
+                    type="password"
+                    name="password"
+                    onChange={(event) => this.inputChangeHandler( event, "password")}
+                    placeholder="Password"
+                    className={myClasses.AuthInput}
+                    //className="form-control"
+                    //ref={register({ required: true })}
+                />  
+                {/*errors.password && <span>This field is required</span>*/}                
+
+                <input 
+                    type="password"
+                    name="password_confirmation"
+                    onChange={(event) => this.inputChangeHandler( event, "password")}
+                    placeholder="Confirm Password"
+                    className={myClasses.AuthInput}
+                    //className="form-control"
+                    //ref={register({ required: true })}
+                />   
+                {/*errors.password_confirmation && <span>This field is required</span*/}             
+            </Auxiliary>
+        )
 
         if ( this.props.loading ) {
             //form = <Spinner />
