@@ -15,52 +15,52 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 class Auth extends Component {
     state = {
-        controls: {
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    name: 'email',
-                    placeholder: 'Email Address'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    isEmail: true
-                },
-                valid: false,
-                touched: false
-            },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'password',
-                    name: 'password',
-                    placeholder: 'Password'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 6,
-                },
-                valid: false,
-                touched: false
-            },
-            confirmPassword: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'password',
-                    placeholder:"Confirm Password"
-                },
-                value: '',
-                validation: {
-                    required: false,
-                    minLength: 6
-                },
-                valid: false,
-                touched: false
-            }
-        },
+        // controls: {
+        //     email: {
+        //         elementType: 'input',
+        //         elementConfig: {
+        //             type: 'email',
+        //             name: 'email',
+        //             placeholder: 'Email Address'
+        //         },
+        //         value: '',
+        //         validation: {
+        //             required: true,
+        //             isEmail: true
+        //         },
+        //         valid: false,
+        //         touched: false
+        //     },
+        //     password: {
+        //         elementType: 'input',
+        //         elementConfig: {
+        //             type: 'password',
+        //             name: 'password',
+        //             placeholder: 'Password'
+        //         },
+        //         value: '',
+        //         validation: {
+        //             required: true,
+        //             minLength: 6,
+        //         },
+        //         valid: false,
+        //         touched: false
+        //     },
+        //     confirmPassword: {
+        //         elementType: 'input',
+        //         elementConfig: {
+        //             type: 'password',
+        //             placeholder:"Confirm Password"
+        //         },
+        //         value: '',
+        //         validation: {
+        //             required: false,
+        //             minLength: 6
+        //         },
+        //         valid: false,
+        //         touched: false
+        //     }
+        // },
         authLogin: true,
     }
     
@@ -163,8 +163,8 @@ class Auth extends Component {
                         //this.submitHandler(values)
                         setTimeout(() => {
                             console.log(this.state);
-                            //alert(JSON.stringify(values, null, 2));
-                            this.props.onAuth( values.email, values.password, this.state.authLogin)
+                            alert(JSON.stringify(values, null, 2));
+                            this.props.onAuth( values, this.state.authLogin)
                             setSubmitting(false);
                         }, 400);
                     }}

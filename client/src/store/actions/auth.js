@@ -78,32 +78,31 @@ export const checkLoginTimeout = (expirationTime) => {
     };
 };
 
-export const auth = (email, password, authLogin) => {
+export const auth = (values, authLogin) => {
     return dispatch => {
         dispatch(authStart());
-        const authData = {
-            email               : email,
-            password            : password,
-            returnSecureToken   : true
-        } 
+        // const authData = {
+        //     email               : email,
+        //     password            : password,
+        //     returnSecureToken   : true
+        // } 
         let url = '/auth/login';
         if (!authLogin) {
             url = '/auth/signup';
         }       
-        axios.post(url, authData)
+        axios.post(url, values, {
+            proxy: {
+                host: "http://localhost",
+                port: 5000
+            }
+        })
             .then(response => {
                 console.log(response);
-                //const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                //localStorage.setItem('token', response.data.idToken);
-                //localStorage.setItem('expirationDate', expirationDate);
-                //localStorage.setItem('userId', response.data.localId); 
-                //dispatch(loginSuccess(response.data.idToken, response.data.localId));
-                //dispatch(checkLoginTimeout(response.data.expiresIn));
-                dispatch(authSuccess(response.data.idToken, response.data.localId)) 
+                dispatch(authSuccess(response)) 
             })
             .catch(err => {
-                //console.log(err);
-                dispatch(authFail(err.response.data.error));
+                console.log(err);
+                dispatch(authFail(err));
             });
     }
 }
@@ -117,24 +116,19 @@ export const signupStart  = () =>{
 export const signupFail = (error) => {
     return {
         type: actionTypes.SIGNUP_FAIL,
-        error: error
-    }
-}
+        error: error}}
 
 export const signupSuccess = (userData) => {
     return {
         type: actionTypes.SIGNUP_SUCCESS,
-        userData: userData
-    }
-}
+        userData: userData}}
     
 export const signup = (email, password) => {
     return dispatch => {
         dispatch(signupStart())
         const userData = {
             email : email, 
-            password : password,
-        }
+            password : password,}
         axios.post('/auth/signup', userData)
             .then(response => {
                 console.log(response);
@@ -148,10 +142,7 @@ export const signup = (email, password) => {
             })
         .catch(err => {
             console.log(err);
-            dispatch(signupFail(err))
-        })    
-    }
-}
+            dispatch(signupFail(err))})}}
 
 export const authStart = () => {
     return {
