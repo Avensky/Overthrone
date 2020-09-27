@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-//import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
 import * as actions from '../../../store/actions/index';
-import {updateObject, checkValidity} from '../../../utility/utility';
-//import Input from '../../UI/Input/Input';
+// import {updateObject, checkValidity} from '../../../utility/utility';
+// import Input from '../../UI/Input/Input';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 
@@ -15,52 +15,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 class Auth extends Component {
     state = {
-        // controls: {
-        //     email: {
-        //         elementType: 'input',
-        //         elementConfig: {
-        //             type: 'email',
-        //             name: 'email',
-        //             placeholder: 'Email Address'
-        //         },
-        //         value: '',
-        //         validation: {
-        //             required: true,
-        //             isEmail: true
-        //         },
-        //         valid: false,
-        //         touched: false
-        //     },
-        //     password: {
-        //         elementType: 'input',
-        //         elementConfig: {
-        //             type: 'password',
-        //             name: 'password',
-        //             placeholder: 'Password'
-        //         },
-        //         value: '',
-        //         validation: {
-        //             required: true,
-        //             minLength: 6,
-        //         },
-        //         valid: false,
-        //         touched: false
-        //     },
-        //     confirmPassword: {
-        //         elementType: 'input',
-        //         elementConfig: {
-        //             type: 'password',
-        //             placeholder:"Confirm Password"
-        //         },
-        //         value: '',
-        //         validation: {
-        //             required: false,
-        //             minLength: 6
-        //         },
-        //         valid: false,
-        //         touched: false
-        //     }
-        // },
         authLogin: true,
     }
     
@@ -87,18 +41,6 @@ class Auth extends Component {
     }
 
 
-    inputChangedHandler = ( event, controlName ) => {
-        const updatedControls = updateObject( this.state.controls, {
-            [controlName]: updateObject( 
-                this.state.controls[controlName], {
-                value: event.target.value,
-                valid: checkValidity( event.target.value, this.state.controls[controlName].validation ),
-                touched: true
-            } )
-        } );
-        this.setState( { controls: updatedControls } );
-    }
-
     inputChangeHandler = ( event ) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -114,33 +56,6 @@ class Auth extends Component {
 
 
     render () {
-        // const formElementsArray = [];
-        // for ( let key in this.state.controls ) {
-        //     formElementsArray.push( {
-        //         id: key,
-        //         config: this.state.controls[key]
-        //     } );
-        // }
-        // let form = formElementsArray.map( formElement => 
-        //     <Input
-        //         names={formElement.config.name}
-        //         type={formElement.config.type}
-        //         key={formElement.id}
-        //         elementType={formElement.config.elementType}
-        //         elementConfig={formElement.config.elementConfig}
-        //         value={formElement.config.value}
-        //         invalid={!formElement.config.valid}
-        //         shouldValidate={formElement.config.validation}
-        //         touched={formElement.config.touched}
-        //         placeholder={formElement.config.placeholder}
-        //         className={myClasses.AuthInput}
-        //         changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
-        // )
-        
-        //const { register, handleSubmit, watch, errors } = useForm();
-        //const onSubmit = data => console.log(data);
-
-        // let error = this.state.myErrors
         let act = 'login';
         if (! this.state.authLogin) {
             act = 'signup'
@@ -152,26 +67,28 @@ class Auth extends Component {
                         const errors = {};
                         if (!values.email) {
                             errors.email = 'Required';} 
-
+        
                         else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                             errors.email = 'Invalid email address'}
-
+        
                         return errors;}}
-
+        
                     onSubmit={ async ( values, { setSubmitting }) => {
                         //this.props.onAuth( values.email, values.password, this.state.authLogin);
                         //this.submitHandler(values)
+                        this.props.onAuth( values, this.state.authLogin)
                         setTimeout(() => {
-                            console.log(this.state);
+                            console.log('state= ' + this.state);
+                            console.log('values= ' + values.email);
                             alert(JSON.stringify(values, null, 2));
-                            this.props.onAuth( values, this.state.authLogin)
+                            // this.props.onAuth( values, this.state.authLogin)
                             setSubmitting(false);
                         }, 400);
                     }}
                     
                     >
                     {({ isSubmitting }) => (
-
+        
                         <Form 
                             // onSubmit={formik.handleSubmit}
                             // action={"/auth/" + act} 
@@ -180,9 +97,6 @@ class Auth extends Component {
                             <Field 
                                 type="email" 
                                 name="email" 
-                                //onChange={formik.handleChange}
-                                //onBlur={formik.handleBlur}
-                                //value={formik.values.email}
                                 placeholder="Email Address"
                                 className={myClasses.AuthInput}
                             />
@@ -190,9 +104,6 @@ class Auth extends Component {
                             <Field 
                                 type="password" 
                                 name="password" 
-                                //onChange={formik.handleChange}
-                                //onBlur={formik.handleBlur}
-                                //value={formik.values.password}
                                 placeholder="Password"
                                 className={myClasses.AuthInput}
                             />
@@ -213,73 +124,93 @@ class Auth extends Component {
 
          let form = (
              <Auxiliary>
-                 <input 
-                     type="text"
-                     name="email"    
-                     onChange={(event) => this.inputChangeHandler( event, "email"
-                     )}
-                     placeholder="Email Address"
-                     className={myClasses.AuthInput}
-                     //ref={register({ required: true })}
-                 />
-                 {/*errors.email && <span>This field is required</span>*/}
-                 <input 
-                     type="password"
-                     name="password"
-                     onChange={(event) => this.inputChangeHandler( event, "password"
-                     )}
-                     placeholder="Password"
-                     className={myClasses.AuthInput}
-                     //ref= m{register({ required: true })}
-                 />
-                 {/*errors.password && <span>This field is required</span>*/}  
-                 <div className={myClasses.AuthInput2}>
-                     <p className="text-left">Forgot Password?</p>
-                 </div>
+                 <form method='post' action={"/auth/" + act} >
+                    <input 
+                        type="text"
+                        name="email"    
+                        onChange={(event) => this.inputChangeHandler( event, "email")}
+                        placeholder="Email Address"
+                        className={myClasses.AuthInput}
+                        //ref={register({ required: true })}
+                    />
+                    {/*errors.email && <span>This field is required</span>*/}
+                    <input 
+                        type="password"
+                        name="password"
+                        onChange={(event) => this.inputChangeHandler( event, "password")}
+                        placeholder="Password"
+                        className={myClasses.AuthInput}
+                        //ref= m{register({ required: true })}
+                    />
+                    {/*errors.password && <span>This field is required</span>*/}  
+                    <div className={myClasses.AuthInput2}>
+                        <p className="text-left">Forgot Password?</p>
+                    </div>
+
+                    <button  
+                        className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                        type="submit">
+                        <div className={myClasses.BtnDiv}>
+                            <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
+                        </div>
+                    </button>
+
+                 </form>
              </Auxiliary>
          )
 
 
         if(!this.state.authLogin) form = (
             <Auxiliary>
-                <input 
-                    type="text"
-                    name="email"    
-                    onChange={(event) => this.inputChangeHandler( event, "email")}
-                    placeholder="Email Address"
-                    className={myClasses.AuthInput}
-                    //className="form-control"
-                    //ref={register({ required: true })}
-                />
-                {/*errors.email && <span>This field is required</span>*/}              
+                <form method='post' action={"/auth/" + act} >
+                    <input 
+                        type="text"
+                        name="email"    
+                        onChange={(event) => this.inputChangeHandler( event, "email")}
+                        placeholder="Email Address"
+                        className={myClasses.AuthInput}
+                        //className="form-control"
+                        //ref={register({ required: true })}
+                    />
+                    {/*errors.email && <span>This field is required</span>*/}              
 
-                <input 
-                    type="password"
-                    name="password"
-                    onChange={(event) => this.inputChangeHandler( event, "password")}
-                    placeholder="Password"
-                    className={myClasses.AuthInput}
-                    //className="form-control"
-                    //ref={register({ required: true })}
-                />  
-                {/*errors.password && <span>This field is required</span>*/}                
+                    <input 
+                        type="password"
+                        name="password"
+                        onChange={(event) => this.inputChangeHandler( event, "password")}
+                        placeholder="Password"
+                        className={myClasses.AuthInput}
+                        //className="form-control"
+                        //ref={register({ required: true })}
+                    />  
+                    {/*errors.password && <span>This field is required</span>*/}                
 
-                <input 
-                    type="password"
-                    name="password_confirmation"
-                    onChange={(event) => this.inputChangeHandler( event, "password")}
-                    placeholder="Confirm Password"
-                    className={myClasses.AuthInput}
-                    //className="form-control"
-                    //ref={register({ required: true })}
-                />   
-                {/*errors.password_confirmation && <span>This field is required</span*/}             
+                    <input 
+                        type="password"
+                        name="password_confirmation"
+                        onChange={(event) => this.inputChangeHandler( event, "password")}
+                        placeholder="Confirm Password"
+                        className={myClasses.AuthInput}
+                        //className="form-control"
+                        //ref={register({ required: true })}
+                    />   
+                    {/*errors.password_confirmation && <span>This field is required</span*/}
+
+                    <button  
+                        className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                        type="submit">
+                        <div className={myClasses.BtnDiv}>
+                            <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
+                        </div>
+                    </button>  
+
+                </form>     
             </Auxiliary>
         )
 
         if ( this.props.loading ) {
-            //form = <Spinner />
-            formik = <Spinner />
+            form = <Spinner />
+            //formik = <Spinner />
 
         }
 
@@ -331,7 +262,7 @@ class Auth extends Component {
                         </button>   
                     </div>
                     
-                    {formik}
+                    {form}
 
                     <div className={classes.CardTitle}>Or continue with:</div>
                     <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
@@ -361,7 +292,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, authLogin) => dispatch(actions.auth(email, password, authLogin)),
+        onAuth: (values, authLogin) => dispatch(actions.auth(values, authLogin)),
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
         onNewUser: (username, givenName, familyName, email, password, picture) => dispatch(actions.signup(username, givenName, familyName, email, password, picture))
     }

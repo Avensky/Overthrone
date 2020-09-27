@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+//import axios from 'axios-https-proxy-fix'; 
+// const axios = require('axios-proxy-fix');
 import * as actionTypes from './actionTypes'
 
 export const fetchUserStart = () => {
@@ -91,14 +92,17 @@ export const auth = (values, authLogin) => {
             url = '/auth/signup';
         }       
         axios.post(url, values, {
-            proxy: {
-                host: "http://localhost",
-                port: 5000
-            }
+            // proxy: {
+            //     host: "http://localhost",
+            //     port: 5000,
+            //     auth: { values }
+            // }
         })
             .then(response => {
                 console.log(response);
-                dispatch(authSuccess(response)) 
+                const data = response.data.results;
+                console.log(data);
+                dispatch(authSuccess(data)) 
             })
             .catch(err => {
                 console.log(err);

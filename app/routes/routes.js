@@ -58,12 +58,27 @@ module.exports = function(app, passport) {
 // =====================================
     	// =====================================
     	// LOGIN ===============================
-    	// =====================================
+		// =====================================
+
+		// process the login form
 		app.post('/auth/login', passport.authenticate('local-login', {
 			successRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/', // redirect back to the signup page if there is an error
+			failureRedirect : '/authentication', // redirect back to the signup page if there is an error
 			failureFlash : true // allow flash messages
 		}));
+
+		//app.post('/auth/login', (req, res) => { 
+		//	 console.log(req.body)
+		//	 const { email, password} = req.body;
+		//	 console.log('email= '+email)
+		//	 console.log('password= '+password)
+		//	 passport.authenticate('local-login', {
+		//		successRedirect : '/profile', // redirect to the secure profile section
+		//		failureRedirect : '/authentication', // redirect back to the signup page if there is an error
+		//		//failureFlash 	: true // allow flash messages
+		//	  })(req, res)
+		// });
+
 		// =====================================
 		// SIGNUP ==============================
 		// =====================================
@@ -71,6 +86,7 @@ module.exports = function(app, passport) {
 		// app.get('/signup', function(req, res) {
 		// 	res.render('signup.ejs', { message: req.flash('loginMessage') });
 		// });
+
     // =====================================
     // REGISTER ============================
     // =====================================
