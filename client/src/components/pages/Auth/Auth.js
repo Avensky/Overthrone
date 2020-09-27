@@ -262,7 +262,7 @@ class Auth extends Component {
                         </button>   
                     </div>
                     
-                    {form}
+                    {formik}
 
                     <div className={classes.CardTitle}>Or continue with:</div>
                     <button className={[myClasses.Btn, "btn-primary"].join(' ')}>

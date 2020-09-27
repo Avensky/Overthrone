@@ -87,16 +87,21 @@ export const auth = (values, authLogin) => {
         //     password            : password,
         //     returnSecureToken   : true
         // } 
+        // let url = 'http://localhost:5000/auth/login';
         let url = '/auth/login';
         if (!authLogin) {
             url = '/auth/signup';
         }       
         axios.post(url, values, {
-            // proxy: {
-            //     host: "http://localhost",
-            //     port: 5000,
-            //     auth: { values }
-            // }
+            proxy: {
+                 host: "http://localhost",
+                 // host: '127.0.0.1',
+                 port: 5000,
+                 auth: {
+                    username: 'mikeymike',
+                    password: 'rapunz3l'
+                  }
+            }
         })
             .then(response => {
                 console.log(response);
