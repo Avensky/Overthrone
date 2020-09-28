@@ -2,6 +2,7 @@ export {
     fetchUser,
     signup,
     auth,
+    login,
     setAuthRedirectPath,
 } from './auth';
 

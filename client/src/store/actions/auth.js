@@ -115,6 +115,42 @@ export const auth = (values, authLogin) => {
             });
     }
 }
+export const login = (email, password, authLogin) => {
+    return dispatch => {
+        dispatch(authStart());
+        const authData = {
+            email               : email,
+            password            : password,
+            returnSecureToken   : true
+        } 
+        // let url = 'http://localhost:5000/auth/login';
+        let url = '/auth/login';
+        if (!authLogin) {
+            url = '/auth/signup';
+        }       
+        axios.post(url, authData, {
+            // proxy: {
+            //      host: "http://localhost",
+            //      // host: '127.0.0.1',
+            //      port: 5000,
+            //      auth: {
+            //         username: 'mikeymike',
+            //         password: 'rapunz3l'
+            //       }
+            // }
+        })
+            .then(response => {
+                console.log(response);
+                const data = response.data.results;
+                console.log(data);
+                dispatch(authSuccess(data)) 
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(authFail(err));
+            });
+    }
+}
 
 export const signupStart  = () =>{
     return{

@@ -5,7 +5,7 @@ import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
 import * as actions from '../../../store/actions/index';
-// import {updateObject, checkValidity} from '../../../utility/utility';
+import {updateObject, checkValidity} from '../../../utility/utility';
 // import Input from '../../UI/Input/Input';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
@@ -15,6 +15,52 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 class Auth extends Component {
     state = {
+        controls: {	
+            email: {	
+                elementType: 'input',	
+                elementConfig: {	
+                    type: 'email',	
+                    name: 'email',	
+                    placeholder: 'Email Address'	
+                },	
+                value: '',	
+                validation: {	
+                    required: true,	
+                    isEmail: true	
+                },	
+                valid: false,	
+                touched: false	
+            },	
+            password: {	
+                elementType: 'input',	
+                elementConfig: {	
+                    type: 'password',	
+                    name: 'password',	
+                    placeholder: 'Password'	
+                },	
+                value: '',	
+                validation: {	
+                    required: true,	
+                    minLength: 6,	
+                },	
+                valid: false,	
+                touched: false	
+            },	
+            confirmPassword: {	
+                elementType: 'input',	
+                elementConfig: {	
+                    type: 'password',	
+                    placeholder:"Confirm Password"	
+                },	
+                value: '',	
+                validation: {	
+                    required: false,	
+                    minLength: 6	
+                },	
+                valid: false,	
+                touched: false	
+            }	
+        },
         authLogin: true,
     }
     
@@ -25,7 +71,7 @@ class Auth extends Component {
     }
     componentDidUpdate() {
         console.log("Auth Login: " + this.state.authLogin)
-        //console.log("errors", this.state.myErrors)
+        // console.log("errors", this.state.myErrors)
     }
 
     loginToggleHandler = () => {
@@ -47,13 +93,25 @@ class Auth extends Component {
         })
     }
 
-    submitHandler = ( values, event ) => {
-        event.preventDefault();
-        console.log(this.state);
-        //this.props.onAuth( this.state.email.value, this.state.password.value, this.state.authLogin);
-        this.props.onAuth( values.email, values.password, this.state.authLogin)
+    inputChangedHandler = ( event, controlName ) => {	
+        const updatedControls = updateObject( this.state.controls, {	
+            [controlName]: updateObject( 	
+                this.state.controls[controlName], {	
+                value: event.target.value,	
+                valid: checkValidity( event.target.value, this.state.controls[controlName].validation ),	
+                touched: true	
+            } )	
+        } );	
+        this.setState( { controls: updatedControls } );	
     }
 
+    submitHandler = ( values, event ) => {
+        //event.preventDefault();
+        console.log(this.state);
+        this.props.onLogin( this.state.controls.email.value, this.state.controls.password.value, this.state.authLogin);
+        // this.props.onAuth( values.email, values.password, this.state.authLogin)
+        // this.props.onAuth( values, this.state.authLogin)
+    }
 
     render () {
         let act = 'login';
@@ -124,11 +182,16 @@ class Auth extends Component {
 
          let form = (
              <Auxiliary>
-                 <form method='post' action={"/auth/" + act} >
+                 <form 
+                    method='post' 
+                    // action={"/auth/" + act} 
+                    
+                    onSubmit={this.submitHandler}
+                >
                     <input 
                         type="text"
                         name="email"    
-                        onChange={(event) => this.inputChangeHandler( event, "email")}
+                        onChange={(event) => this.inputChangedHandler( event, "email")}
                         placeholder="Email Address"
                         className={myClasses.AuthInput}
                         //ref={register({ required: true })}
@@ -137,7 +200,7 @@ class Auth extends Component {
                     <input 
                         type="password"
                         name="password"
-                        onChange={(event) => this.inputChangeHandler( event, "password")}
+                        onChange={(event) => this.inputChangedHandler( event, "password")}
                         placeholder="Password"
                         className={myClasses.AuthInput}
                         //ref= m{register({ required: true })}
@@ -162,11 +225,14 @@ class Auth extends Component {
 
         if(!this.state.authLogin) form = (
             <Auxiliary>
-                <form method='post' action={"/auth/" + act} >
+                <form 
+                    // method='post' action={"/auth/" + act}
+                    onSubmit={this.submitHandler}
+                >
                     <input 
                         type="text"
                         name="email"    
-                        onChange={(event) => this.inputChangeHandler( event, "email")}
+                        onChange={(event) => this.inputChangedHandler( event, "email")}
                         placeholder="Email Address"
                         className={myClasses.AuthInput}
                         //className="form-control"
@@ -177,7 +243,7 @@ class Auth extends Component {
                     <input 
                         type="password"
                         name="password"
-                        onChange={(event) => this.inputChangeHandler( event, "password")}
+                        onChange={(event) => this.inputChangedHandler( event, "password")}
                         placeholder="Password"
                         className={myClasses.AuthInput}
                         //className="form-control"
@@ -188,7 +254,7 @@ class Auth extends Component {
                     <input 
                         type="password"
                         name="password_confirmation"
-                        onChange={(event) => this.inputChangeHandler( event, "password")}
+                        onChange={(event) => this.inputChangedHandler( event, "password")}
                         placeholder="Confirm Password"
                         className={myClasses.AuthInput}
                         //className="form-control"
@@ -262,7 +328,7 @@ class Auth extends Component {
                         </button>   
                     </div>
                     
-                    {formik}
+                    {form}
 
                     <div className={classes.CardTitle}>Or continue with:</div>
                     <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
@@ -293,6 +359,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (values, authLogin) => dispatch(actions.auth(values, authLogin)),
+        onLogin: (email, password, authLogin) => dispatch(actions.login(email, password, authLogin)),
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
         onNewUser: (username, givenName, familyName, email, password, picture) => dispatch(actions.signup(username, givenName, familyName, email, password, picture))
     }
