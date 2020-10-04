@@ -1,37 +1,32 @@
-import React, { useEffect } from 'react';
-import './App.scss';
-import { Route, Switch, withRouter} from 'react-router-dom';
-import * as actions   from '../../store/actions/index';
-import { connect }    from 'react-redux';
-import ConnectLocal   from '../pages/connectLocal/connectLocal';
-import Auth           from '../pages/Auth/Auth';
-// import Login          from '../pages/login/Login';
-import Profile        from '../pages/profile/Profile';
-import Signup         from '../pages/signup/Signup';
-import Wrapper        from '../Wrapper/Wrapper';
-import Layout         from '../Layout/Layout';
-import Books          from '../pages/Books/Books';
-import Connect        from '../pages/Connect/Connect';
-import Authors        from '../pages/Authors/Authors';
-import Characters     from '../pages/Characters/Characters';
-import Sovereignty    from '../pages/Sovereignty/Sovereignty';
-import Shop           from '../pages/Shop/Shop';
-//import ItemFull       from '../pages/Shop/ItemFull/ItemFull';
-import Details        from '../pages/Shop/Details/Details';
-// import Items          from '../pages/Shop/Items/Items';
-import Cart           from '../pages/Cart/Cart';
-import Home           from '../pages/Home/Home';
-import Faqs           from '../pages/Faqs/Faqs';
-// import CharacterEdit  from '../pages/Characters/CharacterEdit/CharacterEdit';
-import CharacterList  from '../pages/Characters/CharacterList/CharacterList';
-import HomePage       from '../pages/Contact/HomePage';
+import React, { useEffect, Suspense } from 'react'
+import { Route, Switch, withRouter} from 'react-router-dom'
+import * as actions   from '../../store/actions/index'
+import { connect }    from 'react-redux'
+import ConnectLocal   from '../pages/connectLocal/connectLocal'
+import Profile        from '../pages/profile/Profile'
+import Signup         from '../pages/signup/Signup'
+import Wrapper        from '../Wrapper/Wrapper'
+import Layout         from '../Layout/Layout'
+import Books          from '../pages/Books/Books'
+import Connect        from '../pages/Connect/Connect'
+import Authors        from '../pages/Authors/Authors'
+import Characters     from '../pages/Characters/Characters'
+import Sovereignty    from '../pages/Sovereignty/Sovereignty'
+import Shop           from '../pages/Shop/Shop'
+import Details        from '../pages/Shop/Details/Details'
+import Cart           from '../pages/Cart/Cart'
+import Home           from '../pages/Home/Home'
+import Faqs           from '../pages/Faqs/Faqs'
+import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
+import HomePage       from '../pages/Contact/HomePage'
+import './App.scss'
+
+const Auth = React.lazy(() => {
+  return import('../pages/Auth/Auth');
+});
 
 
 const App = props => {
-  // state = {
-  //   loggedIn: false,
-  //   username: null
-  // }
 
   useEffect(()=> {
     props.onFetchUser();
@@ -40,8 +35,9 @@ const App = props => {
 
   let routes = (
     <Switch>
+      <Route path="/authentication"      render={props => <Auth {...props} />} />
+
       <Route path="/connectLocal"         component={ConnectLocal} />
-      <Route path="/authentication"       component={Auth} />
       <Route path="/signup"               component={Signup} />
       <Route path="/books"                component={Books} />
       <Route path="/authors"              component={Authors} />
@@ -54,15 +50,15 @@ const App = props => {
       <Route path='/details/:id'    exact component={Details} />
       <Route path='/CharacterList/' exact component={CharacterList} />
       <Route path="/homepage"             component={HomePage}  />      
-      <Route path="/"                     component={Books}  />      
-      {/* <Redirect to="/home" />  */}              
+      <Route path="/"                     component={Books}  />                
     </Switch>
-  );
+  )
 
   if (props.fetchedUser) {
     routes = (
       <Switch>
-        <Route path="/authentication"       component={Auth} />
+        <Route path="/authentication"      render={props => <Auth {...props} />} />
+        
         <Route path="/signup"               component={Signup} />
         <Route path="/books"                component={Books} />
         <Route path="/authors"              component={Authors} />
@@ -74,10 +70,8 @@ const App = props => {
         <Route path="/cart"                 component={Cart} />                
         <Route path='/details/:id'    exact component={Details} />
         <Route path='/CharacterList/' exact component={CharacterList} />
-        {/*<Route path="/connect-local"    component={connect-local} />*/}       
         <Route path="/profile/"             component={Profile} />
         <Route path="/connectlocal"         component={Connect} />
-        {/* <Redirect to="/home" /> */}
         <Route path="/"                     component={Books} />             
       </Switch>
     )
@@ -86,14 +80,11 @@ const App = props => {
   return( 
     <Wrapper>
       <Layout>
-        {routes}
+        <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
       </Layout>
     </Wrapper>
   )
-  
 }
-
-
 
 const mapStateToProps = state => {
   return {
@@ -103,9 +94,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-//    onGetCharacters : () => dispatch( actions.getCharacters()),
     onFetchUser     : () => dispatch(actions.fetchUser()),
-//    onSetAuthRedirectPath: () => dispatch( actions.setAuthRedirectPath( '/' ) )
   };
 };
 

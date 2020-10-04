@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Auxiliary from '../../hoc/Auxiliary';
 import classes from './Wrapper.module.scss';
@@ -7,53 +7,48 @@ import Sidebar from '../Navigation/Sidebar/Sidebar';
 import Background from '../UI/Background/Background';
 
 
-class Wrapper extends Component {
-    state = {
-        showSidebar: false
+const Wrapper = props => {
+    const [showSidebar, setShowSidebar] = useState(false)
+
+    const closeSidebarHandler = () => {
+        setShowSidebar(false)
+    }
+    
+    // best practice to set state in a clean way when it depends on a previous state
+    const sidebarToggleHandler = () => {
+        setShowSidebar(!showSidebar);
     }
 
-    sidebarClosedHandler = () => {
-        this.setState({showSidebar: false})
-    }
-// best practice to set state in a clean way when it depends on a previous state
-    sidebarToggleHandler = () => {
-        this.setState(( prevState ) => {
-            return {showSidebar: !prevState.showSidebar};
-        });
-    }
-
-    render () {
-        return (    
-            <Auxiliary>
-                <Background />
-                <Navbar 
-                    isAuth={this.props.isAuth}
-                    sidebarToggleClicked={this.sidebarToggleHandler}
-                    items = {this.props.items}
-                    cart={this.props.totalItems}
-                />
-                <Sidebar 
-                    isAuth={this.props.isAuth}
-                    open={this.state.showSidebar} 
-                    closed={this.sidebarClosedHandler} 
-                    cart={this.props.totalItems}
-                />
-                <main className={classes.Wrapper}>
-                    {this.props.children}
-                </main>
-            </Auxiliary>
-        )
-    }
+    return (    
+        <Auxiliary>
+            <Background />
+            <Navbar 
+                isAuth={props.isAuth}
+                sidebarToggleClicked={sidebarToggleHandler}
+                items = {props.items}
+                cart={props.totalItems}
+            />
+            <Sidebar 
+                isAuth={props.isAuth}
+                open={showSidebar} 
+                closed={closeSidebarHandler} 
+                cart={props.totalItems}
+            />
+            <main className={classes.Wrapper}>
+                {props.children}
+            </main>
+        </Auxiliary>
+    )
+    
 }
 
 const mapStateToProps = state => {
     return {
-        addedItems: state.addedItems,
         items: state.cart.addedItems,
         totalItems: state.cart.totalItems,
         isAuth: state.auth.payload
-    };
-};
+    }
+}
 
 
-export default  connect (mapStateToProps, null)(Wrapper);
+export default connect ( mapStateToProps, null )( Wrapper )
