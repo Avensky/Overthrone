@@ -6,7 +6,6 @@ import ConnectLocal   from '../pages/connectLocal/connectLocal'
 import Profile        from '../pages/profile/Profile'
 import Signup         from '../pages/signup/Signup'
 import Wrapper        from '../Wrapper/Wrapper'
-import Layout         from '../Layout/Layout'
 import Books          from '../pages/Books/Books'
 import Connect        from '../pages/Connect/Connect'
 import Authors        from '../pages/Authors/Authors'
@@ -24,7 +23,6 @@ import './App.scss'
 const Auth = React.lazy(() => {
   return import('../pages/Auth/Auth');
 });
-
 
 const App = props => {
 
@@ -78,11 +76,7 @@ const App = props => {
   }
 
   return( 
-    <Wrapper>
-      <Layout>
-        <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
-      </Layout>
-    </Wrapper>
+    <Wrapper><Suspense fallback={<p>Loading...</p>}>{routes}</Suspense></Wrapper>
   )
 }
 
