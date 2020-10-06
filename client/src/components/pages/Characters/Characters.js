@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 //import Character from './Character/Character';
@@ -11,90 +11,94 @@ import Character from './Character/Character';
 //import { Route, Switch } from 'react-router-dom';
 import Search from '../../Search/Search';
 
-class Characters extends Component {
-    state = {
-        characters : [],
-        order: true, 
-        sortedData: 'name asc'
-    }
+const Characters = props => {
+    // state = {
+    //     characters : [],
+    //     order: true, 
+    //     sortedData: 'name asc'
+    // }
 
-    componentDidMount () {
-        this.props.onGetCharacters();
-        let chars = this.props.chars
-        this.setState({characters : chars});
-    }
+    //componentDidMount () {
+    //    props.onGetCharacters();
+    //    let chars = props.chars
+    //    setState({characters : chars});
+    //}
+    const { onGetCharacters } =  props;
+    useEffect(() => {
+        props.onGetCharacters()
+    }, [onGetCharacters]);
 
-    deleteCharHandler = (id) => {
-        this.props.onDeleteChar(id);
+    const deleteCharHandler = (id) => {
+        props.onDeleteChar(id);
     }
+// 
+    // const getSortedData =() => {
+    //     if (state.sortedData !== 'name asc') {
+    //         sortAlphHandler()
+    //         setState({order: true, sortedData: 'name asc' });
+    //     } else {
+    //         sortAlphDescHandler()
+    //     }
+    // }
+// 
+    // const sortAlphHandler = () => {
+    //     let chars = props.chars
+    //     chars.sort(function(a, b){
+    //         if(a.name < b.name) { return -1; }
+    //         if(a.name > b.name) { return 1; }
+    //         return 0;
+    //     })
+    //     setState({characters : chars});
+    //     console.log("characters: " + state.characters)
+    // }
+// 
+    // const sortAlphDescHandler = () => {
+    //     let chars = props.chars
+    //     chars.sort(function(a, b){
+    //         if(a.name < b.name) { return -1; }
+    //         if(a.name > b.name) { return 1; }
+    //         return 0;
+    //     })
+    //     const reversed = chars.reverse();
+    //     setState({characters : reversed, order: true, sortedData: 'name desc'});
+    // }
+// 
+    // const getSortedNum = () => {
+    //         
+    //     if (state.sortedData !== 'num asc') {
+    //         //sortAlphDescHandler()
+    //         sortNumHandler()
+    //         setState({order: true, sortedData: 'num asc' });
+    //     } else {
+    //         sortNumDescHandler()
+    //         //sortAlphHandler()
+    //         //setState({order: true, sortedData: 'num desc' });
+    //     }
+    // }
+// 
+    // const sortNumHandler = () => {
+    //     let chars = props.chars
+    //     chars.sort(function(a, b) {
+    //         return (a.age === "") - (b.age === "") || a.age - b.age;
+    //     });          
+    //     setState({characters : chars});
+    //     console.log("num asc: " + chars)
+    // }
+// 
+    // const sortNumDescHandler = () => {
+    //     let chars = props.chars
+    //     chars.sort(function(a, b) {
+    //         return (a.age === "") - (b.age === "") || a.age - b.age;
+    //     });    
+    //     let reversed = chars.reverse();
+    //     setState({characters : reversed, order: true, sortedData: 'num desc' });
+    //     console.log("num desc: " + reversed)
+    // }
 
-    getSortedData =() => {
-        if (this.state.sortedData !== 'name asc') {
-            this.sortAlphHandler()
-            this.setState({order: true, sortedData: 'name asc' });
-        } else {
-            this.sortAlphDescHandler()
-        }
-    }
-
-    sortAlphHandler = () => {
-        let chars = this.props.chars
-        chars.sort(function(a, b){
-            if(a.name < b.name) { return -1; }
-            if(a.name > b.name) { return 1; }
-            return 0;
-        })
-        this.setState({characters : chars});
-        console.log("characters: " + this.state.characters)
-    }
-
-    sortAlphDescHandler = () => {
-        let chars = this.props.chars
-        chars.sort(function(a, b){
-            if(a.name < b.name) { return -1; }
-            if(a.name > b.name) { return 1; }
-            return 0;
-        })
-        const reversed = chars.reverse();
-        this.setState({characters : reversed, order: true, sortedData: 'name desc'});
-    }
-
-    getSortedNum = () => {
-            
-        if (this.state.sortedData !== 'num asc') {
-            //this.sortAlphDescHandler()
-            this.sortNumHandler()
-            this.setState({order: true, sortedData: 'num asc' });
-        } else {
-            this.sortNumDescHandler()
-            //this.sortAlphHandler()
-            //this.setState({order: true, sortedData: 'num desc' });
-        }
-    }
-
-    sortNumHandler = () => {
-        let chars = this.props.chars
-        chars.sort(function(a, b) {
-            return (a.age === "") - (b.age === "") || a.age - b.age;
-        });          
-        this.setState({characters : chars});
-        console.log("num asc: " + chars)
-    }
-
-    sortNumDescHandler = () => {
-        let chars = this.props.chars
-        chars.sort(function(a, b) {
-            return (a.age === "") - (b.age === "") || a.age - b.age;
-        });    
-        let reversed = chars.reverse();
-        this.setState({characters : reversed, order: true, sortedData: 'num desc' });
-        console.log("num desc: " + reversed)
-    }
-    render () {
         let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
-        if (this.state.characters) {
+        if (props.chars) {
             
-            characters = this.props.chars.map( char => {
+            characters = props.chars.map( char => {
                 return (
                     <Character
                         key         = {char._id}  
@@ -103,7 +107,7 @@ class Characters extends Component {
                         age         = {char.age}
                         bio         = {char.bio}
                         relatives   = {char.relatives}
-                        deleteClick  = {() => this.deleteCharHandler(char._id)}
+                        deleteClick  = {() => deleteCharHandler(char._id)}
                     />
                 )
             })
@@ -118,7 +122,7 @@ class Characters extends Component {
                 <div className={[classes.Card, myClasses.Characters].join(' ')}>
                 <Search className={myClasses.Search} />
                 {characters}
-{/*                 {this.props.children}
+{/*                 {props.children}
                <Switch>
                         <Route path="/characters" exact component={CharacterList} />
                         <Route path="/characters/characterEdit/:id"   exact   component={CharacterEdit} />
@@ -131,7 +135,7 @@ class Characters extends Component {
                
             </Auxiliary>
         )
-    }
+    
 }
 
 const mapStateToProps = state => {
@@ -144,8 +148,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetCharacters: () => dispatch( actions.getCharacters()),
-        onGetCharById: (id) => dispatch( actions.getCharById(id)),
-        onDeleteChar: (id) => dispatch( actions.deleteChar(id))
+        // onGetCharById: (id) => dispatch( actions.getCharById(id)),
+        // onDeleteChar: (id) => dispatch( actions.deleteChar(id))
     }
 }
 
