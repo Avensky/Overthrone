@@ -10,6 +10,10 @@ import * as actions from '../../../store/actions/index';
 import Character from './Character/Character';
 //import { Route, Switch } from 'react-router-dom';
 import Search from '../../Search/Search';
+import withErrorHandler from '../../withErrorHandler/withErrorHandler';
+import axios from 'axios';
+import Spinner from '../../UI/Spinner/Spinner'
+
 
 const Characters = props => {
     // state = {
@@ -94,10 +98,9 @@ const Characters = props => {
     //     setState({characters : reversed, order: true, sortedData: 'num desc' });
     //     console.log("num desc: " + reversed)
     // }
-
-        let characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
-        if (props.chars) {
-            
+        let characters = <Spinner />;
+        //characters = <p style={{textAlign: 'center'}}>Something went wrong!</p>
+        if (!props.loading) {
             characters = props.chars.map( char => {
                 return (
                     <Character
@@ -140,8 +143,9 @@ const Characters = props => {
 
 const mapStateToProps = state => {
     return {
-        chars : state.char.characters,
-        getCharById: state.char.getCharById
+        chars   : state.char.characters,
+        loading : state.char.loading,
+        //getCharById: state.char.getCharById
     };
 };
 
@@ -153,4 +157,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect (mapStateToProps, mapDispatchToProps)(Characters);
+export default connect (
+    mapStateToProps, 
+    mapDispatchToProps
+    )(withErrorHandler(Characters, axios));

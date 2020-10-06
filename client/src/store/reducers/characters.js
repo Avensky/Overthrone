@@ -32,7 +32,9 @@ const getCharactersFail = (state, action) => {
   
 const getCharactersSuccess = (state, action) => {
     return updateObject(state, {
-        characters: action.characters })}
+        characters: action.characters,
+        loading: false
+    })}
         
 
 const getCharByIdStart = (state, action) => {
