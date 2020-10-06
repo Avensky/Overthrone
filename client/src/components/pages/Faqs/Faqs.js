@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
@@ -11,11 +11,12 @@ import FaqList from './FaqList/FaqList';
 import FaqEdit from './FaqEdit/FaqEdit';
 import { Route, Switch } from 'react-router-dom';
 
-class Faqs extends Component {
-    componentDidMount () {
-        this.props.onGetFaqs();
-    }
-    render () {
+const Faqs = props => {
+    const { onGetFaqs } = props;
+    useEffect(() => {
+        props.onGetFaqs();
+    }, [onGetFaqs])
+
         let headlines = (
             <div className={myClasses.Headlines}>
                 <div className={myClasses.Faq}>
@@ -177,7 +178,7 @@ class Faqs extends Component {
             </Auxiliary>
         )
     }
-}
+
 
 const mapStateToProps = state => {
     return {

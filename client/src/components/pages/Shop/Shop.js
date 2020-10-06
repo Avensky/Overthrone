@@ -12,12 +12,12 @@ import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details';
 import Search from '../../Search/Search';
 
-class Purchase extends Component {
-    state = {
-        items : []
-    }
+const Purchase = props => {
+    // state = {
+    //     items : []
+    // }
 
-    componentDidMount () {
+    //componentDidMount () {
         //console.log( this.props );
         //const items = this.props.items.slice( 0, 4 );
         //const updatedItems = items.map( item => {
@@ -27,18 +27,15 @@ class Purchase extends Component {
         //} );
         //this.setState({ items: updatedItems })
         //console.log( this.state.items );
-    }
+    //}
 
-    componentDidUpdate () {
+    //componentDidUpdate () {
+    //}
 
-    }
-
-    handleClick = ( id ) => {
+    const handleClick = ( id ) => {
         this.props.addToCart(id); 
 //        this.props.history.push('/shop/itemfull/' + id);
     }
-
-    render () {
         let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
         if ( !this.state.error ) {
             //items = this.props.items.slice( 0, 4 );
@@ -112,7 +109,7 @@ class Purchase extends Component {
             </Auxiliary>
         )
     }
-}
+
 
 const mapStateToProps = state => {
     return {

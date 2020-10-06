@@ -1,14 +1,14 @@
 import React from 'react'
 import classes from '../../Pages.module.scss'
 import myClasses from './Author.module.scss'
-import myImg from '../../../../assets/images/author.jpg';
+// import myImg from '../../../../assets/images/author.jpg';
 
-
+// <figure className={classes.CardThumbnail}>
+// <img src={myImg} alt="author cover"/>
+// </figure>
 const author = props => (
     <div className={myClasses.Author}>
-        <figure className={classes.CardThumbnail}>
-            <img src={myImg} alt="author cover"/>
-        </figure>
+  
         <div className={classes.CardTitle}>
             {props.author}
         </div>

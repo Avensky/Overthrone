@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import Author from '../Authors/Author/Author';
 import classes from '../Pages.module.scss';
 import myClasses from './Authors.module.scss';
 
-class Authors extends Component {
-    render () {
+const Authors = props => {
         return(
             <Auxiliary>
                 <div className="container">
@@ -33,16 +31,5 @@ class Authors extends Component {
             </Auxiliary>
         )
     }
-}
 
-const mapStateToProps = state => {
-    return {
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-    }
-}
-
-export default connect (mapStateToProps, mapDispatchToProps)(Authors);
+export default Authors;
