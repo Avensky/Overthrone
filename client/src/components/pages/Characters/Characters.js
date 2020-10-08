@@ -8,7 +8,6 @@ import classes from '../Pages.module.scss';
 import * as actions from '../../../store/actions/index';
 //import CharacterEdit from './CharacterEdit/CharacterEdit';
 import Character from './Character/Character';
-import Search from '../../Search/Search';
 import withErrorHandler from '../../withErrorHandler/withErrorHandler';
 import axios from 'axios';
 import Spinner from '../../UI/Spinner/Spinner'
@@ -50,7 +49,7 @@ const Characters = props => {
                     </div>
                 </div>
                 <div className={[classes.Card, myClasses.Characters].join(' ')}>
-                <Search className={myClasses.Search} />
+               
                 {characters}
                 </div>
                

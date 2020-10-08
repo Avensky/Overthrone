@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 //import { Route, Switch } from 'react-router-dom';
 import Auxiliary from '../../../hoc/Auxiliary';
@@ -9,37 +9,17 @@ import Item from './Items/Item/Item'
 //import ItemFull from './ItemFull/ItemFull';
 //import Cart from '../Cart/Cart';
 import * as actions from '../../../store/actions/index';
-// import Details from './Details/Details';
-import Search from '../../Search/Search';
+// import Details from './Details/Details'
 
 const Purchase = props => {
-    // state = {
-    //     items : []
-    // }
-
-    //componentDidMount () {
-        //console.log( this.props );
-        //const items = this.props.items.slice( 0, 4 );
-        //const updatedItems = items.map( item => {
-        //    return {
-        //        ...item,
-        //    }
-        //} );
-        //this.setState({ items: updatedItems })
-        //console.log( this.state.items );
-    //}
-
-    //componentDidUpdate () {
-    //}
-
     const handleClick = ( id ) => {
-        this.props.addToCart(id); 
-//        this.props.history.push('/shop/itemfull/' + id);
+        props.addToCart(id); 
+//        props.history.push('/shop/itemfull/' + id);
     }
         let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
-        if ( !this.state.error ) {
-            //items = this.props.items.slice( 0, 4 );
-            items = this.props.items.slice( 0, 4 ).map( item => {
+        if ( props.items ) {
+            //items = props.items.slice( 0, 4 );
+            items = props.items.slice( 0, 4 ).map( item => {
                 return(
                     <Item
                         img         = {item.img}
@@ -49,7 +29,7 @@ const Purchase = props => {
                         title       = {item.title}
                         link        = {"/shop/"}
                         to          = "/"
-                        clicked     = {() => this.handleClick(item.id)}
+                        clicked     = {() => handleClick(item.id)}
                         desc        = {item.desc}
                         price       = {item.price}
                         quantity    = {item.quantity}
@@ -69,7 +49,6 @@ const Purchase = props => {
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
                 <div className={classes.spread}>
                     {/* <input className={myClasses.Search} type='text' placeholder="search the store" /> */}
-                    <Search />
                     <div className={myClasses.dropdown}>
                         <button className={myClasses.dropbtn}>OrderBy: </button>
                         <div className={myClasses.dropdownContent}>
@@ -91,20 +70,6 @@ const Purchase = props => {
                         {items}
                     </div>
                 </div>
-
-
-                    
-                    {/*
-                    {this.props.children}
-                    <Switch>
-                        <Route path="/shop" exact component={Items} />
-                        <Route path="/shop/cart" exact component={Cart} />
-                        <Route path="/shop/itemfull/:id"   exact component={ItemFull} />
-                        <Route render={() => <h1>Not found</h1>}/>
-                        <Redirect from="/" to="/posts" />
-                        <Route path="/" component={Posts} />
-                    </Switch>
-                    */}
                 </div>
             </Auxiliary>
         )

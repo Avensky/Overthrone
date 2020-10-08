@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 //import { Link } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
@@ -8,24 +8,24 @@ import myClasses from './Cart.module.scss'
 //import Item from '../Shop/Items/Item/Item'
 import Auxiliary from '../../../hoc/Auxiliary'
 
-class Cart extends Component{
+const Cart = props => {
 
     //to remove the item completely
-    handleRemove = (id)=>{
-        this.props.removeItem(id);
+    const handleRemove = (id)=>{
+        props.removeItem(id);
     }
     //to add the quantity
-    handleAddQuantity = (id)=>{
-        this.props.addQuantity(id);
+    const handleAddQuantity = (id)=>{
+        props.addQuantity(id);
     }
     //to substruct from the quantity
-    handleSubtractQuantity = (id)=>{
-        this.props.subtractQuantity(id);
+    const handleSubtractQuantity = (id)=>{
+        props.subtractQuantity(id);
     }
-    render(){
-        let cart = this.props.items;
+
+        let cart = props.items;
         let uniqueChars = [...new Set(cart)];
-        let addedItems = this.props.items.length ?
+        let addedItems = props.items.length ?
             (  
                 uniqueChars.map(item=>{
                     return(
@@ -34,7 +34,7 @@ class Cart extends Component{
                             <div className={myClasses.Item}>
                                 {/* Remove */}
                                 <div className={myClasses.Remove}>
-                                    <i className="material-icons" onClick={()=>{this.handleRemove(item.id)}}>clear</i>
+                                    <i className="material-icons" onClick={()=>{handleRemove(item.id)}}>clear</i>
                                 </div>
 
                                 {/* Image */}
@@ -52,9 +52,9 @@ class Cart extends Component{
 
                                  {/* Quantity */}
                                 <div className={myClasses.CardQuantity}>
-                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{this.handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
+                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
                                     <p><b>{item.quantity}</b></p>
-                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{this.handleAddQuantity(item.id)}}>arrow_drop_up</i>                                   
+                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleAddQuantity(item.id)}}>arrow_drop_up</i>                                   
                                 </div>
  
                                 {/* Price */}
@@ -91,7 +91,7 @@ class Cart extends Component{
             </Auxiliary>
        )
     }
-}
+
 
 
 const mapStateToProps = (state)=>{

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 
 
-class connectLocal extends Component {
-    render () {
+const connectLocal = props => {
         let body = (
             <body>
                 <div className="container">
@@ -35,7 +34,7 @@ class connectLocal extends Component {
             </Auxiliary>
         )
     }
-}
+
 
 const mapStateToProps = state => {
     return {

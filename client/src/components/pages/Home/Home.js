@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 // import './Home.module.scss';
 import classes from './Home.module.scss';
 
-class Sovereinty extends Component {
-    componentDidMount() {
-        
-    }
-    render () {
+const Sovereinty = props => {
         let body = (
             <div className={["container", classes.container].join(' ')}>
                 <div className="page-header text-center">
@@ -30,7 +26,7 @@ class Sovereinty extends Component {
             </Auxiliary>
         )
     }
-}
+
 
 const mapStateToProps = state => {
     return {

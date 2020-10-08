@@ -8,7 +8,7 @@ import myClasses from './CharacterList.module.scss';
 import * as actions from '../../../../store/actions/index';
 //import CharacterEdit from './CharacterEdit/CharacterEdit';
 //import { Route, Switch } from 'react-router-dom';
-import Search from '../../../Search/Search';
+// import Search from '../../../Search/Search';
 
 class Characters extends Component {
     state = {
@@ -115,7 +115,7 @@ class Characters extends Component {
                     {/* <div className={['box', myClasses.Items ].join(' ')}></div>
                     {/* <NewCharacter /> */}
                     {/*  <div className={classes.spread}>*/}
-                    <Search className={myClasses.Search} />
+                    
                     
                     {/*
                     <div className={myClasses.dropdown}>

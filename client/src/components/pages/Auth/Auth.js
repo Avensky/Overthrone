@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useForm } from "react-hook-form";
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
@@ -13,109 +13,113 @@ import { Redirect } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 
-class Auth extends Component {
-    state = {
-        controls: {	
-            email: {	
-                elementType: 'input',	
-                elementConfig: {	
-                    type: 'email',	
-                    name: 'email',	
-                    placeholder: 'Email Address'	
-                },	
-                value: '',	
-                validation: {	
-                    required: true,	
-                    isEmail: true	
-                },	
-                valid: false,	
-                touched: false	
+const Auth = props => {
+    const [authForm, setAuthForm] = useState({
+        email: {	
+            elementType: 'input',	
+            elementConfig: {	
+                type: 'email',	
+                name: 'email',	
+                placeholder: 'Email Address'	
             },	
-            password: {	
-                elementType: 'input',	
-                elementConfig: {	
-                    type: 'password',	
-                    name: 'password',	
-                    placeholder: 'Password'	
-                },	
-                value: '',	
-                validation: {	
-                    required: true,	
-                    minLength: 6,	
-                },	
-                valid: false,	
-                touched: false	
+            value: '',	
+            validation: {	
+                required: true,	
+                isEmail: true	
             },	
-            confirmPassword: {	
-                elementType: 'input',	
-                elementConfig: {	
-                    type: 'password',	
-                    placeholder:"Confirm Password"	
-                },	
-                value: '',	
-                validation: {	
-                    required: false,	
-                    minLength: 6	
-                },	
-                valid: false,	
-                touched: false	
-            }	
-        },
-        authLogin: true,
-    }
-    
-    componentDidMount () {
-        if ( this.props.authRedirectPath !== '/' ) {
-            this.props.onSetAuthRedirectPath();
+            valid: false,	
+            touched: false	
+        },	
+        password: {	
+            elementType: 'input',	
+            elementConfig: {	
+                type: 'password',	
+                name: 'password',	
+                placeholder: 'Password'	
+            },	
+            value: '',	
+            validation: {	
+                required: true,	
+                minLength: 6,	
+            },	
+            valid: false,	
+            touched: false	
+        },	
+        confirmPassword: {	
+            elementType: 'input',	
+            elementConfig: {	
+                type: 'password',	
+                placeholder:"Confirm Password"	
+            },	
+            value: '',	
+            validation: {	
+                required: false,	
+                minLength: 6	
+            },	
+            valid: false,	
+            touched: false	
         }
-    }
-    componentDidUpdate() {
-        console.log("Auth Login: " + this.state.authLogin)
-        // console.log("errors", this.state.myErrors)
+    })
+
+    const [authLogin, setAuthLogin] = useState(true)
+
+    const { authRedirectPath, onSetAuthRedirectPath } = props;
+
+    useEffect(() => {
+        if ( props.authRedirectPath !== '/' ) {
+            onSetAuthRedirectPath();
+        }
+    }, [authRedirectPath, onSetAuthRedirectPath])
+
+    // componentDidMount () {
+    //     if ( props.authRedirectPath !== '/' ) {
+    //         props.onSetAuthRedirectPath();
+    //     }
+    // }
+    // componentDidUpdate() {
+    //     console.log("Auth Login: " + state.authLogin)
+    //     // console.log("errors", state.myErrors)
+    // }
+
+    const loginToggleHandler = () => {
+        setAuthLogin(true)
     }
 
-    loginToggleHandler = () => {
-        this.setState(prevState => {
-            return {authLogin: true};
-        });
-    }
-
-    registerToggleHandler = () => {
-        this.setState(prevState => {
-            return {authLogin: false};
-        });
+    const registerToggleHandler = () => {
+        setAuthLogin(false)
     }
 
 
-    inputChangeHandler = ( event ) => {
-        this.setState({
+    const inputChangeHandler = ( event ) => {
+        setAuthForm({
             [event.target.name]: event.target.value
         })
     }
 
-    inputChangedHandler = ( event, controlName ) => {	
-        const updatedControls = updateObject( this.state.controls, {	
+    const inputChangedHandler = ( event, controlName ) => {	
+        const updatedControls = updateObject( authForm, {	
             [controlName]: updateObject( 	
-                this.state.controls[controlName], {	
+                authForm[controlName], {	
                 value: event.target.value,	
-                valid: checkValidity( event.target.value, this.state.controls[controlName].validation ),	
+                valid: checkValidity( 
+                    event.target.value, 
+                    authForm[controlName].validation ),	
                 touched: true	
             } )	
         } );	
-        this.setState( { controls: updatedControls } );	
+        setAuthForm( updatedControls );	
     }
 
-    submitHandler = ( values, event ) => {
-        //event.preventDefault();
-        console.log(this.state);
-        this.props.onLogin( this.state.controls.email.value, this.state.controls.password.value, this.state.authLogin)
-        // this.props.onAuth( values.email, values.password, this.state.authLogin)
-        // this.props.onAuth( values, this.state.authLogin)
+    const submitHandler = ( values, event ) => {
+        event.preventDefault();
+        // console.log(state);
+        // props.onLogin( authForm.email.value, authForm.password.value, authLogin)
+        // props.onAuth( values.email, values.password, state.authLogin)
+        // props.onAuth( values, state.authLogin)
     }
 
-    render () {
         let act = 'login';
-        if (! this.state.authLogin) {
+        if (!authLogin) {
             act = 'signup'
         }
         let formik =(
@@ -132,14 +136,13 @@ class Auth extends Component {
                         return errors;}}
         
                     onSubmit={ async ( values, { setSubmitting }) => {
-                        //this.props.onAuth( values.email, values.password, this.state.authLogin);
-                        //this.submitHandler(values)
-                        this.props.onAuth( values, this.state.authLogin)
+                        //props.onAuth( values.email, values.password, state.authLogin);
+                        //submitHandler(values)
+                        props.onAuth( values, authLogin)
                         setTimeout(() => {
-                            console.log('state= ' + this.state);
-                            console.log('values= ' + values.email);
+                            //console.log('values= ' + values.email);
                             alert(JSON.stringify(values, null, 2));
-                            // this.props.onAuth( values, this.state.authLogin)
+                            // props.onAuth( values, state.authLogin)
                             setSubmitting(false);
                         }, 400);
                     }}
@@ -167,13 +170,13 @@ class Auth extends Component {
                             />
                             <ErrorMessage name="password" component="div" />
                             <button  
-                                //onClick={this.loginHandler} 
+                                //onClick={loginHandler} 
                                 className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                                 type="submit"
                                 disabled={isSubmitting}
                             >
                                 <div className={myClasses.BtnDiv}>
-                                    <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
+                                    <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
                                 </div>
                             </button>
                         </Form>
@@ -183,15 +186,15 @@ class Auth extends Component {
          let form = (
              <Auxiliary>
                  <form 
-                    method='post' 
+                    //method='post' 
                     // action={"/auth/" + act} 
                     
-                    onSubmit={this.submitHandler}
+                    onSubmit={submitHandler}
                 >
                     <input 
                         type="text"
                         name="email"    
-                        onChange={(event) => this.inputChangedHandler( event, "email")}
+                        onChange={event => inputChangedHandler( event, "email")}
                         placeholder="Email Address"
                         className={myClasses.AuthInput}
                         //ref={register({ required: true })}
@@ -200,7 +203,7 @@ class Auth extends Component {
                     <input 
                         type="password"
                         name="password"
-                        onChange={(event) => this.inputChangedHandler( event, "password")}
+                        onChange={(event) => inputChangedHandler( event, "password")}
                         placeholder="Password"
                         className={myClasses.AuthInput}
                         //ref= m{register({ required: true })}
@@ -214,7 +217,7 @@ class Auth extends Component {
                         className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                         type="submit">
                         <div className={myClasses.BtnDiv}>
-                            <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
+                            <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
                         </div>
                     </button>
 
@@ -223,16 +226,16 @@ class Auth extends Component {
          )
 
 
-        if(!this.state.authLogin) form = (
+        if(!authLogin) form = (
             <Auxiliary>
                 <form 
                     // method='post' action={"/auth/" + act}
-                    onSubmit={this.submitHandler}
+                    onSubmit={submitHandler}
                 >
                     <input 
                         type="text"
                         name="email"    
-                        onChange={(event) => this.inputChangedHandler( event, "email")}
+                        onChange={event => inputChangedHandler( event, "email")}
                         placeholder="Email Address"
                         className={myClasses.AuthInput}
                         //className="form-control"
@@ -243,7 +246,7 @@ class Auth extends Component {
                     <input 
                         type="password"
                         name="password"
-                        onChange={(event) => this.inputChangedHandler( event, "password")}
+                        onChange={event => inputChangedHandler( event, "password")}
                         placeholder="Password"
                         className={myClasses.AuthInput}
                         //className="form-control"
@@ -254,7 +257,7 @@ class Auth extends Component {
                     <input 
                         type="password"
                         name="password_confirmation"
-                        onChange={(event) => this.inputChangedHandler( event, "password")}
+                        onChange={event => inputChangedHandler( event, "password")}
                         placeholder="Confirm Password"
                         className={myClasses.AuthInput}
                         //className="form-control"
@@ -266,7 +269,7 @@ class Auth extends Component {
                         className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                         type="submit">
                         <div className={myClasses.BtnDiv}>
-                            <span className={[this.state.authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {this.state.authLogin ? 'Sign In' : 'Sign Up'}
+                            <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
                         </div>
                     </button>  
 
@@ -274,7 +277,7 @@ class Auth extends Component {
             </Auxiliary>
         )
 
-        if ( this.props.loading ) {
+        if ( props.loading ) {
             form = <Spinner />
             //formik = <Spinner />
 
@@ -282,23 +285,23 @@ class Auth extends Component {
 
         let errorMessage = null;
 
-        if ( this.props.error ) {
+        if ( props.error ) {
             errorMessage = (
-                <p>{this.props.error.message}</p>
+                <p>{props.error.message}</p>
             );
         }
 
         let authRedirect = null;
-        if ( this.props.isAuthenticated ) {
-            authRedirect = <Redirect to={this.props.authRedirectPath} />
+        if ( props.isAuthenticated ) {
+            authRedirect = <Redirect to={props.authRedirectPath} />
         }
 
         let selected, unselected = myClasses.AuthToggle;
-        if  ( this.state.authLogin === false){
+        if  ( authLogin === false){
             selected = myClasses.AuthToggle
             unselected = [myClasses.AuthToggle, myClasses.AuthSelected].join(' ')
         }
-        if  ( this.state.authLogin === true){
+        if  ( authLogin === true){
             selected = [myClasses.AuthToggle, myClasses.AuthSelected].join(' ')
             unselected = myClasses.AuthToggle
 
@@ -316,13 +319,13 @@ class Auth extends Component {
                 {errorMessage}
                     <div className={myClasses.AuthNav}>
                         <button 
-                            onClick={this.loginToggleHandler}
+                            onClick={loginToggleHandler}
                             className={selected}
                         ><h2><span className="fa fa-sign-in" /> Login</h2>
                         </button>
 
                         <button 
-                            onClick={this.registerToggleHandler}
+                            onClick={registerToggleHandler}
                             className={unselected}
                         ><h2><span className="fa fa-user" /> Signup</h2>
                         </button>   
@@ -343,7 +346,7 @@ class Auth extends Component {
                 </div> 
             </Auxiliary>
         )
-    }
+    
 }
 
 const mapStateToProps = state => {

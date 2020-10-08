@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 // import { Route } from 'react-router-dom';
 import Auxiliary from '../../../../hoc/Auxiliary';
@@ -9,33 +9,30 @@ import * as actions from '../../../../store/actions/index';
 // import Details from '../Details/Details';
 // import { Link } from 'react-router-dom';
 import Search from '../../../Search/Search';
-class Items extends Component {
-    state = {
-        items : []
-    }
 
-    componentDidMount () {
-        console.log( this.props );
-        const items = this.props.items.slice( 0, 4 );
-        const updatedItems = items.map( item => {
-            return {
-                ...item,
-            }
-        } );
-        this.setState({ items: updatedItems })
-        console.log( this.state.items );
-    }
+const Items = props => {
+
+    // componentDidMount () {
+    //     console.log( props );
+    //     const items = props.items.slice( 0, 4 );
+    //     const updatedItems = items.map( item => {
+    //         return {
+    //             ...item,
+    //         }
+    //     } );
+    //     setState({ items: updatedItems })
+    //     console.log( state.items );
+    // }
 
 
     
-    handleClick = ( id ) => {
-        this.props.addToCart(id); 
-//        this.props.history.push('/shop/itemfull/' + id);
+    const handleClick = ( id ) => {
+        props.addToCart(id); 
+//        props.history.push('/shop/itemfull/' + id);
     }
-    render () {
-        let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
-        if ( !this.state.error ) {
-            items = this.state.items.map( item => {
+    let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
+        if ( !props.items ) {
+            items = props.items.map( item => {
                 return(
                     <Item
                         img     = {item.img}
@@ -45,7 +42,7 @@ class Items extends Component {
                         title   = {item.title}
                         link    = {"/shop/"}
                         to      = "/"
-                        clicked = {() => this.handleClick(item.id)}
+                        clicked = {() => handleClick(item.id)}
                         desc    = {item.desc}
                         price   = {item.price}
                     />
@@ -83,7 +80,7 @@ class Items extends Component {
             </Auxiliary>
         )
     }
-}
+
 
 const mapStateToProps = state => {
     return {

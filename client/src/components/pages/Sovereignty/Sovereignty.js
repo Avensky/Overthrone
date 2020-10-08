@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
 import myClasses from './Sovereignty.module.scss';
 
 
-class Sovereinty extends Component {
-    render () {
+const Sovereinty = props => {
         let body = (
             <div className={classes.Card}>
                 <div className={myClasses.Sovereignty}>
@@ -55,7 +54,7 @@ class Sovereinty extends Component {
             </Auxiliary>
         )
     }
-}
+
 
 const mapStateToProps = state => {
     return {
