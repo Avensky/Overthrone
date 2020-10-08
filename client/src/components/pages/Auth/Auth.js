@@ -71,16 +71,6 @@ const Auth = props => {
         }
     }, [authRedirectPath, onSetAuthRedirectPath])
 
-    // componentDidMount () {
-    //     if ( props.authRedirectPath !== '/' ) {
-    //         props.onSetAuthRedirectPath();
-    //     }
-    // }
-    // componentDidUpdate() {
-    //     console.log("Auth Login: " + state.authLogin)
-    //     // console.log("errors", state.myErrors)
-    // }
-
     const loginToggleHandler = () => {
         setAuthLogin(true)
     }
@@ -89,13 +79,13 @@ const Auth = props => {
         setAuthLogin(false)
     }
 
-
-    const inputChangeHandler = ( event ) => {
-        setAuthForm({
-            [event.target.name]: event.target.value
-        })
-    }
-
+    //const inputChangeHandler = ( event ) => {
+    //    setAuthForm({
+    //        [event.target.name]: event.target.value
+    //    })
+    //}
+    //
+      
     const inputChangedHandler = ( event, controlName ) => {	
         const updatedControls = updateObject( authForm, {	
             [controlName]: updateObject( 	
@@ -113,8 +103,8 @@ const Auth = props => {
     const submitHandler = ( values, event ) => {
         event.preventDefault();
         // console.log(state);
-        // props.onLogin( authForm.email.value, authForm.password.value, authLogin)
-        // props.onAuth( values.email, values.password, state.authLogin)
+       // props.onLogin( authForm.email.value, authForm.password.value, authLogin)
+         props.onAuth( values.email, values.password, authLogin)
         // props.onAuth( values, state.authLogin)
     }
 
@@ -278,8 +268,8 @@ const Auth = props => {
         )
 
         if ( props.loading ) {
-            form = <Spinner />
-            //formik = <Spinner />
+            //form = <Spinner />
+            formik = <Spinner />
 
         }
 
@@ -331,7 +321,7 @@ const Auth = props => {
                         </button>   
                     </div>
                     
-                    {form}
+                    {formik}
 
                     <div className={classes.CardTitle}>Or continue with:</div>
                     <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
