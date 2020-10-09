@@ -17,7 +17,6 @@ import Cart           from '../pages/Cart/Cart'
 import Home           from '../pages/Home/Home'
 import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
-import HomePage       from '../pages/Contact/HomePage'
 import './App.scss'
 
 const Auth = React.lazy(() => {
@@ -46,8 +45,7 @@ const App = props => {
       <Route path="/home"                 component={Home} />          
       <Route path="/cart"                 component={Cart} />                
       <Route path='/details/:id'    exact component={Details} />
-      <Route path='/CharacterList/' exact component={CharacterList} />
-      <Route path="/homepage"             component={HomePage}  />      
+      <Route path='/CharacterList/' exact component={CharacterList} />   
       <Route path="/"                     component={Books}  />                
     </Switch>
   )
