@@ -71,7 +71,7 @@ class Auth extends Component {
 
     loginHandler = () => {
     //    event.preventDefault();
-        this.props.onLogin( 
+        this.props.onAuth( 
             this.state.controls.email.value, 
             this.state.controls.password.value, 
             this.state.authLogin 
@@ -185,9 +185,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        //onLogin: (email, password, isSignup) => dispatch(actions.onAuth(email, password, isSignup)),
+        onAuth: (values, authLogin) => dispatch(actions.auth(values, authLogin)),
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/blog')),
-        onNewUser: (username, givenName, familyName, email, password, picture) => dispatch(actions.signup(username, givenName, familyName, email, password, picture))
     }
 }
 

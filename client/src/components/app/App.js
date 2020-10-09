@@ -19,21 +19,16 @@ import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
 import './App.scss'
 
-const Auth = React.lazy(() => {
-  return import('../pages/Auth/Auth');
-});
+// const Auth = React.lazy(() => {
+//   return import('../pages/Auth/Auth');
+// });
+// <Route path="/authentication"      render={props => <Auth {...props} />} />
 
+import Auth from  '../pages/Auth/Auth'
 const App = props => {
-
-  useEffect(()=> {
-    props.onFetchUser();
-  }, [])
-
-
   let routes = (
     <Switch>
-      <Route path="/authentication"      render={props => <Auth {...props} />} />
-
+      <Route path="/authentication"       component={Auth} />
       <Route path="/connectLocal"         component={ConnectLocal} />
       <Route path="/signup"               component={Signup} />
       <Route path="/books"                component={Books} />
@@ -80,13 +75,15 @@ const App = props => {
 
 const mapStateToProps = state => {
   return {
-    fetchedUser: state.auth.payload
+    fetchedUser: state.auth.payload,
+    authRedirectPath: state.auth.authRedirectPath
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onFetchUser     : () => dispatch(actions.fetchUser()),
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
   };
 };
 

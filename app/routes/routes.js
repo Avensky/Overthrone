@@ -62,17 +62,18 @@ module.exports = function(app, passport) {
 
 		// process the login form
 		app.post('/auth/login', passport.authenticate('local-login', {
-			// successRedirect : '/profile', // redirect to the secure profile section
-			successRedirect : '/', // redirect to the secure profile section
-			// failureRedirect : '/authentication', // redirect back to the signup page if there is an error
+			//successRedirect : '/profile', // redirect to the secure profile section
+			// successRedirect : '/', // redirect to the secure profile section
+			//failureRedirect : '/authentication', // redirect back to the signup page if there is an error
 			// failureRedirect : '/', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
-		})
-		// , function(req, res,) {
-		// 	// If this function gets called, authentication was successful.
-		// 	// `req.user` contains the authenticated user.
-		// 	res.send(200);
-		// 	res.redirect('/');}
+			// failureFlash : true // allow flash messages
+		}), (req, res) => {
+			// If this function gets called, authentication was successful.
+			// `req.user` contains the authenticated user.
+			console.log('Message sent!')
+			res.send(200)
+			//res.sendStatus(200)
+			}
 		);
 
 		//app.post('/auth/login', (req, res) => { 

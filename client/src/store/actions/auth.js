@@ -39,28 +39,6 @@ export const fetchUser = () => {
     }
 }
 
-
-export const loginStart = () => {
-    return {
-        type: actionTypes.LOGIN_START
-    }
-}
-
-export const loginSuccess = (token, userId) => {
-    return {
-        type: actionTypes.LOGIN_SUCCESS, 
-        idToken: token,
-        userId: userId
-    }
-}
-
-export const loginFail = (error) => {
-    return {
-        type: actionTypes.LOGIN_FAIL,
-        error: error
-    }
-}
-
 export const logout = () => {
     axios.get('/auth/logout')
     //localStorage.removeItem('token');
@@ -89,105 +67,21 @@ export const auth = (values, authLogin) => {
         // } 
         // let url = 'http://localhost:5000/auth/login';
         let url = '/auth/login';
-        if (!authLogin) {
-            url = '/auth/signup';
-        }       
-        axios.post(url, values, {
-            proxy: {
-                 host: "http://localhost",
-                 // host: '127.0.0.1',
-                 port: 5000,
-                 auth: {
-                    username: 'mikeymike',
-                    password: 'rapunz3l'
-                  }
-            }
-        })
+        if (!authLogin) { url = '/auth/signup'; }       
+        axios.post(url, values)
             .then(response => {
                 console.log(response);
                 const data = response.data.results;
                 console.log(data);
                 dispatch(authSuccess(data)) 
-            })
-            .catch(err => {
-                console.log(err);
-                dispatch(authFail(err));
-            });
-    }
-}
-export const login = (email, password, authLogin) => {
-    return dispatch => {
-        dispatch(authStart());
-        const authData = {
-            email               : email,
-            password            : password,
-            returnSecureToken   : true
-        } 
-        // let url = 'http://localhost:5000/auth/login';
-        let url = '/auth/login';
-        if (!authLogin) {
-            url = '/auth/signup';
-        }       
-        axios.post(url, authData, {
-            // proxy: {
-            //      host: "http://localhost",
-            //      // host: '127.0.0.1',
-            //      port: 5000,
-            //      auth: {
-            //         username: 'mikeymike',
-            //         password: 'rapunz3l'
-            //       }
-            // }
-        })
-            .then(response => {
-                console.log(response);
-                const data = response.data.results;
-                console.log(data);
-                dispatch(authSuccess(data)) 
-            })
-            .catch(err => {
-                console.log(err);
-                dispatch(authFail(err));
-            });
+             })
+             .catch(err => {
+                 console.log(err);
+                 dispatch(authFail(err));
+             });
     }
 }
 
-export const signupStart  = () =>{
-    return{
-        type: actionTypes.SIGNUP_START
-    }
-}
-
-export const signupFail = (error) => {
-    return {
-        type: actionTypes.SIGNUP_FAIL,
-        error: error}}
-
-export const signupSuccess = (userData) => {
-    return {
-        type: actionTypes.SIGNUP_SUCCESS,
-        userData: userData}}
-    
-export const signup = (email, password) => {
-    return dispatch => {
-        dispatch(signupStart())
-        const userData = {
-            email : email, 
-            password : password,}
-        axios.post('/auth/signup', userData)
-            .then(response => {
-                console.log(response);
-//                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-//                localStorage.setItem('token', response.data.idToken);
-//                localStorage.setItem('expirationDate', expirationDate);
-//                localStorage.setItem('userId', response.data.localId);
-//                dispatch(signupSuccess(response.data.idToken, response.data.localId));
-//                dispatch(checkLoginTimeout(response.data.expiresIn));       
-                dispatch(signupSuccess(userData))        
-            })
-        .catch(err => {
-            console.log(err);
-            dispatch(signupFail(err))})}}
 
 export const authStart = () => {
     return {
@@ -197,16 +91,16 @@ export const authStart = () => {
 
 export const authSuccess = (token, userId) => {
     return {
-        type: actionTypes.AUTH_SUCCESS,
-        idToken: token,
-        userId: userId
+        type    : actionTypes.AUTH_SUCCESS,
+        idToken : token,
+        userId  : userId
     };
 };
 
 export const authFail = (error) => {
     return {
-        type: actionTypes.AUTH_FAIL,
-        error: error
+        type    : actionTypes.AUTH_FAIL,
+        error   : error
     };
 };
 

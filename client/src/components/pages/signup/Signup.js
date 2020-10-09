@@ -39,7 +39,7 @@ class Login extends Component {
 
     signupHandler = ( event ) => {
         event.preventDefault();
-        this.props.onSignup( 
+        this.props.onAuth( 
             this.state.controls.email.value, 
             this.state.controls.password.value
         )
@@ -114,7 +114,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSignup: (email, password) => dispatch( actions.signup(actions.signup(email, password)))
+        onAuth: (values, authLogin) => dispatch(actions.auth(values, authLogin))
     }
 }
 
