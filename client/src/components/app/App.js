@@ -26,6 +26,18 @@ import './App.scss'
 
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
+  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn } = props
+  useEffect(()=> {
+    if (!isLoggedIn){
+        props.onFetchUser();
+    }
+
+    if ( authRedirectPath !== '/profile' ) {
+        onSetAuthRedirectPath()
+    }
+
+}, [authRedirectPath, onSetAuthRedirectPath, submitted])
+
   let routes = (
     <Switch>
       <Route path="/authentication"       component={Auth} />
@@ -75,7 +87,9 @@ const App = props => {
 
 const mapStateToProps = state => {
   return {
+    isLoggedIn: state.auth.user,
     fetchedUser: state.auth.payload,
+    submitted: state.auth.submitted,
     authRedirectPath: state.auth.authRedirectPath
   };
 };

@@ -14,18 +14,18 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 
 const Auth = props => {
-    const { authRedirectPath, onSetAuthRedirectPath, submitted, isAuthenticated, isLoggedIn } = props
+    //const { authRedirectPath, onSetAuthRedirectPath, submitted, isAuthenticated, isLoggedIn } = props
     const [authLogin, setAuthLogin] = useState(true)
 
-    useEffect(()=> {
-        if (!isLoggedIn){
-            props.onFetchUser();
-        }
+    // useEffect(()=> {
+    //     if (!isLoggedIn){
+    //         props.onFetchUser();
+    //     }
 
-        if ( authRedirectPath !== '/profile' ) {
-            onSetAuthRedirectPath()
-        }
-    }, [authRedirectPath, onSetAuthRedirectPath, submitted])
+    //     if ( authRedirectPath !== '/profile' ) {
+    //         onSetAuthRedirectPath()
+    //     }
+    // }, [authRedirectPath, onSetAuthRedirectPath, submitted])
 
 
 
@@ -183,9 +183,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchUser     : () => dispatch(actions.fetchUser()),
-        onAuth: (values, authLogin) => dispatch(actions.auth(values, authLogin)),
-        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/profile')),
+        onFetchUser             : ()                    => dispatch(actions.fetchUser()),
+        onAuth                  : (values, authLogin)   => dispatch(actions.auth(values, authLogin)),
+        onSetAuthRedirectPath   : ()                    => dispatch(actions.setAuthRedirectPath('/profile')),
     }
 }
 
