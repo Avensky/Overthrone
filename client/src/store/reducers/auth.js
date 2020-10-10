@@ -6,6 +6,7 @@ const initialState = {
     userId: null,
     error: null,
     loading: false,
+    userLoading: false,
     payload: null,
     authRedirectPath: '/profile',
     submitted: false
@@ -36,7 +37,8 @@ const authFail = (state, action) => {
 
 const fetchUserStart = (state, action) => {
     return updateObject(state, {
-        error: null, 
+        error: null,
+        userLoading: true
     })
 }
 
@@ -45,13 +47,15 @@ const fetchUserSuccess = (state, action) => {
     return updateObject(state, {
         payload: action.payload,
         error: null,
-        loading: false
+        loading: false,
+        userLoading: false
     })
 }
 const fetchUserFail = (state, action) => {
     return updateObject( state, {
         error: action.error,
         loading: false,
+        userLoading: false
     });
 }
 

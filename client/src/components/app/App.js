@@ -28,15 +28,18 @@ import Auth from  '../pages/Auth/Auth'
 const App = props => {
   const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn } = props
   useEffect(()=> {
-    if (!isLoggedIn){
+    if (!isLoggedIn && submitted){
         props.onFetchUser();
     }
+  }, [authRedirectPath, onSetAuthRedirectPath, submitted])
 
-    if ( authRedirectPath !== '/profile' ) {
-        onSetAuthRedirectPath()
-    }
+  useEffect(()=> {
+      if ( authRedirectPath !== '/profile' ) {
+          onSetAuthRedirectPath()
+      }
+  }, [authRedirectPath, onSetAuthRedirectPath])
+    
 
-}, [authRedirectPath, onSetAuthRedirectPath, submitted])
 
   let routes = (
     <Switch>

@@ -61,7 +61,7 @@ const Auth = props => {
     
     let loader = null;
 
-    if ( props.loading ) {
+    if ( props.loading || (props.submitted && props.userLoading) ) {
         //form = <Spinner />
         loader = <Spinner />
 
@@ -172,6 +172,7 @@ const Auth = props => {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
+        userLoading: state.auth.userLoading,
         submitted: state.auth.submitted,
         error: state.auth.error,
         isLoggedIn: state.auth.user,
