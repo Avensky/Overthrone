@@ -15,7 +15,9 @@ class Login extends Component {
         let local, facebook, twitter, google = '';
 
         local = (
-            <Link link="Local"
+            <Link 
+                link="Local"
+                userLink={true}
                 icon="fa-user"
                 mystyle="auth-btn"
                 provider='/connectlocal' 
@@ -26,6 +28,7 @@ class Login extends Component {
         facebook = (
             <Link
                 link="Facebook"
+                userLink={true}
                 icon="fa-facebook"
                 mystyle="btn-primary"
                 provider='/connect/facebook'
@@ -35,6 +38,7 @@ class Login extends Component {
         twitter = (
             <Link
                 link="Twitter"
+                userLink={true}
                 icon="fa-twitter"
                 mystyle="btn-info"
                 provider='/connect/twitter'
@@ -44,6 +48,7 @@ class Login extends Component {
         google = (
             <Link
                 link="Google"
+                userLink={true}
                 icon="fa-google-plus"
                 mystyle="btn-danger"
                 provider='/connect/google'
@@ -55,6 +60,7 @@ class Login extends Component {
                 <Link
                     id={this.props.payload['local'].id}
                     link="Local"
+                    userLink={false}
                     email={this.props.payload['local'].email}
                     token={this.props.payload['local'].token}
                     name={this.props.payload['local'].name}
@@ -70,6 +76,7 @@ class Login extends Component {
                 <Link
                     id={this.props.payload['facebook'].id}
                     link="Facebook"
+                    userLink={false}
                     email={this.props.payload['facebook'].email}
                     token={this.props.payload['facebook'].token}
                     name={this.props.payload['facebook'].name}
@@ -85,6 +92,7 @@ class Login extends Component {
                 <Link
                     id={this.props.payload['twitter'].id}
                     link="Twitter"
+                    userLink={false}
                     displayName={this.props.payload['twitter'].displayName}
                     //token       = "token"
                     username={this.props.payload['twitter'].username}
@@ -101,6 +109,7 @@ class Login extends Component {
                 <Link
                     id={this.props.payload['google'].id}
                     link="Google"
+                    userLink={false}
                     email={this.props.payload['google'].email}
                     token={this.props.payload['google'].token}
                     name={this.props.payload['google'].name}

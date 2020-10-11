@@ -155,7 +155,11 @@ const Auth = props => {
 
                 <div className={classes.CardTitle}>Or continue with:</div>
                 <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
-                    <a href="/auth/facebook"><span className="fa fa-facebook" /> Facebook</a>
+                    <a 
+                        href="/auth/facebook"
+                        // onClick={props.onFbAuth}
+                    
+                    ><span className="fa fa-facebook" /> Facebook</a>
                 </button>
                 <button className={[myClasses.Btn, "btn-info"].join(' ')}>
                     <a href="/auth/twitter"><span className="fa fa-twitter" /> Twitter</a>
@@ -186,6 +190,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onFetchUser             : ()                    => dispatch(actions.fetchUser()),
         onAuth                  : (values, authLogin)   => dispatch(actions.auth(values, authLogin)),
+        onFbAuth                : ()                    => dispatch(actions.fbAuth()),
         onSetAuthRedirectPath   : ()                    => dispatch(actions.setAuthRedirectPath('/profile')),
     }
 }

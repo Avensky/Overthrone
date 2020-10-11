@@ -13,7 +13,6 @@ export const fetchUserSuccess = (payload) => {
     return {
         type: actionTypes.FETCH_USER_SUCCESS,
         payload: payload
-        
     }
 };
 
@@ -100,6 +99,44 @@ export const authSuccess = (token, userId) => {
 export const authFail = (error) => {
     return {
         type    : actionTypes.AUTH_FAIL,
+        error   : error
+    };
+};
+
+
+export const fbAuth = () => {
+    return dispatch => {
+        dispatch(fbAuthStart());
+        axios.post('/auth/facebook')
+            .then(response => {
+                console.log(response);
+                const data = response.data.results;
+                console.log(data);
+                dispatch(fbAuthSuccess(data)) 
+             })
+             .catch(err => {
+                 console.log(err);
+                 dispatch(fbAuthFail(err));
+             });
+    }
+}
+
+
+export const fbAuthStart = () => {
+    return {
+        type    : actionTypes.FB_AUTH_START
+    };
+};
+
+export const fbAuthSuccess = () => {
+    return {
+        type    : actionTypes.FB_AUTH_SUCCESS,
+    };
+};
+
+export const fbAuthFail = (error) => {
+    return {
+        type    : actionTypes.FB_AUTH_FAIL,
         error   : error
     };
 };

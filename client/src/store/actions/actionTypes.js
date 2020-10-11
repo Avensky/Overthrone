@@ -34,62 +34,66 @@ export const GET_CHAR_BY_ID_FAIL      = 'GET_CHAR_BY_ID_FAIL'
 export const GET_CHAR_BY_ID           = 'GET_CHAR_BY_ID'
 
 
-export const DELETE_CHAR_START     = 'DELETE_CHAR_START'
-export const DELETE_CHAR_SUCCESS   = 'DELETE_CHAR_SUCCESS'
-export const DELETE_CHAR_FAIL      = 'DELETE_CHAR_FAIL'
-export const DELETE_CHAR           = 'DELETE_CHAR'
+export const DELETE_CHAR_START        = 'DELETE_CHAR_START'
+export const DELETE_CHAR_SUCCESS      = 'DELETE_CHAR_SUCCESS'
+export const DELETE_CHAR_FAIL         = 'DELETE_CHAR_FAIL'
+export const DELETE_CHAR              = 'DELETE_CHAR'
 
 
-export const UPDATE_CHAR_START     = 'UPDATE_CHAR_START'
-export const UPDATE_CHAR_SUCCESS   = 'UPDATE_CHAR_SUCCESS'
-export const UPDATE_CHAR_FAIL      = 'UPDATE_CHAR_FAIL'
-export const UPDATE_CHAR           = 'UPDATE_CHAR'
+export const UPDATE_CHAR_START        = 'UPDATE_CHAR_START'
+export const UPDATE_CHAR_SUCCESS      = 'UPDATE_CHAR_SUCCESS'
+export const UPDATE_CHAR_FAIL         = 'UPDATE_CHAR_FAIL'
+export const UPDATE_CHAR              = 'UPDATE_CHAR'
 
 
 
 
 
-export const NEW_FAQ_START         = 'NEW_FAQ_START'
-export const NEW_FAQ_SUCCESS       = 'NEW_FAQ_SUCCESS'
-export const NEW_FAQ_FAIL          = 'NEW_FAQ_FAIL'
-export const NEW_FAQ               = 'NEW_FAQ'
+export const NEW_FAQ_START            = 'NEW_FAQ_START'
+export const NEW_FAQ_SUCCESS          = 'NEW_FAQ_SUCCESS'
+export const NEW_FAQ_FAIL             = 'NEW_FAQ_FAIL'
+export const NEW_FAQ                  = 'NEW_FAQ'
 
 
-export const GET_FAQS_START         = 'GET_FAQS_START'
-export const GET_FAQS_SUCCESS       = 'GET_FAQS_SUCCESS'
-export const GET_FAQS_FAIL          = 'GET_FAQS_FAIL'
-export const GET_FAQS               = 'GET_FAQS'
+export const GET_FAQS_START           = 'GET_FAQS_START'
+export const GET_FAQS_SUCCESS         = 'GET_FAQS_SUCCESS'
+export const GET_FAQS_FAIL            = 'GET_FAQS_FAIL'
+export const GET_FAQS                 = 'GET_FAQS'
 
 
-export const GET_FAQ_BY_ID_START     = 'GET_FAQ_BY_ID_START'
-export const GET_FAQ_BY_ID_SUCCESS   = 'GET_FAQ_BY_ID_SUCCESS'
-export const GET_FAQ_BY_ID_FAIL      = 'GET_FAQ_BY_ID_FAIL'
-export const GET_FAQ_BY_ID           = 'GET_FAQ_BY_ID'
+export const GET_FAQ_BY_ID_START      = 'GET_FAQ_BY_ID_START'
+export const GET_FAQ_BY_ID_SUCCESS    = 'GET_FAQ_BY_ID_SUCCESS'
+export const GET_FAQ_BY_ID_FAIL       = 'GET_FAQ_BY_ID_FAIL'
+export const GET_FAQ_BY_ID            = 'GET_FAQ_BY_ID'
 
 
-export const DELETE_FAQ_START     = 'DELETE_FAQ_START'
-export const DELETE_FAQ_SUCCESS   = 'DELETE_FAQ_SUCCESS'
-export const DELETE_FAQ_FAIL      = 'DELETE_FAQ_FAIL'
-export const DELETE_FAQ           = 'DELETE_FAQ'
+export const DELETE_FAQ_START         = 'DELETE_FAQ_START'
+export const DELETE_FAQ_SUCCESS       = 'DELETE_FAQ_SUCCESS'
+export const DELETE_FAQ_FAIL          = 'DELETE_FAQ_FAIL'
+export const DELETE_FAQ               = 'DELETE_FAQ'
+    
+    
+export const UPDATE_FAQ_START         = 'UPDATE_FAQ_START'
+export const UPDATE_FAQ_SUCCESS       = 'UPDATE_FAQ_SUCCESS'
+export const UPDATE_FAQ_FAIL          = 'UPDATE_FAQ_FAIL'
+export const UPDATE_FAQ               = 'UPDATE_FAQ'
 
+export const LOGIN_START              = 'LOGIN_START'
+export const LOGIN_SUCCESS            = 'LOGIN_SUCCESS'
+export const LOGIN_FAIL               = 'LOGIN_FAIL'
+export const LOGOUT                   = 'LOGOUT'
+export const SET_LOGIN_REDIRECT_PATH  = 'SET_LOGIN_REDIRECT_PATH'
 
-export const UPDATE_FAQ_START     = 'UPDATE_FAQ_START'
-export const UPDATE_FAQ_SUCCESS   = 'UPDATE_FAQ_SUCCESS'
-export const UPDATE_FAQ_FAIL      = 'UPDATE_FAQ_FAIL'
-export const UPDATE_FAQ           = 'UPDATE_FAQ'
+export const AUTH_START               = 'AUTH_START';
+export const AUTH_SUCCESS             = 'AUTH_SUCCESS';
+export const AUTH_FAIL                = 'AUTH_FAIL';
+export const AUTH_LOGOUT              = 'AUTH_LOGOUT';
 
+export const FB_AUTH_START            = 'FB_AUTH_START';
+export const FB_AUTH_SUCCESS          = 'FB_AUTH_SUCCESS';
+export const FB_AUTH_FAIL             = 'FB_AUTH_FAIL';
+export const FB_AUTH_LOGOUT           = 'FB_AUTH_LOGOUT';
 
-export const LOGIN_START                = 'LOGIN_START'
-export const LOGIN_SUCCESS              = 'LOGIN_SUCCESS'
-export const LOGIN_FAIL                 = 'LOGIN_FAIL'
-export const LOGOUT                     = 'LOGOUT'
-export const SET_LOGIN_REDIRECT_PATH    = 'SET_LOGIN_REDIRECT_PATH'
-
-export const AUTH_START     = 'AUTH_START';
-export const AUTH_SUCCESS   = 'AUTH_SUCCESS';
-export const AUTH_FAIL      = 'AUTH_FAIL';
-export const AUTH_LOGOUT    = 'AUTH_LOGOUT';
-
-export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+export const SET_AUTH_REDIRECT_PATH   = 'SET_AUTH_REDIRECT_PATH';
 
 export const SET_CONTACTS = 'SET_CONTACTS';

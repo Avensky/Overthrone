@@ -26,12 +26,14 @@ import './App.scss'
 
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
-  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn } = props
+  
+  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn, loading } = props
+  
   useEffect(()=> {
-    if (!isLoggedIn && submitted){
+    if ((!isLoggedIn && submitted) || !isLoggedIn){
         props.onFetchUser();
     }
-  }, [authRedirectPath, onSetAuthRedirectPath, submitted])
+  }, [authRedirectPath, onSetAuthRedirectPath, submitted, loading])
 
   useEffect(()=> {
       if ( authRedirectPath !== '/profile' ) {
@@ -90,10 +92,11 @@ const App = props => {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.auth.user,
-    fetchedUser: state.auth.payload,
-    submitted: state.auth.submitted,
-    authRedirectPath: state.auth.authRedirectPath
+    isLoggedIn        : state.auth.user,
+    loading           : state.auth.loading,
+    fetchedUser       : state.auth.payload,
+    submitted         : state.auth.submitted,
+    authRedirectPath  : state.auth.authRedirectPath
   };
 };
 

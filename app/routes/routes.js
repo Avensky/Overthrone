@@ -62,31 +62,17 @@ module.exports = function(app, passport) {
 
 		// process the login form
 		app.post('/auth/login', passport.authenticate('local-login', {
-			//successRedirect : '/profile', // redirect to the secure profile section
-			// successRedirect : '/', // redirect to the secure profile section
-			//failureRedirect : '/authentication', // redirect back to the signup page if there is an error
-			// failureRedirect : '/', // redirect back to the signup page if there is an error
+			// successRedirect : '/profile', // redirect to the secure profile section
+			// failureRedirect : '/authentication', // redirect back to the signup page if there is an error
 			// failureFlash : true // allow flash messages
 		}), (req, res) => {
 			// If this function gets called, authentication was successful.
 			// `req.user` contains the authenticated user.
 			console.log('Message sent!')
 			res.send(200)
-			//res.sendStatus(200)
+			// res.sendStatus(200)
 			}
 		);
-
-		//app.post('/auth/login', (req, res) => { 
-		//	 console.log(req.body)
-		//	 const { email, password} = req.body;
-		//	 console.log('email= '+email)
-		//	 console.log('password= '+password)
-		//	 passport.authenticate('local-login', {
-		//		successRedirect : '/profile', // redirect to the secure profile section
-		//		failureRedirect : '/authentication', // redirect back to the signup page if there is an error
-		//		//failureFlash 	: true // allow flash messages
-		//	  })(req, res)
-		// });
 
 		// =====================================
 		// SIGNUP ==============================
@@ -135,14 +121,14 @@ module.exports = function(app, passport) {
     // =====================================
     // route for facebook authentication and login
 		app.get('/auth/facebook', 
-		passport.authenticate('facebook', { 
-			scope : ['public_profile', 'email'] 
-		}));
+			passport.authenticate('facebook', { 
+				scope : ['public_profile', 'email'] 
+		}));	
 
 		// handle the callback after facebook has authenticated the user
 		app.get('/auth/facebook/callback',
 			passport.authenticate('facebook', {
-				successRedirect : '/profile',
+				successRedirect : '/',
 				//failureRedirect : '/'
 			}));
 

@@ -35,6 +35,26 @@ const authFail = (state, action) => {
     });
 };
 
+
+const fbAuthStart = ( state, action ) => {
+    return updateObject( state, { error: null, loading: true } );
+};
+
+const fbAuthSuccess = (state, action) => {
+    return updateObject( state, { 
+        error: null,
+        loading: false,
+        submitted: true
+    });
+};
+
+const fbAuthFail = (state, action) => {
+    return updateObject( state, {
+        error: action.error,
+        loading: false
+    });
+};
+
 const fetchUserStart = (state, action) => {
     return updateObject(state, {
         error: null,
@@ -69,14 +89,17 @@ const setAuthRedirectPath = (state, action) => {
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
-        case actionTypes.FETCH_USER_START: return fetchUserStart(state, action);
-        case actionTypes.FETCH_USER_SUCCESS: return fetchUserSuccess(state, action);
-        case actionTypes.FETCH_USER_FAIL: return fetchUserFail(state, action);
-        case actionTypes.AUTH_START: return authStart(state, action);
-        case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
-        case actionTypes.AUTH_FAIL: return authFail(state, action);
-        case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
-        case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state,action);
+        case actionTypes.FETCH_USER_START       : return fetchUserStart(state, action);
+        case actionTypes.FETCH_USER_SUCCESS     : return fetchUserSuccess(state, action);
+        case actionTypes.FETCH_USER_FAIL        : return fetchUserFail(state, action);
+        case actionTypes.FB_AUTH_START          : return fbAuthStart(state, action);
+        case actionTypes.FB_AUTH_SUCCESS        : return fbAuthSuccess(state, action);
+        case actionTypes.FB_AUTH_FAIL           : return fbAuthFail(state, action);
+        case actionTypes.AUTH_START             : return authStart(state, action);
+        case actionTypes.AUTH_SUCCESS           : return authSuccess(state, action);
+        case actionTypes.AUTH_FAIL              : return authFail(state, action);
+        case actionTypes.AUTH_LOGOUT            : return authLogout(state, action);
+        case actionTypes.SET_AUTH_REDIRECT_PATH : return setAuthRedirectPath(state,action);
      
         default:
             return state;

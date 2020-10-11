@@ -12,15 +12,19 @@ const link = (props) => (
             </h3>
             <p>
                 { props.name        ? <strong>Name:          {props.name}<br /></strong>         : null }
-                { props.displayName ? <strong>Display Name:   {props.displayName}<br /></strong>  : null }
+                { props.displayName ? <strong>Display Name:  {props.displayName}<br /></strong>  : null }
                 { props.username    ? <strong>Username:      {props.username}<br /></strong>     : null }
                 { props.id          ? <strong>Id:            {props.id}<br /></strong>           : null }
                 { props.email       ? <strong>Email:         {props.email}<br /></strong>        : null }
                 { props.token       ? <strong>Token:         {props.token}<br /></strong>        : null }
                 { props.password    ? <strong>Password:      {props.password}<br /></strong>     : null }
             </p>
-            <a href={props.providerUnlink} className="btn btn-default">Unlink</a>
-            <a href={props.provider} className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a>
+                { props.userLink
+                    ? <a href={props.provider} className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a> 
+                    : <a href={props.providerUnlink} className="btn btn-default">Unlink</a> 
+                }
+           
+    
     
     </div>
 )

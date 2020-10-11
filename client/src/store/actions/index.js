@@ -1,6 +1,7 @@
 export {
     fetchUser,
     auth,
+    fbAuth,
     setAuthRedirectPath,
 } from './auth';
 
