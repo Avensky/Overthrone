@@ -16,18 +16,12 @@ import * as Yup from 'yup'
 const Auth = props => {
     //const { authRedirectPath, onSetAuthRedirectPath, submitted, isAuthenticated, isLoggedIn } = props
     const [authLogin, setAuthLogin] = useState(true)
+    const [socialLogin, setSocialLogin] = useState(false)
 
-    // useEffect(()=> {
-    //     if (!isLoggedIn){
-    //         props.onFetchUser();
-    //     }
-
-    //     if ( authRedirectPath !== '/profile' ) {
-    //         onSetAuthRedirectPath()
-    //     }
-    // }, [authRedirectPath, onSetAuthRedirectPath, submitted])
-
-
+    const socialAuthHandler = () => {
+        setSocialLogin(true)
+        props.onFbAuth()
+    }
 
     const loginToggleHandler = () => {
         setAuthLogin(true)
@@ -157,7 +151,7 @@ const Auth = props => {
                 <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
                     <a 
                         href="/auth/facebook"
-                        // onClick={props.onFbAuth}
+                        onClick={socialAuthHandler}
                     
                     ><span className="fa fa-facebook" /> Facebook</a>
                 </button>

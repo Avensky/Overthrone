@@ -44,6 +44,9 @@ const httpReducer = (currHttpState, action ) => {
             return response.json();
         })
         .then( responseData => {
+            console.log(responseData)
+            const payload = responseData.data
+            // dispatch(fetchUserSuccess(payload));
             dispatchHttp({ 
                 type: 'RESPONSE', 
                 responseData:responseData,
@@ -52,6 +55,7 @@ const httpReducer = (currHttpState, action ) => {
         })
         .catch( error => {
             dispatchHttp({type: 'ERROR',errorMessage: 'Something went wrong'});
+            // dispatch(fetchUserFail(error))
         });
     }, []);
   

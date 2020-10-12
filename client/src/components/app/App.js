@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from 'react'
+import React, { useEffect, Suspense, useCallback } from 'react'
 import { Route, Switch, withRouter} from 'react-router-dom'
 import * as actions   from '../../store/actions/index'
 import { connect }    from 'react-redux'
@@ -18,6 +18,7 @@ import Home           from '../pages/Home/Home'
 import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
 import './App.scss'
+import useHttp        from '../../hooks/http'
 
 // const Auth = React.lazy(() => {
 //   return import('../pages/Auth/Auth');
@@ -27,13 +28,15 @@ import './App.scss'
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
   
-  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn, loading } = props
-  
-  useEffect(()=> {
-    if ((!isLoggedIn && submitted) || !isLoggedIn){
-        props.onFetchUser();
-    }
-  }, [authRedirectPath, onSetAuthRedirectPath, submitted, loading])
+  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn, loading, userLoading } = props
+
+  const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
+
+  // useEffect(()=> {
+  //   if ((!isLoggedIn && submitted) || (!isLoggedIn && userLoading)){
+  //       props.onFetchUser();
+  //   }
+  // }, [authRedirectPath, onSetAuthRedirectPath, submitted])
 
   useEffect(()=> {
       if ( authRedirectPath !== '/profile' ) {
@@ -41,7 +44,12 @@ const App = props => {
       }
   }, [authRedirectPath, onSetAuthRedirectPath])
     
-
+  const fetchUserHandler = useCallback( () => {
+    sendRequest(
+      '/api/fetchUser',
+      'GET',
+    );
+  }, [sendRequest]);
 
   let routes = (
     <Switch>
@@ -94,6 +102,7 @@ const mapStateToProps = state => {
   return {
     isLoggedIn        : state.auth.user,
     loading           : state.auth.loading,
+    userLoading       : state.auth.userLoading,
     fetchedUser       : state.auth.payload,
     submitted         : state.auth.submitted,
     authRedirectPath  : state.auth.authRedirectPath

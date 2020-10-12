@@ -107,17 +107,9 @@ export const authFail = (error) => {
 export const fbAuth = () => {
     return dispatch => {
         dispatch(fbAuthStart());
-        axios.post('/auth/facebook')
-            .then(response => {
-                console.log(response);
-                const data = response.data.results;
-                console.log(data);
-                dispatch(fbAuthSuccess(data)) 
-             })
-             .catch(err => {
-                 console.log(err);
-                 dispatch(fbAuthFail(err));
-             });
+        dispatch(fbAuthSuccess()) 
+        //dispatch(fbAuthFail(err));
+
     }
 }
 
