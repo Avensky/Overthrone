@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, useCallback } from 'react'
+import React, { useEffect, Suspense, useCallback, useState } from 'react'
 import { Route, Switch, withRouter} from 'react-router-dom'
 import * as actions   from '../../store/actions/index'
 import { connect }    from 'react-redux'
@@ -19,6 +19,8 @@ import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
 import './App.scss'
 import useHttp        from '../../hooks/http'
+import axios          from 'axios'
+import * as actionTypes from '../../store/actions/actionTypes'
 
 // const Auth = React.lazy(() => {
 //   return import('../pages/Auth/Auth');
@@ -28,15 +30,25 @@ import useHttp        from '../../hooks/http'
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
   
-  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn, loading, userLoading } = props
+  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn, loading, userLoading, fetchedUser } = props
+  const [data, setData] = useState({ hits: [] });
+  // const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
 
-  const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
+  useEffect(()=> {
+    const fetchData = async () => {
+      const result = await axios('/api/fetchUser')
+      setData(result.data);
+      // .then( result => {
+      //     console.log(result)
+      //     setData(result.data);
+      // })
 
-  // useEffect(()=> {
-  //   if ((!isLoggedIn && submitted) || (!isLoggedIn && userLoading)){
-  //       props.onFetchUser();
-  //   }
-  // }, [authRedirectPath, onSetAuthRedirectPath, submitted])
+      // .catch( error => {
+      //    
+      // });
+    };
+    fetchData()
+  }, [])
 
   useEffect(()=> {
       if ( authRedirectPath !== '/profile' ) {
@@ -44,12 +56,12 @@ const App = props => {
       }
   }, [authRedirectPath, onSetAuthRedirectPath])
     
-  const fetchUserHandler = useCallback( () => {
-    sendRequest(
-      '/api/fetchUser',
-      'GET',
-    );
-  }, [sendRequest]);
+  // const fetchUserHandler = useCallback( () => {
+  //   sendRequest(
+  //     '/api/fetchUser',
+  //     'GET',
+  //   );
+  // }, [sendRequest]);
 
   let routes = (
     <Switch>
@@ -94,7 +106,15 @@ const App = props => {
   }
 
   return( 
-    <Wrapper><Suspense fallback={<p>Loading...</p>}>{routes}</Suspense></Wrapper>
+    <Wrapper>    
+      <ul>
+        {data.hits.map(item => (
+          <li key={item.objectID}>
+            <a href={item.url}>{item.title}</a>
+          </li>
+        ))}
+      </ul>
+  <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense></Wrapper>
   )
 }
 

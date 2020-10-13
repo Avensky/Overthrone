@@ -20,7 +20,7 @@ const Auth = props => {
 
     const socialAuthHandler = () => {
         setSocialLogin(true)
-        props.onFbAuth()
+       // props.onFbAuth()
     }
 
     const loginToggleHandler = () => {
