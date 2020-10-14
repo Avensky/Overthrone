@@ -59,12 +59,6 @@ export const checkLoginTimeout = (expirationTime) => {
 export const auth = (values, authLogin) => {
     return dispatch => {
         dispatch(authStart());
-        // const authData = {
-        //     email               : email,
-        //     password            : password,
-        //     returnSecureToken   : true
-        // } 
-        // let url = 'http://localhost:5000/auth/login';
         let url = '/auth/login';
         if (!authLogin) { url = '/auth/signup'; }       
         axios.post(url, values)

@@ -5,13 +5,8 @@ import Link from './Link/Link';
 import classes from '../Pages.module.scss';
 import myClasses from './Profile.module.scss';
 import * as actions from '../../../store/actions/index';
-class Login extends Component {
-    componentDidMount() {
-        this.props.onFetchUser();
-        console.log('payload: ' + this.props.payload)
-    }
-    render() {
 
+const Login = (props) =>{
         let local, facebook, twitter, google = '';
 
         local = (
@@ -55,15 +50,15 @@ class Login extends Component {
                 providerUnlink='/unlink/google'
             />)
 
-        if (this.props.payload['local']) {
+        if (props.payload['local']) {
             local = (
                 <Link
-                    id={this.props.payload['local'].id}
+                    id={props.payload['local'].id}
                     link="Local"
                     userLink={false}
-                    email={this.props.payload['local'].email}
-                    token={this.props.payload['local'].token}
-                    name={this.props.payload['local'].name}
+                    email={props.payload['local'].email}
+                    token={props.payload['local'].token}
+                    name={props.payload['local'].name}
                     icon="fa-user"
                     mystyle="auth-btn"
                     provider='/authentication' 
@@ -71,15 +66,15 @@ class Login extends Component {
                 />)
         }
         
-        if (this.props.payload['facebook']) {
+        if (props.payload['facebook']) {
             facebook = (
                 <Link
-                    id={this.props.payload['facebook'].id}
+                    id={props.payload['facebook'].id}
                     link="Facebook"
                     userLink={false}
-                    email={this.props.payload['facebook'].email}
-                    token={this.props.payload['facebook'].token}
-                    name={this.props.payload['facebook'].name}
+                    email={props.payload['facebook'].email}
+                    token={props.payload['facebook'].token}
+                    name={props.payload['facebook'].name}
                     icon="fa-facebook"
                     mystyle="btn-primary"
                     provider='/connect/facebook' 
@@ -87,16 +82,16 @@ class Login extends Component {
             />)
         }
 
-        if (this.props.payload['twitter']) {
+        if (props.payload['twitter']) {
             twitter = (
                 <Link
-                    id={this.props.payload['twitter'].id}
+                    id={props.payload['twitter'].id}
                     link="Twitter"
                     userLink={false}
-                    displayName={this.props.payload['twitter'].displayName}
+                    displayName={props.payload['twitter'].displayName}
                     //token       = "token"
-                    username={this.props.payload['twitter'].username}
-                    token={this.props.payload['twitter'].token}
+                    username={props.payload['twitter'].username}
+                    token={props.payload['twitter'].token}
                     icon="fa-twitter"
                     mystyle="btn-info"
                     provider='/connect/twitter' 
@@ -104,15 +99,15 @@ class Login extends Component {
             />)
         }
 
-        if (this.props.payload['google']) {
+        if (props.payload['google']) {
             google = (
                 <Link
-                    id={this.props.payload['google'].id}
+                    id={props.payload['google'].id}
                     link="Google"
                     userLink={false}
-                    email={this.props.payload['google'].email}
-                    token={this.props.payload['google'].token}
-                    name={this.props.payload['google'].name}
+                    email={props.payload['google'].email}
+                    token={props.payload['google'].token}
+                    name={props.payload['google'].name}
                     icon="fa-google-plus"
                     mystyle="btn-danger"
                     provider='/connect/google'
@@ -143,7 +138,7 @@ class Login extends Component {
                 {body}
             </Auxiliary>
         )
-    }
+    
 }
 
 const mapStateToProps = state => {

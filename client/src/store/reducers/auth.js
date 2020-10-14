@@ -8,7 +8,7 @@ const initialState = {
     loading: false,
     userLoading: false,
     payload: null,
-    authRedirectPath: '/profile',
+    authRedirectPath: '/',
     submitted: false
 
 };

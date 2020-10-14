@@ -31,30 +31,38 @@ import Auth from  '../pages/Auth/Auth'
 const App = props => {
   
   const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn, loading, userLoading, fetchedUser } = props
-  const [data, setData] = useState({ hits: [] });
+  const [data, setData] 
+  = useState({ hits: [] });
   // const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
 
+//  useEffect(()=> {
+//    const fetchData = async () => {
+//      const result = await axios('/api/fetchUser')
+//      .then( res => {
+//          console.log(res)
+//          setData(res.data);
+//      })
+//      .catch( error => {
+//        console.log(error)
+//        setData(error.data);
+//      });
+//    };
+//    fetchData()
+//  }, [])
   useEffect(()=> {
     const fetchData = async () => {
-      const result = await axios('/api/fetchUser')
-      setData(result.data);
-      // .then( result => {
-      //     console.log(result)
-      //     setData(result.data);
-      // })
-
-      // .catch( error => {
-      //    
-      // });
+      props.onFetchUser()
     };
-    fetchData()
-  }, [])
-
+    if ( !isLoggedIn  ){
+      fetchData()
+    }
+  }, [submitted])
+  
   useEffect(()=> {
-      if ( authRedirectPath !== '/profile' ) {
+      if ( isLoggedIn && (authRedirectPath !== '/profile') ) {
           onSetAuthRedirectPath()
       }
-  }, [authRedirectPath, onSetAuthRedirectPath])
+  }, [authRedirectPath, onSetAuthRedirectPath, submitted])
     
   // const fetchUserHandler = useCallback( () => {
   //   sendRequest(
@@ -106,15 +114,7 @@ const App = props => {
   }
 
   return( 
-    <Wrapper>    
-      <ul>
-        {data.hits.map(item => (
-          <li key={item.objectID}>
-            <a href={item.url}>{item.title}</a>
-          </li>
-        ))}
-      </ul>
-  <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense></Wrapper>
+    <Wrapper><Suspense fallback={<p>Loading...</p>}>{routes}</Suspense></Wrapper>
   )
 }
 
@@ -132,7 +132,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchUser     : () => dispatch(actions.fetchUser()),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/profile')),
   };
 };
 
