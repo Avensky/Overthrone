@@ -75,9 +75,9 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.GET_CHARACTERS_FAIL     : return getCharactersFail(state, action);
         case actionTypes.GET_CHARACTERS_START    : return getCharactersStart(state, action);
         
-        case actionTypes.DELETE_CHAR_SUCCESS  : return deleteCharSuccess(state, action);
-        case actionTypes.DELETE_CHAR_FAIL     : return deleteCharFail(state, action);
-        case actionTypes.DELETE_CHAR_START    : return deleteCharStart(state, action);
+        case actionTypes.DELETE_CHAR_SUCCESS     : return deleteCharSuccess(state, action);
+        case actionTypes.DELETE_CHAR_FAIL        : return deleteCharFail(state, action);
+        case actionTypes.DELETE_CHAR_START       : return deleteCharStart(state, action);
         
         case actionTypes.GET_CHAR_BY_ID_SUCCESS  : return getCharByIdSuccess(state, action);
         case actionTypes.GET_CHAR_BY_ID_FAIL     : return getCharByIdFail(state, action);

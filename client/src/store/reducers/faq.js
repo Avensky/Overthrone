@@ -32,7 +32,9 @@ const getFaqsFail = (state, action) => {
   
 const getFaqsSuccess = (state, action) => {
     return updateObject(state, {
-        faqs: action.faqs })}
+        faqs: action.faqs,
+        loading: false}
+        )}
         
 
 const getFaqByIdStart = (state, action) => {
@@ -65,17 +67,17 @@ const deleteFaqSuccess = (state, action) => {
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
-        case actionTypes.NEW_FAQ_SUCCESS   : return newFaqSuccess(state, action);
-        case actionTypes.NEW_FAQ_FAIL      : return newFaqFail(state, action);
-        case actionTypes.NEW_FAQ_START     : return newFaqStart(state, action);
+        case actionTypes.NEW_FAQ_SUCCESS        : return newFaqSuccess(state, action);
+        case actionTypes.NEW_FAQ_FAIL           : return newFaqFail(state, action);
+        case actionTypes.NEW_FAQ_START          : return newFaqStart(state, action);
+
+        case actionTypes.GET_FAQS_SUCCESS       : return getFaqsSuccess(state, action);
+        case actionTypes.GET_FAQS_FAIL          : return getFaqsFail(state, action);
+        case actionTypes.GET_FAQS_START         : return getFaqsStart(state, action);
         
-        case actionTypes.GET_FAQS_SUCCESS  : return getFaqsSuccess(state, action);
-        case actionTypes.GET_FAQS_FAIL     : return getFaqsFail(state, action);
-        case actionTypes.GET_FAQS_START    : return getFaqsStart(state, action);
-        
-        case actionTypes.DELETE_FAQ_SUCCESS  : return deleteFaqSuccess(state, action);
-        case actionTypes.DELETE_FAQ_FAIL     : return deleteFaqFail(state, action);
-        case actionTypes.DELETE_FAQ_START    : return deleteFaqStart(state, action);
+        case actionTypes.DELETE_FAQ_SUCCESS     : return deleteFaqSuccess(state, action);
+        case actionTypes.DELETE_FAQ_FAIL        : return deleteFaqFail(state, action);
+        case actionTypes.DELETE_FAQ_START       : return deleteFaqStart(state, action);
         
         case actionTypes.GET_FAQ_BY_ID_SUCCESS  : return getFaqByIdSuccess(state, action);
         case actionTypes.GET_FAQ_BY_ID_FAIL     : return getFaqByIdFail(state, action);

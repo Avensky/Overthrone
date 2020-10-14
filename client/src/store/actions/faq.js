@@ -65,13 +65,6 @@ export const getFaqs = () => {
         .then( result => {
             console.log(result)
             const faqs = result.data
-//            const faqs = []
-//                for ( let key in posts ) {
-//                    faqs.push( {
-//                        ...result.data[key],
-//                        id: key
-//                    } );
-//                }
                 dispatch(getFaqsSuccess(faqs));
             } )
             .catch( error => {

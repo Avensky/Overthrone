@@ -15,9 +15,20 @@ import Spinner from '../../UI/Spinner/Spinner'
 
 const Characters = props => {
     const { onGetCharacters } =  props;
+
+    // useEffect(() => {
+    //     props.onGetCharacters()
+    // }, [onGetCharacters]);
+
     useEffect(() => {
-        props.onGetCharacters()
-    }, [onGetCharacters]);
+        const fetchData = async () => {
+            props.onGetCharacters()
+        };
+        if ( props.chars.length === 0 ){
+          fetchData()
+        }
+      }, [])
+
 
     const deleteCharHandler = (id) => {
         props.onDeleteChar(id);

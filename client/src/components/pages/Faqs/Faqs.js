@@ -12,10 +12,16 @@ import FaqEdit from './FaqEdit/FaqEdit';
 import { Route, Switch } from 'react-router-dom';
 
 const Faqs = props => {
-    const { onGetFaqs } = props;
-    useEffect(() => {
-        props.onGetFaqs();
-    }, [onGetFaqs])
+    // const { onGetFaqs, faqs } = props;
+    // 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         onGetFaqs();
+    //     };
+    //     if ( faqs.length === 0 ){
+    //       fetchData()
+    //     }
+    // }, [])
 
         let headlines = (
             <div className={myClasses.Headlines}>
