@@ -4,40 +4,41 @@
 const crypto    = require('crypto');
 const mongoose  = require('mongoose');
 const validator = require('validator');
-const bcrypt    = require('bcryptjs');
+const bcrypt    = require('bcrypt');
 
 // define the schema for our user model
 const userSchema = new mongoose.Schema({
-  local            : {
+  
+  local: {
     name: {
-      type: String,
-      required: [false, 'Please tell us your name!']
+      type          : String,
+      required      : [false, 'Please tell us your name!']
     },
     email: {
-      type: String,
-      required: [true, 'Please provide your email'],
-      unique: true,
-      lowercase: true,
-      validate: [validator.isEmail, 'Please provide a valid email']
+      type          : String,
+      required      : [true, 'Please provide your email'],
+      unique        : true,
+      lowercase     : true,
+      validate      : [validator.isEmail, 'Please provide a valid email']
     },
     photo: {
-      type: String,
-      default: 'default.jpg'
+      type          : String,
+      default       : 'default.jpg'
     },
     role: {
-      type: String,
-      enum: ['user', 'guide', 'lead-guide', 'admin'],
-      default: 'user'
+      type          : String,
+      enum          : ['user', 'guide', 'lead-guide', 'admin'],
+      default       : 'user'
     },
     password: {
-      type: String,
-      required: [true, 'Please provide a password'],
-      minlength: 8,
-      select: false
+      type          : String,
+      required      : [true, 'Please provide a password'],
+      minlength     : 8,
+      select        : false
     },
     passwordConfirm: {
-      type: String,
-      required: [false, 'Please confirm your password'],
+      type          : String,
+      required      : [false, 'Please confirm your password'],
       validate: {
         // This only works on CREATE and SAVE!!!
         validator: function(el) {
@@ -46,13 +47,13 @@ const userSchema = new mongoose.Schema({
         message: 'Passwords are not the same!'
       }
     },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
+    passwordChangedAt     : Date,
+    passwordResetToken    : String,
+    passwordResetExpires  : Date,
     active: {
-      type: Boolean,
-      default: true,
-      select: false
+      type    : Boolean,
+      default : true,
+      select  : false
     }
   },
   facebook         : {
@@ -100,6 +101,10 @@ userSchema.pre(/^find/, function(next) {
   next();
 });
 
+//==============================================================================
+// methods =====================================================================
+//==============================================================================
+
 userSchema.methods.correctPassword = async function(
   candidatePassword,
   userPassword
@@ -135,10 +140,6 @@ userSchema.methods.createPasswordResetToken = function() {
 
   return resetToken;
 };
-
-//==============================================================================
-// methods =====================================================================
-//==============================================================================
 
 // generating a hash
 userSchema.methods.generateHash = function(password) {
