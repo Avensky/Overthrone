@@ -11,20 +11,26 @@ const session       = require('express-session')
 const passport      = require('passport')
 const mongoose      = require('mongoose')
 const keys          = require('./config/keys')
+const userRouter    = require('./app/routes/userRoutes');
 const cors          = require("cors");
 const flash         = require('connect-flash')
 //==============================================================================
 // configuration ===============================================================
 //==============================================================================
-require('./app/models/user');
+//require('./app/models/user');
 require('./app/models/character');
 require('./app/models/faq');
 require('./config/passport')(passport); // pass passport for configuration
 
 mongoose.Promise = global.Promise;// connect to our database
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true,useUnifiedTopology: true })
-    .then(connect => console.log('connected to mongodb'))
-    .catch(err => console.log('could not connect to mongodb', err))
+
+mongoose.connect(keys.mongoURI, { 
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true 
+})
+  .then(connect => console.log('connected to mongodb'))
+  .catch(err => console.log('could not connect to mongodb', err))
 module.exports = {mongoose}
 
 
@@ -61,7 +67,8 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./app/routes/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./app/routes/characterRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 require('./app/routes/faqRoutes.js')(app); // load our routes and pass in our app and fully configured passport
-
+require('./app/routes/userRoutes');
+app.use('/api/v1/users', userRouter);
 //==============================================================================
 // launch ======================================================================
 //==============================================================================
@@ -78,7 +85,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(PORT, (err) =>{
+const server = app.listen(PORT, (err) =>{
   if(!err)
       console.log('server started running on: ' + PORT);
   else

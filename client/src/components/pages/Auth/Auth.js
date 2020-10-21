@@ -5,7 +5,7 @@ import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
 import * as actions from '../../../store/actions/index';
-import {updateObject, checkValidity} from '../../../utility/utility';
+// import {updateObject, checkValidity} from '../../../utility/utility';
 // import Input from '../../UI/Input/Input';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
