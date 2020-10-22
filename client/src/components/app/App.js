@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, useCallback, useState } from 'react'
+import React, { useEffect, Suspense/*, useCallback, useState*/ } from 'react'
 import { Route, Switch, withRouter} from 'react-router-dom'
 import * as actions   from '../../store/actions/index'
 import { connect }    from 'react-redux'
@@ -18,9 +18,9 @@ import Home           from '../pages/Home/Home'
 import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
 import './App.scss'
-import useHttp        from '../../hooks/http'
-import axios          from 'axios'
-import * as actionTypes from '../../store/actions/actionTypes'
+// import useHttp        from '../../hooks/http'
+// import axios          from 'axios'
+// import * as actionTypes from '../../store/actions/actionTypes'
 
 // const Auth = React.lazy(() => {
 //   return import('../pages/Auth/Auth');
@@ -30,9 +30,8 @@ import * as actionTypes from '../../store/actions/actionTypes'
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
   
-  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn, loading, userLoading, fetchedUser } = props
-  const [data, setData] 
-  = useState({ hits: [] });
+  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn /*, loading, userLoading, fetchedUser*/ } = props
+//  const [data, setData] = useState({ hits: [] });
   // const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
 
 //  useEffect(()=> {

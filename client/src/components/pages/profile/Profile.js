@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import Link from './Link/Link';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import { useForm } from "react-hook-form";
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
@@ -16,10 +16,10 @@ import * as Yup from 'yup'
 const Auth = props => {
     //const { authRedirectPath, onSetAuthRedirectPath, submitted, isAuthenticated, isLoggedIn } = props
     const [authLogin, setAuthLogin] = useState(true)
-    const [socialLogin, setSocialLogin] = useState(false)
+    // const [socialLogin, setSocialLogin] = useState(false)
 
     const socialAuthHandler = () => {
-        setSocialLogin(true)
+    //    setSocialLogin(true)
        // props.onFbAuth()
     }
 
@@ -39,10 +39,10 @@ const Auth = props => {
         submitProps.resetForm()
     }
 
-    let act = 'login';
-    if (!authLogin) {
-        act = 'signup'
-    }
+    // let act = 'login';
+    // if (!authLogin) {
+    //     act = 'signup'
+    // }
     // const [formValues, setFormValues] = useState(null)
 
     const initialValues = {
@@ -116,7 +116,7 @@ const Auth = props => {
                     enableReinitialize
                 >   
                     {formik => {
-                        console.log('Formik props', formik)
+                        // console.log('Formik props', formik)
                         return (
                             <Form>
                                 <Field 

@@ -14,7 +14,7 @@ import Spinner from '../../UI/Spinner/Spinner'
 
 
 const Characters = props => {
-    const { onGetCharacters } =  props;
+    // const { onGetCharacters } =  props;
 
     // useEffect(() => {
     //     props.onGetCharacters()

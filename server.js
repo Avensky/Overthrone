@@ -4,6 +4,8 @@
 const express       = require('express')
 const app           = express()
 const PORT          = process.env.PORT || 5000;
+const dotenv        = require('dotenv');
+const morgan        = require('morgan');
 const bodyParser    = require('body-parser')
 const cookieParser  = require('cookie-parser');
 const session       = require('express-session')
@@ -21,6 +23,8 @@ const flash         = require('connect-flash')
 require('./app/models/character');
 require('./app/models/faq');
 require('./config/passport')(passport); // pass passport for configuration
+
+dotenv.config({ path: './config/config.env' });
 
 mongoose.Promise = global.Promise;// connect to our database
 

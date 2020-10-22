@@ -23,51 +23,51 @@ const Cart = props => {
         props.subtractQuantity(id);
     }
 
-        let cart = props.items;
-        let uniqueChars = [...new Set(cart)];
-        let addedItems = props.items.length ?
-            (  
-                uniqueChars.map(item=>{
-                    return(
-                         <div className={myClasses.Cart} key={item.id}>
-                            {/* Product */}
-                            <div className={myClasses.Item}>
-                                {/* Remove */}
-                                <div className={myClasses.Remove}>
-                                    <i className="material-icons" onClick={()=>{handleRemove(item.id)}}>clear</i>
-                                </div>
-
-                                {/* Image */}
-                                <div className={myClasses.CardThumbnail}>
-                                    <img src={item.img} alt={item.alt} />
-                                </div>
-                                
-                                {/* Description */}
-                                <div className={myClasses.CardDescription}>
-                                    <b>
-                                    <span className="title">{item.title}</span>
-                                    </b>
-                                    <p>{item.desc}</p>
-                                </div>
-
-                                 {/* Quantity */}
-                                <div className={myClasses.CardQuantity}>
-                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
-                                    <p><b>{item.quantity}</b></p>
-                                    <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleAddQuantity(item.id)}}>arrow_drop_up</i>                                   
-                                </div>
- 
-                                {/* Price */}
-                                <div className={myClasses.CardPrice}><b> ${item.price}</b></div>
+    let cart = props.items;
+    let uniqueChars = [...new Set(cart)];
+    let addedItems = props.items.length ?
+        (  
+            uniqueChars.map(item=>{
+                return(
+                        <div className={myClasses.Cart} key={item.id}>
+                        {/* Product */}
+                        <div className={myClasses.Item}>
+                            {/* Remove */}
+                            <div className={myClasses.Remove}>
+                                <i className="material-icons" onClick={()=>{handleRemove(item.id)}}>clear</i>
                             </div>
-                        </div>
-                    )
-                })
-            ):
 
-             (  
-                <p>Nothing.</p>
-             )
+                            {/* Image */}
+                            <div className={myClasses.CardThumbnail}>
+                                <img src={item.img} alt={item.alt} />
+                            </div>
+                            
+                            {/* Description */}
+                            <div className={myClasses.CardDescription}>
+                                <b>
+                                <span className="title">{item.title}</span>
+                                </b>
+                                <p>{item.desc}</p>
+                            </div>
+
+                                {/* Quantity */}
+                            <div className={myClasses.CardQuantity}>
+                                <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
+                                <p><b>{item.quantity}</b></p>
+                                <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleAddQuantity(item.id)}}>arrow_drop_up</i>                                   
+                            </div>
+
+                            {/* Price */}
+                            <div className={myClasses.CardPrice}><b> ${item.price}</b></div>
+                        </div>
+                    </div>
+                )
+            })
+        ):
+
+            (  
+            <p>Nothing.</p>
+            )
         return(
             <Auxiliary>
                 <div className='container'>

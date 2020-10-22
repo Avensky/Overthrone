@@ -1,16 +1,14 @@
-const crypto = require('crypto');
-const { promisify } = require('util');
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
-const Email = require('./../utils/email');
+const crypto                = require('crypto');
+const { promisify }         = require('util');
+const jwt                   = require('jsonwebtoken');
+const User                  = require('../models/userModel');
+const catchAsync            = require('./../utils/catchAsync');
+const AppError              = require('./../utils/appError');
+const Email                 = require('./../utils/email');
 
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
-  });
-};
+    expiresIn: process.env.JWT_EXPIRES_IN })}
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
@@ -29,18 +27,16 @@ const createSendToken = (user, statusCode, req, res) => {
   res.status(statusCode).json({
     status: 'success',
     token,
-    data: {
-      user
-    }
+    data: { user }
   });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm
+    name            : req.body.name,
+    email           : req.body.email,
+    password        : req.body.password,
+    passwordConfirm : req.body.passwordConfirm
   });
 
   const url = `${req.protocol}://${req.get('host')}/me`;

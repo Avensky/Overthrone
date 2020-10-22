@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { /*useEffect*/ } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
