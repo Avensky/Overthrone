@@ -1,4 +1,3 @@
-// server.js //
 //==============================================================================
 // set up ======================================================================
 //==============================================================================
@@ -14,6 +13,7 @@ const keys          = require('./config/keys')
 const userRouter    = require('./app/routes/userRoutes');
 const cors          = require("cors");
 const flash         = require('connect-flash')
+
 //==============================================================================
 // configuration ===============================================================
 //==============================================================================
@@ -44,11 +44,36 @@ app.use(
   })
 );
 
+// Set security HTTP headers
+// app.use(helmet());
+
 // app.use(logger('dev')); // log every request to the console
 app.use(express.json())
-app.use(cookieParser()); // read cookies (needed for auth)
+
+// Development logging
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+// Limit requests from same API
+//  const limiter = rateLimit({
+//    max: 100,
+//    windowMs: 60 * 60 * 1000,
+//    message: 'Too many requests from this IP, please try again in an hour!'
+//  });
+//  app.use('/api', limiter);
+
+// read cookies (needed for auth)
+app.use(cookieParser());
+
 //app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false})) // get information from html forms
+
+// Data sanitization against NoSQL query injection
+// app.use(mongoSanitize());
+
+// Data sanitization against XSS
+// app.use(xss());
 
 // required for passport
 app.use(session({ 
@@ -57,8 +82,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
       maxAge: 30*24*60*60*1000,
-  }
-})); 
+  }}));
+
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
       type          : String,
       required      : [true, 'Please provide a password'],
       minlength     : 8,
-      select        : false
+      select        : true
     },
     passwordConfirm: {
       type          : String,
@@ -148,8 +148,10 @@ userSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-  console.log("password check =" + password);
-  console.log("local pass check=" + this.local.password);
+  console.log("password check = " + password);
+  console.log("local user check = " + this.local);
+  console.log("local pass check = " + this.local.password);
+  console.log("local email check = " + this.local.email);
   return bcrypt.compareSync(password, this.local.password);
 };
 

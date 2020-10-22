@@ -66,19 +66,19 @@ module.exports = function(app, passport) {
 				successRedirect : '/', // redirect to the secure profile section
 				failureRedirect : '/', // redirect back to the signup page if there is an error
 				// failureFlash : true // allow flash messages
-			}), (req, res, err) => {
+			})//, (req, res, err) => {
 				// If this function gets called, authentication was successful.
 				// `req.user` contains the authenticated user.
-				console.log('Message sent!')
-				if (err) {
+				//console.log('Message sent!')
+				//if (err) {
 					// handle error and redirect to credentials,
 					// display an error page, or whatever you want to do here...
-				}
+				//}
 				// if no error, redirect
-				redirect('/profile');
+				//redirect('/profile');
 				// res.send(200)
 				// res.sendStatus(200)
-			}
+			//}
 		);
 
 		// =====================================
