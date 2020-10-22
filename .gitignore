@@ -5,6 +5,7 @@
 client/node_modules
 /.pnp
 .pnp.js
+config/config.env
 config/dev.js
 config/secrets.js
 .env.development

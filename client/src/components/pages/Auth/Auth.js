@@ -87,14 +87,9 @@ const Auth = props => {
     
     return(
         <Auxiliary>
-            <div className='container'>
-                <div className={['page-header', 'text-center'].join(' ')}>
-                    <a href='/shop' ><h2>Join the Team!</h2></a>
-                </div>
-            </div>
             <div className={[classes.Card, myClasses.Auth].join(' ')}>
             {authRedirect}
-            {errorMessage}
+            {/*errorMessage*/}
                 <div className={myClasses.AuthNav}>
                     <button 
                         onClick={loginToggleHandler}
