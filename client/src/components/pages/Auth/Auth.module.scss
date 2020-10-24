@@ -1,11 +1,10 @@
 .Auth {       
     margin-top: 5vh;
+    padding-top: 3vh;
     text-align: center;
     align-items: center;
     color: rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0.5);
-    min-width: 40vw;
-    
+    background-color: rgba(0, 0, 0, 0.5);   
 }
 .Auth a { 
     width: 100%;
@@ -92,5 +91,6 @@
     /* For desktop: */
     .Auth {
         margin: 0 30vw 0;
+      
     }
 }

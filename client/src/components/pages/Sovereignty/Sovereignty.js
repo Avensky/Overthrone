@@ -8,6 +8,11 @@ import myClasses from './Sovereignty.module.scss';
 const Sovereinty = props => {
         let body = (
             <div className={classes.Card}>
+                <div className="container">
+                    <div className="page-header text-center">
+                        <h1>History of the Sovereignty</h1>
+                    </div>
+                </div>
                 <div className={myClasses.Sovereignty}>
                 <div className={classes.CardTitle}>Background: The Lithe Crystal</div>
                     <p>
@@ -45,11 +50,6 @@ const Sovereinty = props => {
 
         return(
             <Auxiliary>
-                <div className="container">
-                <div className="page-header text-center">
-                    <h2>History of the Sovereignty</h2>
-                </div>
-                </div>
                 {body}
             </Auxiliary>
         )

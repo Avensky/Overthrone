@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
-import Auxiliary from '../../../hoc/Auxiliary';
-//import Character from './Character/Character';
+// import Auxiliary from '../../../hoc/Auxiliary';
+// import Character from './Character/Character';
 import myClasses from './Characters.module.scss';
 import classes from '../Pages.module.scss';
-//import NewCharacter from './NewCharacter/NewCharacter';
+// import NewCharacter from './NewCharacter/NewCharacter';
 import * as actions from '../../../store/actions/index';
-//import CharacterEdit from './CharacterEdit/CharacterEdit';
+// import CharacterEdit from './CharacterEdit/CharacterEdit';
 import Character from './Character/Character';
 import withErrorHandler from '../../withErrorHandler/withErrorHandler';
 import axios from 'axios';
@@ -52,21 +52,16 @@ const Characters = props => {
                 )
             })
         }
-        return(
-            <Auxiliary>
-                <div className="container">
-                    <div className="page-header text-center">
-                        <h2>Characters</h2>
-                    </div>
+    return(
+        <div className={[classes.Card, myClasses.Characters].join(' ')}>
+            <div className="container">
+                <div className="page-header text-center">
+                    <h1>Characters</h1>
                 </div>
-                <div className={[classes.Card, myClasses.Characters].join(' ')}>
-               
-                {characters}
-                </div>
-               
-            </Auxiliary>
-        )
-    
+            </div>
+        {characters}
+        </div>
+    )
 }
 
 const mapStateToProps = state => {

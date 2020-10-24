@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
 import myClasses from './NavItem.module.scss';
 // import classes from '../../../pages/Pages.module.scss';
 

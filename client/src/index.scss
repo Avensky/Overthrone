@@ -13,41 +13,38 @@ code {
     monospace;
 }
 
-.auth-btn {
-  background-color: rgb(45, 17, 77);
-  background-color: #6623d3;
-}
-
-.auth-btn:hover {
+.btn { 
+  width: 100%;
+  padding: 1vh 1vw;
+  margin: 1vh 0;
   color: rgb(255, 255, 255);
-  background-color: #5b1fbd;
+  border-radius: 4px;
+  background-color: rgb(219, 158, 43);
+  cursor: pointer;
 }
 
-.my-auth-btn {
-  color: #6623d3;
+.btn:hover          {background-color: rgb(192, 137, 35) ;}
+
+.auth-btn           { background-color: #6623d3;}
+.auth-btn:hover     { background-color: #5b1fbd;}
+
+.btn-primary        { background-color: #357ebd;}
+.btn-primary:hover  { background-color: #2e6ca1;}
+
+.btn-info           { background-color: #5bc0de;}
+.btn-info:hover     { background-color: #4da1bb;}
+
+.btn-danger         { background-color: #d9534f;}
+.btn-danger:hover   { background-color: #b94743;}
+
+a ::selection       { color: white !important; }
+a :active           { color: white !important; }
+
+input               { color: black !important; }
+
+.spread {
+  display: flex;
+  justify-content: space-between;
 }
 
-.my-btn-primary {
-  color:#357ebd;
-}
-
-.my-btn-info{
-  color: #5bc0de;
-}
-
-.my-btn-danger{
-  color: #d9534f;
-}
-
-
-a ::selection {
-  color: white !important;
-}
-
-a :active {
-  color: white !important;
-}
-
-input {
-  color: black !important;
-}
+.text-center        { text-align: center; }

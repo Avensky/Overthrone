@@ -128,12 +128,6 @@
     opacity:1;
 }
 
-.Card {
-    background-color: rgb(34, 26, 0);
-    margin: 0 2vw 0;
-    padding: 5vh 5vw 2vh;
-
-}
 
 :focus-visible {
     background-color: white;
@@ -141,9 +135,7 @@
 
 button:focus {outline:0;}
 input:focus {outline:0;}
-input::placeholder{
-
-  }
+input::placeholder{ }
 
 
 .line {
@@ -166,11 +158,20 @@ input::placeholder{
                                     supported by Chrome, Edge, Opera and Firefox */
 }
 
+
+
+.Card {
+    background-color: rgb(34, 26, 0);
+    margin: 0 2vw 0;
+    padding: 5vh 5vw 2vh;
+
+}
+
 @media only screen and (min-width: 600px) {
     /* For tablets: */
     .Card {
         margin: 0 5vw 0;
-        padding: 5vh 5vw 2vh;
+        padding: 1vh 5vw 2vh;
     }
 }
 
@@ -178,9 +179,6 @@ input::placeholder{
     /* For desktop: */
     .Card {
         margin: 0 15vw 0;
-        padding: 5vh 5vw 2vh;
-        min-width: 70vw;
+        padding: 1vh 5vw 2vh;
     }
 }
-
-

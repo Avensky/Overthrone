@@ -147,7 +147,6 @@ const Auth = props => {
                     <a 
                         href="/auth/facebook"
                         onClick={socialAuthHandler}
-                    
                     ><span className="fa fa-facebook" /> Facebook</a>
                 </button>
                 <button className={[myClasses.Btn, "btn-info"].join(' ')}>

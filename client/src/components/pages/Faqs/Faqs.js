@@ -1,6 +1,6 @@
 import React, { /*useEffect*/ } from 'react';
 import {connect} from 'react-redux';
-import Auxiliary from '../../../hoc/Auxiliary';
+// import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
 import myClasses from './Faqs.module.scss';
 // import Faq from './Faq/Faq';
@@ -162,26 +162,23 @@ const Faqs = props => {
             </div>
         )
 
-        return(
-            <Auxiliary>
-                <div className="container">
-                    <div className="page-header text-center">
-                        <h2>Frequently Asked Questions</h2>
-                    </div>
+    return(
+        <div className={[classes.Card, myClasses.Faqs].join(' ')}>
+            <div className="container">
+                <div className="page-header text-center">
+                    <h1>Frequently Asked Questions</h1>
                 </div>
-                <div className={[classes.Card, myClasses.Faqs].join(' ')}>
-                    {headlines}
-                    <Switch>
-                        <Route path="/faqs" exact component={FaqList} />
-                        <Route path="/faqs/faqEdit/:id"   exact   component={FaqEdit} />
-                        <Route render={() => <h1>Not found</h1>}/>
-                        {/* <Redirect from="/" to="/posts" /> */}
-                        {/* <Route path="/" component={Posts} /> */}
-                    </Switch>
-                    {/* <hr />  */}
-            
-                </div>
-            </Auxiliary>
+            </div>
+            {headlines}
+            <Switch>
+                <Route path="/faqs" exact component={FaqList} />
+                <Route path="/faqs/faqEdit/:id"   exact   component={FaqEdit} />
+                <Route render={() => <h1>Not found</h1>}/>
+                {/* <Redirect from="/" to="/posts" /> */}
+                {/* <Route path="/" component={Posts} /> */}
+            </Switch>
+            {/* <hr />  */}
+        </div>
         )
     }
 

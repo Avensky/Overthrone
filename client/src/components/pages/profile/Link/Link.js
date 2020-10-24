@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import myClasses from './Link.module.scss';
+import Modal from  '../../../UI/Modal/Modal';
 // import classes from '../../Pages.module.scss'
 
+const Link = props => {
+    const [unlink, setUnlink] = useState(false)
 
-const link = (props) => (
-    <div className={[myClasses.Card, myClasses.Link].join(' ')}>
+    const unlinkHandler = () => { setUnlink(true) }
 
+    const cancelHandler = () => { setUnlink(false) }
+
+    const continueHandler = () => {
+        const href = props.providerUnlink;
+    }
+
+    let unlinkModal = (
+        <Modal show={unlink} modalClosed={cancelHandler}>
+            <div>
+                <h1>Delete Account</h1>
+                <p>Are you sure you want to delete your account?</p>
+                <div className="spread">
+                    <button type="button" onClick={cancelHandler} className="btn btn-default">Cancel</button>
+                    <a href={props.providerUnlink} className="btn btn-default">Unlink</a>
+                </div>
+            </div>
+        </Modal>
+    )
+
+
+
+    return (
+        <div className={[myClasses.Card, myClasses.Link].join(' ')}>
             <h3>
                 <span className={["fa", props.icon, 'my-' + props.mystyle].join(' ')} />
                 <span> {props.link}</span>
@@ -19,14 +44,23 @@ const link = (props) => (
                 { props.token       ? <strong>Token:         {props.token}<br /></strong>        : null }
                 { props.password    ? <strong>Password:      {props.password}<br /></strong>     : null }
             </p>
-                { props.userLink
-                    ? <a href={props.provider} className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a> 
-                    : <a href={props.providerUnlink} className="btn btn-default">Unlink</a> 
-                }
-           
-    
-    
-    </div>
-)
+            <Modal show={unlink} modalClosed={cancelHandler}>
+                <div>
+                    <h1>Unlink Account</h1>
+                    <p>Are you sure you want to unlink your account?</p>
+                    <div className="spread">
+                        <a href={props.providerUnlink} className="btn btn-default">Unlink</a>
+                        <a onClick={cancelHandler} className="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </Modal>            
+        { props.userLink
+                ? <a href={props.provider} className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a> 
+                : <a onClick={unlinkHandler} className="btn btn-default">Unlink</a>
+            }
+        </div>
+        
+    )
+}
 
-export default link;
+export default Link;
