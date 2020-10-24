@@ -6,7 +6,6 @@ import NavItems from '../NavItems/NavItems';
 import SidebarToggle from '../Sidebar/SidebarToggle/SidebarToggle';
 import { NavLink } from 'react-router-dom';
 
-
 const navbar = ( props ) => {
     let cart;         
     if (props.items.length || props.items.length >0) {
@@ -20,7 +19,7 @@ const navbar = ( props ) => {
     let auth;
     console.log(props.isAuth)
     if (props.isAuth !== null) {
-        auth = <div className={myClasses.NavItem}><a  href="/auth/logout">Logout</a></div>
+        auth = <div className={myClasses.NavLink}><a  href="/auth/logout">Logout</a></div>
     } else {
         auth = <NavLink  to="/authentication"><span className={["fa", myClasses.fa, "fa-user", myClasses.left].join(' ')}/> </NavLink >
     }
@@ -28,9 +27,14 @@ const navbar = ( props ) => {
         <div className={myClasses.Navbar}>
             <SidebarToggle clicked={props.sidebarToggleClicked} />   
             <div className={[myClasses.MobileLinks, myClasses.Mobile].join(' ')}>
-                <h2 className={classes.line}>          
+                <h2 className={classes.line}>
+                    {props.isAuth !== null
+                        ? <div className={myClasses.NavItem}><a  href="/auth/logout">Logout </a></div>
+                        : null}          
                     {cart}
-                    {auth}                    
+                    {props.isAuth !== null
+                        ? <NavLink to="/profile"   ><h2><span className="fa fa-user" /></h2></NavLink>
+                        :<NavLink to="/authentication"   ><h2><span className="fa fa-sign-in" /></h2></NavLink>}                                      
                 </h2>
                 <div className={[myClasses.Logo, myClasses.Mobile].join(' ')}>
                     <NavLink  to="/">

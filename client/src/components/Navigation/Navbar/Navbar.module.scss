@@ -25,7 +25,6 @@
     height: 100%;
 }
 
-
 .Navbar .Mobile {
     display: flex;
     text-align: center;
@@ -44,7 +43,9 @@
     margin: 0;
 }
 
-
+.NavItem {
+ margin: 0 1.5vw;
+}
 a:hover {
     color: white;
 }
