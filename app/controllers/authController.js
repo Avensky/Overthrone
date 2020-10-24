@@ -32,16 +32,20 @@ const createSendToken = (user, statusCode, req, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  // console.log(req.body.name)
+  console.log(req.body.email)
+  console.log(req.body.password)
+  // console.log(req.body.passwordConfirm)
   const newUser = await User.create({
-    name            : req.body.name,
+    // name            : req.body.name,
     email           : req.body.email,
     password        : req.body.password,
-    passwordConfirm : req.body.passwordConfirm
+    // passwordConfirm : req.body.passwordConfirm
   });
 
-  const url = `${req.protocol}://${req.get('host')}/me`;
+  // const url = `${req.protocol}://${req.get('host')}/me`;
   // console.log(url);
-  await new Email(newUser, url).sendWelcome();
+  // await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, req, res);
 });

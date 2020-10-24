@@ -59,7 +59,7 @@ export const checkLoginTimeout = (expirationTime) => {
 export const auth = (values, authLogin) => {
     return dispatch => {
         dispatch(authStart());
-        let url = '/auth/login';
+        let url = ' /auth/login';
         if (!authLogin) { url = '/auth/signup'; }       
         axios.post(url, values)
             .then(response => {

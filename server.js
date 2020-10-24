@@ -6,6 +6,7 @@ const app           = express()
 const PORT          = process.env.PORT || 5000;
 const dotenv        = require('dotenv');
 const morgan        = require('morgan');
+const helmet        = require('helmet');
 const bodyParser    = require('body-parser')
 const cookieParser  = require('cookie-parser');
 const session       = require('express-session')

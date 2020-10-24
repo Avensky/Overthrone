@@ -17,24 +17,29 @@ const navbar = ( props ) => {
             </NavLink > 
         )
     }
+    let auth;
+    console.log(props.isAuth)
+    if (props.isAuth !== null) {
+        auth = <div className={myClasses.NavItem}><a  href="/auth/logout">Logout</a></div>
+    } else {
+        auth = <NavLink  to="/authentication"><span className={["fa", myClasses.fa, "fa-user", myClasses.left].join(' ')}/> </NavLink >
+    }
     return (
         <div className={myClasses.Navbar}>
             <SidebarToggle clicked={props.sidebarToggleClicked} />   
             <div className={[myClasses.MobileLinks, myClasses.Mobile].join(' ')}>
                 <h2 className={classes.line}>          
                     {cart}
-                    <NavLink  to="/authentication">
-                        <span className={["fa", myClasses.fa, "fa-user", myClasses.left].join(' ')}/> 
-                    </NavLink >
+                    {auth}                    
                 </h2>
                 <div className={[myClasses.Logo, myClasses.Mobile].join(' ')}>
-                <NavLink  to="/">
-                    <div className={myClasses.Logo}>
-                        <Logo />
-                    </div>  
-            
-                </NavLink >
-            </div>
+                    <NavLink  to="/">
+                        <div className={myClasses.Logo}>
+                            <Logo />
+                        </div>  
+                
+                    </NavLink >
+                </div>
             </div>
             <div className={myClasses.DesktopOnly}>
                 <NavItems isAuthenticated={props.isAuth} cart={props.cart}/>
