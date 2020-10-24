@@ -23,12 +23,12 @@ const userSchema = new mongoose.Schema({
     },
     photo: {
       type          : String,
-      default       : 'default.jpg'
+      // default       : 'default.jpg'
     },
     role: {
       type          : String,
       enum          : ['user', 'guide', 'lead-guide', 'admin'],
-      default       : 'user'
+      // default       : 'user'
     },
     password: {
       type          : String,
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
     passwordResetExpires  : Date,
     active: {
       type    : Boolean,
-      default : true,
+      // default : true,
       select  : false
     }
   },
