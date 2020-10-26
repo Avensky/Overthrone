@@ -81,13 +81,13 @@ app.use(bodyParser.urlencoded({extended: false})) // get information from html f
 // app.use(xss());
 
 // required for passport
-app.use(session({ 
-  secret: 'ilovescotchscotchyscotchscotch',   // session secret
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-      maxAge: 30*24*60*60*1000,
-  }}));
+// app.use(session({ 
+//   secret: 'ilovescotchscotchyscotchscotch',   // session secret
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//      maxAge: 30*24*60*60*1000,
+//   }}));
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -97,9 +97,9 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 //==============================================================================
 require('./app/routes/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./app/routes/characterRoutes.js')(app); // load our routes and pass in our app and fully configured passport
-require('./app/routes/faqRoutes.js')(app); // load our routes and pass in our app and fully configured passport
+// require('./app/routes/faqRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 require('./app/routes/userRoutes');
-app.use('/api/v1/users', userRouter);
+// app.use('/api/v1/users', userRouter);
 //==============================================================================
 // launch ======================================================================
 //==============================================================================

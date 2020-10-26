@@ -3,7 +3,10 @@ const LocalStrategy    = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy  = require('passport-twitter').Strategy;
 const GoogleStrategy   = require('passport-google-oauth20').Strategy;
+const JwtStrategy      = require('passport-jwt').Strategy;
+const ExtractJwt       = require('passport-jwt').ExtractJwt;
 const mongoose         = require('mongoose')
+
 
 // load up the user model
 const User             = mongoose.model('User')
@@ -37,7 +40,8 @@ module.exports         = function(passport) {
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
-        passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+        passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+        session: false
     },
     function(req, email, password, done) {
         console.log("req" + req.body)
@@ -74,7 +78,8 @@ module.exports         = function(passport) {
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
-        passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+        passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+        session: false    
     },
     function(req, email, password, done) {
 
@@ -137,7 +142,8 @@ module.exports         = function(passport) {
         passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         profileFields   : ['id', 'displayName', 'photos', 'email','first_name', 'last_name'],
 //        enableProof     : true,
-        proxy           : true
+        proxy           : true,
+        session: false  
     },
     async (req, token, refreshToken, profile, done) => {
 
@@ -357,4 +363,29 @@ module.exports         = function(passport) {
             }
         });
     }));
+ 
+    const opts = {
+        // jwtFromRequest  : ExtractJWT.fromAuthHeaderWithScheme('JWT'),
+        jwtFromRequest  : ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey     : 'ilovescotchsc)otchyscotchscotch'
+    }
+    passport.use('jwt', new JwtStrategy(opts, (jwt_payload, done) => {
+            try {
+                User.findOne({
+                    where: { username: jwt_payload.id }
+                }).then( user => {
+                    if (user) {
+                        console.log("user found in db in passport")
+                        done(null, user)
+                    } else {
+                        console.log("user not found in db")
+                        done(null, false)
+                    }
+                })
+            } catch (err) {
+                done(err)
+            }
+        }
+    ))
+
 };
