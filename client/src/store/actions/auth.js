@@ -64,7 +64,7 @@ export const auth = (values, authLogin) => {
         axios.post(url, values)
             .then(response => {
                 console.log(response);
-                const data = response.data.results;
+                const data = response.data;
                 console.log(data);
                 dispatch(authSuccess(data)) 
              })
@@ -82,20 +82,24 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, data) => {
     return {
         type    : actionTypes.AUTH_SUCCESS,
         idToken : token,
-        userId  : userId
+        userId  : userId,
+        message : data.message
     };
 };
 
 export const authFail = (error) => {
     return {
         type    : actionTypes.AUTH_FAIL,
-        error   : error
+        error   : error,
+        message : error.message
     };
 };
+
+
 
 
 export const fbAuth = () => {
@@ -103,7 +107,6 @@ export const fbAuth = () => {
         dispatch(fbAuthStart());
         dispatch(fbAuthSuccess()) 
         //dispatch(fbAuthFail(err));
-
     }
 }
 

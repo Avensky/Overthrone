@@ -41,7 +41,7 @@ module.exports         = function(passport) {
         usernameField : 'email',
         passwordField : 'password',
         passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        session: false
+        //session: false
     },
     function(req, email, password, done) {
         console.log("req" + req.body)
@@ -58,10 +58,10 @@ module.exports         = function(passport) {
 
                 // if no user is found, return the message
                 if (!user)
-                    return done(null, false, req.flash('loginMessage', 'No user found.'));
+                    return done(null, false, {message: 'No user found.'});
 
                 if (!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+                    return done(null, false, {message: 'Oops! Wrong password.'});
 
                 // all is well, return user
                 else
@@ -79,10 +79,10 @@ module.exports         = function(passport) {
         usernameField : 'email',
         passwordField : 'password',
         passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        session: false    
+        //session: false    
     },
     function(req, email, password, done) {
-
+        console.log('user signup');
         // asynchronous
         process.nextTick(function() {
 
@@ -96,7 +96,7 @@ module.exports         = function(passport) {
 
                 // check to see if there's already a user with that email
                 if (existingUser) 
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                    return done(null, false, {message: 'That email is already taken.'});
 
                 //  If we're logged in, we're connecting a new local account.
                 if(req.user) {
@@ -116,7 +116,8 @@ module.exports         = function(passport) {
 
                     newUser.local.email    = email;
                     newUser.local.password = newUser.generateHash(password);
-
+                    // save the user
+                    console.log(newUser)
                     newUser.save(function(err) {
                         if (err)
                             throw err;
@@ -143,7 +144,7 @@ module.exports         = function(passport) {
         profileFields   : ['id', 'displayName', 'photos', 'email','first_name', 'last_name'],
 //        enableProof     : true,
         proxy           : true,
-        session: false  
+        // session: false  
     },
     async (req, token, refreshToken, profile, done) => {
 

@@ -16,7 +16,20 @@ module.exports = function(app, passport) {
 	
 	  app.get('/ping', (req, res) => {
         res.status(200).send("pong!");
-	});   
+	});
+
+	app.get('/api/flash', function(req, res){
+		// Set a flash message by passing the key, followed by the value, to req.flash().
+		req.flash('info', 'Flash is back!')
+		res.redirect('/');
+	  });
+	   
+	  app.get('/api/messages', function(req, res){
+		// Get an array of flash messages by passing the key to req.flash()
+		res.render('index', { messages: req.flash('info') });
+	  });
+
+
     // =====================================
 	// PROFILE SECTION =====================
 	// =====================================
@@ -61,25 +74,36 @@ module.exports = function(app, passport) {
 		// =====================================
 
 		// process the login form
-		app.post('/auth/login', 
-			passport.authenticate('local-login', {
-				successRedirect : '/', // redirect to the secure profile section
-				failureRedirect : '/', // redirect back to the signup page if there is an error
-				// failureFlash : true // allow flash messages
-			})//, (req, res, err) => {
-				// If this function gets called, authentication was successful.
-				// `req.user` contains the authenticated user.
-				//console.log('Message sent!')
-				//if (err) {
-					// handle error and redirect to credentials,
-					// display an error page, or whatever you want to do here...
-				//}
-				// if no error, redirect
-				//redirect('/profile');
-				// res.send(200)
-				// res.sendStatus(200)
-			//}
-		);
+		//	app.post('/auth/login', 
+		//		passport.authenticate('local-login', {
+		//			successRedirect : '/', // redirect to the secure profile section
+		//			failureRedirect : '/', // redirect back to the signup page if there is an error
+		//			failureFlash 	: true // allow flash messages
+		//		}), (req, res) => {
+		//			// If this function gets called, authentication was successful.
+		//			// `req.user` contains the authenticated user.
+		//			//console.log('Message sent!')
+		//			//if (err) {
+		//				// handle error and redirect to credentials,
+		//				// display an error page, or whatever you want to do here...
+		//			//}
+		//			// if no error, redirect
+		//			//redirect('/');
+		//			res.send(200)
+		//			// res.sendStatus(200)
+		//		}
+		//	);
+
+		app.post('/auth/login',  (req, res, next) => {
+			passport.authenticate('local-login', (err, user, info) => {
+				if(err) return next(err);
+				if(info) return res.send(info);
+				req.logIn(user, err => {
+					if(err) return next(err);
+					return res.send(user);
+				});
+			})(req, res, next);
+		});
 
 		// =====================================
 		// SIGNUP ==============================

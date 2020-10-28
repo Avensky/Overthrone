@@ -65,7 +65,7 @@ const Auth = props => {
 
     if ( props.error ) {
         errorMessage = (
-            <p>{props.error.message}</p>
+            <p>{props.error.flash}</p>
         );
     }
 
@@ -89,7 +89,7 @@ const Auth = props => {
         <Auxiliary>
             <div className={[classes.Card, myClasses.Auth].join(' ')}>
             {authRedirect}
-            {/*errorMessage*/}
+            {errorMessage}
                 <div className={myClasses.AuthNav}>
                     <button 
                         onClick={loginToggleHandler}
@@ -163,13 +163,14 @@ const Auth = props => {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading,
-        userLoading: state.auth.userLoading,
-        submitted: state.auth.submitted,
-        error: state.auth.error,
-        isLoggedIn: state.auth.user,
-        isAuthenticated: state.auth.payload,
-        authRedirectPath: state.auth.authRedirectPath
+        loading             : state.auth.loading,
+        userLoading         : state.auth.userLoading,
+        submitted           : state.auth.submitted,
+        error               : state.auth.error,
+        isLoggedIn          : state.auth.user,
+        isAuthenticated     : state.auth.payload,
+        authRedirectPath    : state.auth.authRedirectPath,
+        flash               : state.auth.flash
         
     };
 };

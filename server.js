@@ -81,13 +81,13 @@ app.use(bodyParser.urlencoded({extended: false})) // get information from html f
 // app.use(xss());
 
 // required for passport
-// app.use(session({ 
-//   secret: 'ilovescotchscotchyscotchscotch',   // session secret
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: {
-//      maxAge: 30*24*60*60*1000,
-//   }}));
+app.use(session({ 
+  secret: 'ilovescotchscotchyscotchscotch',   // session secret
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+     maxAge: 30*24*60*60*1000,
+  }}));
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
