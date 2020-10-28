@@ -95,6 +95,7 @@ module.exports = function(app, passport) {
 		//	);
 
 		app.post('/auth/login',  (req, res, next) => {
+
 			passport.authenticate('local-login', (err, user, info) => {
 				if(err) return next(err);
 				if(info) return res.send(info);
@@ -103,6 +104,7 @@ module.exports = function(app, passport) {
 					return res.send(user);
 				});
 			})(req, res, next);
+			
 		});
 
 		// =====================================

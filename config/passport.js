@@ -50,15 +50,15 @@ module.exports         = function(passport) {
         // asynchronous
         process.nextTick(function() {
             User.findOne({ 'local.email' :  email }, function(err, user) {
-                console.log('local email = ' + user.local.email)
-                console.log('local password = ' + user.local.password)
+                //console.log('local email = ' + user.local.email)
+                //console.log('local password = ' + user.local.password)
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
 
                 // if no user is found, return the message
                 if (!user)
-                    return done(null, false, {message: 'No user found.'});
+                    return done(null, false, {message: 'Oops! Email not found.'});
 
                 if (!user.validPassword(password))
                     return done(null, false, {message: 'Oops! Wrong password.'});

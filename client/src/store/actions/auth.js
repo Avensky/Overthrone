@@ -82,12 +82,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId, data) => {
+export const authSuccess = (token, userId) => {
     return {
         type    : actionTypes.AUTH_SUCCESS,
         idToken : token,
-        userId  : userId,
-        message : data.message
+        userId  : userId
     };
 };
 
@@ -95,12 +94,8 @@ export const authFail = (error) => {
     return {
         type    : actionTypes.AUTH_FAIL,
         error   : error,
-        message : error.message
     };
 };
-
-
-
 
 export const fbAuth = () => {
     return dispatch => {
@@ -109,7 +104,6 @@ export const fbAuth = () => {
         //dispatch(fbAuthFail(err));
     }
 }
-
 
 export const fbAuthStart = () => {
     return {

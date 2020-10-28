@@ -10,7 +10,6 @@ const initialState = {
     payload: null,
     authRedirectPath: '/',
     submitted: false,
-    flash: false
 };
 
 const authStart = ( state, action ) => {
@@ -26,16 +25,14 @@ const authSuccess = (state, action) => {
         userId: action.userId,
         error: null,
         loading: false,
-        submitted: true,
-        flash: action.message
+        submitted: true
      });
 };
 
 const authFail = (state, action) => {
     return updateObject( state, {
         error: action.error,
-        loading: false,
-        flash: action.error.message || false
+        loading: false
     });
 };
 

@@ -55,7 +55,7 @@ const Auth = props => {
     
     let loader = null;
 
-    if ( props.loading || (props.submitted && props.userLoading) ) {
+    if ( props.loading ) {
         //form = <Spinner />
         loader = <Spinner />
 
@@ -65,8 +65,13 @@ const Auth = props => {
 
     if ( props.error ) {
         errorMessage = (
-            <p>{props.error.flash}</p>
+            <p>{props.error.message}</p>
         );
+    }
+    
+    let flash = false;
+    if ( props.token ) {
+        flash = <p>{props.token.message}</p>
     }
 
     let authRedirect = null;
@@ -89,7 +94,8 @@ const Auth = props => {
         <Auxiliary>
             <div className={[classes.Card, myClasses.Auth].join(' ')}>
             {authRedirect}
-            {errorMessage}
+            
+            
                 <div className={myClasses.AuthNav}>
                     <button 
                         onClick={loginToggleHandler}
@@ -104,6 +110,7 @@ const Auth = props => {
                     </button>   
                 </div>
                 {loader}
+                {flash}
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -170,7 +177,7 @@ const mapStateToProps = state => {
         isLoggedIn          : state.auth.user,
         isAuthenticated     : state.auth.payload,
         authRedirectPath    : state.auth.authRedirectPath,
-        flash               : state.auth.flash
+        token               : state.auth.token
         
     };
 };
