@@ -14,21 +14,6 @@ const Link = props => {
         const href = props.providerUnlink;
     }
 
-    let unlinkModal = (
-        <Modal show={unlink} modalClosed={cancelHandler}>
-            <div>
-                <h1>Delete Account</h1>
-                <p>Are you sure you want to delete your account?</p>
-                <div className="spread">
-                    <button type="button" onClick={cancelHandler} className="btn btn-default">Cancel</button>
-                    <a href={props.providerUnlink} className="btn btn-default">Unlink</a>
-                </div>
-            </div>
-        </Modal>
-    )
-
-
-
     return (
         <div className={[myClasses.Card, myClasses.Link].join(' ')}>
             <h3>

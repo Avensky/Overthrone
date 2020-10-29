@@ -26,15 +26,19 @@ code {
 .btn:hover          {background-color: rgb(192, 137, 35) ;}
 
 .auth-btn           { background-color: #6623d3;}
+.my-auth-btn        { color: #6623d3;}
 .auth-btn:hover     { background-color: #5b1fbd;}
 
 .btn-primary        { background-color: #357ebd;}
+.my-btn-primary     { color: #357ebd;}
 .btn-primary:hover  { background-color: #2e6ca1;}
 
 .btn-info           { background-color: #5bc0de;}
+.my-btn-info        { color: #5bc0de;}
 .btn-info:hover     { background-color: #4da1bb;}
 
 .btn-danger         { background-color: #d9534f;}
+.my-btn-danger      { color: #d9534f;}
 .btn-danger:hover   { background-color: #b94743;}
 
 a ::selection       { color: white !important; }
