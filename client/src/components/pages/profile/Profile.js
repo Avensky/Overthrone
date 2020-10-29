@@ -26,15 +26,6 @@ const Login = (props) =>{
             mystyle="btn-primary"
             provider='/connect/facebook'
             providerUnlink='/unlink/facebook' />)
-
-    twitter = (
-        <Link
-            link="Twitter"
-            userLink={true}
-            icon="fa-twitter"
-            mystyle="btn-info"
-            provider='/connect/twitter'
-            providerUnlink='/unlink/twitter' />)
     
     google = (
         <Link
@@ -48,7 +39,7 @@ const Login = (props) =>{
     if (props.payload['local']) {
         local = (
             <Link
-                id={props.payload['local'].id}
+                id={props.payload['_id']}
                 link="Local"
                 userLink={false}
                 email={props.payload['local'].email}
@@ -61,7 +52,7 @@ const Login = (props) =>{
         />)
     }
     
-    if (props.payload['facebook']) {
+    if (props.payload['facebook'] && props.payload['facebook'].token) {
         facebook = (
             <Link
                 id={props.payload['facebook'].id}
@@ -77,7 +68,7 @@ const Login = (props) =>{
         />)
     }
 
-    if (props.payload['twitter']) {
+    if (props.payload['twitter'] && props.payload['twitter'].token) {
         twitter = (
             <Link
                 id={props.payload['twitter'].id}
@@ -92,9 +83,19 @@ const Login = (props) =>{
                 provider='/connect/twitter' 
                 providerUnlink='/unlink/twitter' 
         />)
+    } else {
+        twitter = (
+            <Link
+                link="Twitter"
+                userLink={true}
+                icon="fa-twitter"
+                mystyle="btn-info"
+                provider='/connect/twitter'
+                providerUnlink='/unlink/twitter' />
+        )
     }
 
-    if (props.payload['google']) {
+    if (props.payload['google'] && props.payload['google'].token) {
         google = (
             <Link
                 id={props.payload['google'].id}
