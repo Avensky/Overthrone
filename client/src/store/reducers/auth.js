@@ -15,7 +15,8 @@ const initialState = {
 const authStart = ( state, action ) => {
     return updateObject( state, { 
         error: null, 
-        loading: true 
+        loading: true, 
+        submitted: false
     });
 };
 
@@ -32,7 +33,8 @@ const authSuccess = (state, action) => {
 const authFail = (state, action) => {
     return updateObject( state, {
         error: action.error,
-        loading: false
+        loading: false,
+        submitted: true
     });
 };
 

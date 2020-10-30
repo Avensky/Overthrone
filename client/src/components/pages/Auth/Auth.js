@@ -55,7 +55,7 @@ const Auth = props => {
     
     let loader = null;
 
-    if ( props.loading ) {
+    if ( props.loading || (props.submitted && props.userLoading)) {
         //form = <Spinner />
         loader = <Spinner />
 
