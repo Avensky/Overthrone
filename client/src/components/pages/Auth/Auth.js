@@ -9,8 +9,8 @@ import * as actions from '../../../store/actions/index';
 // import Input from '../../UI/Input/Input';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
-
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Persist } from 'formik-persist'
 import * as Yup from 'yup'
 
 const Auth = props => {
@@ -55,7 +55,7 @@ const Auth = props => {
     
     let loader = null;
 
-    if ( props.loading || (props.submitted && props.userLoading)) {
+    if ( props.loading || (props.submitted && props.userLoading && !props.token.message)) {
         //form = <Spinner />
         loader = <Spinner />
 
@@ -116,38 +116,34 @@ const Auth = props => {
                     validationSchema={validationSchema}
                     onSubmit={submitHandler}
                     enableReinitialize
-                >   
-                    {formik => {
-                        // console.log('Formik props', formik)
-                        return (
-                            <Form>
-                                <Field 
-                                    type="email" 
-                                    name="email" 
-                                    placeholder="Email Address"
-                                    className={myClasses.AuthInput}
-                                />
-                                <ErrorMessage name="email" component="div" />
-                                <Field 
-                                    type="password" 
-                                    name="password" 
-                                    placeholder="Password"
-                                    className={myClasses.AuthInput}
-                                />
-                                <ErrorMessage name="password" component="div" />
-                                <button  
-                                    className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
-                                    type='submit'
-                                    disabled={!formik.isValid || formik.isSubmitting}
-                                >
-                                    <div className={myClasses.BtnDiv}>
-                                        <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
-                                    </div>
-                                </button>
-                            </Form>
-                        )}
-                    }
-                </Formik>
+                    render = { formik => 
+                    <Form>
+                        <Field 
+                            type="email" 
+                            name="email" 
+                            placeholder="Email Address"
+                            className={myClasses.AuthInput}
+                        />
+                        <ErrorMessage name="email" component="div" />
+                        <Field 
+                            type="password" 
+                            name="password" 
+                            placeholder="Password"
+                            className={myClasses.AuthInput}
+                        />
+                        <ErrorMessage name="password" component="div" />
+                        <button  
+                            className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                            type='submit'
+                            disabled={!formik.isValid || formik.isSubmitting }
+                        >
+                            <div className={myClasses.BtnDiv}>
+                                <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
+                            </div>
+                        </button>
+                        <Persist name="auth-form" />
+                    </Form>}
+                />
 
                 <div className={classes.CardTitle}>Or continue with:</div>
                 <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
