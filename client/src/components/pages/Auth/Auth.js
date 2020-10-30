@@ -100,13 +100,13 @@ const Auth = props => {
                     <button 
                         onClick={loginToggleHandler}
                         className={selected}
-                    ><h2><span className="fa fa-sign-in" /> Login</h2>
+                    ><h1><span className="fa fa-sign-in" /> Login</h1>
                     </button>
 
                     <button 
                         onClick={registerToggleHandler}
                         className={unselected}
-                    ><h2><span className="fa fa-user" /> Signup</h2>
+                    ><h1><span className="fa fa-user" /> Signup</h1>
                     </button>   
                 </div>
                 {loader}
