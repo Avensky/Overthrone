@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 // import { Route, Switch } from 'react-router-dom';
 // import Auxiliary from '../../../hoc/Auxiliary';
@@ -12,32 +12,42 @@ import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
 
 const Purchase = props => {
+    let [cart, setCart] = useState([])
+    let localCart = localStorage.getItem("cart")
+    
     const handleClick = ( id ) => {
         props.addToCart(id); 
 //        props.history.push('/shop/itemfull/' + id);
     }
-        let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
-        if ( props.items ) {
-            //items = props.items.slice( 0, 4 );
-            items = props.items.slice( 0, 4 ).map( item => {
-                return(
-                    <Item
-                        img         = {item.img}
-                        id          = {item.id}
-                        key         = {item.id}
-                        alt         = {item.title}
-                        title       = {item.title}
-                        link        = {"/shop/"}
-                        to          = "/"
-                        clicked     = {() => handleClick(item.id)}
-                        desc        = {item.desc}
-                        price       = {item.price}
-                        quantity    = {item.quantity}
-                    />
-                )
-            })
-        }
 
+    let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
+    if ( props.items ) {
+        //items = props.items.slice( 0, 4 );
+        items = props.items.slice( 0, 4 ).map( item => {
+            return(
+                <Item
+                    img         = {item.img}
+                    id          = {item.id}
+                    key         = {item.id}
+                    alt         = {item.title}
+                    title       = {item.title}
+                    link        = {"/shop/"}
+                    to          = "/"
+                    clicked     = {() => handleClick(item.id)}
+                    desc        = {item.desc}
+                    price       = {item.price}
+                    quantity    = {item.quantity}
+                />
+            )
+        })
+    }
+
+    useEffect(() => {
+        //turn into js
+        localCart = JSON.parse(localCart);
+        //load persisted cart ino state if it exists
+        if (localCart) localStorage.setItem("cart", localCart)
+    }, []) //only run once
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
             <div className='container'>
