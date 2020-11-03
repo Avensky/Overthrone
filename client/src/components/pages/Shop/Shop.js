@@ -13,12 +13,16 @@ import * as actions from '../../../store/actions/index';
 
 const Purchase = props => {
     let [cart, setCart] = useState([])
-    let localCart = localStorage.getItem("cart")
-
-    const handleAddToCart = ( id ) => {
-        props.addToCart(id); 
-    }
+    let localCart = localStorage.getItem("cart");
     
+    useEffect(() => {
+        //turn into js
+        //localCart = JSON.parse(localCart);
+        //load persisted cart ino state if it exists
+        if (localCart) localStorage.setItem("cart", localCart)
+        console.log('local storage= ' + localCart)
+    }, []) //only run once
+
     const handleClick = ( id ) => {
         props.addToCart(id);
         //look for item in cart array
@@ -32,14 +36,14 @@ const Purchase = props => {
         let cartCopy = [...cart];
         
         //assuming we have an ID field in our item
-        let {ID} = item;
+        let ID = item.id;
         
         //look for item in cart array
         let existingItem = cartCopy.find(cartItem => cartItem.id == ID);
         
         //if item already exists
         if (existingItem) {
-            existingItem.quantity += item.quantity //update item
+            existingItem.quantity++ //update item
         } else { //if item doesn't exist, simply add it
           cartCopy.push(item)
         }
@@ -50,6 +54,7 @@ const Purchase = props => {
         //make cart a string and store in local space
         let stringCart = JSON.stringify(cartCopy);
         localStorage.setItem("cart", stringCart)
+        console.log('local storage= ' + localCart)
     }
 
     const editItem = (itemID, amount) => {
@@ -73,8 +78,9 @@ const Purchase = props => {
         //again, update state and localState
         setCart(cartCopy);
         
-        let cartString = JSON.stringify(cartCopy);
-        localStorage.setItem('cart', cartString);
+        // let cartString = JSON.stringify(cartCopy);
+        // localStorage.setItem('cart', cartString);
+        localStorage.setItem('cart', cartCopy);
     }
 
     const removeItem = (itemID) => {
@@ -91,9 +97,25 @@ const Purchase = props => {
     }
 
     let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
+
     if ( props.items ) {
+        
         //items = props.items.slice( 0, 4 );
         items = props.items.slice( 0, 4 ).map( item => {
+            let cartCopy = [...localCart]
+            let localQuantity;
+
+            //look for item in cart array
+            let localItem = cartCopy.find(cartItem => cartItem.id == item.id)
+            
+            if (localItem) {
+                localQuantity = localItem.quantity
+            } 
+            // else {
+            //     localQuantity = 0;
+            // }
+            //let localQuantity = localItem.quantity
+
             return(
                 <Item
                     img         = {item.img}
@@ -106,18 +128,11 @@ const Purchase = props => {
                     clicked     = {() => handleClick(item.id)}
                     desc        = {item.desc}
                     price       = {item.price}
-                    quantity    = {item.quantity}
+                    quantity    = {localQuantity}
                 />
             )
         })
     } 
-
-    useEffect(() => {
-        //turn into js
-        localCart = JSON.parse(localCart);
-        //load persisted cart ino state if it exists
-        if (localCart) localStorage.setItem("cart", localCart)
-    }, []) //only run once
     
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
@@ -165,9 +180,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addToCart           : (id)=>{dispatch(actions.addToCart(id))},
-        removeItem          : (id)=>{dispatch(actions.removeItem(id))},
-        addQuantity         : (id)=>{dispatch(actions.addQuantity(id))},
-        subtractQuantity    : (id)=>{dispatch(actions.subtractQuantity(id))}
+        // removeItem          : (id)=>{dispatch(actions.removeItem(id))},
+        // addQuantity         : (id)=>{dispatch(actions.addQuantity(id))},
+        // subtractQuantity    : (id)=>{dispatch(actions.subtractQuantity(id))}
     }
 }
 
