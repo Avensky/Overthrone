@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 // import { Route, Switch } from 'react-router-dom';
 // import Auxiliary from '../../../hoc/Auxiliary';
@@ -12,22 +12,82 @@ import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
 
 const Purchase = props => {
+    let [cart, setCart] = useState([])
+    let localCart = localStorage.getItem("cart")
+
     const handleAddToCart = ( id ) => {
         props.addToCart(id); 
+    }
+    
+    const handleClick = ( id ) => {
+        props.addToCart(id);
+        //look for item in cart array
+        let item = props.items.find(item => item.id === id);
+        addItem(item)
 //        props.history.push('/shop/itemfull/' + id);
     }
 
-    //to remove the item completely
-    const handleRemove = (id)=>{
-        props.removeItem(id);
+    const addItem = (item) => {
+        //create a copy of our cart state, avoid overwritting existing state
+        let cartCopy = [...cart];
+        
+        //assuming we have an ID field in our item
+        let {ID} = item;
+        
+        //look for item in cart array
+        let existingItem = cartCopy.find(cartItem => cartItem.id == ID);
+        
+        //if item already exists
+        if (existingItem) {
+            existingItem.quantity += item.quantity //update item
+        } else { //if item doesn't exist, simply add it
+          cartCopy.push(item)
+        }
+        
+        //update app state
+        setCart(cartCopy)
+        
+        //make cart a string and store in local space
+        let stringCart = JSON.stringify(cartCopy);
+        localStorage.setItem("cart", stringCart)
     }
-    //to add the quantity
-    const handleAddQuantity = (id)=>{
-        props.addQuantity(id);
+
+    const editItem = (itemID, amount) => {
+        let cartCopy = [...cart]
+        
+        //find if item exists, just in case
+        let existentItem = cartCopy.find(item => item.ID == itemID);
+        
+        //if it doesnt exist simply return
+        if (!existentItem) return
+        
+        //continue and update quantity
+        existentItem.quantity += amount;
+        
+        //validate result
+        if (existentItem.quantity <= 0) {
+          //remove item  by filtering it from cart array
+          cartCopy = cartCopy.filter(item => item.ID != itemID)
+        }
+        
+        //again, update state and localState
+        setCart(cartCopy);
+        
+        let cartString = JSON.stringify(cartCopy);
+        localStorage.setItem('cart', cartString);
     }
-    //to substruct from the quantity
-    const handleSubtractQuantity = (id)=>{
-        props.subtractQuantity(id);
+
+    const removeItem = (itemID) => {
+        //create cartCopy
+        let cartCopy = [...cart]
+        
+        cartCopy = cartCopy.filter(item => item.ID != itemID);
+        
+        //update state and local
+        setCart(cartCopy);
+        
+        let cartString = JSON.stringify(cartCopy)
+        localStorage.setItem('cart', cartString)
     }
 
     let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
@@ -36,25 +96,29 @@ const Purchase = props => {
         items = props.items.slice( 0, 4 ).map( item => {
             return(
                 <Item
-                    img             = {item.img}
-                    id              = {item.id}
-                    key             = {item.id}
-                    alt             = {item.title}
-                    title           = {item.title}
-                    link            = {"/shop/"}
-                    to              = "/"
-                    clicked         = {() => handleAddQuantity(item.id)}
-                    clickedRemove   = {() => handleRemove(item.id)}
-                    clickedAdd      = {() => handleAddQuantity(item.id)}
-                    clickedSubtract = {() => handleSubtractQuantity(item.id)}
-                    desc            = {item.desc}
-                    price           = {item.price}
-                    quantity        = {item.quantity}
+                    img         = {item.img}
+                    id          = {item.id}
+                    key         = {item.id}
+                    alt         = {item.title}
+                    title       = {item.title}
+                    link        = {"/shop/"}
+                    to          = "/"
+                    clicked     = {() => handleClick(item.id)}
+                    desc        = {item.desc}
+                    price       = {item.price}
+                    quantity    = {item.quantity}
                 />
             )
         })
-    }
+    } 
 
+    useEffect(() => {
+        //turn into js
+        localCart = JSON.parse(localCart);
+        //load persisted cart ino state if it exists
+        if (localCart) localStorage.setItem("cart", localCart)
+    }, []) //only run once
+    
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
             <div className='container'>

@@ -4,8 +4,8 @@
   "description": "Code for the entire scotch.io tutorial series: Complete Guide to Node Authentication",
   "main": "server.js",
   "engines": {
-    "node": "13.0.1",
-    "npm": "6.12.0"
+    "node": "14.15.0",
+    "npm": "6.14.8"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

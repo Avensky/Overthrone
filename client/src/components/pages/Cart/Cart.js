@@ -11,20 +11,20 @@ import Auxiliary from '../../../hoc/Auxiliary'
 const Cart = props => {
 
     //to remove the item completely
-    const handleRemove = (id)=>{
+    const handleRemove              = (id)=>{ 
         props.removeItem(id);
     }
     //to add the quantity
-    const handleAddQuantity = (id)=>{
+    const handleAddQuantity         = (id)=>{ 
         props.addQuantity(id);
     }
     //to substruct from the quantity
-    const handleSubtractQuantity = (id)=>{
+    const handleSubtractQuantity    = (id)=>{ 
         props.subtractQuantity(id);
     }
 
-    let cart = props.items;
-    let uniqueChars = [...new Set(cart)];
+    let cartList = props.items;
+    let uniqueChars = [...new Set(cartList)];
     let addedItems = props.items.length ?
         (  
             uniqueChars.map(item=>{
