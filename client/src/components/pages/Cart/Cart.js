@@ -29,7 +29,7 @@ const Cart = props => {
         (  
             uniqueChars.map(item=>{
                 return(
-                        <div className={myClasses.Cart} key={item.id}>
+                    <div className={myClasses.Cart} key={item.id}>
                         {/* Product */}
                         <div className={myClasses.Item}>
                             {/* Remove */}
@@ -44,13 +44,11 @@ const Cart = props => {
                             
                             {/* Description */}
                             <div className={myClasses.CardDescription}>
-                                <b>
-                                <span className="title">{item.title}</span>
-                                </b>
+                                <b><span className="title">{item.title}</span></b>
                                 <p>{item.desc}</p>
                             </div>
 
-                                {/* Quantity */}
+                            {/* Quantity */}
                             <div className={myClasses.CardQuantity}>
                                 <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
                                 <p><b>{item.quantity}</b></p>

@@ -12,31 +12,48 @@ import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
 
 const Purchase = props => {
-    const handleClick = ( id ) => {
+    const handleAddToCart = ( id ) => {
         props.addToCart(id); 
 //        props.history.push('/shop/itemfull/' + id);
     }
-        let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
-        if ( props.items ) {
-            //items = props.items.slice( 0, 4 );
-            items = props.items.slice( 0, 4 ).map( item => {
-                return(
-                    <Item
-                        img         = {item.img}
-                        id          = {item.id}
-                        key         = {item.id}
-                        alt         = {item.title}
-                        title       = {item.title}
-                        link        = {"/shop/"}
-                        to          = "/"
-                        clicked     = {() => handleClick(item.id)}
-                        desc        = {item.desc}
-                        price       = {item.price}
-                        quantity    = {item.quantity}
-                    />
-                )
-            })
-        }
+
+    //to remove the item completely
+    const handleRemove = (id)=>{
+        props.removeItem(id);
+    }
+    //to add the quantity
+    const handleAddQuantity = (id)=>{
+        props.addQuantity(id);
+    }
+    //to substruct from the quantity
+    const handleSubtractQuantity = (id)=>{
+        props.subtractQuantity(id);
+    }
+
+    let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
+    if ( props.items ) {
+        //items = props.items.slice( 0, 4 );
+        items = props.items.slice( 0, 4 ).map( item => {
+            return(
+                <Item
+                    img             = {item.img}
+                    id              = {item.id}
+                    key             = {item.id}
+                    alt             = {item.title}
+                    title           = {item.title}
+                    link            = {"/shop/"}
+                    to              = "/"
+                    clicked         = {() => handleAddQuantity(item.id)}
+                    clickedRemove   = {() => handleRemove(item.id)}
+                    clickedAdd      = {() => handleAddQuantity(item.id)}
+                    clickedSubtract = {() => handleSubtractQuantity(item.id)}
+                    desc            = {item.desc}
+                    price           = {item.price}
+                    quantity        = {item.quantity}
+                />
+            )
+        })
+    }
 
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
@@ -45,29 +62,29 @@ const Purchase = props => {
                     <a href='/shop' ><h1>Shop</h1></a>
                 </div>
             </div>
-        <div className={classes.spread}>
-            {/* <input className={myClasses.Search} type='text' placeholder="search the store" /> */}
-            <div className={myClasses.dropdown}>
-                <button className={myClasses.dropbtn}>OrderBy: </button>
-                <div className={myClasses.dropdownContent}>
-                    <a href="/">Price</a>
-                    <a href="/">Most recent</a>
-                    <a href="/">Most Popular</a>
+            <div className={classes.spread}>
+                {/* <input className={myClasses.Search} type='text' placeholder="search the store" /> */}
+                <div className={myClasses.dropdown}>
+                    <button className={myClasses.dropbtn}>OrderBy: </button>
+                    <div className={myClasses.dropdownContent}>
+                        <a href="/">Price</a>
+                        <a href="/">Most recent</a>
+                        <a href="/">Most Popular</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div className={myClasses.filter}>
-            <label><p>All</p></label>
-            <label><p>Books</p></label>
-            <label><p>Apparel</p></label>
-            <label><p>Hats</p></label>
-            <label><p>Misc</p></label>
-        </div>
-        <div className={myClasses.Items}>
-            <div className={['box', myClasses.Items ].join(' ')}>
-                {items}
+            <div className={myClasses.filter}>
+                <label><p>All</p></label>
+                <label><p>Books</p></label>
+                <label><p>Apparel</p></label>
+                <label><p>Hats</p></label>
+                <label><p>Misc</p></label>
             </div>
-        </div>
+            <div className={myClasses.Items}>
+                <div className={['box', myClasses.Items ].join(' ')}>
+                    {items}
+                </div>
+            </div>
         </div>
     )
 }
@@ -83,7 +100,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart: ( id ) => { dispatch( actions.addToCart( id ) ) }
+        addToCart           : (id)=>{dispatch(actions.addToCart(id))},
+        removeItem          : (id)=>{dispatch(actions.removeItem(id))},
+        addQuantity         : (id)=>{dispatch(actions.addQuantity(id))},
+        subtractQuantity    : (id)=>{dispatch(actions.subtractQuantity(id))}
     }
 }
 

@@ -4,12 +4,7 @@ import classes from '../../../Pages.module.scss';
 import myClasses from './Item.module.scss';
 //{classes.CardThumbnail}
 const item = props => (
-    <div 
-        key={props.id}
-        className={["card", myClasses.Item, props.class].join(' ')}
-    >
-
-        
+    <div className={myClasses.Item} key={props.id}>
         {/* Image */}
         <div className={myClasses.CardThumbnail}>
             <Link to={'/shop/itemfull/' + props.id}>
