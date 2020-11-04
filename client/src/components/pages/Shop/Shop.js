@@ -20,13 +20,15 @@ const Purchase = props => {
         //localCart = JSON.parse(localCart);
         //load persisted cart ino state if it exists
         if (localCart) localStorage.setItem("cart", localCart)
-        console.log('local storage= ' + localCart)
+        console.log('cart in local storage= ' + localCart)
     }, []) //only run once
 
     const handleClick = ( id ) => {
         props.addToCart(id);
         //look for item in cart array
+        console.log(props.items)
         let item = props.items.find(item => item.id === id);
+        console.log(item)
         addItem(item)
 //        props.history.push('/shop/itemfull/' + id);
     }
@@ -102,14 +104,21 @@ const Purchase = props => {
         
         //items = props.items.slice( 0, 4 );
         items = props.items.slice( 0, 4 ).map( item => {
-            let cartCopy = [...localCart]
+            let cartCopy = [localCart]
             let localQuantity;
 
+
+            let parseCart = JSON.parse(cartCopy)
+
             //look for item in cart array
-            let localItem = cartCopy.find(cartItem => cartItem.id == item.id)
-            
+            let localItem = parseCart.find(cartItem => cartItem.id == item.id)
+
+            let stringItem = JSON.stringify(localItem)
+            console.log('stringItem = ' + stringItem)
+
             if (localItem) {
                 localQuantity = localItem.quantity
+                console.log('localQuantity' + localQuantity)
             } 
             // else {
             //     localQuantity = 0;
