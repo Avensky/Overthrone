@@ -14,14 +14,6 @@ import * as actions from '../../../store/actions/index';
 const Purchase = props => {
     let [cart, setCart] = useState([])
     let localCart = localStorage.getItem("cart");
-    
-    useEffect(() => {
-        //turn into js
-        //localCart = JSON.parse(localCart);
-        //load persisted cart ino state if it exists
-        if (localCart) localStorage.setItem("cart", localCart)
-        console.log('cart in local storage= ' + localCart)
-    }, []) //only run once
 
     const handleClick = ( id ) => {
         props.addToCart(id);
@@ -104,8 +96,12 @@ const Purchase = props => {
         
         //items = props.items.slice( 0, 4 );
         items = props.items.slice( 0, 4 ).map( item => {
-            let cartCopy = [localCart]
-            let localQuantity;
+            let cartCopy = '[]'
+            let localQuantity = 0;
+
+            if (localCart) {
+                cartCopy = [localCart]
+            }
 
 
             let parseCart = JSON.parse(cartCopy)
@@ -141,8 +137,19 @@ const Purchase = props => {
                 />
             )
         })
-    } 
-    
+    }
+        
+    useEffect(() => {
+        //turn into js
+        //localCart = JSON.parse(localCart);
+        //load persisted cart ino state if it exists
+        if (localCart) localStorage.setItem("cart", localCart)
+        console.log('cart in local storage= ' + localCart)
+
+      //  let cartCopy = [...localCart];
+    //    setCart(cartCopy)
+    }, []) //only run once
+
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
             <div className='container'>
