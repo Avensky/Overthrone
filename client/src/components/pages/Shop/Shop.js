@@ -18,16 +18,18 @@ const Purchase = props => {
     const handleClick = ( id ) => {
         props.addToCart(id);
         //look for item in cart array
-        console.log(props.items)
+        //console.log(props.items)
+
         let item = props.items.find(item => item.id === id);
-        console.log(item)
+        //console.log(item)
         addItem(item)
 //        props.history.push('/shop/itemfull/' + id);
     }
 
     const addItem = (item) => {
         //create a copy of our cart state, avoid overwritting existing state
-        let cartCopy = [...cart];
+        let cartCopy = [cart];
+        console.log("cart = " + cartCopy)
         
         //assuming we have an ID field in our item
         let ID = item.id;
@@ -38,8 +40,10 @@ const Purchase = props => {
         //if item already exists
         if (existingItem) {
             existingItem.quantity++ //update item
+            console.log('adding to existingItem')
         } else { //if item doesn't exist, simply add it
-          cartCopy.push(item)
+            cartCopy.push(item)
+            console.log('adding new item')
         }
         
         //update app state
@@ -103,23 +107,19 @@ const Purchase = props => {
                 cartCopy = [localCart]
             }
 
-
+            // parse 
             let parseCart = JSON.parse(cartCopy)
 
             //look for item in cart array
             let localItem = parseCart.find(cartItem => cartItem.id == item.id)
 
             let stringItem = JSON.stringify(localItem)
-            console.log('stringItem = ' + stringItem)
+            //console.log('stringItem = ' + stringItem)
 
             if (localItem) {
                 localQuantity = localItem.quantity
-                console.log('localQuantity' + localQuantity)
+                //console.log('localQuantity' + localQuantity)
             } 
-            // else {
-            //     localQuantity = 0;
-            // }
-            //let localQuantity = localItem.quantity
 
             return(
                 <Item
