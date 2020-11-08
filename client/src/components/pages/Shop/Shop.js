@@ -14,6 +14,7 @@ import * as actions from '../../../store/actions/index';
 const Purchase = props => {
     let [cart, setCart] = useState([])
     let localCart = localStorage.getItem("cart");
+    console.log('Cart found in local storage ' + localCart)
 
     const handleClick = ( id ) => {
         props.addToCart(id);
@@ -28,8 +29,8 @@ const Purchase = props => {
 
     const addItem = (item) => {
         //create a copy of our cart state, avoid overwritting existing state
-        let cartCopy = [cart];
-        console.log("cart = " + cartCopy)
+        let cartCopy = [...cart];
+        //console.log("cart = " + JSON.stringify(cartCopy))
         
         //assuming we have an ID field in our item
         let ID = item.id;
@@ -39,9 +40,11 @@ const Purchase = props => {
         
         //if item already exists
         if (existingItem) {
-            existingItem.quantity++ //update item
-            console.log('adding to existingItem')
-        } else { //if item doesn't exist, simply add it
+            console.log('prev existingItem.quantity = ' + existingItem.quantity)
+            // existingItem.quantity++ //update item
+            console.log('new existingItem.quantity = ' + existingItem.quantity)
+        } else { 
+            //if item doesn't exist, simply add it
             cartCopy.push(item)
             console.log('adding new item')
         }
@@ -52,7 +55,7 @@ const Purchase = props => {
         //make cart a string and store in local space
         let stringCart = JSON.stringify(cartCopy);
         localStorage.setItem("cart", stringCart)
-        console.log('local storage= ' + localCart)
+        console.log('setting local storage= ' + stringCart)
     }
 
     const editItem = (itemID, amount) => {
@@ -142,12 +145,11 @@ const Purchase = props => {
     useEffect(() => {
         //turn into js
         //localCart = JSON.parse(localCart);
-        //load persisted cart ino state if it exists
-        if (localCart) localStorage.setItem("cart", localCart)
-        console.log('cart in local storage= ' + localCart)
-
-      //  let cartCopy = [...localCart];
-    //    setCart(cartCopy)
+        //load persisted cart into state if it exists
+        // if (localCart) {
+        //     localStorage.setItem("cart", localCart)
+        //     console.log('cart in local storage= ' + localCart)
+        // }    
     }, []) //only run once
 
     return(
