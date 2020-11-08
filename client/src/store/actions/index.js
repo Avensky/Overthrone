@@ -9,7 +9,8 @@ export {
     addToCart,
     removeItem,
     subtractQuantity,
-    addQuantity
+    addQuantity,
+    loadCart
 } from './cart';
 
 export {

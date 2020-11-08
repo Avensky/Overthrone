@@ -143,13 +143,27 @@ const Purchase = props => {
     }
         
     useEffect(() => {
-        //turn into js
-        //localCart = JSON.parse(localCart);
-        //load persisted cart into state if it exists
-        // if (localCart) {
-        //     localStorage.setItem("cart", localCart)
-        //     console.log('cart in local storage= ' + localCart)
-        // }    
+        // update initial state for cart reducer
+        let items = props.items
+        let cartCopy = '[]'
+        if (localCart) { cartCopy = [localCart] }
+
+        console.log('local storage cart = ' + cartCopy)
+        // parse 
+        let parseCart = JSON.parse(cartCopy)
+        let updatedItems 
+
+        let stringInitItems = JSON.stringify(items)
+        console.log('inital cart in reducer = ' + stringInitItems)
+
+        //items = props.items.slice( 0, 4 );
+        updatedItems = items.map( obj => parseCart.find(item => item.id === obj.id) || obj)
+        
+        // props.loadCart(initCart)
+        let stringItems = JSON.stringify(updatedItems)
+        console.log('update items cart in reducer = ' + stringItems)
+        // props.loadCart(updatedItems)
+
     }, []) //only run once
 
     return(
@@ -198,6 +212,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addToCart           : (id)=>{dispatch(actions.addToCart(id))},
+        loadCart            : (cart)=>{dispatch(actions.loadCart(cart))},
         // removeItem          : (id)=>{dispatch(actions.removeItem(id))},
         // addQuantity         : (id)=>{dispatch(actions.addQuantity(id))},
         // subtractQuantity    : (id)=>{dispatch(actions.subtractQuantity(id))}

@@ -29,3 +29,10 @@ export const addQuantity=(id)=>{
         id
     }
 }
+
+export const loadCart=(cart)=>{
+    return{
+        type: actionTypes.LOAD_CART,
+        cart
+    }
+}
