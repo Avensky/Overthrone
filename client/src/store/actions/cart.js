@@ -30,9 +30,15 @@ export const addQuantity=(id)=>{
     }
 }
 
-export const loadCart=(cart)=>{
+export const loadCart = ( cart ) => {
+    console.log('action cart = '    + cart)
+    let stringCart = JSON.stringify(cart).replace(/\\"/g, '"')
+    
+    console.log('action cart = '    + stringCart)
+    let fixedCart = JSON.parse(stringCart)
+
     return{
         type: actionTypes.LOAD_CART,
-        cart
+        cart: fixedCart
     }
 }

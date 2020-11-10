@@ -14,7 +14,41 @@ import * as actions from '../../../store/actions/index';
 const Purchase = props => {
     let [cart, setCart] = useState([])
     let localCart = localStorage.getItem("cart");
+    let items = props.items
+    
     console.log('Cart found in local storage ' + localCart)
+
+    useEffect(() => {
+        // update initial state for cart reducer
+        let cartCopy = '[]'
+        if (localCart) { cartCopy = [localCart] }
+
+        console.log('local storage cart = ' + cartCopy)
+        
+        // parse 
+        let parseCart = JSON.parse(cartCopy)
+        console.log('local storage parseCart = ' + cartCopy)
+
+        let updatedItems 
+        let itemsCopy = items
+
+        let stringInitItems = JSON.stringify(items)
+        console.log('inital cart in reducer = ' + stringInitItems)
+        // console.log('inital items state = ' + items)
+
+        //items = props.items.slice( 0, 4 );
+        updatedItems = itemsCopy.map( obj => parseCart.find(item => item.id === obj.id) || obj)
+        
+        
+        // props.loadCart(initCart)
+        // let stringItems = JSON.stringify(updatedItems)
+        // console.log('update the inital items state = ' + stringItems)
+        // 
+        // let parseUpdatedItems = JSON.parse(stringItems)
+
+        props.loadCart(updatedItems)
+
+    }, []) //only run once
 
     const handleClick = ( id ) => {
         props.addToCart(id);
@@ -97,12 +131,8 @@ const Purchase = props => {
         localStorage.setItem('cart', cartString)
     }
 
-    let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
-
-    if ( props.items ) {
-        
         //items = props.items.slice( 0, 4 );
-        items = props.items.slice( 0, 4 ).map( item => {
+        let shop = items.map( item => {
             let cartCopy = '[]'
             let localQuantity = 0;
 
@@ -140,31 +170,7 @@ const Purchase = props => {
                 />
             )
         })
-    }
-        
-    useEffect(() => {
-        // update initial state for cart reducer
-        let items = props.items
-        let cartCopy = '[]'
-        if (localCart) { cartCopy = [localCart] }
-
-        console.log('local storage cart = ' + cartCopy)
-        // parse 
-        let parseCart = JSON.parse(cartCopy)
-        let updatedItems 
-
-        let stringInitItems = JSON.stringify(items)
-        console.log('inital cart in reducer = ' + stringInitItems)
-
-        //items = props.items.slice( 0, 4 );
-        updatedItems = items.map( obj => parseCart.find(item => item.id === obj.id) || obj)
-        
-        // props.loadCart(initCart)
-        let stringItems = JSON.stringify(updatedItems)
-        console.log('update items cart in reducer = ' + stringItems)
-        // props.loadCart(updatedItems)
-
-    }, []) //only run once
+    
 
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
@@ -193,7 +199,7 @@ const Purchase = props => {
             </div>
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
-                    {items}
+                    {shop}
                 </div>
             </div>
         </div>

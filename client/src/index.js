@@ -11,6 +11,7 @@ import authReducer  from './store/reducers/auth';
 import cartReducer  from './store/reducers/cart';
 import characterReducer    from './store/reducers/characters';
 import faqReducer from './store/reducers/faq';
+import shopReducer from './store/reducers/shop';
 
 // Development only axios helpers!
 import axios from 'axios';
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
     auth        : authReducer,
     cart        : cartReducer,
     char        : characterReducer,
-    faq         : faqReducer
+    faq         : faqReducer,
+    shop        : shopReducer
 })
 
 const store = createStore(

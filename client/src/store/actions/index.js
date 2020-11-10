@@ -25,6 +25,17 @@ export {
 } from './characters';
 
 export {
+    newItem,
+    newItemStart,
+    getItems,
+    getItemsStart,
+    getItemById,
+    deleteItem, 
+    updateItem,
+
+} from './shop';
+
+export {
     newFaq,
     newFaqStart,
     getFaqs,

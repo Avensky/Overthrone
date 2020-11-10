@@ -23,6 +23,7 @@ const flash         = require('connect-flash')
 //require('./app/models/user');
 require('./app/models/character');
 require('./app/models/faq');
+require('./app/models/shop');
 require('./config/passport')(passport); // pass passport for configuration
 
 dotenv.config({ path: './config/config.env' });

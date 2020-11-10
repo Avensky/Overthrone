@@ -19,6 +19,12 @@ const Wrapper = props => {
         setShowSidebar(!showSidebar);
     }
 
+    let addedItems = props.addedItems
+
+    if (!addedItems) {
+        addedItems = [] 
+    }
+    console.log( 'prop items to nav = ' + addedItems)
     return (    
         <Auxiliary>
             <div className = {classes.Layout}>
@@ -26,7 +32,7 @@ const Wrapper = props => {
                 <Navbar 
                     isAuth={props.isAuth}
                     sidebarToggleClicked={sidebarToggleHandler}
-                    items = {props.items}
+                    items = {addedItems}
                     cart={props.totalItems}
                 />
                 <Sidebar 
@@ -46,7 +52,7 @@ const Wrapper = props => {
 
 const mapStateToProps = state => {
     return {
-        items: state.cart.addedItems,
+        addedItems: state.cart.addedItems,
         totalItems: state.cart.totalItems,
         isAuth: state.auth.payload
     }

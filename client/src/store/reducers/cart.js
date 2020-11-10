@@ -2,7 +2,7 @@ import Item1 from '../images/item1.jpg'
 import Item2 from '../images/item2.jpg'
 import Item3 from '../images/item3.jpg'
 import Item4 from '../images/item4.jpg'
-import Item5 from '../images/item5.jpg'
+import Item5 from '../images/item6.jpg'
 import Item6 from '../images/item6.jpg'
 //import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING } from '../actions/actionTypes/cart'
 import * as actionTypes from '../actions/actionTypes'
@@ -17,14 +17,17 @@ const initialState = {
         {id:5,title:'Cropped-sho',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
         {id:6,title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }
     ],
-    addedItems  :[],
+    addedItems  : [],
     total       : 0.00,
     totalItems  : 0,
     totalPrice  : 0
 }
 
 const addToCart= ( state, action ) => {
- 
+    let items = state.items
+    console.log('reducer state.items = ' + items)
+    let stringItems = JSON.stringify(items)
+    console.log('reducer stringItems = ' + stringItems)
     let addedItem = state.items.find(item=> item.id === action.id)
     //check if the action id exists in the addedItems
     let existed_item= state.addedItems.find(item=> action.id === item.id)
@@ -128,6 +131,15 @@ const subShipping = ( state, action ) => {
 }
 
 const loadCart = ( state, action ) => {
+    console.log('loadCart items = ' + state.items)
+    let stringItem = JSON.stringify(state.items)
+    console.log('loadCart items = ' + stringItem)
+
+    console.log('action.cart = '    + action.cart)
+    // let stringCart = JSON.stringify(action.cart)
+    // console.log('action.cart = '    + stringCart)
+    // let fixedCart = JSON.parse(stringCart)
+
     return {
         state,
         items: action.cart

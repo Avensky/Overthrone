@@ -46,6 +46,35 @@ export const UPDATE_CHAR_SUCCESS      = 'UPDATE_CHAR_SUCCESS'
 export const UPDATE_CHAR_FAIL         = 'UPDATE_CHAR_FAIL'
 export const UPDATE_CHAR              = 'UPDATE_CHAR'
 
+export const NEW_ITEM_START     = 'NEW_ITEM_START'
+export const NEW_ITEM_SUCCESS   = 'NEW_ITEM_SUCCESS'
+export const NEW_ITEM_FAIL      = 'NEW_ITEM_FAIL'
+export const NEW_ITEM           = 'NEW_ITEM'
+
+
+export const GET_ITEMS_START     = 'GET_ITEMS_START'
+export const GET_ITEMS_SUCCESS   = 'GET_ITEMS_SUCCESS'
+export const GET_ITEMS_FAIL      = 'GET_ITEMS_FAIL'
+export const GET_ITEMS           = 'GET_ITEMS'
+
+
+export const GET_ITEM_BY_ID_START     = 'GET_ITEM_BY_ID_START'
+export const GET_ITEM_BY_ID_SUCCESS   = 'GET_ITEM_BY_ID_SUCCESS'
+export const GET_ITEM_BY_ID_FAIL      = 'GET_ITEM_BY_ID_FAIL'
+export const GET_ITEM_BY_ID           = 'GET_ITEM_BY_ID'
+
+
+export const DELETE_ITEM_START        = 'DELETE_ITEM_START'
+export const DELETE_ITEM_SUCCESS      = 'DELETE_ITEM_SUCCESS'
+export const DELETE_ITEM_FAIL         = 'DELETE_ITEM_FAIL'
+export const DELETE_ITEM              = 'DELETE_ITEM'
+
+
+export const UPDATE_ITEM_START        = 'UPDATE_ITEM_START'
+export const UPDATE_ITEM_SUCCESS      = 'UPDATE_ITEM_SUCCESS'
+export const UPDATE_ITEM_FAIL         = 'UPDATE_ITEM_FAIL'
+export const UPDATE_ITEM              = 'UPDATE_ITEM'
+
 
 
 
