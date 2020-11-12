@@ -40,6 +40,8 @@ mongoose.connect(keys.mongoURI, {
   .catch(err => console.log('could not connect to mongodb', err))
 module.exports = {mongoose}
 
+// allow files to be stored in files directory
+app.use('/files', express.static("files"));
 
 // set up cors to allow us to accept requests from our client
 app.use(
@@ -100,6 +102,7 @@ require('./app/routes/routes.js')(app, passport); // load our routes and pass in
 require('./app/routes/characterRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 // require('./app/routes/faqRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 require('./app/routes/userRoutes');
+require('./app/routes/shopRoutes');
 // app.use('/api/v1/users', userRouter);
 //==============================================================================
 // launch ======================================================================
