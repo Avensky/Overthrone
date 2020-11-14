@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 //  import {Redirect} from 'react-router-dom';
 // import Layout from '../../Layout/Layout';
 // import Header from '../../Layout/Header/Header';
@@ -9,148 +9,137 @@ import {connect} from 'react-redux';
 import * as actions from '../../../../store/actions/index';
 // import axios from '../../../axios';
 
-class NewItem extends Component {
-    state = {
-        itemForm:{
-            name: {
-                value: '',
-                validation: {
-                    required: true,
-                }
-            },
-            age: {
-                value: '',
-                validation: {
-                    required: true,
-                }
-            },
-            bio: {
-                value: '',
-                validation: {
-                    required: true,
-                }
-            },
-            relatives: {
-                value: '',
-                validation: {
-                    required: false,
-                }
-            }
-        },
-        error: null
+import Spinner from '../../../UI/Spinner/Spinner';
+import { Redirect } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Persist } from 'formik-persist'
+import * as Yup from 'yup'
+
+const NewItem = props => {
+
+    const submitHandler = ( values, submitProps ) => {
+        console.log('Form data', values)
+        console.log('submitProps', submitProps)
+        props.onNewItem( values)
+        submitProps.setSubmitting(false)
+        submitProps.resetForm()
     }
 
-    componentDidMount () {
-        console.log(this.props);
+    const initialValues = {
+        name: '',
+        desc: '',
+        price: '', 
+        image: '',
+        quantity: ''
+    }
+    const validationSchema = Yup.object({
+        email: Yup.string().required('Required')
+      })
+    
+    let loader = null;
+
+    if ( props.loading || (props.submitted && props.userLoading && !props.token.message)) {
+        //form = <Spinner />
+        loader = <Spinner />
+
+    }
+    
+    let flash = false;
+    if ( props.token ) {
+        flash = <p>{props.token.message}</p>
     }
 
-    newItemHandler = (event) => {
-        event.preventDefault();
-        //this.props.onSetAuthRedirectPath('/checkout');
-//        this.props.history.push('/items');
-//         const author =  this.props.payload.username;
-        this.props.onNewItem(
-            this.state.itemForm.name.value, 
-            this.state.itemForm.age.value, 
-            this.state.itemForm.relatives.value, 
-            this.state.itemForm.bio.value
+    let authRedirect = null;
+    if ( props.isAuthenticated ) {
+        authRedirect = <Redirect to={props.authRedirectPath} />
+    }
+
+    let errorMessage = null;
+    if (props.error) {
+        errorMessage = (
+            <p>{props.error.message}</p>
         );
     }
-
-    inputChangedHandler = ( event, controlName ) => {
-        const updatedControls = {
-            ...this.state.itemForm,
-            [controlName]: {
-                ...this.state.itemForm[controlName],
-                value: event.target.value,
-//                valid: this.checkValidity( event.target.value, this.state.itemForm[controlName].validation ),
-                touched: true
-            },
-            date: {
-                ...this.state.itemForm.date,
-                value: new Date()
-            }
-        };
-        this.setState( { itemForm: updatedControls } );
-    }
-
-    render () {
-        let errorMessage = null;
-        if (this.props.error) {
-            errorMessage = (
-                <p>{this.props.error.message}</p>
-            );
-        }
-
-        let form = (
-            <form onSubmit={this.newItemHandler}>
-                <legend>Add a Item</legend>
-                {errorMessage}
-                <div className={myClasses.MidLine}>
-                    <label className={myClasses.Left}>Name: </label> 
-                    <input 
-                        type="text" 
-                        onChange={(event) => this.inputChangedHandler( event, "name")}
-                        //placeholder="Name"
-                        className={myClasses.Right}
-                    />
-                </div>
-                <div className={myClasses.MidLine}>
-                    <label className={myClasses.Left}>Age: </label>
-                    <input 
-                            type="text" 
-                            onChange={(event) => this.inputChangedHandler( event, "age")}
-                            //placeholder="Age"
-                            className={myClasses.Right}
-                        />                    
-                </div>
-                <div className={myClasses.MidLine}>
-                    <label className={myClasses.Left}>Relatives: </label>
-                    <input 
-                        type="text" 
-                        onChange={(event) => this.inputChangedHandler( event, "relatives")}
-                        //placeholder="Relatives"
-                        className={myClasses.Right}
-                    />
-                </div>
-                <div className={myClasses.MidLine}>
-                    <label className={myClasses.Left}>Bio: </label>
-                    <textarea
-                        type="textarea"
-                        rows="4" 
-                        //placeholder="Bio"
-                        className={myClasses.Right}
-                        onChange={(event) => this.inputChangedHandler( event, "bio")}
-                    />
-                </div>
-                <div className={myClasses.MidLine}>
-                    <label className={myClasses.Left} />
-                    <button className={["auth-btn", classes.btn, myClasses.Right].join(' ')}>Add Item</button>
-                </div>
-                           </form>
-        )
         
-        return (
-            <div className={myClasses.NewItem}>
-                {errorMessage}
-                {form}                
-            </div>     
-        );
-    }
+    useEffect(() => {
+        console.log(props);
+    }, [])
+
+    return (
+        <div className={myClasses.NewItem}>
+            {errorMessage}
+            {loader}
+                {flash}
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={submitHandler}
+                    enableReinitialize
+                    render = { formik => 
+                    <Form>
+                        <Field 
+                            type="text" 
+                            name="name" 
+                            placeholder="name"
+                            className={myClasses.AuthInput}
+                        />
+                        <ErrorMessage name="name" component="div" />
+                        <Field 
+                            type="text" 
+                            name="desc" 
+                            placeholder="desc"
+                            className={myClasses.AuthInput}
+                        />
+                        <ErrorMessage name="desc" component="div" />
+                        <Field 
+                            type="text" 
+                            name="price" 
+                            placeholder="price"
+                            className={myClasses.AuthInput}
+                        />
+                        <ErrorMessage name="price" component="div" />
+                        <Field 
+                            type="image" 
+                            name="image" 
+                            placeholder="image"
+                            className={myClasses.AuthInput}
+                        />
+                        <ErrorMessage name="image" component="div" />
+                        <Field 
+                            type="text" 
+                            name="quantity" 
+                            placeholder="quantity"
+                            className={myClasses.AuthInput}
+                        />
+                        <ErrorMessage name="quantity" component="div" />
+                        <button  
+                            className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                            type='submit'
+                            disabled={!formik.isValid || formik.isSubmitting }
+                        >
+                            <div className={myClasses.BtnDiv}>Add new item</div>
+                        </button>
+                        <Persist name="item-form" />
+                    </Form>}
+                />
+                
+        </div>     
+    );
 }
+
 
 const mapStateToProps = state => {
     return {
-        error: state.char.error,
-        isLoggedIn: state.auth.payload !== null,
-        payload: state.auth.payload,
-        userId: state.auth.userId,
+        error       : state.char.error,
+        isLoggedIn  : state.auth.payload !== null,
+        payload     : state.auth.payload,
+        userId      : state.auth.userId,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onNewItem: (name, age, relatives, bio) => dispatch(actions.newItem(name, age, relatives, bio)),
+        onNewItem: (values) => dispatch(actions.newItem(values)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NewItem);

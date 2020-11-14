@@ -10,6 +10,7 @@ import Item from './Items/Item/Item'
 // import Cart from '../Cart/Cart';
 import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
+import NewItem from './NewItem/NewItem'
 
 const Purchase = props => {
     let [cart, setCart] = useState([])
@@ -198,6 +199,7 @@ const Purchase = props => {
                 <label><p>Misc</p></label>
             </div>
             <div className={myClasses.Items}>
+                <NewItem />
                 <div className={['box', myClasses.Items ].join(' ')}>
                     {shop}
                 </div>
