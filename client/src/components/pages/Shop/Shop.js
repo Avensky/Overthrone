@@ -16,8 +16,12 @@ const Purchase = props => {
     let [cart, setCart] = useState([])
     let localCart = localStorage.getItem("cart");
     let items = props.items
-    
     console.log('Cart found in local storage ' + localCart)
+
+    useEffect(() => {
+        props.getItems()
+        console.log(props.store)
+      }, [])
 
     useEffect(() => {
         // update initial state for cart reducer
@@ -213,7 +217,8 @@ const mapStateToProps = state => {
     return {
         items       : state.cart.items,
         addedItems  : state.cart.addedItems,
-        totalItems  : state.cart.totalItems
+        totalItems  : state.cart.totalItems,
+        store       : state.shop.items
     };
 };
 
@@ -221,6 +226,7 @@ const mapDispatchToProps = dispatch => {
     return {
         addToCart           : (id)=>{dispatch(actions.addToCart(id))},
         loadCart            : (cart)=>{dispatch(actions.loadCart(cart))},
+        getItems            : ()=>{dispatch(actions.getItems())},
         // removeItem          : (id)=>{dispatch(actions.removeItem(id))},
         // addQuantity         : (id)=>{dispatch(actions.addQuantity(id))},
         // subtractQuantity    : (id)=>{dispatch(actions.subtractQuantity(id))}

@@ -21,23 +21,17 @@ export const newItemSuccess = (itemData) => {
     }
 }
 
-export const newItem = (name, age, relatives, bio) => {
+export const newItem = (values) => {
     return dispatch => {
         dispatch(newItemStart())
 
-        const itemData = {
-            name        : name, 
-            age         : age, 
-            relatives   : relatives,
-            bio         : bio, 
-        }
-
-        axios.post('/api/addItem', itemData)
+        axios.post('/api/addItem', values)
             .then(response => {
                 console.log(response);
-                dispatch(newItemSuccess(itemData))
+                const data = response.data;
+                console.log(data);
+                dispatch(newItemSuccess(data))
         })
-        
         .catch(error => {
             console.log(error);
             dispatch(newItemFail(error))
