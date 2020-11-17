@@ -77,41 +77,61 @@ const NewItem = props => {
                     enableReinitialize
                     render = { formik => 
                     <Form>
-                        <Field 
-                            type="text" 
-                            name="name" 
-                            placeholder="name"
-                            className={myClasses.AuthInput}
-                        />
+                        <div className={myClasses.MidLine}>
+                            <label className={myClasses.Left}>Name </label> 
+                            <Field 
+                                type="text" 
+                                name="name" 
+                                //placeholder="name"
+                                className={myClasses.Right}
+                            />                            
+                        </div>
                         <ErrorMessage name="name" component="div" />
-                        <Field 
-                            type="text" 
-                            name="desc" 
-                            placeholder="desc"
-                            className={myClasses.AuthInput}
-                        />
+
+                        <div className={myClasses.MidLine}>
+                            <label className={myClasses.Left}>Description </label> 
+                            <Field 
+                                type="text" 
+                                name="desc" 
+                                //placeholder="desc"
+                                className={myClasses.Right}
+                            />
+                        </div>
                         <ErrorMessage name="desc" component="div" />
-                        <Field 
-                            type="text" 
-                            name="price" 
-                            placeholder="price"
-                            className={myClasses.AuthInput}
-                        />
+
+                        <div className={myClasses.MidLine}>
+                            <label className={myClasses.Left}>Price </label> 
+                            <Field 
+                                type="text" 
+                                name="price" 
+                                placeholder="$"
+                                className={myClasses.Right}
+                            />                            
+                        </div>
                         <ErrorMessage name="price" component="div" />
-                        <Field 
-                            type="image" 
-                            name="image" 
-                            placeholder="image"
-                            className={myClasses.AuthInput}
-                        />
-                        <ErrorMessage name="image" component="div" />
-                        <Field 
-                            type="text" 
-                            name="quantity" 
-                            placeholder="quantity"
-                            className={myClasses.AuthInput}
-                        />
+
+                        <div className={myClasses.MidLine}>
+                            <label className={myClasses.Left}>Quantity </label> 
+                            <Field 
+                                type="text" 
+                                name="quantity" 
+                                // placeholder="quantity"
+                                className={myClasses.Right}
+                            />
+                        </div>
                         <ErrorMessage name="quantity" component="div" />
+
+                        <div className={myClasses.MidLine}>
+                            <label className={myClasses.Left}>Photo </label> 
+                            <Field 
+                                type="file" 
+                                name="image" 
+                                // placeholder="image"
+                                className={[myClasses.Photo, myClasses.Right].join(' ')}
+                            />                            
+                        </div>
+                        <ErrorMessage name="image" component="div" />
+
                         <button  
                             className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                             type='submit'

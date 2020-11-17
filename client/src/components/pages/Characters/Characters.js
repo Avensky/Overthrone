@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 // import Character from './Character/Character';
 import myClasses from './Characters.module.scss';
 import classes from '../Pages.module.scss';
-// import NewCharacter from './NewCharacter/NewCharacter';
+import NewCharacter from './NewCharacter/NewCharacter';
 import * as actions from '../../../store/actions/index';
 // import CharacterEdit from './CharacterEdit/CharacterEdit';
 import Character from './Character/Character';
@@ -59,6 +59,7 @@ const Characters = props => {
                     <h1>Characters</h1>
                 </div>
             </div>
+        <NewCharacter />
         {characters}
         </div>
     )

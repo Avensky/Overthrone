@@ -1,4 +1,4 @@
-.NewCharacter form{
+.NewItem form{
     display: flex;
     flex-direction: column;
 }
@@ -8,11 +8,11 @@ textarea {
     background-color: rgb(255, 255, 255);
 }
 
-.NewCharacter button {
+.NewItem button {
     color: white;
 }
 
-.NewCharacter {
+.NewItem {
     margin-bottom: 5vh;
 }
 
@@ -35,9 +35,13 @@ input {
 }
 
 .Left {
-    width: 20%;
+    width: 25%;
 }
 
 .Right {
-    width: 80%;
+    width: 75%;
+}
+
+.Photo {
+    background-color: transparent !important;
 }
