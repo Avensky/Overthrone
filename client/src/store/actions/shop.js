@@ -25,7 +25,7 @@ export const newItem = (values) => {
     return dispatch => {
         dispatch(newItemStart())
 
-        axios.post('/api/addItem', values)
+        axios.post('/api/addProduct', values)
             .then(response => {
                 console.log(response);
                 const data = response.data;

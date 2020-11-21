@@ -5,10 +5,10 @@ const mongoose  = require('mongoose');
 
 // define the schema for our user model
 const productSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: [true, "Please include the product id"]
-    },
+    // id: {
+    //     type: Number,
+    //     required: [true, "Please include the product id"]
+    // },
     name: {
         type: String,
         required: [true, "Please include the product name"]
@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        required: true
+        required: false
     },
     quantity: {
         type: Number,

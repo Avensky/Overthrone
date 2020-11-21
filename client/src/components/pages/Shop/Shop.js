@@ -28,17 +28,17 @@ const Purchase = props => {
         let cartCopy = '[]'
         if (localCart) { cartCopy = [localCart] }
 
-        console.log('local storage cart = ' + cartCopy)
+        //console.log('local storage cart = ' + cartCopy)
         
         // parse 
         let parseCart = JSON.parse(cartCopy)
-        console.log('local storage parseCart = ' + cartCopy)
+        //console.log('local storage parseCart = ' + cartCopy)
 
         let updatedItems 
         let itemsCopy = items
 
         let stringInitItems = JSON.stringify(items)
-        console.log('inital cart in reducer = ' + stringInitItems)
+        //console.log('inital cart in reducer = ' + stringInitItems)
         // console.log('inital items state = ' + items)
 
         //items = props.items.slice( 0, 4 );

@@ -102,7 +102,8 @@ require('./app/routes/routes.js')(app, passport); // load our routes and pass in
 require('./app/routes/characterRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 // require('./app/routes/faqRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 require('./app/routes/userRoutes');
-require('./app/routes/shopRoutes');
+require('./app/routes/shopRoutes')(app);
+
 // app.use('/api/v1/users', userRouter);
 //==============================================================================
 // launch ======================================================================

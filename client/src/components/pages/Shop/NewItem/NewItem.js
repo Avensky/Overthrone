@@ -33,7 +33,7 @@ const NewItem = props => {
         quantity: ''
     }
     const validationSchema = Yup.object({
-        email: Yup.string().required('Required')
+        name: Yup.string().required('Required')
       })
     
     let loader = null;
@@ -104,7 +104,7 @@ const NewItem = props => {
                             <Field 
                                 type="text" 
                                 name="price" 
-                                placeholder="$"
+                                placeholder=""
                                 className={myClasses.Right}
                             />                            
                         </div>
