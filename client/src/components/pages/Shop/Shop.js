@@ -15,12 +15,12 @@ import NewItem from './NewItem/NewItem'
 const Purchase = props => {
     let [cart, setCart] = useState([])
     let localCart = localStorage.getItem("cart");
-    let items = props.items
-    console.log('Cart found in local storage ' + localCart)
+    let items = props.shop
+    // console.log('Cart found in local storage ' + localCart)
 
     useEffect(() => {
         props.getItems()
-        console.log(props.store)
+        // console.log(props.store)
       }, [])
 
     useEffect(() => {
@@ -28,18 +28,18 @@ const Purchase = props => {
         let cartCopy = '[]'
         if (localCart) { cartCopy = [localCart] }
 
-        //console.log('local storage cart = ' + cartCopy)
+        //// console.log('local storage cart = ' + cartCopy)
         
         // parse 
         let parseCart = JSON.parse(cartCopy)
-        //console.log('local storage parseCart = ' + cartCopy)
+        //// console.log('local storage parseCart = ' + cartCopy)
 
         let updatedItems 
         let itemsCopy = items
 
         let stringInitItems = JSON.stringify(items)
-        //console.log('inital cart in reducer = ' + stringInitItems)
-        // console.log('inital items state = ' + items)
+        //// console.log('inital cart in reducer = ' + stringInitItems)
+        // // console.log('inital items state = ' + items)
 
         //items = props.items.slice( 0, 4 );
         updatedItems = itemsCopy.map( obj => parseCart.find(item => item.id === obj.id) || obj)
@@ -47,7 +47,7 @@ const Purchase = props => {
         
         // props.loadCart(initCart)
         // let stringItems = JSON.stringify(updatedItems)
-        // console.log('update the inital items state = ' + stringItems)
+        // // console.log('update the inital items state = ' + stringItems)
         // 
         // let parseUpdatedItems = JSON.parse(stringItems)
 
@@ -58,10 +58,10 @@ const Purchase = props => {
     const handleClick = ( id ) => {
         props.addToCart(id);
         //look for item in cart array
-        //console.log(props.items)
+        //// console.log(props.items)
 
         let item = props.items.find(item => item.id === id);
-        //console.log(item)
+        //// console.log(item)
         addItem(item)
 //        props.history.push('/shop/itemfull/' + id);
     }
@@ -69,7 +69,7 @@ const Purchase = props => {
     const addItem = (item) => {
         //create a copy of our cart state, avoid overwritting existing state
         let cartCopy = [...cart];
-        //console.log("cart = " + JSON.stringify(cartCopy))
+        //// console.log("cart = " + JSON.stringify(cartCopy))
         
         //assuming we have an ID field in our item
         let ID = item.id;
@@ -79,13 +79,13 @@ const Purchase = props => {
         
         //if item already exists
         if (existingItem) {
-            console.log('prev existingItem.quantity = ' + existingItem.quantity)
+            // console.log('prev existingItem.quantity = ' + existingItem.quantity)
             // existingItem.quantity++ //update item
-            console.log('new existingItem.quantity = ' + existingItem.quantity)
+            // console.log('new existingItem.quantity = ' + existingItem.quantity)
         } else { 
             //if item doesn't exist, simply add it
             cartCopy.push(item)
-            console.log('adding new item')
+            // console.log('adding new item')
         }
         
         //update app state
@@ -94,7 +94,7 @@ const Purchase = props => {
         //make cart a string and store in local space
         let stringCart = JSON.stringify(cartCopy);
         localStorage.setItem("cart", stringCart)
-        console.log('setting local storage= ' + stringCart)
+        // console.log('setting local storage= ' + stringCart)
     }
 
     const editItem = (itemID, amount) => {
@@ -141,23 +141,23 @@ const Purchase = props => {
             let cartCopy = '[]'
             let localQuantity = 0;
 
-            if (localCart) {
-                cartCopy = [localCart]
-            }
-
-            // parse 
-            let parseCart = JSON.parse(cartCopy)
-
-            //look for item in cart array
-            let localItem = parseCart.find(cartItem => cartItem.id == item.id)
-
-            let stringItem = JSON.stringify(localItem)
-            //console.log('stringItem = ' + stringItem)
-
-            if (localItem) {
-                localQuantity = localItem.quantity
-                //console.log('localQuantity' + localQuantity)
-            } 
+            // if (localCart) {
+            //     cartCopy = [localCart]
+            // }
+            // 
+            // // parse 
+            // let parseCart = JSON.parse(cartCopy)
+            // 
+            // //look for item in cart array
+            // let localItem = parseCart.find(cartItem => cartItem.id == item.id)
+            // 
+            // let stringItem = JSON.stringify(localItem)
+            // //// console.log('stringItem = ' + stringItem)
+            // 
+            // if (localItem) {
+            //     localQuantity = localItem.quantity
+            //     //// console.log('localQuantity' + localQuantity)
+            // } 
 
             return(
                 <Item
@@ -218,7 +218,7 @@ const mapStateToProps = state => {
         items       : state.cart.items,
         addedItems  : state.cart.addedItems,
         totalItems  : state.cart.totalItems,
-        store       : state.shop.items
+        shop       : state.shop.items
     };
 };
 

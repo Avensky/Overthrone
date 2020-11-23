@@ -131,11 +131,11 @@ const subShipping = ( state, action ) => {
 }
 
 const loadCart = ( state, action ) => {
-    console.log('loadCart items = ' + state.items)
-    let stringItem = JSON.stringify(state.items)
-    console.log('loadCart items = ' + stringItem)
+    //console.log('loadCart items = ' + state.items)
+    //let stringItem = JSON.stringify(state.items)
+    ///console.log('loadCart items = ' + stringItem)
 
-    console.log('action.cart = '    + action.cart)
+    //console.log('action.cart = '    + action.cart)
     // let stringCart = JSON.stringify(action.cart)
     // console.log('action.cart = '    + stringCart)
     // let fixedCart = JSON.parse(stringCart)
