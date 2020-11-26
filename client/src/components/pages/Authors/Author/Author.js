@@ -12,7 +12,11 @@ const author = props => (
         <div className={classes.CardTitle}>
             {props.author}
         </div>
-        <div className={classes.CardDescription}>{props.content}</div>
+        <div className={classes.CardDescription}>
+            {props.content}<br /><br />
+            {props.content2}<br /><br />
+            {props.content3}<br />
+        </div>
     </div>
 )
 
