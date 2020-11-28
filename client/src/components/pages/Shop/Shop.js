@@ -11,11 +11,24 @@ import Item from './Items/Item/Item'
 import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
 import NewItem from './NewItem/NewItem'
+import Item1 from './images/item1.jpg'
+import Item2 from './images/item2.jpg'
+import Item3 from './images/item3.jpg'
+import Item4 from './images/item4.jpg'
+import Item5 from './images/item6.jpg'
+import Item6 from './images/item6.jpg'
 
 const Purchase = props => {
     let [cart, setCart] = useState([])
     let localCart = localStorage.getItem("cart");
-    let items = props.shop
+    let items = [
+        {id:1,title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0 },
+        {id:2,title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0 },
+        {id:3,title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0 },
+        {id:4,title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0 },
+        {id:5,title:'Cropped-sho',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
+        {id:6,title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }
+    ]
     // console.log('Cart found in local storage ' + localCart)
 
     useEffect(() => {
@@ -203,7 +216,6 @@ const Purchase = props => {
                 <label><p>Misc</p></label>
             </div>
             <div className={myClasses.Items}>
-                <NewItem />
                 <div className={['box', myClasses.Items ].join(' ')}>
                     {shop}
                 </div>

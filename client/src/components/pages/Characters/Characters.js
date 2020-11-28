@@ -59,7 +59,6 @@ const Characters = props => {
                     <h1>Characters</h1>
                 </div>
             </div>
-        <NewCharacter />
         {characters}
         </div>
     )
