@@ -33,17 +33,25 @@ const Purchase = props => {
     ])
     let stringItems = JSON.stringify(items)
     console.log('items = '+ stringItems)
+
+    let [cart, setCart]= useState(items )
+    let stringCart = JSON.stringify(cart)
+    console.log('stringCart = '+ stringCart)
+
     let [ addedItems, setAddedItems ] = useState([])
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
-    let [ total, setTotal] = useState([0.00])
+
+    let [ total, setTotal] = useState(0.00)
     console.log('total = '+ total)
-    let [ totalItems, setTotalItems] = useState([0])
+
+    let [ totalItems, setTotalItems] = useState(0)
     console.log('totalItems = '+ totalItems)
-    let [ totalPrice, setTotalPrice ] = useState([0])
+    
+    let [ totalPrice, setTotalPrice ] = useState(0)
     console.log('totalPrice = '+ totalPrice)
 
-    let shop = items.map( item => {
+    let shop = cart.map( item => {
         // let cartCopy = '[]'
         //let localQuantity = 0;
 
@@ -181,7 +189,7 @@ const Purchase = props => {
             let myAddedItems = [...addedItems, addedItem]
             let myTotal = total + addedItem.price
             setAddedItems(myAddedItems)
-            setItems(updatedItems)
+            setCart(updatedItems)
             setTotal(myTotal)
             setTotalItems(totalItems + 1) 
         } else {
@@ -196,7 +204,7 @@ const Purchase = props => {
             let myAddedItems = [...addedItems, addedItem]
             let myTotal = total + addedItem.price
             setAddedItems(myAddedItems)
-            setItems(updatedItems)
+            setCart(updatedItems)
             setTotal(myTotal)
             setTotalItems(totalItems + 1)
         } 
