@@ -16,13 +16,14 @@ const navbar = ( props ) => {
             </NavLink > 
         )
     }
-    let auth;
-    console.log(props.isAuth)
-    if (props.isAuth !== null) {
-        auth = <div className={myClasses.NavLink}><a  href="/auth/logout">Logout</a></div>
-    } else {
-        auth = <NavLink  to="/authentication"><span className={["fa", myClasses.fa, "fa-user", myClasses.left].join(' ')}/> </NavLink >
-    }
+    // let auth;
+    // console.log(props.isAuth)
+    // if (props.isAuth !== null) {
+    //     auth = <div className={myClasses.NavLink}><a  href="/auth/logout">Logout</a></div>
+    // } else {
+    //     auth = <NavLink  to="/authentication"><span className={["fa", myClasses.fa, "fa-user", myClasses.left].join(' ')}/> </NavLink >
+    // }
+    
     return (
         <div className={myClasses.Navbar}>
             <SidebarToggle clicked={props.sidebarToggleClicked} />   

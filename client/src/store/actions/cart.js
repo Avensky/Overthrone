@@ -31,10 +31,10 @@ export const addQuantity=(id)=>{
 }
 
 export const loadCart = ( cart ) => {
-    console.log('action cart = '    + cart)
+    //console.log('action cart = '    + cart)
     let stringCart = JSON.stringify(cart).replace(/\\"/g, '"')
     
-    console.log('action cart = '    + stringCart)
+    //console.log('action cart = '    + stringCart)
     let fixedCart = JSON.parse(stringCart)
 
     return{

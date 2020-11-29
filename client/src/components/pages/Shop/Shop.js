@@ -10,7 +10,7 @@ import Item from './Items/Item/Item'
 // import Cart from '../Cart/Cart';
 import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
-import NewItem from './NewItem/NewItem'
+// import NewItem from './NewItem/NewItem'
 import Item1 from './images/item1.jpg'
 import Item2 from './images/item2.jpg'
 import Item3 from './images/item3.jpg'
@@ -19,48 +19,94 @@ import Item5 from './images/item6.jpg'
 import Item6 from './images/item6.jpg'
 
 const Purchase = props => {
-    let [cart, setCart] = useState([])
-    let localCart = localStorage.getItem("cart");
-    let items = [
+    // let [cart, setCart] = useState([])
+    let localCart = localStorage.getItem("cart")
+    
+        // console.log('Cart found in local storage ' + localCart)
+    let [items, setItems ]= useState([
         {id:1,title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0 },
         {id:2,title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0 },
         {id:3,title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0 },
         {id:4,title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0 },
         {id:5,title:'Cropped-sho',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
         {id:6,title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }
-    ]
-    // console.log('Cart found in local storage ' + localCart)
+    ])
+    let stringItems = JSON.stringify(items)
+    console.log('items = '+ stringItems)
+    let [ addedItems, setAddedItems ] = useState([])
+    let stringAddedItems = JSON.stringify(addedItems)
+    console.log('addedItems = '+ stringAddedItems)
+    let [ total, setTotal] = useState([0.00])
+    console.log('total = '+ total)
+    let [ totalItems, setTotalItems] = useState([0])
+    console.log('totalItems = '+ totalItems)
+    let [ totalPrice, setTotalPrice ] = useState([0])
+    console.log('totalPrice = '+ totalPrice)
 
-    useEffect(() => {
-        props.getItems()
-        // console.log(props.store)
-      }, [])
+    let shop = items.map( item => {
+        // let cartCopy = '[]'
+        //let localQuantity = 0;
+
+        // if (localCart) {
+        //     cartCopy = [localCart]
+        // }
+        // 
+        // // parse 
+        // let parseCart = JSON.parse(cartCopy)
+        // 
+        // //look for item in cart array
+        // let localItem = parseCart.find(cartItem => cartItem.id == item.id)
+        // 
+        // let stringItem = JSON.stringify(localItem)
+        // //// console.log('stringItem = ' + stringItem)
+        // 
+        // if (localItem) {
+        //     localQuantity = localItem.quantity
+        //     //// console.log('localQuantity' + localQuantity)
+        // } 
+
+        return(
+            <Item
+                img         = {item.img}
+                id          = {item.id}
+                key         = {item.id}
+                alt         = {item.title}
+                title       = {item.title}
+                link        = {"/shop/"}
+                to          = "/"
+                clicked     = {() => addToCart(item.id)}
+                desc        = {item.desc}
+                price       = {item.price}
+                quantity    = {item.quantity}
+            />
+        )
+    })
 
     useEffect(() => {
         // update initial state for cart reducer
         let cartCopy = '[]'
         if (localCart) { cartCopy = [localCart] }
 
-        //// console.log('local storage cart = ' + cartCopy)
+        // console.log('local storage cart = ' + cartCopy)
         
         // parse 
         let parseCart = JSON.parse(cartCopy)
-        //// console.log('local storage parseCart = ' + cartCopy)
+        // console.log('local storage parseCart = ' + cartCopy)
 
         let updatedItems 
         let itemsCopy = items
 
-        let stringInitItems = JSON.stringify(items)
-        //// console.log('inital cart in reducer = ' + stringInitItems)
-        // // console.log('inital items state = ' + items)
+        // let stringInitItems = JSON.stringify(items)
+        // console.log('inital cart in reducer = ' + stringInitItems)
+        // console.log('inital items state = ' + items)
 
         //items = props.items.slice( 0, 4 );
         updatedItems = itemsCopy.map( obj => parseCart.find(item => item.id === obj.id) || obj)
         
-        
+        setItems(updatedItems)
         // props.loadCart(initCart)
         // let stringItems = JSON.stringify(updatedItems)
-        // // console.log('update the inital items state = ' + stringItems)
+        // console.log('update the inital items state = ' + stringItems)
         // 
         // let parseUpdatedItems = JSON.parse(stringItems)
 
@@ -68,126 +114,135 @@ const Purchase = props => {
 
     }, []) //only run once
 
-    const handleClick = ( id ) => {
-        props.addToCart(id);
-        //look for item in cart array
-        //// console.log(props.items)
+    //const handleClick = ( id ) => {
+    //    props.addToCart(id);
+    //    //look for item in cart array
+    //    //// console.log(props.items)
+    //
+    //    let item = props.items.find(item => item.id === id);
+    //    //// console.log(item)
+    //    addItem(item)
+    //      props.history.push('/shop/itemfull/' + id);
+    //}
 
-        let item = props.items.find(item => item.id === id);
-        //// console.log(item)
-        addItem(item)
-//        props.history.push('/shop/itemfull/' + id);
-    }
+    // const addItem = (item) => {
+    //     //create a copy of our cart state, avoid overwritting existing state
+    //     let cartCopy = [...cart];
+    //     //// console.log("cart = " + JSON.stringify(cartCopy))
+    //     
+    //     //assuming we have an ID field in our item
+    //     let ID = item.id;
+    //     
+    //     //look for item in cart array
+    //     let existingItem = cartCopy.find(cartItem => cartItem.id === ID);
+    //     
+    //     //if item already exists
+    //     if (existingItem) {
+    //         // console.log('prev existingItem.quantity = ' + existingItem.quantity)
+    //         // existingItem.quantity++ //update item
+    //         // console.log('new existingItem.quantity = ' + existingItem.quantity)
+    //     } else { 
+    //         //if item doesn't exist, simply add it
+    //         cartCopy.push(item)
+    //         // console.log('adding new item')
+    //     }
+    //     
+    //     //update app state
+    //     setCart(cartCopy)
+    //     
+    //     //make cart a string and store in local space
+    //     let stringCart = JSON.stringify(cartCopy);
+    //     localStorage.setItem("cart", stringCart)
+    //     // console.log('setting local storage= ' + stringCart)
+    // }
 
-    const addItem = (item) => {
-        //create a copy of our cart state, avoid overwritting existing state
-        let cartCopy = [...cart];
-        //// console.log("cart = " + JSON.stringify(cartCopy))
-        
-        //assuming we have an ID field in our item
-        let ID = item.id;
-        
-        //look for item in cart array
-        let existingItem = cartCopy.find(cartItem => cartItem.id == ID);
-        
-        //if item already exists
-        if (existingItem) {
-            // console.log('prev existingItem.quantity = ' + existingItem.quantity)
-            // existingItem.quantity++ //update item
-            // console.log('new existingItem.quantity = ' + existingItem.quantity)
-        } else { 
-            //if item doesn't exist, simply add it
-            cartCopy.push(item)
-            // console.log('adding new item')
-        }
-        
-        //update app state
-        setCart(cartCopy)
-        
-        //make cart a string and store in local space
-        let stringCart = JSON.stringify(cartCopy);
-        localStorage.setItem("cart", stringCart)
-        // console.log('setting local storage= ' + stringCart)
-    }
+    const addToCart= ( id ) => {
+        let itemsCopy = items
+        stringItems = JSON.stringify(itemsCopy)
+        console.log('stringItems = ' + stringItems)
+        console.log('item.id = ' + id)
+        let addedItem = itemsCopy.find(item=> item.id === id)
+        //check if the action id exists in the addedItems
+        let existed_item= addedItems.find(item=> id === item.id)
+        //let parseCart = JSON.parse(cartCopy)
+        // console.log('local storage parseCart = ' + cartCopy)
+        let updatedItems 
+        // let stringInitItems = JSON.stringify(items)
+        // console.log('inital cart in reducer = ' + stringInitItems)
+        // console.log('inital items state = ' + items)
+             
+        if (existed_item) {
+            addedItem.quantity += 1
+            let stringAddedItem = JSON.stringify(addedItem)
+            console.log('string addedItem = ' + stringAddedItem)
+            updatedItems = itemsCopy.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
+            let stringUpdatedItems= JSON.stringify(updatedItems)
+            console.log('string updatedItems = ' + stringUpdatedItems)
+            let myAddedItems = [...addedItems, addedItem]
+            let myTotal = total + addedItem.price
+            setAddedItems(myAddedItems)
+            setItems(updatedItems)
+            setTotal(myTotal)
+            setTotalItems(totalItems + 1) 
+        } else {
+            addedItem.quantity = 1;
+            let stringAddedItem = JSON.stringify(addedItem)
+            console.log('string addedItem = ' + stringAddedItem)
+            updatedItems = itemsCopy.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
+            let stringUpdatedItems= JSON.stringify(updatedItems)
+            console.log('string updatedItems = ' + stringUpdatedItems)
+            //calculating the total
 
-    const editItem = (itemID, amount) => {
-        let cartCopy = [...cart]
-        
-        //find if item exists, just in case
-        let existentItem = cartCopy.find(item => item.ID == itemID);
-        
-        //if it doesnt exist simply return
-        if (!existentItem) return
-        
-        //continue and update quantity
-        existentItem.quantity += amount;
-        
-        //validate result
-        if (existentItem.quantity <= 0) {
-          //remove item  by filtering it from cart array
-          cartCopy = cartCopy.filter(item => item.ID != itemID)
-        }
-        
-        //again, update state and localState
-        setCart(cartCopy);
-        
-        // let cartString = JSON.stringify(cartCopy);
-        // localStorage.setItem('cart', cartString);
-        localStorage.setItem('cart', cartCopy);
+            let myAddedItems = [...addedItems, addedItem]
+            let myTotal = total + addedItem.price
+            setAddedItems(myAddedItems)
+            setItems(updatedItems)
+            setTotal(myTotal)
+            setTotalItems(totalItems + 1)
+        } 
     }
+    
 
-    const removeItem = (itemID) => {
-        //create cartCopy
-        let cartCopy = [...cart]
-        
-        cartCopy = cartCopy.filter(item => item.ID != itemID);
-        
-        //update state and local
-        setCart(cartCopy);
-        
-        let cartString = JSON.stringify(cartCopy)
-        localStorage.setItem('cart', cartString)
-    }
+    // const editItem = (itemID, amount) => {
+    //     let cartCopy = [...cart]
+    //     
+    //     //find if item exists, just in case
+    //     let existentItem = cartCopy.find(item => item.ID === itemID);
+    //     
+    //     //if it doesnt exist simply return
+    //     if (!existentItem) return
+    //     
+    //     //continue and update quantity
+    //     existentItem.quantity += amount;
+    //     
+    //     //validate result
+    //     if (existentItem.quantity <= 0) {
+    //       //remove item  by filtering it from cart array
+    //       cartCopy = cartCopy.filter(item => item.ID !== itemID)
+    //     }
+    //     
+    //     //again, update state and localState
+    //     setCart(cartCopy);
+    //     
+    //     // let cartString = JSON.stringify(cartCopy);
+    //     // localStorage.setItem('cart', cartString);
+    //     localStorage.setItem('cart', cartCopy);
+    // }
+    // 
+    // const removeItem = (itemID) => {
+    //     //create cartCopy
+    //     let cartCopy = [...cart]
+    //     
+    //     cartCopy = cartCopy.filter(item => item.ID !== itemID);
+    //     
+    //     //update state and local
+    //     setCart(cartCopy);
+    //     
+    //     let cartString = JSON.stringify(cartCopy)
+    //     localStorage.setItem('cart', cartString)
+    // }
 
         //items = props.items.slice( 0, 4 );
-        let shop = items.map( item => {
-            let cartCopy = '[]'
-            let localQuantity = 0;
-
-            // if (localCart) {
-            //     cartCopy = [localCart]
-            // }
-            // 
-            // // parse 
-            // let parseCart = JSON.parse(cartCopy)
-            // 
-            // //look for item in cart array
-            // let localItem = parseCart.find(cartItem => cartItem.id == item.id)
-            // 
-            // let stringItem = JSON.stringify(localItem)
-            // //// console.log('stringItem = ' + stringItem)
-            // 
-            // if (localItem) {
-            //     localQuantity = localItem.quantity
-            //     //// console.log('localQuantity' + localQuantity)
-            // } 
-
-            return(
-                <Item
-                    img         = {item.img}
-                    id          = {item.id}
-                    key         = {item.id}
-                    alt         = {item.title}
-                    title       = {item.title}
-                    link        = {"/shop/"}
-                    to          = "/"
-                    clicked     = {() => handleClick(item.id)}
-                    desc        = {item.desc}
-                    price       = {item.price}
-                    quantity    = {localQuantity}
-                />
-            )
-        })
     
 
     return(

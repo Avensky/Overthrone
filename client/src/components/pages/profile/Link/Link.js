@@ -10,9 +10,9 @@ const Link = props => {
 
     const cancelHandler = () => { setUnlink(false) }
 
-    const continueHandler = () => {
-        const href = props.providerUnlink;
-    }
+    // const continueHandler = () => {
+    //     const href = props.providerUnlink;
+    // }
 
     return (
         <div className={[myClasses.Card, myClasses.Link].join(' ')}>

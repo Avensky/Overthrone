@@ -24,7 +24,7 @@ const Wrapper = props => {
     if (!addedItems) {
         addedItems = [] 
     }
-    console.log( 'prop items to nav = ' + addedItems)
+    // console.log( 'prop items to nav = ' + addedItems)
     return (    
         <Auxiliary>
             <div className = {classes.Layout}>
