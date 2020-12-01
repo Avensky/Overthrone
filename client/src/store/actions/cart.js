@@ -2,10 +2,12 @@ import * as actionTypes from './actionTypes'
 // import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING} from './actionTypes/cart'
 
 //add cart action
-export const addToCart= (id)=>{
+export const addToCart= (addedItems, total, totalItems)=>{
     return{
         type: actionTypes.ADD_TO_CART,
-        id
+        addedItems, 
+        total, 
+        totalItems
     }
 }
 //remove item action

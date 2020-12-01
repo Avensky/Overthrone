@@ -19,8 +19,8 @@ import Item5 from './images/item6.jpg'
 import Item6 from './images/item6.jpg'
 
 const Purchase = props => {
-    // let [cart, setCart] = useState([])
-    let localCart = localStorage.getItem("cart")
+    let [localCart, setLocalCart] = useState(localStorage.getItem("cart"))
+    let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
     
         // console.log('Cart found in local storage ' + localCart)
     let [items, setItems ]= useState([
@@ -32,11 +32,11 @@ const Purchase = props => {
         {id:6,title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }
     ])
     let stringItems = JSON.stringify(items)
-    console.log('items = '+ stringItems)
+    // console.log('items = '+ stringItems)
 
     let [cart, setCart]= useState(items )
     let stringCart = JSON.stringify(cart)
-    console.log('stringCart = '+ stringCart)
+    console.log('Cart = '+ stringCart)
 
     let [ addedItems, setAddedItems ] = useState([])
     let stringAddedItems = JSON.stringify(addedItems)
@@ -47,13 +47,13 @@ const Purchase = props => {
 
     let [ totalItems, setTotalItems] = useState(0)
     console.log('totalItems = '+ totalItems)
-    
+
     let [ totalPrice, setTotalPrice ] = useState(0)
     console.log('totalPrice = '+ totalPrice)
 
     let shop = cart.map( item => {
         // let cartCopy = '[]'
-        //let localQuantity = 0;
+        // let localQuantity = 0;
 
         // if (localCart) {
         //     cartCopy = [localCart]
@@ -91,35 +91,39 @@ const Purchase = props => {
     })
 
     useEffect(() => {
-        // update initial state for cart reducer
-        let cartCopy = '[]'
-        if (localCart) { cartCopy = [localCart] }
+        let localCartCopy = '[]'
+        if (localCart) { localCartCopy = [localCart] }
+        console.log('local storage cart = ' + localCartCopy)
 
-        // console.log('local storage cart = ' + cartCopy)
-        
         // parse 
-        let parseCart = JSON.parse(cartCopy)
-        // console.log('local storage parseCart = ' + cartCopy)
-
-        let updatedItems 
+        let parseLocalCart = JSON.parse(localCartCopy)
+        // console.log('local storage parseLocalCart = ' + parseLocalCart)
         let itemsCopy = items
 
-        // let stringInitItems = JSON.stringify(items)
-        // console.log('inital cart in reducer = ' + stringInitItems)
-        // console.log('inital items state = ' + items)
+        let updatedItems = itemsCopy.map( obj => parseLocalCart.find(item => item.id === obj.id) || obj)
+        let stringUpdatedItems= JSON.stringify(updatedItems)
+        console.log('Cart Items cross reference local = ' + stringUpdatedItems)
+        setCart(updatedItems)
+    }, []) //only run once
 
-        //items = props.items.slice( 0, 4 );
-        updatedItems = itemsCopy.map( obj => parseCart.find(item => item.id === obj.id) || obj)
-        
-        setItems(updatedItems)
-        // props.loadCart(initCart)
-        // let stringItems = JSON.stringify(updatedItems)
-        // console.log('update the inital items state = ' + stringItems)
-        // 
-        // let parseUpdatedItems = JSON.parse(stringItems)
+    useEffect(() => {
+        let localAddedItemsCopy = addedItems
+        let localAddedItemsCopyString = localAddedItemsCopy
 
-        props.loadCart(updatedItems)
+        if (localAddedItems) { 
+            localAddedItemsCopy = [localAddedItems] 
+            // parse 
+            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
+        }
+        console.log('local storage added Items= ' + localAddedItemsCopyString)
 
+        // console.log('local storage parseLocalCart = ' + parseLocalCart)
+
+        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
+        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
+
+        setAddedItems(localAddedItemsCopy)
+        console.log('added Items cross reference local = ' + localAddedItemsCopy)
     }, []) //only run once
 
     //const handleClick = ( id ) => {
@@ -165,14 +169,14 @@ const Purchase = props => {
     // }
 
     const addToCart= ( id ) => {
-        let itemsCopy = items
+        let itemsCopy = cart
         stringItems = JSON.stringify(itemsCopy)
         console.log('stringItems = ' + stringItems)
         console.log('item.id = ' + id)
         let addedItem = itemsCopy.find(item=> item.id === id)
         //check if the action id exists in the addedItems
-        let existed_item= addedItems.find(item=> id === item.id)
         //let parseCart = JSON.parse(cartCopy)
+        let existed_item= addedItems.find(item=> id === item.id)
         // console.log('local storage parseCart = ' + cartCopy)
         let updatedItems 
         // let stringInitItems = JSON.stringify(items)
@@ -187,11 +191,18 @@ const Purchase = props => {
             let stringUpdatedItems= JSON.stringify(updatedItems)
             console.log('string updatedItems = ' + stringUpdatedItems)
             let myAddedItems = [...addedItems, addedItem]
+            let stringMyAddedItems = JSON.stringify(myAddedItems)
+            console.log('string MyAddedItems = ' + stringMyAddedItems)
             let myTotal = total + addedItem.price
             setAddedItems(myAddedItems)
+            //make cart a string and store in local space
+            localStorage.setItem("addedItems", stringMyAddedItems)
             setCart(updatedItems)
+            //make cart a string and store in local space
+            localStorage.setItem("cart", stringUpdatedItems)
             setTotal(myTotal)
             setTotalItems(totalItems + 1) 
+            props.addToCart(myAddedItems, myTotal, totalItems)
         } else {
             addedItem.quantity = 1;
             let stringAddedItem = JSON.stringify(addedItem)
@@ -199,14 +210,19 @@ const Purchase = props => {
             updatedItems = itemsCopy.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
             let stringUpdatedItems= JSON.stringify(updatedItems)
             console.log('string updatedItems = ' + stringUpdatedItems)
-            //calculating the total
-
             let myAddedItems = [...addedItems, addedItem]
+            let stringMyAddedItems = JSON.stringify(myAddedItems)
+            console.log('string MyAddedItems = ' + stringMyAddedItems)
             let myTotal = total + addedItem.price
             setAddedItems(myAddedItems)
+            //make cart a string and store in local space
+            localStorage.setItem("addedItems", stringMyAddedItems)
             setCart(updatedItems)
+            //make cart a string and store in local space
+            localStorage.setItem("cart", stringUpdatedItems)
             setTotal(myTotal)
             setTotalItems(totalItems + 1)
+            props.addToCart(myAddedItems, myTotal, totalItems)
         } 
     }
     
@@ -255,13 +271,16 @@ const Purchase = props => {
 
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
+            {/*
             <div className='container'>
                 <div className={['page-header', 'text-center'].join(' ')}>
                     <a href='/shop' ><h1>Shop</h1></a>
                 </div>
             </div>
             <div className={classes.spread}>
+            */}
                 {/* <input className={myClasses.Search} type='text' placeholder="search the store" /> */}
+            {/*
                 <div className={myClasses.dropdown}>
                     <button className={myClasses.dropbtn}>OrderBy: </button>
                     <div className={myClasses.dropdownContent}>
@@ -278,6 +297,7 @@ const Purchase = props => {
                 <label><p>Hats</p></label>
                 <label><p>Misc</p></label>
             </div>
+            */}
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
                     {shop}
@@ -299,9 +319,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart           : (id)=>{dispatch(actions.addToCart(id))},
-        loadCart            : (cart)=>{dispatch(actions.loadCart(cart))},
-        getItems            : ()=>{dispatch(actions.getItems())},
+        addToCart           : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
+        loadCart            : (cart)                           =>{ dispatch(actions.loadCart(cart))},
+        getItems            : ()                               =>{ dispatch(actions.getItems())},
         // removeItem          : (id)=>{dispatch(actions.removeItem(id))},
         // addQuantity         : (id)=>{dispatch(actions.addQuantity(id))},
         // subtractQuantity    : (id)=>{dispatch(actions.subtractQuantity(id))}
