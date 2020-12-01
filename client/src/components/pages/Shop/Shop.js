@@ -124,6 +124,9 @@ const Purchase = props => {
 
         setAddedItems(localAddedItemsCopy)
         console.log('added Items cross reference local = ' + localAddedItemsCopy)
+
+        props.addToCart(localAddedItemsCopy)
+
     }, []) //only run once
 
     //const handleClick = ( id ) => {

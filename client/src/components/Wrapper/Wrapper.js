@@ -20,6 +20,7 @@ const Wrapper = props => {
     }
 
     let addedItems = props.addedItems
+    let totalItems = props.addedItems.length
 
     if (!addedItems) {
         addedItems = [] 
@@ -33,13 +34,13 @@ const Wrapper = props => {
                     isAuth={props.isAuth}
                     sidebarToggleClicked={sidebarToggleHandler}
                     items = {addedItems}
-                    cart={props.totalItems}
+                    cart={totalItems}
                 />
                 <Sidebar 
                     isAuth={props.isAuth}
                     open={showSidebar} 
                     closed={closeSidebarHandler} 
-                    cart={props.totalItems}
+                    cart={totalItems}
                 />
                 <main className={classes.Wrapper}>
                     {props.children}
