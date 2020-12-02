@@ -38,7 +38,7 @@ const Purchase = props => {
     let stringCart = JSON.stringify(cart)
     console.log('Cart = '+ stringCart)
 
-    let [ addedItems, setAddedItems ] = useState([])
+    let [ addedItems, setAddedItems ] = useState(props.addedItems)
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
 
@@ -106,28 +106,28 @@ const Purchase = props => {
         setCart(updatedItems)
     }, []) //only run once
 
-    useEffect(() => {
-        let localAddedItemsCopy = addedItems
-        let localAddedItemsCopyString = localAddedItemsCopy
-
-        if (localAddedItems) { 
-            localAddedItemsCopy = [localAddedItems] 
-            // parse 
-            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
-        }
-        console.log('local storage added Items= ' + localAddedItemsCopyString)
-
-        // console.log('local storage parseLocalCart = ' + parseLocalCart)
-
-        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
-        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
-
-        setAddedItems(localAddedItemsCopy)
-        console.log('added Items cross reference local = ' + localAddedItemsCopy)
-
-        props.addToCart(localAddedItemsCopy)
-
-    }, []) //only run once
+//    useEffect(() => {
+//        let localAddedItemsCopy = addedItems
+//        let localAddedItemsCopyString = localAddedItemsCopy
+//
+//        if (localAddedItems) { 
+//            localAddedItemsCopy = [localAddedItems] 
+//            // parse 
+//            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
+//        }
+//        console.log('local storage added Items= ' + localAddedItemsCopyString)
+//
+//        // console.log('local storage parseLocalCart = ' + parseLocalCart)
+//
+//        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
+//        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
+//
+//        setAddedItems(localAddedItemsCopy)
+//        console.log('added Items cross reference local = ' + localAddedItemsCopy)
+//
+//        props.addToCart(localAddedItemsCopy)
+//
+//    }, []) //only run once
 
     //const handleClick = ( id ) => {
     //    props.addToCart(id);

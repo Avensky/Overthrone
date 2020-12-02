@@ -68,12 +68,6 @@ const Cart = props => {
             )
         return(
             <Auxiliary>
-                <div className='container'>
-                    <div className={['page-header', 'text-center'].join(' ')}>
-                        <a href='/shop' ><h2>Shop</h2></a>
-                    </div>
-                </div>
-
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
                     <div className={myClasses.Cart}>
                         {/* Title */}
