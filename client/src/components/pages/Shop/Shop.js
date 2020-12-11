@@ -38,17 +38,17 @@ const Purchase = props => {
     //let stringCart = JSON.stringify(cart)
     //console.log('Cart = '+ stringCart)
 
-    let [ addedItems, setAddedItems ] = useState([])
+    let [ addedItems, setAddedItems ] = useState(props.addedItems)
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
 
     let stringAddedItems2 = JSON.stringify(props.addedItems)
-    console.log('addedItems = '+ stringAddedItems2)
+    console.log('addedItems2 = '+ stringAddedItems2)
 
     let [ total, setTotal] = useState(0.00)
     console.log('total = '+ total)
 
-    let [ totalItems, setTotalItems] = useState(0)
+    let [ totalItems, setTotalItems] = useState(props.totalItems)
     console.log('totalItems = '+ totalItems)
 
     let [ totalPrice, setTotalPrice ] = useState(0)
@@ -107,12 +107,33 @@ const Purchase = props => {
         let stringUpdatedItems= JSON.stringify(updatedItems)
         // console.log('Cart Items cross reference local = ' + stringUpdatedItems)
         setCart(updatedItems)
+
+        let localAddedItemsCopy = addedItems
+        let localAddedItemsCopyString =  JSON.stringify(localAddedItemsCopy)
+        if (localAddedItems) { 
+            localAddedItemsCopy = [localAddedItems] 
+            // parse 
+            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
+            setAddedItems(localAddedItemsCopy)
+            //localAddedItemsCopyString = JSON.stringify(localAddedItemsCopy)
+            //console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
+            props.addToCart(localAddedItemsCopy)
+        }
+        // console.log('local storage parseLocalCart = ' + parseLocalCart)
+        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
+        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
+        setAddedItems(localAddedItemsCopy)
+        console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
+
+        let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+        console.log('totalItemQuantity = ' + totalItemsQuantity)
+        setTotalItems(totalItemsQuantity)
+
+        let totalItemsPrice = localAddedItemsCopy.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+        console.log('totalItemPrice = ' + totalItemsPrice)
+        setTotalPrice(totalItemsPrice)
     }, []) //only run once
 
-
-    useEffect(() => {
-        setAddedItems(props.addedItems)
-    }, [addedItems]) //only run once
 
 //    useEffect(() => {
 //        let localAddedItemsCopy = addedItems
@@ -198,22 +219,32 @@ const Purchase = props => {
             addedItem.quantity += 1
             let stringAddedItem = JSON.stringify(addedItem)
             console.log('string addedItem = ' + stringAddedItem)
-            updatedItems = itemsCopy.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
+            // updatedItems = itemsCopy.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
+            updatedItems = addedItems.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
+
+            //filter 
             let stringUpdatedItems= JSON.stringify(updatedItems)
             console.log('string updatedItems = ' + stringUpdatedItems)
             let myAddedItems = [...addedItems, addedItem]
             let stringMyAddedItems = JSON.stringify(myAddedItems)
             console.log('string MyAddedItems = ' + stringMyAddedItems)
             let myTotal = total + addedItem.price
-            setAddedItems(myAddedItems)
+            setAddedItems(updatedItems)
             //make cart a string and store in local space
-            localStorage.setItem("addedItems", stringMyAddedItems)
-            setCart(updatedItems)
+            localStorage.setItem("addedItems", stringUpdatedItems)
+            // setCart(updatedItems)
             //make cart a string and store in local space
             localStorage.setItem("cart", stringUpdatedItems)
             setTotal(myTotal)
-            setTotalItems(totalItems + 1) 
-            props.addToCart(myAddedItems, myTotal, totalItems)
+
+            let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+            console.log('totalItemPrice = ' + totalItemsPrice)
+            setTotalPrice(totalItemsPrice)
+
+            let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+            console.log('totalItemQuantity = ' + totalItemsQuantity)
+            setTotalItems(totalItemsQuantity)
+            props.addToCart(updatedItems, totalItemsPrice, totalItemsQuantity)
         } else {
             addedItem.quantity = 1;
             let stringAddedItem = JSON.stringify(addedItem)
@@ -232,8 +263,15 @@ const Purchase = props => {
             //make cart a string and store in local space
             localStorage.setItem("cart", stringUpdatedItems)
             setTotal(myTotal)
-            setTotalItems(totalItems + 1)
-            props.addToCart(myAddedItems, myTotal, totalItems)
+
+            let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+            console.log('totalItemPrice = ' + totalItemsPrice)
+            setTotalPrice(totalItemsPrice)
+
+            let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+            console.log('totalItemQuantity = ' + totalItemsQuantity)
+            setTotalItems(totalItemsQuantity)
+            props.addToCart(myAddedItems, totalItemsPrice, totalItemsQuantity)
         } 
     }
     

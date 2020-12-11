@@ -6,15 +6,18 @@ import Navbar from '../Navigation/Navbar/Navbar';
 import Sidebar from '../Navigation/Sidebar/Sidebar';
 import Background from './Background/Background';
 import * as actions from '../../store/actions/index';
+import item from '../pages/Shop/Items/Item/Item';
 
 
 const Wrapper = props => {
     let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
-
     let [ addedItems, setAddedItems ] = useState([])
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
 
+    let [ totalItems, setTotalItems] = useState(props.total)
+    console.log('totalItems = '+ totalItems)
+    
     const [showSidebar, setShowSidebar] = useState(false)
     const closeSidebarHandler = () => {
         setShowSidebar(false)
@@ -25,7 +28,11 @@ const Wrapper = props => {
         setShowSidebar(!showSidebar);
     }
 
-    let totalItems = props.addedItems.length
+    //let totalCounter = 0
+    //let totalItems = addedItems.map( (item) => totalCounter += item.quantity)
+    // let totalItems = addedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+
+    //const calculateSum = (obj, field) => obj.map(items => items.attributes[field]).reduce((prev, curr) => prev + curr, 0);
 
     useEffect(() => {
         let localAddedItemsCopy = addedItems
@@ -47,7 +54,11 @@ const Wrapper = props => {
         //console.log('added Items cross reference local = ' + localAddedItemsCopy)
         props.addToCart(localAddedItemsCopy)
 
+        let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+        console.log('totalItemQuantity = ' + totalItemsQuantity)
+        setTotalItems(totalItemsQuantity)
     }, [])
+
 
     if (!addedItems) {
         setAddedItems([])
@@ -83,9 +94,9 @@ const Wrapper = props => {
 
 const mapStateToProps = state => {
     return {
-        addedItems: state.cart.addedItems,
-        totalItems: state.cart.totalItems,
-        isAuth: state.auth.payload
+        addedItems  : state.cart.addedItems,
+        totalItems  : state.cart.totalItems,
+        isAuth      : state.auth.payload
     }
 }
 
