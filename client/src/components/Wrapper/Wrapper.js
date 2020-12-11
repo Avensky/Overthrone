@@ -27,32 +27,34 @@ const Wrapper = props => {
 
     let totalItems = props.addedItems.length
 
-    if (!addedItems) {
-        addedItems = [] 
-    }
-    // console.log( 'prop items to nav = ' + addedItems)
-
     useEffect(() => {
         let localAddedItemsCopy = addedItems
-        let localAddedItemsCopyString = localAddedItemsCopy
-
+        let localAddedItemsCopyString =  JSON.stringify(localAddedItemsCopy)
         if (localAddedItems) { 
             localAddedItemsCopy = [localAddedItems] 
             // parse 
             localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
+            setAddedItems(localAddedItemsCopy)
+            //localAddedItemsCopyString = JSON.stringify(localAddedItemsCopy)
+            //console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
+            props.addToCart(localAddedItemsCopy)
         }
-        console.log('local storage added Items= ' + localAddedItemsCopyString)
-
         // console.log('local storage parseLocalCart = ' + parseLocalCart)
-
         // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
         // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
-
         setAddedItems(localAddedItemsCopy)
-        console.log('added Items cross reference local = ' + localAddedItemsCopy)
-
+        console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
+        //console.log('added Items cross reference local = ' + localAddedItemsCopy)
         props.addToCart(localAddedItemsCopy)
+
     }, [])
+
+    if (!addedItems) {
+        setAddedItems([])
+    }
+    // console.log( 'prop items to nav = ' + addedItems)
+
+
     
     return (    
         <Auxiliary>

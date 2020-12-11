@@ -34,13 +34,16 @@ const Purchase = props => {
     let stringItems = JSON.stringify(items)
     // console.log('items = '+ stringItems)
 
-    let [cart, setCart]= useState(items )
-    let stringCart = JSON.stringify(cart)
-    console.log('Cart = '+ stringCart)
+    let [cart, setCart]= useState(items)
+    //let stringCart = JSON.stringify(cart)
+    //console.log('Cart = '+ stringCart)
 
-    let [ addedItems, setAddedItems ] = useState(props.addedItems)
+    let [ addedItems, setAddedItems ] = useState([])
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
+
+    let stringAddedItems2 = JSON.stringify(props.addedItems)
+    console.log('addedItems = '+ stringAddedItems2)
 
     let [ total, setTotal] = useState(0.00)
     console.log('total = '+ total)
@@ -93,7 +96,7 @@ const Purchase = props => {
     useEffect(() => {
         let localCartCopy = '[]'
         if (localCart) { localCartCopy = [localCart] }
-        console.log('local storage cart = ' + localCartCopy)
+        // console.log('local storage cart = ' + localCartCopy)
 
         // parse 
         let parseLocalCart = JSON.parse(localCartCopy)
@@ -102,9 +105,14 @@ const Purchase = props => {
 
         let updatedItems = itemsCopy.map( obj => parseLocalCart.find(item => item.id === obj.id) || obj)
         let stringUpdatedItems= JSON.stringify(updatedItems)
-        console.log('Cart Items cross reference local = ' + stringUpdatedItems)
+        // console.log('Cart Items cross reference local = ' + stringUpdatedItems)
         setCart(updatedItems)
     }, []) //only run once
+
+
+    useEffect(() => {
+        setAddedItems(props.addedItems)
+    }, [addedItems]) //only run once
 
 //    useEffect(() => {
 //        let localAddedItemsCopy = addedItems
