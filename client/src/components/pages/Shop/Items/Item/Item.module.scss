@@ -2,7 +2,7 @@
     padding: 1vh 0;
     display: grid;
     gap: 2vw;
-    grid-template-columns: 25px 1fr 100px 1fr 1fr;
+    grid-template-columns: .5fr 1fr .25fr .25fr;
     grid-template-areas: 
     "img desc quant price";
 }
@@ -62,6 +62,7 @@ img {
     display: flex;
     align-items: center;
     white-space: nowrap;
+    margin: auto;
 }
 
 
@@ -70,7 +71,7 @@ img {
 @media only screen and (min-width: 600px) {
     /* For tablets: */
     .Item {
-        grid-template-columns: 1fr 250px 1fr 1fr;
+        grid-template-columns: .5fr 1.5fr .25fr .25fr;
     }
        
     img {

@@ -42,8 +42,8 @@ const Purchase = props => {
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
 
-    let stringAddedItems2 = JSON.stringify(props.addedItems)
-    console.log('addedItems2 = '+ stringAddedItems2)
+    //let stringAddedItems2 = JSON.stringify(props.addedItems)
+    //console.log('addedItems2 = '+ stringAddedItems2)
 
     let [ total, setTotal] = useState(0.00)
     console.log('total = '+ total)

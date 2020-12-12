@@ -13,12 +13,12 @@ const Wrapper = props => {
     let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
     let [ addedItems, setAddedItems ] = useState([])
     let stringAddedItems = JSON.stringify(addedItems)
-    console.log('addedItems = '+ stringAddedItems)
+    //console.log('addedItems = '+ stringAddedItems)
 
     //let [ totalItems, setTotalItems] = useState(0)
     //let totalItems = props.addedItems.length
     let totalItems = props.addedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-    console.log('totalItems = '+ totalItems)
+    //console.log('totalItems = '+ totalItems)
     
     const [showSidebar, setShowSidebar] = useState(false)
     const closeSidebarHandler = () => {

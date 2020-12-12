@@ -25,7 +25,7 @@ const item = props => (
         </div>
 
         {/* Price */}
-        <div className={myClasses.CardPrice}><p><b>${props.price}</b></p></div>
+        <div className={["text-center", myClasses.CardPrice].join(' ')}><p><b>${props.price}</b></p></div>
     </div>
 )
 
