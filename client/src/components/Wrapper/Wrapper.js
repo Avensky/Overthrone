@@ -15,7 +15,9 @@ const Wrapper = props => {
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
 
-    let [ totalItems, setTotalItems] = useState(props.total)
+    //let [ totalItems, setTotalItems] = useState(0)
+    //let totalItems = props.addedItems.length
+    let totalItems = props.addedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
     console.log('totalItems = '+ totalItems)
     
     const [showSidebar, setShowSidebar] = useState(false)
@@ -52,11 +54,12 @@ const Wrapper = props => {
         setAddedItems(localAddedItemsCopy)
         console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
         //console.log('added Items cross reference local = ' + localAddedItemsCopy)
-        props.addToCart(localAddedItemsCopy)
+        props.addToCart(localAddedItemsCopy,null,)
 
-        let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-        console.log('totalItemQuantity = ' + totalItemsQuantity)
-        setTotalItems(totalItemsQuantity)
+       // let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+       // console.log('totalItemQuantity = ' + totalItemsQuantity)
+        //setTotalItems(totalItemsQuantity)
+        //setTotalItems(localAddedItemsCopy.length)
     }, [])
 
 
