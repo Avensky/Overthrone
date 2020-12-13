@@ -34,16 +34,14 @@ const Purchase = props => {
     let stringItems = JSON.stringify(items)
     // console.log('items = '+ stringItems)
 
-    let [cart, setCart]= useState(items)
-    //let stringCart = JSON.stringify(cart)
-    //console.log('Cart = '+ stringCart)
-
     let [ addedItems, setAddedItems ] = useState(props.addedItems)
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
 
-    //let stringAddedItems2 = JSON.stringify(props.addedItems)
-    //console.log('addedItems2 = '+ stringAddedItems2)
+    let new_items = items.map( obj => addedItems.find(item => item.id === obj.id) || obj)
+    let [cart, setCart]= useState(new_items)
+    //let stringCart = JSON.stringify(cart)
+    //console.log('Cart = '+ stringCart)
 
     let [ total, setTotal] = useState(0.00)
     console.log('total = '+ total)
@@ -95,7 +93,7 @@ const Purchase = props => {
 
     useEffect(() => {
         let localCartCopy = '[]'
-        if (localCart) { localCartCopy = [localCart] }
+        if (localCart) { localCartCopy = [localAddedItems] }
         // console.log('local storage cart = ' + localCartCopy)
 
         // parse 

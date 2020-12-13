@@ -5,6 +5,7 @@ import classes from '../../pages/Pages.module.scss';
 
 const navItems = ( props ) => (
     <ul className={myClasses.NavItems}>
+        <NavItem link="/orders"         exact>Orders</NavItem>
         <NavItem link="/books"          exact>Books</NavItem>
         <NavItem link="/authors"        exact>Authors</NavItem>
         <NavItem link="/characters"     exact>Characters</NavItem>

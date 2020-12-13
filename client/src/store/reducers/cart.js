@@ -43,6 +43,9 @@ const removeItem = ( state, action ) => {
     console.log(itemToRemove)
 
     itemToRemove.quantity = 0;
+    //store in local storage
+    let stringNewItems= JSON.stringify(new_items)
+    localStorage.setItem("addedItems", stringNewItems)
     return{
         ...state,
         addedItems: new_items,
@@ -53,9 +56,13 @@ const removeItem = ( state, action ) => {
 }
 
 const addQuantity = ( state, action ) => {
-    let addedItem = state.items.find(item=> item.id === action.id)
+    let addedItem = state.addedItems.find(item=> item.id === action.id)
     addedItem.quantity += 1 
     let newTotal = state.total + addedItem.price
+    let new_items = state.addedItems.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
+    //store in local storage
+    let stringNewItems= JSON.stringify(new_items)
+    localStorage.setItem("addedItems", stringNewItems)
     return{
         ...state,
         addedItems: [...state.addedItems, addedItem],
@@ -64,12 +71,15 @@ const addQuantity = ( state, action ) => {
     }
 }
 const subQuantity = ( state, action ) => {
-    let addedItem = state.items.find(item=> item.id === action.id) 
+    let addedItem = state.addedItems.find(item=> item.id === action.id) 
     //if the qt == 0 then it should be removed
     if(addedItem.quantity === 1){
         addedItem.quantity -= 1
         let new_items = state.addedItems.filter(item=>item.id !== action.id)
         let newTotal = state.total - addedItem.price
+            //store in local storage
+        let stringNewItems= JSON.stringify(new_items)
+        localStorage.setItem("addedItems", stringNewItems)
         return{
             ...state,
             addedItems: new_items,
@@ -79,7 +89,11 @@ const subQuantity = ( state, action ) => {
     }
     else {
         addedItem.quantity -= 1
+        let new_items = state.addedItems.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
         let newTotal = state.total - addedItem.price
+        //store in local storage
+        let stringNewItems= JSON.stringify(new_items)
+        localStorage.setItem("addedItems", stringNewItems)
         return{
             ...state,
             addedItems: [...state.addedItems, addedItem],
