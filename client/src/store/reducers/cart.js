@@ -65,7 +65,7 @@ const addQuantity = ( state, action ) => {
     localStorage.setItem("addedItems", stringNewItems)
     return{
         ...state,
-        addedItems: [...state.addedItems, addedItem],
+        addedItems: new_items,
         total: newTotal,
         totalItems: state.totalItems + 1
     }
@@ -96,7 +96,7 @@ const subQuantity = ( state, action ) => {
         localStorage.setItem("addedItems", stringNewItems)
         return{
             ...state,
-            addedItems: [...state.addedItems, addedItem],
+            addedItems: new_items,
             total: newTotal,        
             totalItems: state.totalItems -1
         }
