@@ -17,7 +17,7 @@ import Item3 from './images/item3.jpg'
 import Item4 from './images/item4.jpg'
 import Item5 from './images/item6.jpg'
 import Item6 from './images/item6.jpg'
-
+import {useHistory} from 'react-router-dom'
 const Purchase = props => {
     let [localCart, setLocalCart] = useState(localStorage.getItem("cart"))
     let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
@@ -197,6 +197,18 @@ const Purchase = props => {
     //     localStorage.setItem("cart", stringCart)
     //     // console.log('setting local storage= ' + stringCart)
     // }
+    const history = useHistory()
+
+    const purchaseHandler = () => {
+        if (props.isAuth) {
+//            setPurchasing(true)
+            history.push('/cart')
+        } else {
+//            this.props.onSetAuthRedirectPath('/checkout');
+            history.push('/authentication');
+        }
+    }
+
 
     const addToCart= ( id ) => {
         let itemsCopy = cart
@@ -348,6 +360,15 @@ const Purchase = props => {
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
                     {shop}
+                    <button 
+                        className='btn-primary btn'
+                        // disabled={!props.purchaseable}
+                        onClick={purchaseHandler}
+                    >{
+                            props.isAuth 
+                                ? 'GO TO CART' 
+                                : 'SIGN IN TO ORDER'}
+                    </button>
                 </div>
             </div>
         </div>
@@ -360,7 +381,8 @@ const mapStateToProps = state => {
         items       : state.cart.items,
         addedItems  : state.cart.addedItems,
         totalItems  : state.cart.totalItems,
-        shop       : state.shop.items
+        shop       : state.shop.items,
+        isAuth      : state.auth.payload
     };
 };
 

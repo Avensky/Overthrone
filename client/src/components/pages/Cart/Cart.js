@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux'
 //import { Link } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
@@ -7,9 +7,22 @@ import classes from '../Pages.module.scss'
 import myClasses from './Cart.module.scss'
 //import Item from '../Shop/Items/Item/Item'
 import Auxiliary from '../../../hoc/Auxiliary'
+import OrderSummary from './OrderSummary/OrderSummary'
+import Modal from '../../UI/Modal/Modal'
+import { useHistory } from 'react-router-dom';
 
 const Cart = props => {
-
+    const [purchasing, setPurchasing] = useState(false);
+    
+    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
+    let total
+    let array = props.items
+    if ( array != ''){
+        total = array.reduce(reducer, 0)
+        console.log("total = " + array.reduce(reducer, 0))
+    }
+    
+    
     //to remove the item completely
     const handleRemove              = (id)=>{ 
         props.removeItem(id);
@@ -23,6 +36,33 @@ const Cart = props => {
         props.subtractQuantity(id);
     }
 
+    const history = useHistory()
+    const purchaseHandler = () => {
+        if (props.isAuth) {
+            setPurchasing(true)
+        } else {
+//            this.props.onSetAuthRedirectPath('/checkout');
+            history.push('/authentication');
+        }
+    }
+    const purchaseCancelHandler = () => {
+        setPurchasing(false)
+    }
+
+    const purchaseContinueHandler = () => {
+        //this.props.onInitPurchase();
+        //this.props.history.push('/checkout')
+    }
+    
+    let orderSummary = null
+    if (props.items) {
+        orderSummary = <OrderSummary 
+            items={props.items}
+            total={total}
+            purchaseCancelled={purchaseCancelHandler}
+            purchaseContinued={purchaseContinueHandler}
+    />;
+    }
     let cartList = props.items;
     let uniqueChars = [...new Set(cartList)];
     let addedItems = props.items.length ?
@@ -68,6 +108,9 @@ const Cart = props => {
             )
         return(
             <Auxiliary>
+                <Modal show={purchasing} modalClosed={purchaseCancelHandler}> 
+                    {orderSummary}
+                </Modal>
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
                     <div className={myClasses.Cart}>
                         {/* Title */}
@@ -76,7 +119,16 @@ const Cart = props => {
                         </div>
                         <div className={myClasses.Collection}>
                             {addedItems}
-                            <Recipe />  
+                            {total ? <h3>Total = ${total}</h3> : null}
+                            <button 
+                                className='btn-primary btn'
+                                // disabled={!props.purchaseable}
+                                onClick={purchaseHandler}>{
+                                    props.isAuth 
+                                        ? 'CHECKOUT SUMMARY' 
+                                        : 'SIGN IN TO ORDER'}
+                            </button>
+                            {/* <Recipe items={array} total={total}/> */} 
                         </div>
                     </div>
                 </div>
@@ -89,6 +141,7 @@ const Cart = props => {
 const mapStateToProps = (state)=>{
     return{
         items: state.cart.addedItems,
+        isAuth: state.auth.payload
         //addedItems: state.addedItems
     }
 }
