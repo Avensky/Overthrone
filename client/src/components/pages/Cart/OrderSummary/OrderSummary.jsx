@@ -13,11 +13,11 @@ const orderSummary = (props) => {
 
     return (
         <Auxiliary>
-            <h3>Cehckout Summary</h3>
+            <h3>Checkout Summary</h3>
             <p>Is this order correct?</p>
             <ul>
                 {itemsSummary}
-            </ul>
+            </ul> 
             <p><strong>Total Price: ${props.total}</strong></p>
             <p>Continue to Checkout?</p>
             <div className="spread">
