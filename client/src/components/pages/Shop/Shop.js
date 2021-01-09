@@ -327,9 +327,25 @@ const Purchase = props => {
 
         //items = props.items.slice( 0, 4 );
     
-
+    const button = (
+        <button 
+        className='btn-primary btn'
+        // disabled={!props.purchaseable}
+        onClick={purchaseHandler}
+    >{
+            props.isAuth 
+                ? 'GO TO CART' 
+                : 'SIGN IN TO ORDER'}
+    </button>
+    )
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
+            {/* Title */}
+            <div className="container">
+                <div className="page-header text-center border-bottom">
+                    <h1>Shop</h1>
+                </div>
+            </div>
             {/*
             <div className='container'>
                 <div className={['page-header', 'text-center'].join(' ')}>
@@ -359,16 +375,9 @@ const Purchase = props => {
             */}
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
+                    {button}
                     {shop}
-                    <button 
-                        className='btn-primary btn'
-                        // disabled={!props.purchaseable}
-                        onClick={purchaseHandler}
-                    >{
-                            props.isAuth 
-                                ? 'GO TO CART' 
-                                : 'SIGN IN TO ORDER'}
-                    </button>
+                    {button}
                 </div>
             </div>
         </div>

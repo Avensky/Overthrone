@@ -1,5 +1,5 @@
 .Wrapper {
-    margin-top: 1.5vh;
+    margin-top: 1vh;
     height: 100%;
     color: white;
 }
@@ -14,17 +14,11 @@
     .Layout {
         padding: 6vh 0;
     }
-    .Wrapper {
-        margin-top: 4vh;
-    }
 }
 
 @media only screen and (min-width: 768px) {
     /* For desktop: */
     .Layout {
         padding: 6vh 0;
-    }
-    .Wrapper {
-        margin-top: 4vh;
     }
 }

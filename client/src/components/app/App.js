@@ -17,6 +17,7 @@ import Cart           from '../pages/Cart/Cart'
 import Home           from '../pages/Home/Home'
 import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
+import ContactData   from '../pages/ContactData/ContactData'
 import './App.scss'
 // import useHttp        from '../../hooks/http'
 // import axios          from 'axios'
@@ -73,6 +74,7 @@ const App = props => {
   let routes = (
     <Switch>
       <Route path="/authentication"       component={Auth} />
+      <Route path="/contactData"         component={ContactData} />
       <Route path="/connectLocal"         component={ConnectLocal} />
       <Route path="/signup"               component={Signup} />
       <Route path="/books"                component={Books} />
@@ -93,7 +95,7 @@ const App = props => {
     routes = (
       <Switch>
         <Route path="/authentication"      render={props => <Auth {...props} />} />
-        
+        <Route path="/contactData"         component={ContactData} />
         <Route path="/signup"               component={Signup} />
         <Route path="/books"                component={Books} />
         <Route path="/authors"              component={Authors} />

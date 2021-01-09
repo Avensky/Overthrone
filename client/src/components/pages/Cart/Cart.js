@@ -52,6 +52,7 @@ const Cart = props => {
     const purchaseContinueHandler = () => {
         //this.props.onInitPurchase();
         //this.props.history.push('/checkout')
+        history.push('/contactData');
     }
     
     let orderSummary = null
@@ -115,7 +116,7 @@ const Cart = props => {
                     <div className={myClasses.Cart}>
                         {/* Title */}
                         <div className={myClasses.Title}>
-                            <h3>Shopping Cart:</h3>
+                            <h1>Shopping Cart:</h1>
                         </div>
                         <div className={myClasses.Collection}>
                             {addedItems}
