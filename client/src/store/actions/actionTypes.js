@@ -124,6 +124,12 @@ export const FB_AUTH_SUCCESS          = 'FB_AUTH_SUCCESS';
 export const FB_AUTH_FAIL             = 'FB_AUTH_FAIL';
 export const FB_AUTH_LOGOUT           = 'FB_AUTH_LOGOUT';
 
+export const NEW_ADDRESS_START        = 'NEW_ADDRESS_START';
+export const NEW_ADDRESS_SUCCESS      = 'NEW_ADDRESS_SUCCESS';
+export const NEW_ADDRESS_FAIL         = 'NEW_ADDRESS_FAIL';
+export const NEW_ADDRESS              = 'NEW_ADDRESS';
+
+
 export const SET_AUTH_REDIRECT_PATH   = 'SET_AUTH_REDIRECT_PATH';
 
 export const SET_CONTACTS = 'SET_CONTACTS';

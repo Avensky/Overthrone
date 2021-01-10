@@ -1,3 +1,6 @@
+const mongoose         = require('mongoose')
+const User             = mongoose.model('User')
+
 module.exports = function(app, passport) {
 
 // =============================================================================
@@ -69,6 +72,47 @@ module.exports = function(app, passport) {
 // =====================================
 // LOCAL ===============================
 // =====================================
+	app.post('/api/addAddress',(req,res) => {        //add a new address
+		User.findOne({'_id' : req.body.id},function(err){
+			// if there are any errors, return the error
+			if (err)
+			return done(err);
+
+			//  If we're logged in, we're connecting a new local account.
+			if(user) {
+				var user                    = req.user;
+				user.local.address.name    	= req.body.name, 
+				user.local.address.phone   	= req.body.phone, 
+				user.local.address.address1	= req.body.address,
+				user.local.address.address2	= req.body.address2,
+				user.local.address.city    	= req.body.city, 
+				//user.local.address.state   	= req.body.state,
+				user.local.address.zipCode 	= req.body.zipCode,
+				user.local.address.email   	= req.body.email
+				user.save(function(err) {
+					if (err)
+						throw err;
+					return done(null, user);
+				});
+			}
+		},(err,doc)=>{
+			if(doc)
+				res.send('Address updated successfully!');
+			else {
+				res.err(err.message);
+			}
+		})
+	});
+		
+// 		app.get('/api/getcharDetails/:addressid',(req,res)=>{              //get a address details
+// 		Address.findOne({_id : req.params.addressid},{},(err,doc)=>{
+// 			if(doc)
+// 				res.json(doc);
+// 			else {
+// 				res.status(404).send('Ops!Detail not found');
+// 			}
+// 		})
+// 		});   
     	// =====================================
     	// LOGIN ===============================
 		// =====================================

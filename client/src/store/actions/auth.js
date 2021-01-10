@@ -124,6 +124,61 @@ export const fbAuthFail = (error) => {
     };
 };
 
+
+
+
+export const newAddressStart  = () =>{
+    return{
+        type: actionTypes.NEW_ADDRESS_START
+    }
+}
+
+export const newAddressFail = (error) => {
+    return {
+        type: actionTypes.NEW_ADDRESS_FAIL,
+        error: error
+    }
+}
+
+export const newAddressSuccess = (addressData) => {
+    return {
+        type: actionTypes.NEW_ADDRESS_SUCCESS,
+        addressData: addressData
+    }
+}
+
+export const newAddress = (name, phone, address, address2, city, state, zipCode, email, id) => {
+    return dispatch => {
+        dispatch(newAddressStart())
+
+        const addressData = {
+            id          : id,
+            name        : name, 
+            phone       : phone, 
+            address     : address,
+            address2    : address2,
+            city        : city, 
+            state       : state,
+            zipCode     : zipCode,
+            email       : email
+        }
+
+        axios.post('/api/addAddress', addressData)
+            .then(response => {
+                console.log(response);
+                dispatch(newAddressSuccess(addressData))
+        })
+        
+        .catch(error => {
+            console.log(error);
+            dispatch(newAddressFail(error))
+        })    
+    }
+}
+
+
+
+
 export const setAuthRedirectPath = (path) => {
     return {
         type: actionTypes.SET_AUTH_REDIRECT_PATH,

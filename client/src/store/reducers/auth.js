@@ -90,6 +90,22 @@ const setAuthRedirectPath = (state, action) => {
     return updateObject(state, { authRedirectPath: action.path })
 }
 
+const newAddressStart = (state, action) => {
+    return updateObject( state, {        
+        error: null, 
+        loading: true })}
+
+const newAddressFail = (state, action) => {
+    return updateObject( state, { 
+        loading: false })}
+  
+const newAddressSuccess = (state, action) => {
+    //const newAddress = updateObject(action.addressData, { id: action.addressId })
+    return updateObject(state, {
+        loading: false,
+        //addresss: state.addresss.concat( newAddress ) 
+    })}
+
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.FETCH_USER_START       : return fetchUserStart(state, action);
@@ -103,7 +119,9 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.AUTH_FAIL              : return authFail(state, action);
         case actionTypes.AUTH_LOGOUT            : return authLogout(state, action);
         case actionTypes.SET_AUTH_REDIRECT_PATH : return setAuthRedirectPath(state,action);
-     
+        case actionTypes.NEW_ADDRESS_START      : return newAddressStart(state, action);
+        case actionTypes.NEW_ADDRESS_SUCCESS    : return newAddressSuccess(state, action);     
+        case actionTypes.NEW_ADDRESS_FAIL       : return newAddressFail(state, action);     
         default:
             return state;
     }

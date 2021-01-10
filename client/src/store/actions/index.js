@@ -3,6 +3,8 @@ export {
     auth,
     fbAuth,
     setAuthRedirectPath,
+    newAddress,
+    newAddressStart
 } from './auth';
 
 export {
