@@ -59,7 +59,7 @@ export const checkLoginTimeout = (expirationTime) => {
 export const auth = (values, authLogin) => {
     return dispatch => {
         dispatch(authStart());
-        let url = ' /auth/login';
+        let url = '/auth/login';
         if (!authLogin) { url = '/auth/signup'; }       
         axios.post(url, values)
             .then(response => {
@@ -147,28 +147,18 @@ export const newAddressSuccess = (addressData) => {
     }
 }
 
-export const newAddress = (name, phone, address, address2, city, state, zipCode, email, id) => {
+export const newAddress = (values) => {
     return dispatch => {
         dispatch(newAddressStart())
-
-        const addressData = {
-            id          : id,
-            name        : name, 
-            phone       : phone, 
-            address     : address,
-            address2    : address2,
-            city        : city, 
-            state       : state,
-            zipCode     : zipCode,
-            email       : email
-        }
-
-        axios.post('/api/addAddress', addressData)
+        console.log('New Address Start');
+        axios.post('/api/addAddress', values)
             .then(response => {
+                console.log('Axios Start');
                 console.log(response);
-                dispatch(newAddressSuccess(addressData))
+                const data = response.data;
+                console.log(data);
+                dispatch(newAddressSuccess(data))
         })
-        
         .catch(error => {
             console.log(error);
             dispatch(newAddressFail(error))

@@ -29,8 +29,14 @@ const ContactData = props => {
         submitProps.resetForm()
     }
 
+    let userId 
+    if (props.user) {
+        userId = props.user['_id']
+        console.log('id = '+ userId)
+    }
     const initialValues = {
         // country: 'United States',
+        id: userId,
         name: '',
         phone: '', 
         address: '',
@@ -79,7 +85,7 @@ const ContactData = props => {
                             type="tel" 
                             name="phone" 
                             pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
-                            maxlength="12"
+                            maxLength="12"
                             placeholder="123-4567-8901"
                             className={myClasses.ContactDataInput}
                         />
@@ -104,8 +110,8 @@ const ContactData = props => {
                             className={myClasses.ContactDataInput}
                         />
                         <label htmlFor="state">State</label>
-                        <select
-                            type="string" 
+                        <Field
+                            as='select'
                             name="state" 
                             className={myClasses.ContactDataInput}
                         >
@@ -160,7 +166,7 @@ const ContactData = props => {
                             <option value="WV">West Virginia</option>
                             <option value="WI">Wisconsin</option>
                             <option value="WY">Wyoming</option>
-                        </select>
+                        </Field>
                         <label htmlFor="zipCode">ZIP Code</label>
                         <Field 
                             type="text" 
@@ -185,7 +191,7 @@ const ContactData = props => {
                                <h3>Shipping Details</h3>
                             </div>
                         </button>
-                        <Persist name="auth-form" />
+                        <Persist name="address-form" />
                     </Form>}
                 />
                 
@@ -198,12 +204,13 @@ const ContactData = props => {
 const mapStateToProps = state => {
     return {
         items: state.cart.addedItems,
+        user: state.auth.payload,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onNewAddress : () => dispatch(actions.newAddress())
+        onNewAddress : (values) => dispatch(actions.newAddress(values))
     }
 }
 

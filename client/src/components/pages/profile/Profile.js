@@ -5,10 +5,23 @@ import Link from './Link/Link';
 import classes from '../Pages.module.scss';
 import myClasses from './Profile.module.scss';
 import * as actions from '../../../store/actions/index';
+import Address from './Address/Address'
 
 const Login = (props) =>{
-    let local, facebook, twitter, google = '';
-
+    let address, local, facebook, twitter, google = '';
+    const user = props.payload.local
+    address = (
+        <Address 
+            name     = {user.address.name}
+            phone    = {user.address.phone}
+            address1 = {user.address.address}
+            address2 = {user.address.address2}
+            city     = {user.address.city}
+            state    = {user.address.state}
+            zipCode  = {user.address.zipCode}
+            email    = {user.address.email}
+        />
+    )
     local = (
         <Link 
             link="Local"
@@ -119,6 +132,7 @@ const Login = (props) =>{
                         <h1><span className="fa fa-anchor"></span> Profile Page</h1>
                     </div>
                 </div>
+                {address}
                 {local}
                 {facebook}
                 {twitter}

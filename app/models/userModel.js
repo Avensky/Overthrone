@@ -1,4 +1,4 @@
-//==============================================================================
+ //==============================================================================
 // set up ======================================================================
 //==============================================================================
 const crypto    = require('crypto');
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   local: {
     name: {
       type          : String,
-      required      : [false, 'Please tell us your name!']
+      //required      : [false, 'Please tell us your name!']
     },
     phone: {
       type          : Number,
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     address: {
       name: {
         type          : String,
-        required      : [false, 'Please tell us your name!']
+        //required      : [false, 'Please tell us your name!']
       },    
       phone: {
         type          : Number,
@@ -42,10 +42,10 @@ const userSchema = new mongoose.Schema({
       },
       email: {
         type          : String,
-        required      : [false, 'Please provide your email'],
-        unique        : true,
+        //required      : [false, 'Please provide your email'],
+        //unique        : true,
         lowercase     : true,
-        validate      : [validator.isEmail, 'Please provide a valid email']
+        //validate      : [validator.isEmail, 'Please provide a valid email']
       },
     },
     email: {
