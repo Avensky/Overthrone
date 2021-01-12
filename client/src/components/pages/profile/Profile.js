@@ -7,21 +7,34 @@ import myClasses from './Profile.module.scss';
 import * as actions from '../../../store/actions/index';
 import Address from './Address/Address'
 
-const Login = (props) =>{
+const Profile = (props) =>{
     let address, local, facebook, twitter, google = '';
-    const user = props.payload.local
+    const user = props.payload
     address = (
         <Address 
-            name     = {user.address.name}
-            phone    = {user.address.phone}
-            address1 = {user.address.address}
-            address2 = {user.address.address2}
-            city     = {user.address.city}
-            state    = {user.address.state}
-            zipCode  = {user.address.zipCode}
-            email    = {user.address.email}
+            link     ='Address'
+            userLink ={true}
+            provider ='/contactData'
         />
     )
+
+    if (props.payload['addresses']) {
+        address = (
+            <Address 
+                link     ='Shipping Address'
+                userLink ={true}
+                provider ='/contactData'
+                name     = {user.addresses.name}
+                phone    = {user.addresses.phone}
+                address  = {user.addresses.address1}
+                address2 = {user.addresses.address2}
+                city     = {user.addresses.city}
+                state    = {user.addresses.state}
+                zipCode  = {user.addresses.zipCode}
+                email    = {user.addresses.email}
+            />
+        )
+    }
     local = (
         <Link 
             link="Local"
@@ -162,4 +175,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

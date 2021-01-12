@@ -8,56 +8,44 @@ const bcrypt    = require('bcrypt');
 
 // define the schema for our user model
 const userSchema = new mongoose.Schema({
-  
-  local: {
+  addresses: {
     name: {
       type          : String,
       //required      : [false, 'Please tell us your name!']
-    },
+    },    
     phone: {
       type          : Number,
     },
-    address: {
-      name: {
-        type          : String,
-        //required      : [false, 'Please tell us your name!']
-      },    
-      phone: {
-        type          : Number,
-      },
-      address1: {
-        type          : String
-      },    
-      address2: {
-        type          : String
-      },
-      city: {
-        type          : String
-      },
-      state: {
-        type          : String
-      },
-      zipCode: {
-        type          : Number
-      },
-      email: {
-        type          : String,
-        //required      : [false, 'Please provide your email'],
-        //unique        : true,
-        lowercase     : true,
-        //validate      : [validator.isEmail, 'Please provide a valid email']
-      },
+    address1: {
+      type          : String
+    },    
+    address2: {
+      type          : String
     },
+    city: {
+      type          : String
+    },
+    state: {
+      type          : String
+    },
+    zipCode: {
+      type          : Number
+    },
+    email: {
+      type          : String,
+      //required      : [false, 'Please provide your email'],
+      //unique        : true,
+      lowercase     : true,
+      //validate      : [validator.isEmail, 'Please provide a valid email']
+    },
+  },
+  local: {
     email: {
       type          : String,
       required      : [false, 'Please provide your email'],
       unique        : true,
       lowercase     : true,
       validate      : [validator.isEmail, 'Please provide a valid email']
-    },
-    photo: {
-      type          : String,
-      // default       : 'default.jpg'
     },
     role: {
       type          : String,

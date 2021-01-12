@@ -74,7 +74,6 @@ const App = props => {
   let routes = (
     <Switch>
       <Route path="/authentication"       component={Auth} />
-      <Route path="/contactData"         component={ContactData} />
       <Route path="/connectLocal"         component={ConnectLocal} />
       <Route path="/signup"               component={Signup} />
       <Route path="/books"                component={Books} />

@@ -72,43 +72,53 @@ module.exports = function(app, passport) {
 // =====================================
 // LOCAL ===============================
 // =====================================
-	app.post('/api/addAddress',(req,res, done) => {        //add a new address
+	app.post('/api/addAddress',(req, res, done) => {        //add a new address
 		console.log('/api/addAddress');
-			User.findOne({'_id' : req.body.id},function(err){
-				console.log('/api/addAddress' + req.body);
-				console.log('string'+JSON.stringify(req.body))
-				// if there are any errors, return the error
-				if (err) {
-					console.log('err' + err)
-					return done(err);
-				}
-					
-
-				//  If we're logged in, we're connecting a new local account.
-				if(req.user) {
-					console.log('user' + req.user);
-					var user                    = req.user;
-					user.local.address.name    	= req.body.name, 
-					user.local.address.phone   	= req.body.phone, 
-					user.local.address.address1	= req.body.address,
-					user.local.address.address2	= req.body.address2,
-					user.local.address.city    	= req.body.city, 
-					user.local.address.state   	= req.body.state,
-					user.local.address.zipCode 	= req.body.zipCode,
-					user.local.address.email   	= req.body.email
-					user.save(function(err) {
-						if (err)
-							throw err;
-						return done(null, user);
-					});
-				}
-			},{ sort: { 'created_at' : -1 } },(err,doc)=>{
-				if(doc)
-					res.send('Address updated successfully!');
-				else {
-					res.err(err.message);
-				}
-			})
+		User.findOne(
+			{'_id' : req.body.id},
+			(err) => {
+			console.log('/api/addAddress' + req.body);
+			console.log('string'+JSON.stringify(req.body))
+			// if there are any errors, return the error
+			if (err) {
+				console.log('err' + err)
+				return done(err);
+			}
+			//  If we're logged in, we're connecting a new local account.
+			if(req.user) {
+				console.log('user' + req.user);
+				var user                = req.user;
+				user.addresses.name    	= req.body.name, 
+				user.addresses.phone   	= req.body.phone, 
+				user.addresses.address1	= req.body.address,
+				user.addresses.address2	= req.body.address2,
+				user.addresses.city    	= req.body.city, 
+				user.addresses.state   	= req.body.state,
+				user.addresses.zipCode 	= req.body.zipCode,
+				user.addresses.email   	= req.body.email
+				
+				user.save(function(err) {
+					if (err){
+						console.log('err1 = ' + err)
+						throw err;
+					}
+					console.log('err2 = ' + err)
+					return done(null, user);
+				});
+			}
+		},
+		{ 
+			sort: { 'created_at' : -1 } 
+		}
+		),	(err,res) => {
+			if(res){
+				console.log('err3 = ' + err.message)
+				res.send('Address updated successfully!');}
+			else {
+				console.log('err4 = ' + err.message)
+				res.err(err.message);
+			}
+		}
 	});
 		
 // 		app.get('/api/getcharDetails/:addressid',(req,res)=>{              //get a address details
