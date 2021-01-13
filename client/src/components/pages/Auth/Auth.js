@@ -61,13 +61,13 @@ const Auth = props => {
 
     }
 
-    let errorMessage = null;
-
-    if ( props.error ) {
-        errorMessage = (
-            <p>{props.error.message}</p>
-        );
-    }
+    // let errorMessage = null;
+// 
+    // if ( props.error ) {
+    //     errorMessage = (
+    //         <p>{props.error.message}</p>
+    //     );
+    // }
     
     let flash = false;
     if ( props.token ) {
@@ -115,8 +115,8 @@ const Auth = props => {
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={submitHandler}
-                    enableReinitialize
-                    render = { formik => 
+                    enableReinitialize> 
+                    { formik => 
                     <Form>
                         <Field 
                             type="email" 
@@ -143,7 +143,7 @@ const Auth = props => {
                         </button>
                         <Persist name="auth-form" />
                     </Form>}
-                />
+                </Formik>
 
                 <div className={classes.CardTitle}>Or continue with:</div>
                 <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>

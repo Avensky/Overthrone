@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import myClasses from './Recipe.module.scss'
 //import { addShipping } from './actions/cartActions'
@@ -11,26 +11,10 @@ const Recipe = props => {
     console.log('array = ' + array)
     const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
     let total
-    if ( array != ''){
+    if ( array !== ''){
         total = array.reduce(reducer, 0)
         console.log("total = " + array.reduce(reducer, 0))
     }
-
-
-    // componentWillUnmount() {
-    //      if(refs.shipping.checked)
-    //           props.substractShipping()
-    // }
-    // 
-    // handleChecked = (e)=>{
-    //     if(e.target.checked){
-    //         props.addShipping();
-    //     }
-    //     else{
-    //         props.substractShipping();
-    //     }
-    // }
-
     return(
         <div className={myClasses.Recipe}>
             <div className={myClasses.Collection}>

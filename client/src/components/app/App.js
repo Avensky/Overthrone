@@ -55,10 +55,10 @@ const fetchData = async () => {
 }
 
 useEffect(()=> {
-    if ( !fetchedUser ){
+    if ( !fetchedUser){
       fetchData()
     }
-  }, [fetchedUser])
+  }, [fetchedUser, submitted])
 
 //useEffect(()=> {
 //      fetchData()

@@ -11,20 +11,20 @@ import { Persist } from 'formik-persist'
 import * as Yup from 'yup'
 //import Recipe from './Recipe/Recipe'
 import Address from '../profile/Address/Address'
-import {useHistory} from 'react-router-dom'
+//import {useHistory} from 'react-router-dom'
 
 const ContactData = props => {
     const [showForm, setShowForm] = useState(false)
-    const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
+//    const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
 
-    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-    const history = useHistory()
-    let total
-    let array = props.items
-    if ( array != ''){
-        total = array.reduce(reducer, 0)
-        console.log("total = " + array.reduce(reducer, 0))
-    }
+//    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
+//    const history = useHistory()
+//    let total
+//    let array = props.items
+//    if ( array != ''){
+//        total = array.reduce(reducer, 0)
+//        console.log("total = " + array.reduce(reducer, 0))
+//    }
 
     const showFormHanldler = () => {
         if (showForm === false){
