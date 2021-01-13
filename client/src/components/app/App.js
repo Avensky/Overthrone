@@ -58,7 +58,7 @@ useEffect(()=> {
     if ( !fetchedUser){
       fetchData()
     }
-  }, [fetchedUser])
+  }, [fetchedUser, submitted])
 
   useEffect(()=> {
     if (data) {

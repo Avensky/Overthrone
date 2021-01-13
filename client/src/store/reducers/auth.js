@@ -100,7 +100,7 @@ const newAddressStart = (state, action) => {
 const newAddressFail = (state, action) => {
     return updateObject( state, { 
         loading: false, 
-        error: action.error
+        error: action.error,
     })}
   
 const newAddressSuccess = (state, action) => {
