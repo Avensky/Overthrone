@@ -6,10 +6,17 @@ import classes from '../Pages.module.scss';
 import myClasses from './Profile.module.scss';
 import * as actions from '../../../store/actions/index';
 import Address from './Address/Address'
-
+import { useHistory }from 'react-router-dom'
 const Profile = (props) =>{
     let address, local, facebook, twitter, google = '';
     const user = props.payload
+    const history = useHistory()
+
+    const editAddressHandler = () => {
+        history.push('/contactData')
+    }
+
+
     address = (
         <Address 
             link     ='Address'
@@ -21,6 +28,7 @@ const Profile = (props) =>{
     if (props.payload['addresses']) {
         address = (
             <Address 
+                clicked  = {() =>editAddressHandler()}
                 link     ='Shipping Address'
                 userLink ={true}
                 provider ='/contactData'

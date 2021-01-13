@@ -32,7 +32,7 @@ import './App.scss'
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
   const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
-  const { fetchedUser, loading, submitted, isLoggedIn /*, loading, userLoading*/ } = props
+  const { data, fetchedUser, loading, submitted, isLoggedIn /*, loading, userLoading*/ } = props
 //  const [data, setData] = useState({ hits: [] });
   // const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
 
@@ -58,7 +58,17 @@ useEffect(()=> {
     if ( !fetchedUser){
       fetchData()
     }
-  }, [fetchedUser, submitted])
+  }, [fetchedUser])
+
+  useEffect(()=> {
+    if (data) {
+      fetchData()
+    }
+  }, [data])
+
+// useEffect(()=> {
+//     fetchData()
+// }, [data])
 
 //useEffect(()=> {
 //      fetchData()
@@ -131,6 +141,7 @@ const mapStateToProps = state => {
     userLoading       : state.auth.userLoading,
     fetchedUser       : state.auth.payload,
     submitted         : state.auth.submitted,
+    data              : state.auth.addressData,
     authRedirectPath  : state.auth.authRedirectPath
   };
 };

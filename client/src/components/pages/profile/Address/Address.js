@@ -49,7 +49,7 @@ const Address = props => {
                     </div>
                 </div>
             </Modal>            
-        { props.provider ? <a className={["btn", props.mystyle].join(' ')} href={props.provider}>Update {props.link}</a>:null}
+        { props.provider ? <a className={["btn", props.mystyle].join(' ')} onClick={editHandler}>Update {props.link}</a>:null}
         { props.providerUnlink ? <a onClick={unlinkHandler} className="btn btn-default">Edit</a> :null}
         </div>
         

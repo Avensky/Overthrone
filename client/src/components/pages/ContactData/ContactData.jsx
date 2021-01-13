@@ -77,15 +77,6 @@ const ContactData = props => {
             deliveryMethod: 'normal'
         }
     }
-    const fetchData = async () => {
-    props.onFetchUser()
-    }
-
-    useEffect(() => {
-        if (props.data){
-            fetchData()     
-        }
-    },[props.data])
 
     useEffect(() => {
         user = props.user        
