@@ -10,6 +10,7 @@ const initialState = {
     payload: null,
     authRedirectPath: '/',
     submitted: false,
+    addressData: null,
 };
 
 const authStart = ( state, action ) => {
@@ -93,17 +94,20 @@ const setAuthRedirectPath = (state, action) => {
 const newAddressStart = (state, action) => {
     return updateObject( state, {        
         error: null, 
-        loading: true })}
+        loading: true,
+        addressData: null })}
 
 const newAddressFail = (state, action) => {
     return updateObject( state, { 
-        loading: false })}
+        loading: false, 
+        error: action.error
+    })}
   
 const newAddressSuccess = (state, action) => {
     //const newAddress = updateObject(action.addressData, { id: action.addressId })
     return updateObject(state, {
         loading: false,
-        //addresss: state.addresss.concat( newAddress ) 
+        addressData: action.addressData 
     })}
 
 const reducer = ( state = initialState, action ) => {

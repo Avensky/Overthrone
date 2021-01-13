@@ -73,52 +73,59 @@ module.exports = function(app, passport) {
 // LOCAL ===============================
 // =====================================
 	app.post('/api/addAddress',(req, res, done) => {        //add a new address
-		console.log('/api/addAddress');
-		User.findOne(
-			{'_id' : req.body.id},
-			(err) => {
-			console.log('/api/addAddress' + req.body);
-			console.log('string'+JSON.stringify(req.body))
-			// if there are any errors, return the error
-			if (err) {
-				console.log('err' + err)
-				return done(err);
+		//console.log('/api/addAddress');
+		User.findOneAndUpdate({'_id' : req.body.id},{
+			$set:{ 
+				addresses : {
+					name    	: req.body.name, 
+					phone   	: req.body.phone, 
+					address1	: req.body.address,
+					address2	: req.body.address2,
+					city    	: req.body.city, 
+					state   	: req.body.state,
+					zipCode 	: req.body.zipCode,
+					email   	: req.body.email
+				}
 			}
-			//  If we're logged in, we're connecting a new local account.
-			if(req.user) {
-				console.log('user' + req.user);
-				var user                = req.user;
-				user.addresses.name    	= req.body.name, 
-				user.addresses.phone   	= req.body.phone, 
-				user.addresses.address1	= req.body.address,
-				user.addresses.address2	= req.body.address2,
-				user.addresses.city    	= req.body.city, 
-				user.addresses.state   	= req.body.state,
-				user.addresses.zipCode 	= req.body.zipCode,
-				user.addresses.email   	= req.body.email
-				
-				user.save(function(err) {
-					if (err){
-						console.log('err1 = ' + err)
-						throw err;
-					}
-					console.log('err2 = ' + err)
-					return done(null, user);
-				});
+		},(err, doc) => {
+			if(doc){
+				//res.redirect('/profile')
+				res.send('Address updated successfully!');
 			}
-		},
-		{ 
-			sort: { 'created_at' : -1 } 
-		}
-		),	(err,res) => {
-			if(res){
-				console.log('err3 = ' + err.message)
-				res.send('Address updated successfully!');}
 			else {
-				console.log('err4 = ' + err.message)
 				res.err(err.message);
 			}
-		}
+			//	console.log('/api/addAddress' + req.body);
+			//	console.log('string'+JSON.stringify(req.body))
+			//	// if there are any errors, return the error
+			//	if (err) {
+			//		console.log('err' + err)
+			//		return done(err);
+			//	}
+			//	//  If we're logged in, we're connecting a new local account.
+			//	if(req.user) {
+			//		console.log('user = ' + req.user);
+			//		console.log('result = ' + doc);
+			//		var user                = req.user;
+			//		user.addresses.name    	= req.body.name, 
+			//		user.addresses.phone   	= req.body.phone, 
+			//		user.addresses.address1	= req.body.address,
+			//		user.addresses.address2	= req.body.address2,
+			//		user.addresses.city    	= req.body.city, 
+			//		user.addresses.state   	= req.body.state,
+			//		user.addresses.zipCode 	= req.body.zipCode,
+			//		user.addresses.email   	= req.body.email
+			//		
+			//		user.save(function(err,res) {
+			//			if (err){
+			//				console.log('err1 = ' + err)
+			//				throw err;
+			//		}
+			//		console.log('user saved')
+			//		return done(null, user);
+			//	});
+			//}
+		})
 	});
 		
 // 		app.get('/api/getcharDetails/:addressid',(req,res)=>{              //get a address details

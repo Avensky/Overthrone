@@ -1,4 +1,5 @@
-import React, { useEffect, Suspense/*, useCallback, useState*/ } from 'react'
+import React, { useEffect, Suspense,/*, useCallback, useState*/ 
+useState} from 'react'
 import { Route, Switch, withRouter} from 'react-router-dom'
 import * as actions   from '../../store/actions/index'
 import { connect }    from 'react-redux'
@@ -30,8 +31,8 @@ import './App.scss'
 
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
-  
-  const { authRedirectPath, onSetAuthRedirectPath, submitted, isLoggedIn /*, loading, userLoading, fetchedUser*/ } = props
+  const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
+  const { fetchedUser, loading, submitted, isLoggedIn /*, loading, userLoading*/ } = props
 //  const [data, setData] = useState({ hits: [] });
   // const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
 
@@ -49,20 +50,25 @@ const App = props => {
 //    };
 //    fetchData()
 //  }, [])
-  useEffect(()=> {
-    const fetchData = async () => {
-      props.onFetchUser()
-    };
-    if ( !isLoggedIn  ){
+const fetchData = async () => {
+  props.onFetchUser()
+}
+
+useEffect(()=> {
+    if ( !fetchedUser ){
       fetchData()
     }
-  }, [submitted])
+  }, [fetchedUser])
+
+//useEffect(()=> {
+//      fetchData()
+//  }, [])
   
-  useEffect(()=> {
-      if ( isLoggedIn && (authRedirectPath !== '/profile') ) {
-          onSetAuthRedirectPath()
-      }
-  }, [authRedirectPath, onSetAuthRedirectPath, submitted])
+  // useEffect(()=> {
+  //     if ( isLoggedIn && (authRedirectPath !== '/profile') ) {
+  //         onSetAuthRedirectPath()
+  //     }
+  // }, [authRedirectPath, onSetAuthRedirectPath, submitted])
     
   // const fetchUserHandler = useCallback( () => {
   //   sendRequest(

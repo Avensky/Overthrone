@@ -15,6 +15,8 @@ import {useHistory} from 'react-router-dom'
 
 const ContactData = props => {
     const [showForm, setShowForm] = useState(false)
+    const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
+
     const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
     const history = useHistory()
     let total
@@ -38,7 +40,7 @@ const ContactData = props => {
         props.onNewAddress(values)
         submitProps.setSubmitting(false)
         submitProps.resetForm()
-        //setShowForm(false)
+        setShowForm(false)
         //history.push('/contactData');
     }
     let userId 
@@ -75,9 +77,18 @@ const ContactData = props => {
             deliveryMethod: 'normal'
         }
     }
+    const fetchData = async () => {
+    props.onFetchUser()
+    }
 
     useEffect(() => {
-        user = props.user
+        if (props.data){
+            fetchData()     
+        }
+    },[props.data])
+
+    useEffect(() => {
+        user = props.user        
     },[props.user])
     
     const validationSchema = Yup.object({
@@ -145,78 +156,87 @@ const ContactData = props => {
                             //placeholder={user.addresses.address2 ? user.addresses.address2: "Apt, suite, unit, building, floor, etc."}
                             className={myClasses.ContactDataInput}
                         />
-                        <label htmlFor="city">City</label>
-                        <Field 
-                            type="text" 
-                            name="city" 
-                            //placeholder={user.addresses.city ? user.addresses.city: "City"}
-                            className={myClasses.ContactDataInput}
-                        />
-                        <label htmlFor="state">State</label>
-                        <Field
-                            as='select'
-                            name="state"
-                            //placeholder={user.addresses.state ? user.addresses.state : user.addresses.state}
-                            className={myClasses.ContactDataInput}>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="DC">District Of Columbia</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
-                        </Field>
-                        <label htmlFor="zipCode">ZIP Code</label>
-                        <Field 
-                            type="text" 
-                            name="zipCode" 
-                            //placeholder={user.addresses.zipCode ? user.addresses.zipCode: "ZIP Code"}
-                            className={myClasses.ContactDataInput}
-                        />
+                        <div className="flex">
+                            <div className='margin-side'>
+                                <label htmlFor="city">City</label>
+                                <Field 
+                                    type="text" 
+                                    name="city" 
+                                    //placeholder={user.addresses.city ? user.addresses.city: "City"}
+                                    className={myClasses.ContactDataInput}
+                                />                             
+                            </div>
+                            <div className='margin-side'>
+                                <label htmlFor="state">State</label>
+                                <Field
+                                    as='select'
+                                    name="state"
+                                    //placeholder={user.addresses.state ? user.addresses.state : user.addresses.state}
+                                    className={myClasses.ContactDataInput}>
+                                        <option value="AL">Alabama</option>
+                                        <option value="AK">Alaska</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="AR">Arkansas</option>
+                                        <option value="CA">California</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="CT">Connecticut</option>
+                                        <option value="DE">Delaware</option>
+                                        <option value="DC">District Of Columbia</option>
+                                        <option value="FL">Florida</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="ID">Idaho</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="IN">Indiana</option>
+                                        <option value="IA">Iowa</option>
+                                        <option value="KS">Kansas</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="LA">Louisiana</option>
+                                        <option value="ME">Maine</option>
+                                        <option value="MD">Maryland</option>
+                                        <option value="MA">Massachusetts</option>
+                                        <option value="MI">Michigan</option>
+                                        <option value="MN">Minnesota</option>
+                                        <option value="MS">Mississippi</option>
+                                        <option value="MO">Missouri</option>
+                                        <option value="MT">Montana</option>
+                                        <option value="NE">Nebraska</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="NH">New Hampshire</option>
+                                        <option value="NJ">New Jersey</option>
+                                        <option value="NM">New Mexico</option>
+                                        <option value="NY">New York</option>
+                                        <option value="NC">North Carolina</option>
+                                        <option value="ND">North Dakota</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="OK">Oklahoma</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="RI">Rhode Island</option>
+                                        <option value="SC">South Carolina</option>
+                                        <option value="SD">South Dakota</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="UT">Utah</option>
+                                        <option value="VT">Vermont</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="WA">Washington</option>
+                                        <option value="WV">West Virginia</option>
+                                        <option value="WI">Wisconsin</option>
+                                        <option value="WY">Wyoming</option>
+                                </Field>
+                            </div>
+                            <div className='margin-side'>
+                                <label htmlFor="zipCode">ZIP Code</label>
+                                <Field 
+                                    type="text" 
+                                    name="zipCode" 
+                                    //placeholder={user.addresses.zipCode ? user.addresses.zipCode: "ZIP Code"}
+                                    className={myClasses.ContactDataInput}
+                                />
+                            </div>
+                            
+                        </div>
                         <label htmlFor="email">Email Address</label>
                         <Field 
                             type="email" 
@@ -419,12 +439,15 @@ const mapStateToProps = state => {
     return {
         items: state.cart.addedItems,
         user: state.auth.payload,
+        loading: state.auth.loading,
+        data: state.auth.addressData
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onNewAddress : (values) => dispatch(actions.newAddress(values))
+        onNewAddress : (values) => dispatch(actions.newAddress(values)),
+        onFetchUser : () => dispatch(actions.fetchUser())
     }
 }
 
