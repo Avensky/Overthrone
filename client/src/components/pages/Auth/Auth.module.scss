@@ -6,10 +6,12 @@
     background-color: rgba(0, 0, 0, 0.5);   
 }
 .Auth a { 
-    width: 100%;
-    margin: 1vh 0;
-    display: block;
-    text-emphasis: none;
+    // display: inline-block;     
+    // position: relative;    
+    z-index: 1;     
+    // padding: 1vh 1vw;
+    // margin: 1vh 0;
+    // text-emphasis: none;
     text-decoration: none;
 }
 
@@ -42,11 +44,13 @@
 .Btn {
     color: rgb(255, 255, 255);   
     width: 100%;
-    margin: 1vh 0;
+    margin: .5vh 0;
+//    padding: 1vh 0;
+    cursor: pointer;
 }
 
 .BtnDiv {
-    margin: 1vh 0;
+    padding: .5em
 }
 
 .AuthNav {

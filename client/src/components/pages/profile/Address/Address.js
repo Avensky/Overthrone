@@ -38,6 +38,7 @@ const Address = props => {
                 </div>
                 { props.email       ? <strong>   {props.email}<br /></strong>    : null }
             </div>
+            <br />
             <Modal show={unlink} modalClosed={cancelHandler}>
                 <div>
                     <h1>Unlink Account</h1>
@@ -48,7 +49,7 @@ const Address = props => {
                     </div>
                 </div>
             </Modal>            
-        { props.provider ? <button className={["btn", props.mystyle].join(' ')}><a href={props.provider}>Update {props.link}</a></button>:null}
+        { props.provider ? <a className={["btn", props.mystyle].join(' ')} href={props.provider}>Update {props.link}</a>:null}
         { props.providerUnlink ? <a onClick={unlinkHandler} className="btn btn-default">Edit</a> :null}
         </div>
         

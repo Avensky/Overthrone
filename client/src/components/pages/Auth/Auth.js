@@ -146,17 +146,17 @@ const Auth = props => {
                 />
 
                 <div className={classes.CardTitle}>Or continue with:</div>
-                <button className={[myClasses.Btn, "btn-primary"].join(' ')}>
-                    <a 
+                <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
+                    <a  
                         href="/auth/facebook"
                         onClick={socialAuthHandler}
-                    ><span className="fa fa-facebook" /> Facebook</a>
+                    ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
                 </button>
                 <button className={[myClasses.Btn, "btn-info"].join(' ')}>
-                    <a href="/auth/twitter"><span className="fa fa-twitter" /> Twitter</a>
+                    <a href="/auth/twitter"><div className={myClasses.BtnDiv}><span className="fa fa-twitter" /> Twitter</div></a>
                 </button>
                 <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
-                    <a href="/auth/google"><span className="fa fa-google-plus" /> Google+</a>
+                    <a href="/auth/google"><div className={myClasses.BtnDiv}><span className="fa fa-google-plus" /> Google+</div></a>
                 </button>
             </div> 
         </Auxiliary>
