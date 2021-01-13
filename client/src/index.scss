@@ -45,6 +45,9 @@ a ::selection       { color: white !important; }
 a :active           { color: white !important; }
 
 input               { color: black !important; }
+input:checked         { background-color: black !important; }
+input::selection         { background-color: transparent !important; }
+
 
 .spread {
   display: flex;

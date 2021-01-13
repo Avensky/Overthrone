@@ -53,9 +53,57 @@ const Auth = props => {
         email: Yup.string().required('Required')
       })
     
-    let loader = null;
+    let loader = (
+        <Auxiliary>
+            <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={submitHandler}
+            enableReinitialize> 
+            { formik => 
+            <Form>
+                <Field 
+                    type="email" 
+                    name="email" 
+                    placeholder="Email Address"
+                    className={myClasses.AuthInput}
+                />
+                <ErrorMessage name="email" component="div" />
+                <Field 
+                    type="password" 
+                    name="password" 
+                    placeholder="Password"
+                    className={myClasses.AuthInput}
+                />
+                <ErrorMessage name="password" component="div" />
+                <button  
+                    className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                    type='submit'
+                    disabled={!formik.isValid || formik.isSubmitting }
+                >
+                    <div className={myClasses.BtnDiv}>
+                        <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
+                    </div>
+                </button>
+            </Form>}
+        </Formik>
+        <div className={classes.CardTitle}>Or continue with:</div>
+            <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
+                <a  
+                    href="/auth/facebook"
+                    onClick={socialAuthHandler}
+                ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
+            </button>
+            <button className={[myClasses.Btn, "btn-info"].join(' ')}>
+                <a href="/auth/twitter"><div className={myClasses.BtnDiv}><span className="fa fa-twitter" /> Twitter</div></a>
+            </button>
+            <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
+                <a href="/auth/google"><div className={myClasses.BtnDiv}><span className="fa fa-google-plus" /> Google+</div></a>
+            </button>
+        </Auxiliary>
+    )
 
-    if ( props.loading || (props.submitted && props.userLoading && !props.token.message)) {
+    if ( props.loading || (props.submitted && props.userLoading)) {
         //form = <Spinner />
         loader = <Spinner />
 
@@ -111,53 +159,6 @@ const Auth = props => {
                 </div>
                 {loader}
                 {flash}
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={submitHandler}
-                    enableReinitialize> 
-                    { formik => 
-                    <Form>
-                        <Field 
-                            type="email" 
-                            name="email" 
-                            placeholder="Email Address"
-                            className={myClasses.AuthInput}
-                        />
-                        <ErrorMessage name="email" component="div" />
-                        <Field 
-                            type="password" 
-                            name="password" 
-                            placeholder="Password"
-                            className={myClasses.AuthInput}
-                        />
-                        <ErrorMessage name="password" component="div" />
-                        <button  
-                            className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
-                            type='submit'
-                            disabled={!formik.isValid || formik.isSubmitting }
-                        >
-                            <div className={myClasses.BtnDiv}>
-                                <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
-                            </div>
-                        </button>
-                        <Persist name="auth-form" />
-                    </Form>}
-                </Formik>
-
-                <div className={classes.CardTitle}>Or continue with:</div>
-                <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
-                    <a  
-                        href="/auth/facebook"
-                        onClick={socialAuthHandler}
-                    ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
-                </button>
-                <button className={[myClasses.Btn, "btn-info"].join(' ')}>
-                    <a href="/auth/twitter"><div className={myClasses.BtnDiv}><span className="fa fa-twitter" /> Twitter</div></a>
-                </button>
-                <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
-                    <a href="/auth/google"><div className={myClasses.BtnDiv}><span className="fa fa-google-plus" /> Google+</div></a>
-                </button>
             </div> 
         </Auxiliary>
     )

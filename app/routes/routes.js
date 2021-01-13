@@ -10,11 +10,21 @@ module.exports = function(app, passport) {
 //	app.get('/', function(req, res) {
 //		res.render('index.ejs');
 //	});
+	app.get('api/users', (req, res, next) => {
+		if (req.user && req.user.isAdmin) {
+			next();
+		return;
+	}
+	res.status(401).send('Not authorized');
+   });
 
-	app.get('/api/fetchUser', (req, res) => {
+	app.get('/api/fetchUser', async (req, res, next) => {
         if (req.user){
-            res.send(req.user);
-        }
+			res.send(req.user);
+			next();
+			return
+		}
+		res.status(401).send('Not authorized');
 	});
 	
 	  app.get('/ping', (req, res) => {
@@ -95,36 +105,6 @@ module.exports = function(app, passport) {
 			else {
 				res.err(err.message);
 			}
-			//	console.log('/api/addAddress' + req.body);
-			//	console.log('string'+JSON.stringify(req.body))
-			//	// if there are any errors, return the error
-			//	if (err) {
-			//		console.log('err' + err)
-			//		return done(err);
-			//	}
-			//	//  If we're logged in, we're connecting a new local account.
-			//	if(req.user) {
-			//		console.log('user = ' + req.user);
-			//		console.log('result = ' + doc);
-			//		var user                = req.user;
-			//		user.addresses.name    	= req.body.name, 
-			//		user.addresses.phone   	= req.body.phone, 
-			//		user.addresses.address1	= req.body.address,
-			//		user.addresses.address2	= req.body.address2,
-			//		user.addresses.city    	= req.body.city, 
-			//		user.addresses.state   	= req.body.state,
-			//		user.addresses.zipCode 	= req.body.zipCode,
-			//		user.addresses.email   	= req.body.email
-			//		
-			//		user.save(function(err,res) {
-			//			if (err){
-			//				console.log('err1 = ' + err)
-			//				throw err;
-			//		}
-			//		console.log('user saved')
-			//		return done(null, user);
-			//	});
-			//}
 		})
 	});
 		
@@ -140,40 +120,35 @@ module.exports = function(app, passport) {
     	// =====================================
     	// LOGIN ===============================
 		// =====================================
-
 		// process the login form
-		//	app.post('/auth/login', 
-		//		passport.authenticate('local-login', {
-		//			successRedirect : '/', // redirect to the secure profile section
-		//			failureRedirect : '/', // redirect back to the signup page if there is an error
-		//			failureFlash 	: true // allow flash messages
-		//		}), (req, res) => {
-		//			// If this function gets called, authentication was successful.
-		//			// `req.user` contains the authenticated user.
-		//			//console.log('Message sent!')
-		//			//if (err) {
-		//				// handle error and redirect to credentials,
-		//				// display an error page, or whatever you want to do here...
-		//			//}
-		//			// if no error, redirect
-		//			//redirect('/');
-		//			res.send(200)
-		//			// res.sendStatus(200)
-		//		}
-		//	);
+		//app.post('/auth/login', 
+		//	passport.authenticate('local-login', {
+		//		successRedirect : '/profile', // redirect to the secure profile section
+		//		//failureRedirect : '/authentication', // redirect back to the signup page if there is an error
+		//		//failureFlash 	: true // allow flash messages
+		//	}), (req, res) => {
+		//		// If this function gets called, authentication was successful.
+		//		// `req.user` contains the authenticated user.
+		//		console.log('Message sent!')
+		//		res.send(200)
+		//		// res.sendStatus(200)
+		//	}
+		//);
 
-		app.post('/auth/login',  (req, res, next) => {
-
-			passport.authenticate('local-login', (err, user, info) => {
-				if(err) return next(err);
-				if(info) return res.send(info);
-				req.logIn(user, err => {
-					if(err) return next(err);
-					return res.send(user);
-				});
-			})(req, res, next);
-			
-		});
+		app.post('/auth/login', 
+			(req, res, next) => {
+				passport.authenticate('local-login',
+					(err, user, info) => {
+						if(err) return next(err);
+						if(info) return res.send(info);
+						req.logIn(user, err => {
+							if(err) return next(err);
+							return res.send(user);
+						});
+					}
+				)(req, res, next);
+			} 
+		);
 
 		// =====================================
 		// SIGNUP ==============================
