@@ -107,17 +107,39 @@ a {
     align-self:center;
 }
 
+.dualBtn {
+//    display: flex;
+    display: block;
+    justify-content: flex-end;
+    padding: 2vh 0vw;
+    margin: 0;
+    //width: 100%;
+}
 
+.dualGrid {
+    //width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+        "dualLeft dualRight";
+}
 
+.dualRight button {
+    display: block;
+}
 
-
-
-
+.dualLeft {
+    grid-area: dualLeft;
+}
+.dualRight {
+    grid-area: dualRight;
+}
 @media only screen and (min-width: 600px) {
     /* For tablets: */
-    .Shop {
+    .dualBtn {
+        display: flex;
+        padding: 2vh 0;
     }
-
     .filter {
         justify-content: left;
     }
@@ -125,7 +147,12 @@ a {
 
 @media only screen and (min-width: 1025px) {
     /* For desktop: */
-    .Shop {
+    .dualBtn {
+        display: flex;
+        padding: 2vh 0;
+    }
+    .dualRight button {
+        display: block;
     }
 
     .filter {

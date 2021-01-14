@@ -6,7 +6,7 @@ import Item5 from '../images/item6.jpg'
 import Item6 from '../images/item6.jpg'
 //import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING } from '../actions/actionTypes/cart'
 import * as actionTypes from '../actions/actionTypes'
-
+import {updateObject} from '../../utility/utility'
 
 const initialState = {
     items: [
@@ -20,7 +20,9 @@ const initialState = {
     addedItems  : [],
     total       : 0.00,
     totalItems  : 0,
-    totalPrice  : 0
+    totalPrice  : 0,
+    checkout    : null,
+    error       : null
 }
 
 const addToCart= ( state, action ) => {
@@ -117,19 +119,32 @@ const subShipping = ( state, action ) => {
 }
 
 const loadCart = ( state, action ) => {
-    //console.log('loadCart items = ' + state.items)
-    //let stringItem = JSON.stringify(state.items)
-    ///console.log('loadCart items = ' + stringItem)
-
-    //console.log('action.cart = '    + action.cart)
-    // let stringCart = JSON.stringify(action.cart)
-    // console.log('action.cart = '    + stringCart)
-    // let fixedCart = JSON.parse(stringCart)
-
     return {
         state,
         items: action.cart
     }
+}
+
+const checkoutStart = (state, action) => {
+    return updateObject (state, {
+            error: null,
+            loading: true,
+        }
+    )
+}
+const checkoutFail = (state, action) => {
+    return updateObject(state, {
+            loading: false,
+            error: action.error
+        }
+    )
+}
+const checkoutSuccess = (state, action) => {
+    return updateObject(state, {
+            loading: false,
+            checkout: action.response
+        }
+    )
 }
 
 const reducer = ( state = initialState, action ) => {
@@ -141,6 +156,9 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.ADD_SHIPPING      : return addShipping(state, action);
         case actionTypes.SUB_SHIPPING      : return subShipping(state, action); 
         case actionTypes.LOAD_CART         : return loadCart(state, action);
+        case actionTypes.CHECKOUT_START    : return checkoutStart(state, action);
+        case actionTypes.CHECKOUT_FAIL     : return checkoutFail(state, action);
+        case actionTypes.CHECKOUT_SUCCESS  : return checkoutSuccess(state, action);
         default: return state;
     }
 };

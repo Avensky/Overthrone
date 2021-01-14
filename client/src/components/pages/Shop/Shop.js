@@ -42,8 +42,8 @@ const Purchase = props => {
     let [cart, setCart]= useState(new_items)
     //let stringCart = JSON.stringify(cart)
     //console.log('Cart = '+ stringCart)
-
-    let [ total, setTotal] = useState(0.00)
+    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
+    let [ total, setTotal] = useState(props.items.reduce(reducer, 0))
     console.log('total = '+ total)
 
     let [ totalItems, setTotalItems] = useState(props.totalItems)
@@ -53,27 +53,6 @@ const Purchase = props => {
     console.log('totalPrice = '+ totalPrice)
 
     let shop = cart.map( item => {
-        // let cartCopy = '[]'
-        // let localQuantity = 0;
-
-        // if (localCart) {
-        //     cartCopy = [localCart]
-        // }
-        // 
-        // // parse 
-        // let parseCart = JSON.parse(cartCopy)
-        // 
-        // //look for item in cart array
-        // let localItem = parseCart.find(cartItem => cartItem.id == item.id)
-        // 
-        // let stringItem = JSON.stringify(localItem)
-        // //// console.log('stringItem = ' + stringItem)
-        // 
-        // if (localItem) {
-        //     localQuantity = localItem.quantity
-        //     //// console.log('localQuantity' + localQuantity)
-        // } 
-
         return(
             <Item
                 img         = {item.img}
@@ -133,70 +112,6 @@ const Purchase = props => {
     }, []) //only run once
 
 
-//    useEffect(() => {
-//        let localAddedItemsCopy = addedItems
-//        let localAddedItemsCopyString = localAddedItemsCopy
-//
-//        if (localAddedItems) { 
-//            localAddedItemsCopy = [localAddedItems] 
-//            // parse 
-//            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
-//        }
-//        console.log('local storage added Items= ' + localAddedItemsCopyString)
-//
-//        // console.log('local storage parseLocalCart = ' + parseLocalCart)
-//
-//        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
-//        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
-//
-//        setAddedItems(localAddedItemsCopy)
-//        console.log('added Items cross reference local = ' + localAddedItemsCopy)
-//
-//        props.addToCart(localAddedItemsCopy)
-//
-//    }, []) //only run once
-
-    //const handleClick = ( id ) => {
-    //    props.addToCart(id);
-    //    //look for item in cart array
-    //    //// console.log(props.items)
-    //
-    //    let item = props.items.find(item => item.id === id);
-    //    //// console.log(item)
-    //    addItem(item)
-    //      props.history.push('/shop/itemfull/' + id);
-    //}
-
-    // const addItem = (item) => {
-    //     //create a copy of our cart state, avoid overwritting existing state
-    //     let cartCopy = [...cart];
-    //     //// console.log("cart = " + JSON.stringify(cartCopy))
-    //     
-    //     //assuming we have an ID field in our item
-    //     let ID = item.id;
-    //     
-    //     //look for item in cart array
-    //     let existingItem = cartCopy.find(cartItem => cartItem.id === ID);
-    //     
-    //     //if item already exists
-    //     if (existingItem) {
-    //         // console.log('prev existingItem.quantity = ' + existingItem.quantity)
-    //         // existingItem.quantity++ //update item
-    //         // console.log('new existingItem.quantity = ' + existingItem.quantity)
-    //     } else { 
-    //         //if item doesn't exist, simply add it
-    //         cartCopy.push(item)
-    //         // console.log('adding new item')
-    //     }
-    //     
-    //     //update app state
-    //     setCart(cartCopy)
-    //     
-    //     //make cart a string and store in local space
-    //     let stringCart = JSON.stringify(cartCopy);
-    //     localStorage.setItem("cart", stringCart)
-    //     // console.log('setting local storage= ' + stringCart)
-    // }
     const history = useHistory()
 
     const purchaseHandler = () => {
@@ -207,6 +122,10 @@ const Purchase = props => {
 //            this.props.onSetAuthRedirectPath('/checkout');
             history.push('/authentication');
         }
+    }
+
+    const viewCartHandler = () => {
+        history.push('/cart')
     }
 
 
@@ -284,60 +203,41 @@ const Purchase = props => {
             props.addToCart(myAddedItems, totalItemsPrice, totalItemsQuantity)
         } 
     }
-    
-
-    // const editItem = (itemID, amount) => {
-    //     let cartCopy = [...cart]
-    //     
-    //     //find if item exists, just in case
-    //     let existentItem = cartCopy.find(item => item.ID === itemID);
-    //     
-    //     //if it doesnt exist simply return
-    //     if (!existentItem) return
-    //     
-    //     //continue and update quantity
-    //     existentItem.quantity += amount;
-    //     
-    //     //validate result
-    //     if (existentItem.quantity <= 0) {
-    //       //remove item  by filtering it from cart array
-    //       cartCopy = cartCopy.filter(item => item.ID !== itemID)
-    //     }
-    //     
-    //     //again, update state and localState
-    //     setCart(cartCopy);
-    //     
-    //     // let cartString = JSON.stringify(cartCopy);
-    //     // localStorage.setItem('cart', cartString);
-    //     localStorage.setItem('cart', cartCopy);
-    // }
-    // 
-    // const removeItem = (itemID) => {
-    //     //create cartCopy
-    //     let cartCopy = [...cart]
-    //     
-    //     cartCopy = cartCopy.filter(item => item.ID !== itemID);
-    //     
-    //     //update state and local
-    //     setCart(cartCopy);
-    //     
-    //     let cartString = JSON.stringify(cartCopy)
-    //     localStorage.setItem('cart', cartString)
-    // }
-
-        //items = props.items.slice( 0, 4 );
-    
-    const button = (
-        <button 
-        className='btn-primary btn'
-        // disabled={!props.purchaseable}
-        onClick={purchaseHandler}
-    >{
+        
+    let button = null
+    let itemString = 'item'
+    if (props.addedItems.length>1) {
+        itemString = 'items'
+    }
+    if (props.addedItems.length > 0){
+        button = (
             props.isAuth 
-                ? 'GO TO CART' 
-                : 'SIGN IN TO ORDER'}
-    </button>
-    )
+                ? (
+                <div className={myClasses.dualGrid}>
+                    <div className={myClasses.dualLeft}>
+                        <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${totalPrice}</p>
+                        <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
+                    </div>
+                    <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
+                        <button  className='btn-primary btn one-line' onClick={purchaseHandler}>View Cart</button>
+                        <button  className='btn-primary btn one-line' onClick={purchaseHandler}>Checkout</button>
+                    </div>
+                </div>
+                )
+                : (
+                <div className={myClasses.dualGrid}>
+                    <div className={myClasses.dualLeft}>
+                        <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${totalPrice}</p>
+                        <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
+                    </div>
+                    <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
+                        <button  className='btn-primary btn one-line' onClick={viewCartHandler}>View Cart</button>
+                        <button  className='btn-primary btn one-line' onClick={purchaseHandler}>Sign in to Order</button>
+                    </div>
+                </div>
+                ) 
+        )
+    }   
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
             {/* Title */}

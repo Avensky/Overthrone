@@ -131,5 +131,9 @@ export const NEW_ADDRESS              = 'NEW_ADDRESS';
 
 
 export const SET_AUTH_REDIRECT_PATH   = 'SET_AUTH_REDIRECT_PATH';
+export const SET_CONTACTS             = 'SET_CONTACTS';
 
-export const SET_CONTACTS = 'SET_CONTACTS';
+export const CHECKOUT                 = 'CHECKOUT';
+export const CHECKOUT_START           = 'CHECKOUT_START';
+export const CHECKOUT_SUCCESS         = 'CHECKOUT_SUCCESS';
+export const CHECKOUT_FAIL            = 'CHECKOUT_FAIL';

@@ -1,5 +1,7 @@
 const mongoose         = require('mongoose')
 const User             = mongoose.model('User')
+const stripe 		   = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const YOUR_DOMAIN 	   = 'http://localhost:3000/checkout';
 
 module.exports = function(app, passport) {
 
@@ -10,6 +12,32 @@ module.exports = function(app, passport) {
 //	app.get('/', function(req, res) {
 //		res.render('index.ejs');
 //	});
+
+
+	app.post('/api/create-checkout-session', async (req, res) => {
+		const session = await stripe.checkout.sessions.create({
+		payment_method_types: ['card'],
+		line_items: [
+			{
+			price_data: {
+				currency: 'usd',
+				product_data: {
+				name: 'Stubborn Attachments',
+				images: ['https://i.imgur.com/EHyR2nP.png'],
+				},
+				unit_amount: 2000,
+			},
+			quantity: 1,
+			},
+		],
+		mode: 'payment',
+		success_url: `${YOUR_DOMAIN}?success=true`,
+		cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+	});
+		res.json({ id: session.id });
+	});
+
+
 	app.get('api/users', (req, res, next) => {
 		if (req.user && req.user.isAdmin) {
 			next();
@@ -17,6 +45,7 @@ module.exports = function(app, passport) {
 	}
 	res.status(401).send('Not authorized');
    });
+
 
 	app.get('/api/fetchUser', async (req, res, next) => {
         if (req.user){
@@ -26,11 +55,15 @@ module.exports = function(app, passport) {
 		}
 		res.status(401).send('Not authorized');
 	});
+
 	
 	  app.get('/ping', (req, res) => {
         res.status(200).send("pong!");
 	});
 
+
+
+	
 	app.get('/api/flash', function(req, res){
 		// Set a flash message by passing the key, followed by the value, to req.flash().
 		req.flash('info', 'Flash is back!')

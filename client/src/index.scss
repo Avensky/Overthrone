@@ -78,3 +78,8 @@ option {
 button {
   padding: 0;
 }
+
+.one-line {
+  //white-space: nowrap; 
+  overflow: hidden;
+}

@@ -28,13 +28,6 @@
     text-align: center;
 }
 
-
-.Card {
-    padding: 2vh 5vw;
-    background-color: #4d3b00;
-}
-
-
 .CardTitle {
     font-size: 1.25em;
     overflow: hidden;
@@ -161,7 +154,7 @@ input::placeholder{ }
 .Card {
     background-color: rgb(34, 26, 0);
     margin: 0 2vw 0;
-    padding: 5vh 5vw 2vh;
+    padding: 1vh 5vw 2vh;
 
 }
 
@@ -169,7 +162,7 @@ input::placeholder{ }
     /* For tablets: */
     .Card {
         margin: 0 5vw 0;
-        padding: 1vh 5vw 2vh;
+        //padding: 1vh 5vw 2vh;
     }
 }
 
@@ -177,6 +170,6 @@ input::placeholder{ }
     /* For desktop: */
     .Card {
         margin: 0 15vw 0;
-        padding: 1vh 5vw 2vh;
+        //padding: 1vh 5vw 2vh;
     }
 }

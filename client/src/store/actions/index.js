@@ -12,7 +12,8 @@ export {
     removeItem,
     subtractQuantity,
     addQuantity,
-    loadCart
+    loadCart,
+    checkout
 } from './cart';
 
 export {
