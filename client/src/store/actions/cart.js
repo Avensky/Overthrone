@@ -1,10 +1,10 @@
 //import { response } from 'express'
 import axios from 'axios'
 import * as actionTypes from './actionTypes'
-import { loadStripe } from "@stripe/stripe-js";
-
-// import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING} from './actionTypes/cart'
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+import { loadStripe } from '@stripe/stripe-js';
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 
 //add cart action
 export const addToCart= (addedItems, total, totalItems)=>{
@@ -72,14 +72,14 @@ export const checkout = (values) => {
     return dispatch => {
         dispatch(checkoutStart())
         const stripe = stripePromise;
-        axios.post('api/create-checkout-session', values)
-        .post(response => {
+        axios.post('api/checkout', values)
+        .then(response => {
             console.log('checkout =' + response)
             dispatch(checkoutSuccess())
         })
         .catch((err) => {
             console.log('checkout error =' + err)
-            dispatch(checkoutFail())
+            dispatch(checkoutFail(err))
         })
     }
 }

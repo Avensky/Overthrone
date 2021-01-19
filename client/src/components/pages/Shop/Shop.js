@@ -127,6 +127,9 @@ const Purchase = props => {
     const viewCartHandler = () => {
         history.push('/cart')
     }
+    const checkoutHandler = () => {
+        history.push('/checkout')
+    }
 
 
     const addToCart= ( id ) => {
@@ -219,8 +222,8 @@ const Purchase = props => {
                         <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
                     </div>
                     <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
-                        <button  className='btn-primary btn one-line' onClick={purchaseHandler}>View Cart</button>
-                        <button  className='btn-primary btn one-line' onClick={purchaseHandler}>Checkout</button>
+                        <button  className='btn-primary btn one-line' onClick={viewCartHandler}>View Cart</button>
+                        <button  className='btn-primary btn one-line' onClick={checkoutHandler}>Checkout</button>
                     </div>
                 </div>
                 )

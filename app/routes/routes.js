@@ -1,7 +1,8 @@
-const mongoose         = require('mongoose')
-const User             = mongoose.model('User')
-const stripe 		   = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
-const YOUR_DOMAIN 	   = 'http://localhost:3000/checkout';
+const mongoose      = require('mongoose')
+const User          = mongoose.model('User')
+const Stripe        = require('stripe');
+const stripe        = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
+
 
 module.exports = function(app, passport) {
 
@@ -14,29 +15,28 @@ module.exports = function(app, passport) {
 //	});
 
 
-	app.post('/api/create-checkout-session', async (req, res) => {
-		const session = await stripe.checkout.sessions.create({
-		payment_method_types: ['card'],
-		line_items: [
-			{
-			price_data: {
-				currency: 'usd',
-				product_data: {
-				name: 'Stubborn Attachments',
-				images: ['https://i.imgur.com/EHyR2nP.png'],
-				},
-				unit_amount: 2000,
-			},
-			quantity: 1,
-			},
-		],
-		mode: 'payment',
-		success_url: `${YOUR_DOMAIN}?success=true`,
-		cancel_url: `${YOUR_DOMAIN}?canceled=true`,
-	});
-		res.json({ id: session.id });
-	});
+app.post('/api/checkout', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: [
+      {
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'T-shirt',
+          },
+          unit_amount: 2000,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: 'https://yoursite.com/success.html',
+    cancel_url: 'https://example.com/cancel',
+  });
 
+  res.json({ id: session.id });
+});
 
 	app.get('api/users', (req, res, next) => {
 		if (req.user && req.user.isAdmin) {

@@ -10,6 +10,8 @@ import Auxiliary from '../../../hoc/Auxiliary'
 import OrderSummary from './OrderSummary/OrderSummary'
 import Modal from '../../UI/Modal/Modal'
 import { useHistory } from 'react-router-dom';
+import * as actions from '../../../store/actions/index';
+
 
 const Cart = props => {
     const [purchasing, setPurchasing] = useState(false);
@@ -49,10 +51,11 @@ const Cart = props => {
         setPurchasing(false)
     }
 
-    const purchaseContinueHandler = () => {
+    const purchaseContinueHandler = (values) => {
         //this.props.onInitPurchase();
-        //this.props.history.push('/checkout')
-        history.push('/contactData');
+//        history.push('/checkout')
+        // history.push('/contactData');
+        props.checkout()
     }
     
     let orderSummary = null
@@ -148,6 +151,7 @@ const mapStateToProps = (state)=>{
 }
 const mapDispatchToProps = (dispatch)=>{
     return{
+        checkout         : (values)=>{ dispatch(actions.checkout(values))},
         removeItem       : (id)=>{dispatch(removeItem(id))},
         addQuantity      : (id)=>{dispatch(addQuantity(id))},
         subtractQuantity : (id)=>{dispatch(subtractQuantity(id))}

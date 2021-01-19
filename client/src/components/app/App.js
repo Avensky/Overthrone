@@ -15,6 +15,7 @@ import Sovereignty    from '../pages/Sovereignty/Sovereignty'
 import Shop           from '../pages/Shop/Shop'
 import Details        from '../pages/Shop/Details/Details'
 import Cart           from '../pages/Cart/Cart'
+import Checkout       from '../pages/Checkout/Checkout'
 import Home           from '../pages/Home/Home'
 import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
@@ -89,6 +90,7 @@ useEffect(()=> {
 
   let routes = (
     <Switch>
+      <Route path="/checkout"             component={Checkout} />/
       <Route path="/authentication"       component={Auth} />
       <Route path="/connectLocal"         component={ConnectLocal} />
       <Route path="/signup"               component={Signup} />
@@ -109,6 +111,7 @@ useEffect(()=> {
   if (props.fetchedUser) {
     routes = (
       <Switch>
+        <Route path="/checkout"             component={Checkout} />
         <Route path="/authentication"      render={props => <Auth {...props} />} />
         <Route path="/contactData"         component={ContactData} />
         <Route path="/signup"               component={Signup} />
