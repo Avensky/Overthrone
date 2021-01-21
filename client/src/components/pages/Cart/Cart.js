@@ -51,11 +51,11 @@ const Cart = props => {
         setPurchasing(false)
     }
 
-    const purchaseContinueHandler = (values) => {
+    const purchaseContinueHandler = () => {
         //this.props.onInitPurchase();
 //        history.push('/checkout')
         // history.push('/contactData');
-        props.checkout()
+        props.checkout(props.items)
     }
     
     let orderSummary = null
