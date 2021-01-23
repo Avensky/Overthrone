@@ -128,7 +128,7 @@ const Purchase = props => {
         history.push('/cart')
     }
     const checkoutHandler = () => {
-        history.push('/checkout')
+        history.push('/contactData')
     }
 
 
@@ -217,7 +217,7 @@ const Purchase = props => {
             props.isAuth 
                 ? (
                 <div className={myClasses.dualGrid}>
-                    <div className={myClasses.dualLeft}>
+                    <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
                         <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${totalPrice}</p>
                         <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
                     </div>
@@ -229,7 +229,7 @@ const Purchase = props => {
                 )
                 : (
                 <div className={myClasses.dualGrid}>
-                    <div className={myClasses.dualLeft}>
+                    <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
                         <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${totalPrice}</p>
                         <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
                     </div>

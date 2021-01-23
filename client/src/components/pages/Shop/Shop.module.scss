@@ -137,8 +137,8 @@ a {
 @media only screen and (min-width: 600px) {
     /* For tablets: */
     .dualBtn {
-        display: flex;
-        padding: 2vh 0;
+    //    display: flex;
+    //    padding: 2vh 0;
     }
     .filter {
         justify-content: left;
@@ -148,11 +148,11 @@ a {
 @media only screen and (min-width: 1025px) {
     /* For desktop: */
     .dualBtn {
-        display: flex;
-        padding: 2vh 0;
+   //     display: flex;
+     //   padding: 2vh 0;
     }
     .dualRight button {
-        display: block;
+    //    display: block;
     }
 
     .filter {

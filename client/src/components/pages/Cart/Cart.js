@@ -11,10 +11,10 @@ import OrderSummary from './OrderSummary/OrderSummary'
 import Modal from '../../UI/Modal/Modal'
 import { useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
-import { loadStripe } from '@stripe/stripe-js';
+//import { loadStripe } from '@stripe/stripe-js';
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
+//const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
 
 
 const Cart = props => {
@@ -45,7 +45,7 @@ const Cart = props => {
     
     const purchaseHandler = () => {
         if (props.isAuth) {
-            setPurchasing(true)
+            history.push('/contactData')
         } else {
 //            this.props.onSetAuthRedirectPath('/checkout');
             history.push('/authentication');
@@ -57,25 +57,9 @@ const Cart = props => {
     }
 
     const purchaseContinueHandler = async (event) => {
-        // Get Stripe.js instance
-        const stripe = await stripePromise;
-
-        // Call your backend to create the Checkout Session
-        const response = await fetch('/api/checkout', { method: 'POST' });
-
-        const session = await response.json();
-
-        // When the customer clicks on the button, redirect them to Checkout.
-        const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-        });
-
-        if (result.error) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `result.error.message`.
-        }
+        history.push('/cart')
     };
+
     
     let orderSummary = null
     if (props.items) {
@@ -84,7 +68,7 @@ const Cart = props => {
             total={total}
             purchaseCancelled={purchaseCancelHandler}
             purchaseContinued={purchaseContinueHandler}
-    />;
+        />;
     }
     let cartList = props.items;
     let uniqueChars = [...new Set(cartList)];
@@ -149,7 +133,7 @@ const Cart = props => {
                                 type="button" role="link"
                                 onClick={purchaseHandler}>{
                                     props.isAuth 
-                                        ? 'CHECKOUT SUMMARY' 
+                                        ? 'CONTINUE TO CHECKOUT' 
                                         : 'SIGN IN TO ORDER'}
                             </button>
                             {/* <Recipe items={array} total={total}/> */} 

@@ -14,7 +14,6 @@ module.exports = function(app, passport) {
 //		res.render('index.ejs');
 //	});
 
-
 app.post('/api/checkout', async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -31,8 +30,10 @@ app.post('/api/checkout', async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: 'https://yoursite.com/success.html',
-    cancel_url: 'https://example.com/cancel',
+    //success_url: 'https://authorapp.herokuapp.com/checkout',
+    success_url: 'http://localhost:3000/checkout',
+    //cancel_url: 'https://authorapp.herokuapp.com/shop',
+    cancel_url: 'http://localhost:3000/shop',
   });
 
   res.json({ id: session.id });

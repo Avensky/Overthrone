@@ -4,6 +4,9 @@ import classes from '../Pages.module.scss';
 //import Spinner from '../../../components/UI/Spinner/Spinner';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
+import OrderSummary from './OrderSummary/OrderSummary'
+import Modal from '../../UI/Modal/Modal'
+import { useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 //import { Redirect } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -13,8 +16,69 @@ import * as Yup from 'yup'
 import Address from '../profile/Address/Address'
 //import {useHistory} from 'react-router-dom'
 
+
+import { loadStripe } from '@stripe/stripe-js';
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
+
+
+
 const ContactData = props => {
-    const [showForm, setShowForm] = useState(false)
+    const [showForm, setShowForm]       = useState(false)
+    const [purchasing, setPurchasing]   = useState(false);
+    const history = useHistory()
+    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
+    let total
+    let array = props.items
+    if ( array != '') {
+        total = array.reduce(reducer, 0)
+        console.log("total = " + array.reduce(reducer, 0))
+    }
+    
+    const purchaseHandler = () => {
+        if (props.isAuth) {
+            setPurchasing(true)
+        } else {
+//            this.props.onSetAuthRedirectPath('/checkout');
+            history.push('/authentication');
+        }
+    }
+    const purchaseCancelHandler = () => {
+        setPurchasing(false)
+    }
+
+    const purchaseContinueHandler = async (event) => {
+        // Get Stripe.js instance
+        const stripe = await stripePromise;
+
+        // Call your backend to create the Checkout Session
+        const response = await fetch('/api/checkout', { method: 'POST' });
+
+        const session = await response.json();
+
+        // When the customer clicks on the button, redirect them to Checkout.
+        const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+        });
+
+        if (result.error) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `result.error.message`.
+        }
+    };
+
+    let orderSummary = null
+    if (props.items) {
+        orderSummary = <OrderSummary 
+            items={props.items}
+            total={total}
+            purchaseCancelled={purchaseCancelHandler}
+            purchaseContinued={purchaseContinueHandler}
+        />;
+    }
+
 //    const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
 
 //    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
@@ -78,9 +142,7 @@ const ContactData = props => {
         }
     }
 
-    useEffect(() => {
-        user = props.user        
-    },[props.user])
+    useEffect(() => { user = props.user},[props.user])
     
     const validationSchema = Yup.object({
         email: Yup.string().required('Required')
@@ -405,6 +467,9 @@ const ContactData = props => {
 
     return (
         <Auxiliary>
+            <Modal show={purchasing} modalClosed={purchaseCancelHandler}> 
+                {orderSummary}
+            </Modal>
             <div className={[classes.Card, myClasses.ContactData].join(' ')}>
                 <div className="container">
                     <div className="page-header text-center">
@@ -419,6 +484,15 @@ const ContactData = props => {
                         </div>
                     </button>
                     {addressForm}
+                    <button 
+                        className='btn-primary btn'
+                        // disabled={!props.purchaseable}
+                        type="button" role="link"
+                        onClick={purchaseHandler}>{
+                            props.isAuth 
+                                ? 'CONTINUE TO CHECKOUT' 
+                                : 'SIGN IN TO ORDER'}
+                    </button>
                 </div>
             </div>
         </Auxiliary>
@@ -431,7 +505,8 @@ const mapStateToProps = state => {
         items: state.cart.addedItems,
         user: state.auth.payload,
         loading: state.auth.loading,
-        data: state.auth.addressData
+        data: state.auth.addressData,
+        isAuth: state.auth.payload
     }
 }
 
