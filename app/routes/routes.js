@@ -2,7 +2,7 @@ const mongoose      = require('mongoose')
 const User          = mongoose.model('User')
 const Stripe        = require('stripe');
 const stripe        = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
-
+const bodyParser    = require('body-parser')
 
 module.exports = function(app, passport) {
 
@@ -13,30 +13,40 @@ module.exports = function(app, passport) {
 //	app.get('/', function(req, res) {
 //		res.render('index.ejs');
 //	});
+app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
+	const payload = req.body;
+  
+	console.log("Got payload: " + payload);
+  
+	res.status(200);
+});
 
 app.post('/api/checkout', async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'T-shirt',
-          },
-          unit_amount: 2000,
-        },
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    //success_url: 'https://authorapp.herokuapp.com/checkout',
-    success_url: 'http://localhost:3000/checkout',
-    //cancel_url: 'https://authorapp.herokuapp.com/shop',
-    cancel_url: 'http://localhost:3000/shop',
-  });
+	console.log('server items = ' + req.body)
+	const session = await stripe.checkout.sessions.create({
+	payment_method_types: ['card'],
+	line_items: [
+		{
+		price_data: {
+			currency: 'usd',
+			product_data: {
+			name: 'T-shirt',
+			},
+			unit_amount: 2000,
+		},
+		quantity: 1,
+		},
+	],
+	mode: 'payment',
+	//success_url: 'https://authorapp.herokuapp.com/checkout',
+	success_url: 'http://localhost:3000/checkout',
+	//cancel_url: 'https://authorapp.herokuapp.com/shop',
+	cancel_url: 'http://localhost:3000/shop',
+	});
 
-  res.json({ id: session.id });
+	res.json({ id: session.id });
+
+	console.log('checkout success' + session.id )
 });
 
 	app.get('api/users', (req, res, next) => {

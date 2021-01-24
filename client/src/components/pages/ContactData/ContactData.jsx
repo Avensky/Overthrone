@@ -53,9 +53,16 @@ const ContactData = props => {
         const stripe = await stripePromise;
 
         // Call your backend to create the Checkout Session
-        const response = await fetch('/api/checkout', { method: 'POST' });
+        const response = await fetch('/api/checkout', { 
+            method: 'POST',
 
-        const session = await response.json();
+            //make sure to serialize your JSON body
+            body: JSON.stringify({
+              items: props.addedItems
+            })
+        })
+
+        const session = await response.json()
 
         // When the customer clicks on the button, redirect them to Checkout.
         const result = await stripe.redirectToCheckout({
