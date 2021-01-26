@@ -3,7 +3,7 @@ const User          = mongoose.model('User')
 const Stripe        = require('stripe');
 const stripe        = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 const bodyParser    = require('body-parser')
-
+const endpointSecret ='whsec_8uBYP8hWJrpcTob7wWS1MWJsYcEIVSzR'
 module.exports = function(app, passport) {
 
 // =============================================================================
@@ -13,16 +13,73 @@ module.exports = function(app, passport) {
 //	app.get('/', function(req, res) {
 //		res.render('index.ejs');
 //	});
-app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
-	const payload = req.body;
+const fulfillOrder = (session) => {
+	// TODO: fill me in
+	console.log("Fulfilling order", session);
+  }
   
-	console.log("Got payload: " + payload);
+  const createOrder = (session) => {
+	// TODO: fill me in
+	console.log("Creating order", session);
+  }
   
-	res.status(200);
+  const emailCustomerAboutFailedPayment = (session) => {
+	// TODO: fill me in
+	console.log("Emailing customer", session);
+  }
+  
+  app.post('/webhook', bodyParser.raw({type: 'application/json'}), (request, response) => {
+	const payload = request.body;
+	const sig = request.headers['stripe-signature'];
+  
+	let event;
+  
+	try {
+	  event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+	} catch (err) {
+	  return response.status(400).send(`Webhook Error: ${err.message}`);
+	}
+	
+	switch (event.type) {
+		case 'checkout.session.completed': {
+		  const session = event.data.object;
+		  // Save an order in your database, marked as 'awaiting payment'
+		  createOrder(session);
+	
+		  // Check if the order is paid (e.g., from a card payment)
+		  //
+		  // A delayed notification payment will have an `unpaid` status, as
+		  // you're still waiting for funds to be transferred from the customer's
+		  // account.
+		  if (session.payment_status === 'paid') {
+			fulfillOrder(session);
+		  }
+	
+		  break;
+		}
+	
+		case 'checkout.session.async_payment_succeeded': {
+		  const session = event.data.object;
+	
+		  // Fulfill the purchase...
+		  fulfillOrder(session);
+	
+		  break;
+		}
+	
+		case 'checkout.session.async_payment_failed': {
+		  const session = event.data.object;
+	
+		  // Send an email to the customer asking them to retry their order
+		  emailCustomerAboutFailedPayment(session);
+	
+		  break;
+		}
+	  }
 });
 
 app.post('/api/checkout', async (req, res) => {
-	console.log('server items = ' + req.body)
+	//console.log('server items = ' + req.body)
 	const session = await stripe.checkout.sessions.create({
 	payment_method_types: ['card'],
 	line_items: [
@@ -46,7 +103,7 @@ app.post('/api/checkout', async (req, res) => {
 
 	res.json({ id: session.id });
 
-	console.log('checkout success' + session.id )
+//	console.log('checkout success' + session.id )
 });
 
 	app.get('api/users', (req, res, next) => {
