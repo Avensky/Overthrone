@@ -38,12 +38,12 @@ const ContactData = props => {
     
         // console.log('Cart found in local storage ' + localCart)
     let [items, setItems ]= useState([
-        {id:1,title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0 },
-        {id:2,title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0 },
-        {id:3,title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0 },
-        {id:4,title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0 },
-        {id:5,title:'Cropped-sho',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
-        {id:6,title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }
+        {id:'price_1IFFnkELbEgFNgrjBSXLtJec',title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0 },
+        {id:'price_1IFFqOELbEgFNgrjxEAMOVGz',title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0 },
+        {id:'price_1IFFqwELbEgFNgrjE4MEjU6R',title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0 },
+        {id:'price_1IFFrvELbEgFNgrj8zRYYsTi',title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0 },
+        {id:'price_1IFFsnELbEgFNgrjUUlOQvQR',title:'Cropped-shoe', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
+        {id:'price_1IFFtgELbEgFNgrj7Xycyyhu',title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }
     ])
     let stringItems = JSON.stringify(items)
     // console.log('items = '+ stringItems)
@@ -99,16 +99,8 @@ const ContactData = props => {
         const stripe = await stripePromise;
 
         let line_items = addedItems.map( item => {
-            let mydata = {
-                    currency: 'usd',
-                    product_data: {
-                        name: item.title,
-                    },
-                    unit_amount: item.price*100,
-            }
-            
             let data = {
-                    price_data: mydata,
+                    price: item.id,
                     quantity : item.quantity
             }
         

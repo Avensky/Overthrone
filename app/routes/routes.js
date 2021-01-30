@@ -15,26 +15,22 @@ module.exports = function(app, passport) {
 
 
 app.post('/api/checkout', async (req, res) => {
-	//let body = req.body
-	let body = JSON.stringify(req.body.items)
-	//console.log('server items = ' + JSON.stringify(body))
-	console.log('server items = ' + body)
-	let items = [
-		{
-		price_data: {
-			currency: 'usd',
-			product_data: {
-			name: 'T-shirt',
-			},
-			unit_amount: 2000,
-		},
+	let body = req.body.items
+	// let body = JSON.stringify(req.body.items)
+	console.log('server items = ' + JSON.stringify(body))
+	// console.log('server items = ' + body)
+	let items = [{
+		price: 'price_1IFFnkELbEgFNgrjBSXLtJec',
 		quantity: 1,
-		},
+	 },{
+		price: 'price_1IFFqwELbEgFNgrjE4MEjU6R',
+		quantity: 2,
+	 },
 	]
 	console.log('Sample Items = ' + JSON.stringify(items))
 	const session = await stripe.checkout.sessions.create({
 	payment_method_types: ['card'],
-	line_items: items,
+	line_items: body,
 	// line_items: [
 	// 	{
 	// 	price_data: {
