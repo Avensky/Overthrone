@@ -15,10 +15,11 @@ module.exports = function(app, passport) {
 
 
 app.post('/api/checkout', async (req, res) => {
-	//console.log('server items = ' + req.body)
-	const session = await stripe.checkout.sessions.create({
-	payment_method_types: ['card'],
-	line_items: [
+	//let body = req.body
+	let body = JSON.stringify(req.body.items)
+	//console.log('server items = ' + JSON.stringify(body))
+	console.log('server items = ' + body)
+	let items = [
 		{
 		price_data: {
 			currency: 'usd',
@@ -29,7 +30,24 @@ app.post('/api/checkout', async (req, res) => {
 		},
 		quantity: 1,
 		},
-	],
+	]
+	console.log('Sample Items = ' + JSON.stringify(items))
+	const session = await stripe.checkout.sessions.create({
+	payment_method_types: ['card'],
+	line_items: items,
+	// line_items: [
+	// 	{
+	// 	price_data: {
+	// 		currency: 'usd',
+	// 		product_data: {
+	// 		name: 'T-shirt',
+	// 		},
+	// 		unit_amount: 2000,
+	// 	},
+	// 	quantity: 1,
+	// 	},
+	// ],
+
 	mode: 'payment',
 	//success_url: 'https://authorapp.herokuapp.com/checkout',
 	success_url: 'http://localhost:3000/checkout',

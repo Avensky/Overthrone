@@ -47,13 +47,7 @@ module.exports = {mongoose}
 // app.use('/files', express.static("files"));
 
 // set up cors to allow us to accept requests from our client
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000", // allow to server to accept request from different origin
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     credentials: true // allow session cookie from browser to pass through
-//   })
-// );
+
 
 // Set security HTTP headers
 // app.use(helmet());
@@ -77,20 +71,13 @@ module.exports = {mongoose}
 // read cookies (needed for auth)
 //app.use(cookieParser());
 
-//app.use(bodyParser.urlencoded({extended: false})) // get information from html forms
-//app.use(bodyParser.json())
-
-//app.use(bodyParser.json({
-//  verify: (request, result, buf) => {
-//   request.rawBody = buf
-//  }
-//}))
 
 // Use JSON parser for all non-webhook routes
 app.use((req, res, next) => {
   if (req.originalUrl === '/webhook') {
     next();
   } else {
+    // set up cors to allow us to accept requests from our client
     cors({
       origin: "http://localhost:3000", // allow to server to accept request from different origin
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
