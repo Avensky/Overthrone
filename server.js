@@ -27,6 +27,7 @@ const stripe         = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 require('./app/models/character');
 require('./app/models/faq');
 require('./app/models/shop');
+require('./app/models/orders');
 require('./config/passport')(passport); // pass passport for configuration
 
 dotenv.config({ path: './config/config.env' });
@@ -88,14 +89,61 @@ app.use((req, res, next) => {
   }
 });
 
+
+const Order         = mongoose.model('Order')  
+
 const fulfillOrder = (session) => {
 	// TODO: fill me in
 	console.log("Fulfilling order", session);
 }
-  
+
 const createOrder = (session) => {
 // TODO: fill me in
 console.log("Creating order", session);
+const orderObj = new Order({
+  id                          : session.id,
+  object                      : session.object,                
+  allow_promotion_codes       : session.allow_promotion_codes,
+  amount_subtotal             : session.amount_subtotal,       
+  amount_total                : session.amount_total,          
+  billing_address_collection  : session.billing_address_collection,
+  cancel_url                  : session.cancel_url,            
+  client_reference_id         : session.client_reference_id,
+  currency                    : session.currency,              
+  customer                    : session.customer,              
+  customer_details : {
+    email      : session.customer_details.email,              
+    tax_exempt : session.customer_details.tax_exempt,        
+    tax_ids    : session.customer_details.tax_ids              
+  },
+  customer_email              : session.customer_email,        
+  livemode                    : session.livemode,
+  locale                      : session.locale,                
+  metadata                    : session.metadata,
+  mode                        : session.mode,
+  payment_intent              : session.payment_intent,        
+  payment_method_types        : session.payment_method_types,  
+  payment_status              : session.payment_status,        
+  setup_intent                : session.setup_intent,          
+  shipping                    : session.shipping,              
+  shipping_address_collection : session.shipping_address_collection,
+  submit_type                 : session.submit_type,
+  subscription                : session.subscription,       
+  success_url                 : session.success_url,           
+  total_details: { 
+    amount_discount       : session.total_details.amount_discount,      
+    amount_tax            : session.total_details.amount_tax          
+  }
+})
+orderObj.save((err)=>{
+  if(err){
+  console.log(err);
+  res.send('Unable to save character data!');
+  }
+  else
+  res.send('character data saved successfully!');
+})
+
 }
 
 const emailCustomerAboutFailedPayment = (session) => {
@@ -132,7 +180,50 @@ app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
 		case 'checkout.session.completed': {
 		  const session = event.data.object;
 		  // Save an order in your database, marked as 'awaiting payment'
-		  createOrder(session);
+      // createOrder(session);
+      const orderObj = new Order({
+        id                          : session.id,
+        object                      : session.object,                
+        allow_promotion_codes       : session.allow_promotion_codes,
+        amount_subtotal             : session.amount_subtotal,       
+        amount_total                : session.amount_total,          
+        billing_address_collection  : session.billing_address_collection,
+        cancel_url                  : session.cancel_url,            
+        client_reference_id         : session.client_reference_id,
+        currency                    : session.currency,              
+        customer                    : session.customer,              
+        customer_details : {
+          email      : session.customer_details.email,              
+          tax_exempt : session.customer_details.tax_exempt,        
+          tax_ids    : session.customer_details.tax_ids              
+        },
+        customer_email              : session.customer_email,        
+        livemode                    : session.livemode,
+        locale                      : session.locale,                
+        metadata                    : session.metadata,
+        mode                        : session.mode,
+        payment_intent              : session.payment_intent,        
+        payment_method_types        : session.payment_method_types,  
+        payment_status              : session.payment_status,        
+        setup_intent                : session.setup_intent,          
+        shipping                    : session.shipping,              
+        shipping_address_collection : session.shipping_address_collection,
+        submit_type                 : session.submit_type,
+        subscription                : session.subscription,       
+        success_url                 : session.success_url,           
+        total_details: { 
+          amount_discount       : session.total_details.amount_discount,      
+          amount_tax            : session.total_details.amount_tax          
+        }
+      })
+      orderObj.save((err)=>{
+        if(err){
+        console.log(err);
+        res.send('Unable to save character data!');
+        }
+        else
+        res.send('character data saved successfully!');
+      })
 	
 		  // Check if the order is paid (e.g., from a card payment)
 		  //

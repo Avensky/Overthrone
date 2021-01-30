@@ -1,5 +1,6 @@
 const mongoose      = require('mongoose')
 const User          = mongoose.model('User')
+const Order         = mongoose.model('Order')  
 const Stripe        = require('stripe');
 const stripe        = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 
@@ -19,15 +20,15 @@ app.post('/api/checkout', async (req, res) => {
 	// let body = JSON.stringify(req.body.items)
 	console.log('server items = ' + JSON.stringify(body))
 	// console.log('server items = ' + body)
-	let items = [{
-		price: 'price_1IFFnkELbEgFNgrjBSXLtJec',
-		quantity: 1,
-	 },{
-		price: 'price_1IFFqwELbEgFNgrjE4MEjU6R',
-		quantity: 2,
-	 },
-	]
-	console.log('Sample Items = ' + JSON.stringify(items))
+	// let items = [{
+	// 	price: 'price_1IFFnkELbEgFNgrjBSXLtJec',
+	// 	quantity: 1,
+	//  },{
+	// 	price: 'price_1IFFqwELbEgFNgrjE4MEjU6R',
+	// 	quantity: 2,
+	//  },
+	// ]
+	// console.log('Sample Items = ' + JSON.stringify(items))
 	const session = await stripe.checkout.sessions.create({
 	payment_method_types: ['card'],
 	line_items: body,
