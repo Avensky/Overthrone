@@ -137,3 +137,8 @@ export const CHECKOUT                 = 'CHECKOUT';
 export const CHECKOUT_START           = 'CHECKOUT_START';
 export const CHECKOUT_SUCCESS         = 'CHECKOUT_SUCCESS';
 export const CHECKOUT_FAIL            = 'CHECKOUT_FAIL';
+
+export const FETCH_ORDERS             = 'FETCH_ORDERS';
+export const FETCH_ORDERS_START       = 'FETCH_ORDERS_START';
+export const FETCH_ORDERS_SUCCESS       = 'FETCH_ORDERS_SUCCESS';
+export const FETCH_ORDERS_FAIL          = 'FETCH_ORDERS_FAIL';

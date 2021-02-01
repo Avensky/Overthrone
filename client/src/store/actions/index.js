@@ -53,3 +53,8 @@ export {
 export { 
     setContacts 
 } from './contacts';
+
+export {
+    fetchOrders,
+    fetchOrdersStart,
+} from './orders'

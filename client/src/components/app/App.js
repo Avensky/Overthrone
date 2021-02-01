@@ -20,6 +20,7 @@ import Home           from '../pages/Home/Home'
 import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
 import ContactData   from '../pages/ContactData/ContactData'
+import Orders         from '../pages/Orders/Orders'
 import './App.scss'
 // import useHttp        from '../../hooks/http'
 // import axios          from 'axios'
@@ -53,6 +54,7 @@ const App = props => {
 //  }, [])
 const fetchData = async () => {
   props.onFetchUser()
+  console.log('user = ' + props.fetchedUser)
 }
 
 useEffect(()=> {
@@ -90,7 +92,7 @@ useEffect(()=> {
 
   let routes = (
     <Switch>
-      <Route path="/checkout"             component={Checkout} />/
+      <Route path="/checkout"             component={Checkout} />
       <Route path="/authentication"       component={Auth} />
       <Route path="/connectLocal"         component={ConnectLocal} />
       <Route path="/signup"               component={Signup} />
@@ -111,6 +113,7 @@ useEffect(()=> {
   if (props.fetchedUser) {
     routes = (
       <Switch>
+        <Route path="/orders"               component={Orders} />
         <Route path="/checkout"             component={Checkout} />
         <Route path="/authentication"      render={props => <Auth {...props} />} />
         <Route path="/contactData"         component={ContactData} />

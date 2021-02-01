@@ -6,6 +6,19 @@ const stripe        = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 
 module.exports = function(app, passport) {
 
+	app.post('/api/orders', (req,res) =>{          //get all faqs info from db
+		let id = req.body
+		console.log('id = ' + JSON.stringify(id))		
+		Order.find({ 'userid' : id._id},{}, (err,doc)=>{
+			if(doc)
+				res.json(doc);
+			else {
+				//res.err(err.message);
+				res.status(404).send('Ops! Orders not found');
+			}
+		})
+	});
+
 // =============================================================================
 // normal routes ===============================================================
 // =============================================================================
