@@ -101,7 +101,8 @@ const ContactData = props => {
         let line_items = addedItems.map( item => {
             let data = {
                     price: item.id,
-                    quantity : item.quantity
+                    quantity : item.quantity,
+                    tax_rates: ['txr_1IFmGYELbEgFNgrjLX2kMXq6']
             }
         
             return (
@@ -119,8 +120,9 @@ const ContactData = props => {
 
             //make sure to serialize your JSON body
             body: JSON.stringify({
-              items: line_items//,
-              //address: user.addresses
+              items: line_items,
+              address: user.addresses,
+              userid: props.user['_id']
             })
         })
 

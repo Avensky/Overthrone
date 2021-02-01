@@ -17,8 +17,12 @@ module.exports = function(app, passport) {
 
 app.post('/api/checkout', async (req, res) => {
 	let body = req.body.items
+	let userid = req.body.userid
+	let shipping = req.body.address
 	// let body = JSON.stringify(req.body.items)
 	console.log('server items = ' + JSON.stringify(body))
+	console.log('server userid = ' + JSON.stringify(userid))
+	console.log('server shipping = ' + JSON.stringify(shipping))
 	// console.log('server items = ' + body)
 	// let items = [{
 	// 	price: 'price_1IFFnkELbEgFNgrjBSXLtJec',
@@ -52,7 +56,45 @@ app.post('/api/checkout', async (req, res) => {
 	cancel_url: 'http://localhost:3000/shop',
 	});
 
-	res.json({ id: session.id });
+	//	let items = body.map(item => {
+	//		let data = {
+	//			price: item.id,
+	//			quantity : item.quantity,
+	//			tax_rates: ['txr_1IFmGYELbEgFNgrjLX2kMXq6']
+	//		}
+	//		return (
+	//			data
+	//		)
+	//	})
+
+	let items = req.body.items
+
+	const orderObj = new Order({
+		sessionid: session.id,
+		userid: userid,
+		date: new Date(),
+		items: items,
+		shipping : {
+			name    	: shipping.name, 
+			phone   	: shipping.phone, 
+			address1	: shipping.address1,
+			address2	: shipping.address2,
+			city    	: shipping.city, 
+			state   	: shipping.state,
+			zipCode 	: shipping.zipCode,
+			email   	: shipping.email
+		}	
+	})
+	orderObj.save((err)=>{
+		if(err){
+		console.log(err);
+		res.send('Unable to save order data!');
+		}
+		else
+		//res.send('order data saved successfully!');
+		res.json({ id: session.id });
+	})
+
 
 //	console.log('checkout success' + session.id )
 });
@@ -141,7 +183,7 @@ app.post('/api/checkout', async (req, res) => {
 				addresses : {
 					name    	: req.body.name, 
 					phone   	: req.body.phone, 
-					address1	: req.body.address,
+					address1	: req.body.address1,
 					address2	: req.body.address2,
 					city    	: req.body.city, 
 					state   	: req.body.state,

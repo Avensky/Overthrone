@@ -74,20 +74,41 @@ module.exports = {mongoose}
 
 
 // Use JSON parser for all non-webhook routes
-app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook') {
-    next();
-  } else {
-    // set up cors to allow us to accept requests from our client
-    cors({
-      origin: "http://localhost:3000", // allow to server to accept request from different origin
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      credentials: true // allow session cookie from browser to pass through
-    })
-    bodyParser.json()(req, res, next)
-    bodyParser.urlencoded({extended: false})
+// app.use((req, res, next) => {
+//   if (req.originalUrl === '/webhook') {
+//     next();
+//   } else {
+//     // set up cors to allow us to accept requests from our client
+//     cors({
+//       origin: "http://localhost:3000", // allow to server to accept request from different origin
+//       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//       credentials: true // allow session cookie from browser to pass through
+//     })
+//     bodyParser.json()(req, res, next)
+//     bodyParser.urlencoded({extended: false})
+//   }
+// });
+
+
+
+
+// cors({
+//   origin: "http://localhost:3000", // allow to server to accept request from different origin
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true // allow session cookie from browser to pass through
+// })
+// bodyParser.json()(req, res, next)
+//bodyParser.urlencoded({extended: false})
+
+
+
+
+app.use(bodyParser.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf
   }
-});
+}))
+
 
 
 const Order         = mongoose.model('Order')  
@@ -100,50 +121,6 @@ const fulfillOrder = (session) => {
 const createOrder = (session) => {
 // TODO: fill me in
 console.log("Creating order", session);
-const orderObj = new Order({
-  id                          : session.id,
-  object                      : session.object,                
-  allow_promotion_codes       : session.allow_promotion_codes,
-  amount_subtotal             : session.amount_subtotal,       
-  amount_total                : session.amount_total,          
-  billing_address_collection  : session.billing_address_collection,
-  cancel_url                  : session.cancel_url,            
-  client_reference_id         : session.client_reference_id,
-  currency                    : session.currency,              
-  customer                    : session.customer,              
-  customer_details : {
-    email      : session.customer_details.email,              
-    tax_exempt : session.customer_details.tax_exempt,        
-    tax_ids    : session.customer_details.tax_ids              
-  },
-  customer_email              : session.customer_email,        
-  livemode                    : session.livemode,
-  locale                      : session.locale,                
-  metadata                    : session.metadata,
-  mode                        : session.mode,
-  payment_intent              : session.payment_intent,        
-  payment_method_types        : session.payment_method_types,  
-  payment_status              : session.payment_status,        
-  setup_intent                : session.setup_intent,          
-  shipping                    : session.shipping,              
-  shipping_address_collection : session.shipping_address_collection,
-  submit_type                 : session.submit_type,
-  subscription                : session.subscription,       
-  success_url                 : session.success_url,           
-  total_details: { 
-    amount_discount       : session.total_details.amount_discount,      
-    amount_tax            : session.total_details.amount_tax          
-  }
-})
-orderObj.save((err)=>{
-  if(err){
-  console.log(err);
-  res.send('Unable to save character data!');
-  }
-  else
-  res.send('character data saved successfully!');
-})
-
 }
 
 const emailCustomerAboutFailedPayment = (session) => {
@@ -151,12 +128,13 @@ const emailCustomerAboutFailedPayment = (session) => {
 console.log("Emailing customer", session);
 }
   
-app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
-//app.post('/webhook', (request, response) => {
-	//const payload = req.body;
+//app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
+app.post('/webhook', (req, res) => {
+	const payload = req.rawBody;
 	//const payload = JSON.stringify(request.body);
 	//const payload = request.rawBody;
 	//console.log('rawBody' + JSON.stringify(payload))
+	console.log('body' + JSON.stringify(req.body))
 	const sig = req.headers['stripe-signature'];
   
 	let event;
@@ -166,7 +144,7 @@ app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
     //console.log('rawBody = ' + payload)
     //console.log('sig = ' + sig)
     //console.log('endpointSecret = ' + endpointSecret)
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
     
 	} catch (err) {
     console.log('Webhook Error = '+ err.message)
@@ -178,51 +156,60 @@ app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
 	
 	switch (event.type) {
 		case 'checkout.session.completed': {
-		  const session = event.data.object;
+      const session = event.data.object;
+      // let body = req.body
+      // let userid = req.body.userid
+      // let shipping = req.body.address
+      // console.log('webhook items = ' + JSON.stringify(body))
+      // console.log('webhook userid = ' + JSON.stringify(userid))
+      // console.log('webhook shipping = ' + JSON.stringify(shipping))
 		  // Save an order in your database, marked as 'awaiting payment'
       // createOrder(session);
-      const orderObj = new Order({
-        id                          : session.id,
-        object                      : session.object,                
-        allow_promotion_codes       : session.allow_promotion_codes,
-        amount_subtotal             : session.amount_subtotal,       
-        amount_total                : session.amount_total,          
-        billing_address_collection  : session.billing_address_collection,
-        cancel_url                  : session.cancel_url,            
-        client_reference_id         : session.client_reference_id,
-        currency                    : session.currency,              
-        customer                    : session.customer,              
-        customer_details : {
-          email      : session.customer_details.email,              
-          tax_exempt : session.customer_details.tax_exempt,        
-          tax_ids    : session.customer_details.tax_ids              
-        },
-        customer_email              : session.customer_email,        
-        livemode                    : session.livemode,
-        locale                      : session.locale,                
-        metadata                    : session.metadata,
-        mode                        : session.mode,
-        payment_intent              : session.payment_intent,        
-        payment_method_types        : session.payment_method_types,  
-        payment_status              : session.payment_status,        
-        setup_intent                : session.setup_intent,          
-        shipping                    : session.shipping,              
-        shipping_address_collection : session.shipping_address_collection,
-        submit_type                 : session.submit_type,
-        subscription                : session.subscription,       
-        success_url                 : session.success_url,           
-        total_details: { 
-          amount_discount       : session.total_details.amount_discount,      
-          amount_tax            : session.total_details.amount_tax          
+
+      Order.findOneAndUpdate({'sessionid' : session.id},{
+        $set:{
+          id                          : session.id,
+          object                      : session.object,                
+          allow_promotion_codes       : session.allow_promotion_codes,
+          amount_subtotal             : session.amount_subtotal,       
+          amount_total                : session.amount_total,          
+          billing_address_collection  : session.billing_address_collection,
+          cancel_url                  : session.cancel_url,            
+          client_reference_id         : session.client_reference_id,
+          currency                    : session.currency,              
+          customer                    : session.customer,              
+          customer_details : {
+            email      : session.customer_details.email,              
+            tax_exempt : session.customer_details.tax_exempt,        
+            tax_ids    : session.customer_details.tax_ids              
+          },
+          customer_email              : session.customer_email,        
+          livemode                    : session.livemode,
+          locale                      : session.locale,                
+          metadata                    : session.metadata,
+          mode                        : session.mode,
+          payment_intent              : session.payment_intent,        
+          payment_method_types        : session.payment_method_types,  
+          payment_status              : session.payment_status,        
+          setup_intent                : session.setup_intent,          
+          //shipping                    : session.shipping,              
+          shipping_address_collection : session.shipping_address_collection,
+          submit_type                 : session.submit_type,
+          subscription                : session.subscription,       
+          success_url                 : session.success_url,           
+          total_details: { 
+            amount_discount       : session.total_details.amount_discount,      
+            amount_tax            : session.total_details.amount_tax          
+          }
         }
-      })
-      orderObj.save((err)=>{
-        if(err){
-        console.log(err);
-        res.send('Unable to save character data!');
+      },(err, doc) => {
+        if(doc){
+          //res.redirect('/profile')
+          res.send('Address updated successfully!');
         }
-        else
-        res.send('character data saved successfully!');
+        else {
+          res.err(err.message);
+        }
       })
 	
 		  // Check if the order is paid (e.g., from a card payment)
