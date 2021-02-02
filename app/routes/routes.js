@@ -5,11 +5,13 @@ const Stripe        = require('stripe');
 const stripe        = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 
 module.exports = function(app, passport) {
-
 	app.post('/api/orders', (req,res) =>{          //get all faqs info from db
 		let id = req.body
-		console.log('id = ' + JSON.stringify(id))		
-		Order.find({ 'userid' : id._id},{}, (err,doc)=>{
+		console.log( 'id = ' + JSON.stringify(id))		
+		Order.find({$and:[
+			{ 'userid' : id._id},
+			{ 'payment_status' : 'paid'}
+		]},{}, (err,doc)=>{
 			if(doc)
 				res.json(doc);
 			else {
@@ -33,55 +35,19 @@ app.post('/api/checkout', async (req, res) => {
 	let userid = req.body.userid
 	let shipping = req.body.address
 	// let body = JSON.stringify(req.body.items)
-	console.log('server items = ' + JSON.stringify(body))
-	console.log('server userid = ' + JSON.stringify(userid))
-	console.log('server shipping = ' + JSON.stringify(shipping))
-	// console.log('server items = ' + body)
-	// let items = [{
-	// 	price: 'price_1IFFnkELbEgFNgrjBSXLtJec',
-	// 	quantity: 1,
-	//  },{
-	// 	price: 'price_1IFFqwELbEgFNgrjE4MEjU6R',
-	// 	quantity: 2,
-	//  },
-	// ]
-	// console.log('Sample Items = ' + JSON.stringify(items))
+	// console.log('server items = ' + JSON.stringify(body))
+	// console.log('server userid = ' + JSON.stringify(userid))
+	// console.log('server shipping = ' + JSON.stringify(shipping))
 	const session = await stripe.checkout.sessions.create({
 	payment_method_types: ['card'],
 	line_items: body,
-	// line_items: [
-	// 	{
-	// 	price_data: {
-	// 		currency: 'usd',
-	// 		product_data: {
-	// 		name: 'T-shirt',
-	// 		},
-	// 		unit_amount: 2000,
-	// 	},
-	// 	quantity: 1,
-	// 	},
-	// ],
-
 	mode: 'payment',
 	//success_url: 'https://authorapp.herokuapp.com/checkout',
 	success_url: 'http://localhost:3000/checkout',
 	//cancel_url: 'https://authorapp.herokuapp.com/shop',
 	cancel_url: 'http://localhost:3000/shop',
 	});
-
-	//	let items = body.map(item => {
-	//		let data = {
-	//			price: item.id,
-	//			quantity : item.quantity,
-	//			tax_rates: ['txr_1IFmGYELbEgFNgrjLX2kMXq6']
-	//		}
-	//		return (
-	//			data
-	//		)
-	//	})
-
 	let items = req.body.items
-
 	const orderObj = new Order({
 		sessionid: session.id,
 		userid: userid,
@@ -107,8 +73,6 @@ app.post('/api/checkout', async (req, res) => {
 		//res.send('order data saved successfully!');
 		res.json({ id: session.id });
 	})
-
-
 //	console.log('checkout success' + session.id )
 });
 

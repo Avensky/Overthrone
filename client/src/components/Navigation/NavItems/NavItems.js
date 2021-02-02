@@ -5,7 +5,6 @@ import classes from '../../pages/Pages.module.scss';
 
 const navItems = ( props ) => (
     <ul className={myClasses.NavItems}>
-        <NavItem link="/orders"         exact>Orders</NavItem>
         <NavItem link="/books"          exact>Books</NavItem>
         <NavItem link="/authors"        exact>Authors</NavItem>
         <NavItem link="/characters"     exact>Characters</NavItem>
@@ -13,8 +12,8 @@ const navItems = ( props ) => (
         <NavItem link="/faqs"           exact>FAQs</NavItem>
         <NavItem link="/shop"           exact>Purchase</NavItem>
         {/* <NavItem link="/profile"        exact>Profile</NavItem> */}
-        {props.isAuthenticated != null
-            ? <NavItem link="/profile"          >Profile</NavItem> : null}
+        {props.isAuthenticated != null ? <NavItem link="/profile"          >Profile</NavItem> : null}
+        {props.isAuthenticated != null ? <NavItem link="/orders"           >Orders</NavItem>  : null}
         {!props.isAuthenticated
             ? <NavItem link="/authentication"   >Cotact &amp; Sign-Up</NavItem>
             : <div className={myClasses.NavItem}><a  href="/auth/logout">Logout</a></div>}

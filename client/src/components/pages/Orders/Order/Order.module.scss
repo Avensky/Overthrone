@@ -1,0 +1,16 @@
+.Order {
+    margin: 0 0 2vh;
+    width: 100%;
+    display: inline-block;
+    padding: 2vh 0;
+    background-color: #271e00;
+}
+
+.bigbox {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.box {
+    width: 50%;
+}
