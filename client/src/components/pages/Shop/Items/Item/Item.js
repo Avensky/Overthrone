@@ -2,6 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../../../Pages.module.scss';
 import myClasses from './Item.module.scss';
+import Item1 from '../../images/item1.jpg'
+import Item2 from '../../images/item2.jpg'
+import Item3 from '../../images/item3.jpg'
+import Item4 from '../../images/item4.jpg'
+import Item5 from '../../images/item6.jpg'
+import Item6 from '../../images/item6.jpg'
+
 //{classes.CardThumbnail}
 const item = props => (
     <div className={myClasses.Item} key={props.id}>

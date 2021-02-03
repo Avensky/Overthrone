@@ -10,7 +10,7 @@ import Item from './Items/Item/Item'
 // import Cart from '../Cart/Cart';
 import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
-// import NewItem from './NewItem/NewItem'
+import NewItem from './NewItem/NewItem'
 import Item1 from './images/item1.jpg'
 import Item2 from './images/item2.jpg'
 import Item3 from './images/item3.jpg'
@@ -51,13 +51,13 @@ const Purchase = props => {
 
     let [ totalPrice, setTotalPrice ] = useState(0)
     console.log('totalPrice = '+ totalPrice)
-
-    let shop = cart.map( item => {
+    console.log('shop = ' + props.shop)
+    let shop = props.shop.map( item => {
         return(
             <Item
-                img         = {item.img}
-                id          = {item.id}
+                img         = {item.image}
                 key         = {item.id}
+                id          = {item.priceid}
                 alt         = {item.title}
                 title       = {item.title}
                 link        = {"/shop/"}
@@ -69,6 +69,11 @@ const Purchase = props => {
             />
         )
     })
+
+    useEffect(() => {
+        props.getItems()
+        console.log('shop = ' + props.shop)
+    },[])
 
     useEffect(() => {
         let localCartCopy = '[]'
