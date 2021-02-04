@@ -2,20 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../../../Pages.module.scss';
 import myClasses from './Item.module.scss';
-import Item1 from '../../images/item1.jpg'
-import Item2 from '../../images/item2.jpg'
-import Item3 from '../../images/item3.jpg'
-import Item4 from '../../images/item4.jpg'
-import Item5 from '../../images/item6.jpg'
-import Item6 from '../../images/item6.jpg'
+import Image1 from '../../../../../assets/images/Image1.jpg'
+import Image2 from '../../../../../assets/images/Image2.jpg'
+import Image3 from '../../../../../assets/images/Image3.jpg'
+import Image4 from '../../../../../assets/images/Image4.jpg'
+import Image5 from '../../../../../assets/images/Image6.jpg'
+import Image6 from '../../../../../assets/images/Image6.jpg'
 
 //{classes.CardThumbnail}
-const item = props => (
+const item = props => {
+      
+    return  (
     <div className={myClasses.Item} key={props.id}>
         {/* Image */}
         <div className={myClasses.CardThumbnail}>
-            <Link to={'/shop/itemfull/' + props.id}>
-                <img src={props.img} alt={props.alt}/>
+            <Link //to={'/shop/itemfull/' + props.id}
+            >
+                <img src={props.image} alt={props.alt}/>
             </Link>
         </div>
         
@@ -34,6 +37,5 @@ const item = props => (
         {/* Price */}
         <div className={["text-center", myClasses.CardPrice].join(' ')}><p><b>${props.price}</b></p></div>
     </div>
-)
-
+)}
 export default item;

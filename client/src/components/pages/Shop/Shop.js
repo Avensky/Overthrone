@@ -11,13 +11,15 @@ import Item from './Items/Item/Item'
 import * as actions from '../../../store/actions/index';
 // import Details from './Details/Details'
 import NewItem from './NewItem/NewItem'
-import Item1 from './images/item1.jpg'
-import Item2 from './images/item2.jpg'
-import Item3 from './images/item3.jpg'
-import Item4 from './images/item4.jpg'
-import Item5 from './images/item6.jpg'
-import Item6 from './images/item6.jpg'
+import Item1 from './images/Image1.jpg'
+import Item2 from './images/Image2.jpg'
+import Item3 from './images/Image3.jpg'
+import Item4 from './images/Image4.jpg'
+import Item5 from './images/Image6.jpg'
+import Item6 from './images/Image6.jpg'
+
 import {useHistory} from 'react-router-dom'
+
 const Purchase = props => {
     let [localCart, setLocalCart] = useState(localStorage.getItem("cart"))
     let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
@@ -51,11 +53,11 @@ const Purchase = props => {
 
     let [ totalPrice, setTotalPrice ] = useState(0)
     console.log('totalPrice = '+ totalPrice)
-    console.log('shop = ' + props.shop)
+    console.log('shop = ' + JSON.stringify(props.shop))
     let shop = props.shop.map( item => {
         return(
             <Item
-                img         = {item.image}
+                image       = {item.image}
                 key         = {item.id}
                 id          = {item.priceid}
                 alt         = {item.title}

@@ -16,12 +16,12 @@ import * as Yup from 'yup'
 import Address from '../profile/Address/Address'
 //import {useHistory} from 'react-router-dom'
 
-import Item1 from '../Shop/images/item1.jpg'
-import Item2 from '../Shop/images/item2.jpg'
-import Item3 from '../Shop/images/item3.jpg'
-import Item4 from '../Shop/images/item4.jpg'
-import Item5 from '../Shop/images/item6.jpg'
-import Item6 from '../Shop/images/item6.jpg'
+import Item1 from '../Shop/images/Image1.jpg'
+import Item2 from '../Shop/images/Image2.jpg'
+import Item3 from '../Shop/images/Image3.jpg'
+import Item4 from '../Shop/images/Image4.jpg'
+import Item5 from '../Shop/images/Image6.jpg'
+import Item6 from '../Shop/images/Image6.jpg'
 
 
 import { loadStripe } from '@stripe/stripe-js';
