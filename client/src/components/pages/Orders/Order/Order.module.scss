@@ -2,10 +2,17 @@
     margin: 0 0 2vh;
     width: 100%;
     display: inline-block;
-    padding: 2vh 0;
+    padding: 2vh 2vw;
     background-color: #271e00;
 }
 
+.Order p {
+    display: inline;
+    // overflow: hidden;
+    word-break: break-all;
+    white-space: pre-wrap !important;
+    margin: 0;
+}
 .bigbox {
     display: flex;
     justify-content: space-evenly;

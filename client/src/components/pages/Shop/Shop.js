@@ -54,7 +54,7 @@ const Purchase = props => {
     let [ totalPrice, setTotalPrice ] = useState(0)
     console.log('totalPrice = '+ totalPrice)
     console.log('shop = ' + JSON.stringify(props.shop))
-    let shop = props.shop.map( item => {
+    let shop = props.items.map( item => {
         return(
             <Item
                 image       = {item.image}
@@ -68,6 +68,7 @@ const Purchase = props => {
                 desc        = {item.desc}
                 price       = {item.price}
                 quantity    = {item.quantity}
+                add         = {true}
             />
         )
     })

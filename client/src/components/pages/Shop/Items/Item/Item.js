@@ -16,8 +16,7 @@ const item = props => {
     <div className={myClasses.Item} key={props.id}>
         {/* Image */}
         <div className={myClasses.CardThumbnail}>
-            <Link //to={'/shop/itemfull/' + props.id}
-            >
+            <Link to={'/shop/itemfull/' + props.id}>
                 <img src={props.image} alt={props.alt}/>
             </Link>
         </div>
@@ -31,7 +30,10 @@ const item = props => {
         {/* Quantity */}
         <div className={myClasses.CardQuantity}>
             <p><b>{props.quantity}</b></p>
-            <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')}onClick={props.clicked}>add</i>
+            {props.add === true
+                ? <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')}onClick={props.clicked}>add</i>
+                : null
+            }
         </div>
 
         {/* Price */}

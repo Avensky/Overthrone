@@ -10,15 +10,16 @@ const Order = props => {
         return(
             <Item
                 img         = {item.img}
-                id          = {item.id}
+                id          = {item.price.id}
                 key         = {item.id}
-                alt         = {item.title}
-                title       = {item.title}
+                alt         = {item.description}
+                title       = {item.description}
                 link        = {"/shop/"}
                 to          = "/"
          //       clicked     = {() => addToCart(item.id)}
+                add         = {false}
                 desc        = {item.desc}
-                price       = {item.price}
+                price       = {item.price.unit_amount/100*item.quantity}
                 quantity    = {item.quantity}
             />
         )
@@ -26,25 +27,22 @@ const Order = props => {
 
     return (        
         <div className={myClasses.Order}>
-            <p>Ordered on {props.date}</p>
-            <p>Order ID {props.sessionid}</p>
+            <p>Ordered on : {props.date}</p><br />
+            <p>Order ID : {props.sessionid}</p>
             <div className={myClasses.bigbox}>
                 <div className={myClasses.box}>
                     <Address 
-                        link     ='Shipping Address'
-                        name     = {props.name}
-                        phone    = {props.phone}
-                        address  = {props.address1}
-                        address2 = {props.address2}
-                        city     = {props.city}
-                        state    = {props.state}
-                        zipCode  = {props.zipCode}
-                        email    = {props.email}
+                        link            = 'Shipping Address'
+                        name            = {props.name}
+                        phone           = {props.phone}
+                        address         = {props.line1}
+                        address2        = {props.line2}
+                        city            = {props.city}
+                        state           = {props.state}
+                        postal_code     = {props.postal_code}
+                        email           = {props.email}
                     
                     />
-
-      
-
                 </div>
                 <div className={myClasses.box}>
                     <Summary 

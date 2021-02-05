@@ -2,6 +2,7 @@ const mongoose      = require('mongoose')
 const User          = mongoose.model('User')
 const Order         = mongoose.model('Order')  
 const Stripe        = require('stripe');
+//const { default: item } = require('../../client/src/components/pages/Shop/Items/Item/Item');
 const stripe        = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 
 module.exports = function(app, passport) {
@@ -32,39 +33,44 @@ module.exports = function(app, passport) {
 
 app.post('/api/checkout', async (req, res) => {
 	let body = req.body.items
+	//console.log('checkout body = ' + JSON.stringify(body))
+	//let body = req.body.items.map( item => {
+	//	let data = {
+	//		price: item.id, 
+	//		quantity: item.quantity
+	//	}
+	//	return data
+	//})
+
+
 	let userid = req.body.userid
-	let shipping = req.body.address
+	// let shipping = req.body.address
 	// let body = JSON.stringify(req.body.items)
-	// console.log('server items = ' + JSON.stringify(body))
+	console.log('checkout items = ' + JSON.stringify(body))
 	// console.log('server userid = ' + JSON.stringify(userid))
 	// console.log('server shipping = ' + JSON.stringify(shipping))
+	
 	const session = await stripe.checkout.sessions.create({
-	payment_method_types: ['card'],
-	line_items: body,
-	mode: 'payment',
-	//success_url: 'https://authorapp.herokuapp.com/checkout',
-	success_url: 'http://localhost:3000/checkout',
-	//cancel_url: 'https://authorapp.herokuapp.com/shop',
-	cancel_url: 'http://localhost:3000/shop',
+		billing_address_collection: 'auto',
+    	shipping_address_collection: {
+			allowed_countries: ['US'],
+		},
+		payment_method_types: ['card'],
+		line_items: body,
+		mode: 'payment',
+		//success_url: 'https://authorapp.herokuapp.com/checkout',
+		success_url: 'http://localhost:3000/checkout',
+		//cancel_url: 'https://authorapp.herokuapp.com/shop',
+		cancel_url: 'http://localhost:3000/shop',
 	});
-	let items = req.body.items
+	//res.json({ id: session.id });
 	const orderObj = new Order({
-		sessionid: session.id,
-		userid: userid,
-		date: new Date(),
-		items: items,
-		shipping : {
-			name    	: shipping.name, 
-			phone   	: shipping.phone, 
-			address1	: shipping.address1,
-			address2	: shipping.address2,
-			city    	: shipping.city, 
-			state   	: shipping.state,
-			zipCode 	: shipping.zipCode,
-			email   	: shipping.email
-		}	
-	})
-	orderObj.save((err)=>{
+		sessionid                     : session.id,
+		userid                        : userid,
+		date                          : new Date(),
+		payment_status                : "unpaid",  
+	  })
+	  orderObj.save((err)=>{
 		if(err){
 		console.log(err);
 		res.send('Unable to save order data!');
@@ -73,7 +79,7 @@ app.post('/api/checkout', async (req, res) => {
 		//res.send('order data saved successfully!');
 		res.json({ id: session.id });
 	})
-//	console.log('checkout success' + session.id )
+	
 });
 
 	app.get('api/users', (req, res, next) => {
