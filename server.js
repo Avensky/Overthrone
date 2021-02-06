@@ -45,7 +45,7 @@ mongoose.connect(keys.mongoURI, {
 module.exports = {mongoose}
 
 // allow files to be stored in files directory
-// app.use('/files', express.static("files"));
+app.use('/files', express.static("files"));
 
 // set up cors to allow us to accept requests from our client
 

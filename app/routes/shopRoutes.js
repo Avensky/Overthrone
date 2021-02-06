@@ -1,6 +1,6 @@
 // const router = require("express").Router();
 const productController = require("../controllers/shopController");
-const multerInstance = require('../../multer')
+const multerInstance = require('../../image')
 const productRepository = require('../repository')
 // load all the things we need
 const mongoose              = require('mongoose')
@@ -8,7 +8,34 @@ const mongoose              = require('mongoose')
 const Product             = mongoose.model('Product')
 
 module.exports = function(app) {
-    // app.post("/", multerInstance.upload.single('image'), productController.createProduct);
+//    app.post("/api/addImage", multerInstance.upload.single('imageData'), productController.createProduct);
+    app.post("/api/addImage", multerInstance.upload.single('imageData'), (req, res, next) => {
+        console.log(req.body);
+        const productObj = new Product({
+            imageName: req.body.imageName,
+            imageData: req.file.path
+        })
+        newImage.save()
+            .then((result) => {
+                console.log(result);
+                res.status(200).json({
+                    success: true,
+                    document: result
+                })
+            })
+            .catch((err) => next(err))
+    });
+    var cpUpload = multerInstance.upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
+    app.post('/cool-profile', cpUpload, function (req, res, next) {
+      // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
+      //
+      // e.g.
+      //  req.files['avatar'][0] -> File
+      //  req.files['gallery'] -> Array
+      //
+      // req.body will contain the text fields, if there were any
+    })
+
     // app.get("/api/items", async (req, res) => {
     //     try {
     //         let products = await productRepository.products();

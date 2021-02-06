@@ -257,6 +257,9 @@ const Purchase = props => {
                     <h1>Shop</h1>
                 </div>
             </div>
+            <form action="/api/addImage" method="post" enctype="multipart/form-data">
+                <input type="file" name="avatar" />
+            </form>
             {/*
             <div className='container'>
                 <div className={['page-header', 'text-center'].join(' ')}>

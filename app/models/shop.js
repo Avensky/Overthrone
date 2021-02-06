@@ -21,7 +21,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Please include the product price"]
     },
-    image: {
+    imageName: {
+        type: String,
+        required: false
+    },
+    imageData: {
         type: String,
         required: false
     },
