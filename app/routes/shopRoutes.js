@@ -9,13 +9,13 @@ const Product             = mongoose.model('Product')
 
 module.exports = function(app) {
 //    app.post("/api/addImage", multerInstance.upload.single('imageData'), productController.createProduct);
-    app.post("/api/addImage", multerInstance.upload.single('imageData'), (req, res, next) => {
+    app.post("/api/addImage", multerInstance.upload.single('avatar'), (req, res, next) => {
         console.log(req.body);
         const productObj = new Product({
             imageName: req.body.imageName,
             imageData: req.file.path
         })
-        newImage.save()
+        productObj.save()
             .then((result) => {
                 console.log(result);
                 res.status(200).json({

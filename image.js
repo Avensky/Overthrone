@@ -3,10 +3,11 @@ const path = require("path");
 //image upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-         cb(null, path.join("./files/"));
+         cb(null, "./files/");
     },
     filename: (req, file, cb) => {
-        cb(null, Date().now + file.originalname);
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, file.fieldname  + '-' + uniqueSuffix);
     }
 });
 // checking file type

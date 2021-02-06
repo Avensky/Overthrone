@@ -7,19 +7,19 @@ const mongoose  = require('mongoose');
 const productSchema = new mongoose.Schema({
     priceid: {
         type: String,
-        required: [true, "Please include the product id"]
+        required: [false, "Please include the product id"]
     },
     name: {
         type: String,
-        required: [true, "Please include the product name"]
+        required: [false, "Please include the product name"]
     },
     desc: {
         type: String,
-        required: [true, "Please include the product description"]
+        required: [false, "Please include the product description"]
     },
     price: {
         type: Number,
-        required: [true, "Please include the product price"]
+        required: [false, "Please include the product price"]
     },
     imageName: {
         type: String,
@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
-        required: true
+        required: false
     }
 });
 

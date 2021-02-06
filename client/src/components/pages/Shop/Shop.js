@@ -259,6 +259,7 @@ const Purchase = props => {
             </div>
             <form action="/api/addImage" method="post" enctype="multipart/form-data">
                 <input type="file" name="avatar" />
+                <input type="submit" value="submit" class="btn btn-default" />    
             </form>
             {/*
             <div className='container'>
