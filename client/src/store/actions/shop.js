@@ -25,7 +25,7 @@ export const newItem = (values) => {
     return dispatch => {
         dispatch(newItemStart())
 
-        axios.post('/api/addProduct', values)
+        axios.post('/api/addImage', values)
             .then(response => {
                 console.log(response);
                 const data = response.data;
@@ -62,31 +62,16 @@ export const getItems = () => {
         dispatch(getItemsStart());
         axios.get( '/api/items')
         .then( result => {
-            console.log(result)
+            //console.log("result"+JSON.stringify(result))
             const items = result.data
-//            const items = []
-//                for ( let key in posts ) {
-//                    items.push( {
-//                        ...result.data[key],
-//                        id: key
-//                    } );
-//                }
-
-            items.sort(function(a, b){
-                if(a.name < b.name) { return -1; }
-                if(a.name > b.name) { return 1; }
-                return 0;
-            })
                 dispatch(getItemsSuccess(items));
             } )
             .catch( error => {
+                //console.log("reserrorult"+JSON.stringify(error))
                 dispatch(getItemsFail(error));
             } );
     };
 }
-
-
-
 
 export const getItemByIdSuccess = (charById) => {
     return {

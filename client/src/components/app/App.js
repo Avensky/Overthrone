@@ -34,7 +34,7 @@ import './App.scss'
 import Auth from  '../pages/Auth/Auth'
 const App = props => {
   const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
-  const { data, fetchedUser, loading, submitted, isLoggedIn /*, loading, userLoading*/ } = props
+  const { shop, data, fetchedUser, loading, submitted, isLoggedIn /*, loading, userLoading*/ } = props
 //  const [data, setData] = useState({ hits: [] });
   // const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
 
@@ -52,6 +52,20 @@ const App = props => {
 //    };
 //    fetchData()
 //  }, [])
+
+
+
+
+
+// const fetchItems = async () => {
+//   props.getItems()
+//   console.log('shop = ' + props.shop)
+// }
+// 
+// useEffect(()=> {
+//   if (!shop) fetchItems()
+// }, [shop])
+
 const fetchData = async () => {
   props.onFetchUser()
   console.log('user = ' + props.fetchedUser)
@@ -61,13 +75,13 @@ useEffect(()=> {
     if ( !fetchedUser){
       fetchData()
     }
-  }, [fetchedUser, submitted])
+  }, [fetchedUser])
 
-  useEffect(()=> {
-    if (data) {
-      fetchData()
-    }
-  }, [data])
+  // useEffect(()=> {
+  //   if (data) {
+  //     fetchData()
+  //   }
+  // }, [data])
 
 // useEffect(()=> {
 //     fetchData()
@@ -115,8 +129,8 @@ useEffect(()=> {
       <Switch>
         <Route path="/orders"               component={Orders} />
         <Route path="/checkout"             component={Checkout} />
-        <Route path="/authentication"      render={props => <Auth {...props} />} />
-        <Route path="/contactData"         component={ContactData} />
+        <Route path="/authentication"       render={props => <Auth {...props} />} />
+        <Route path="/contactData"          component={ContactData} />
         <Route path="/signup"               component={Signup} />
         <Route path="/books"                component={Books} />
         <Route path="/authors"              component={Authors} />
@@ -148,14 +162,16 @@ const mapStateToProps = state => {
     fetchedUser       : state.auth.payload,
     submitted         : state.auth.submitted,
     data              : state.auth.addressData,
-    authRedirectPath  : state.auth.authRedirectPath
+    authRedirectPath  : state.auth.authRedirectPath,
+    shop              : state.shop.items,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchUser     : () => dispatch(actions.fetchUser()),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/profile')),
+    onFetchUser           : () => dispatch(actions.fetchUser()),
+    onSetAuthRedirectPath : () => dispatch(actions.setAuthRedirectPath('/profile')),
+    getItems              : ()  =>{ dispatch(actions.getItems())},
   };
 };
 

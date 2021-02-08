@@ -1,127 +1,134 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-// import { Route, Switch } from 'react-router-dom';
 // import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
 import myClasses from './Shop.module.scss';
-// import Items from './Items/Items'
 import Item from './Items/Item/Item'
-// import ItemFull from './ItemFull/ItemFull';
-// import Cart from '../Cart/Cart';
 import * as actions from '../../../store/actions/index';
-// import Details from './Details/Details'
 import NewItem from './NewItem/NewItem'
-import Item1 from './images/Image1.jpg'
-import Item2 from './images/Image2.jpg'
-import Item3 from './images/Image3.jpg'
-import Item4 from './images/Image4.jpg'
-import Item5 from './images/Image6.jpg'
-import Item6 from './images/Image6.jpg'
-
 import {useHistory} from 'react-router-dom'
 
 const Purchase = props => {
-    let [localCart, setLocalCart] = useState(localStorage.getItem("cart"))
+    const { shop } = props
+    // local storage
     let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
+    console.log('localAddedItems = '+ localAddedItems)
     
-        // console.log('Cart found in local storage ' + localCart)
-    let [items, setItems ]= useState([
-        {id:'price_1IFFnkELbEgFNgrjBSXLtJec',title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0 },
-        {id:'price_1IFFqOELbEgFNgrjxEAMOVGz',title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0 },
-        {id:'price_1IFFqwELbEgFNgrjE4MEjU6R',title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0 },
-        {id:'price_1IFFrvELbEgFNgrj8zRYYsTi',title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0 },
-        {id:'price_1IFFsnELbEgFNgrjUUlOQvQR',title:'Cropped-shoe', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
-        {id:'price_1IFFtgELbEgFNgrj7Xycyyhu',title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }    
-    ])
-    let stringItems = JSON.stringify(items)
-    // console.log('items = '+ stringItems)
-
-    let [ addedItems, setAddedItems ] = useState(props.addedItems)
+    // addedItems
+    let [ addedItems, setAddedItems ] = useState(JSON.parse(localAddedItems))
+    //if ( localAddedItems && !addedItems ) { setAddedItems(JSON.parse(localAddedItems)) }
+  
     let stringAddedItems = JSON.stringify(addedItems)
     console.log('addedItems = '+ stringAddedItems)
 
-    let new_items = items.map( obj => addedItems.find(item => item.id === obj.id) || obj)
-    let [cart, setCart]= useState(new_items)
+    // items
+    let [ items, setItems ]= useState([])
+
+    let stringItems = JSON.stringify(items)
+    console.log('items = '+ stringItems)
+
+    //let new_items = items.map( obj => addedItems.find(item => item.id === obj.id) || obj)
+    //let [cart, setCart]= useState()
     //let stringCart = JSON.stringify(cart)
     //console.log('Cart = '+ stringCart)
     const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-    let [ total, setTotal] = useState(props.items.reduce(reducer, 0))
+    //let [ total, setTotal] = useState(props.items.reduce(reducer, 0))
+    let [ total, setTotal] = useState()
     console.log('total = '+ total)
 
-    let [ totalItems, setTotalItems] = useState(props.totalItems)
+    //let [ totalItems, setTotalItems] = useState(props.totalItems)
+    let [ totalItems, setTotalItems] = useState()
     console.log('totalItems = '+ totalItems)
 
-    let [ totalPrice, setTotalPrice ] = useState(0)
+    let [ totalPrice, setTotalPrice ] = useState()
     console.log('totalPrice = '+ totalPrice)
-    console.log('shop = ' + JSON.stringify(props.shop))
-    let shop = props.items.map( item => {
-        return(
+    //console.log('shop = ' + JSON.stringify(props.shop))
+
+    let myShop 
+    if(items){ 
+        myShop = items.map( item => {
+        return( 
             <Item
-                image       = {item.image}
-                key         = {item.id}
-                id          = {item.priceid}
+                image       = {item.imageData}
+                key         = {item._id}
+                id          = {item._id}
                 alt         = {item.title}
                 title       = {item.title}
                 link        = {"/shop/"}
                 to          = "/"
-                clicked     = {() => addToCart(item.id)}
+                clicked     = {() => addToCart(item._id)}
                 desc        = {item.desc}
                 price       = {item.price}
-                quantity    = {item.quantity}
+                quantity    = {item.amount||0}
                 add         = {true}
             />
         )
-    })
-
+    })}
+ 
     useEffect(() => {
-        props.getItems()
-        console.log('shop = ' + props.shop)
-    },[])
+        const fetchData = async () => { props.getItems() }
+        if ( items.length === 0){ 
+            console.log('fetchingData')
+            fetchData() 
+        }   
+    }, [])
 
-    useEffect(() => {
-        let localCartCopy = '[]'
-        if (localCart) { localCartCopy = [localAddedItems] }
-        // console.log('local storage cart = ' + localCartCopy)
-
-        // parse 
-        let parseLocalCart = JSON.parse(localCartCopy)
-        // console.log('local storage parseLocalCart = ' + parseLocalCart)
-        let itemsCopy = items
-
-        let updatedItems = itemsCopy.map( obj => parseLocalCart.find(item => item.id === obj.id) || obj)
-        let stringUpdatedItems= JSON.stringify(updatedItems)
-        // console.log('Cart Items cross reference local = ' + stringUpdatedItems)
-        setCart(updatedItems)
-
-        let localAddedItemsCopy = addedItems
-        let localAddedItemsCopyString =  JSON.stringify(localAddedItemsCopy)
-        if (localAddedItems) { 
-            localAddedItemsCopy = [localAddedItems] 
-            // parse 
-            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
-            setAddedItems(localAddedItemsCopy)
-            //localAddedItemsCopyString = JSON.stringify(localAddedItemsCopy)
-            //console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
-            props.addToCart(localAddedItemsCopy)
+    useEffect(()=> {
+        if (shop) {
+            let updatedItems
+            if(addedItems){
+                updatedItems = shop.map( obj => addedItems.find(item => item._id === obj._id) || obj)
+                console.log('useEffect = ' + updatedItems)
+                //updatedItems = addedItems
+                //updatedItems = (updatedItems)
+                return setItems(updatedItems)
+            } else {
+                return setItems(shop)
+            }
         }
-        // console.log('local storage parseLocalCart = ' + parseLocalCart)
-        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
-        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
-        setAddedItems(localAddedItemsCopy)
-        console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
-
-        let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-        console.log('totalItemQuantity = ' + totalItemsQuantity)
-        setTotalItems(totalItemsQuantity)
-
-        let totalItemsPrice = localAddedItemsCopy.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
-        console.log('totalItemPrice = ' + totalItemsPrice)
-        setTotalPrice(totalItemsPrice)
-    }, []) //only run once
-
-
+    }, [shop])
+      
+//    useEffect(() => {
+//        let localCartCopy = '[]'
+//        if (localCart) { localCartCopy = [localAddedItems] }
+//        // console.log('local storage cart = ' + localCartCopy)
+//
+//        // parse 
+//        let parseLocalCart = JSON.parse(localCartCopy)
+//        // console.log('local storage parseLocalCart = ' + parseLocalCart)
+//        let itemsCopy = items
+//
+//        let updatedItems = itemsCopy.map( obj => parseLocalCart.find(item => item.id === obj.id) || obj)
+//        let stringUpdatedItems= JSON.stringify(updatedItems)
+//        // console.log('Cart Items cross reference local = ' + stringUpdatedItems)
+//        setCart(updatedItems)
+//
+//        let localAddedItemsCopy = addedItems
+//        let localAddedItemsCopyString =  JSON.stringify(localAddedItemsCopy)
+//        if (localAddedItems) { 
+//            localAddedItemsCopy = [localAddedItems] 
+//            // parse 
+//            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
+//            setAddedItems(localAddedItemsCopy)
+//            //localAddedItemsCopyString = JSON.stringify(localAddedItemsCopy)
+//            //console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
+//            props.addToCart(localAddedItemsCopy)
+//        }
+//        // console.log('local storage parseLocalCart = ' + parseLocalCart)
+//        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
+//        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
+//        setAddedItems(localAddedItemsCopy)
+//        console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
+//
+//        let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+//        console.log('totalItemQuantity = ' + totalItemsQuantity)
+//        setTotalItems(totalItemsQuantity)
+//
+//        let totalItemsPrice = localAddedItemsCopy.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+//        console.log('totalItemPrice = ' + totalItemsPrice)
+//        setTotalPrice(totalItemsPrice)
+//    }, []) //only run once
     const history = useHistory()
-
     const purchaseHandler = () => {
         if (props.isAuth) {
 //            setPurchasing(true)
@@ -139,88 +146,65 @@ const Purchase = props => {
         history.push('/contactData')
     }
 
-
     const addToCart= ( id ) => {
-        let itemsCopy = cart
-        stringItems = JSON.stringify(itemsCopy)
-        console.log('stringItems = ' + stringItems)
-        console.log('item.id = ' + id)
-        let addedItem = itemsCopy.find(item=> item.id === id)
-        //check if the action id exists in the addedItems
-        //let parseCart = JSON.parse(cartCopy)
-        let existed_item= addedItems.find(item=> id === item.id)
-        // console.log('local storage parseCart = ' + cartCopy)
-        let updatedItems 
-        // let stringInitItems = JSON.stringify(items)
-        // console.log('inital cart in reducer = ' + stringInitItems)
-        // console.log('inital items state = ' + items)
-             
+        let addedItem = items.find(item=> item._id === id)
+        let existed_item = addedItems.find(item=> id === item._id)
+        let updatedItems, stringMyAddedItems 
         if (existed_item) {
-            addedItem.quantity += 1
-            let stringAddedItem = JSON.stringify(addedItem)
-            console.log('string addedItem = ' + stringAddedItem)
-            // updatedItems = itemsCopy.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
-            updatedItems = addedItems.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
-
-            //filter 
-            let stringUpdatedItems= JSON.stringify(updatedItems)
-            console.log('string updatedItems = ' + stringUpdatedItems)
-            let myAddedItems = [...addedItems, addedItem]
-            let stringMyAddedItems = JSON.stringify(myAddedItems)
-            console.log('string MyAddedItems = ' + stringMyAddedItems)
-            let myTotal = total + addedItem.price
+            addedItem.amount += 1
+            updatedItems = addedItems.map( obj => [addedItem].find(item => item._id === obj._id) || obj)
             setAddedItems(updatedItems)
             //make cart a string and store in local space
-            localStorage.setItem("addedItems", stringUpdatedItems)
-            // setCart(updatedItems)
-            //make cart a string and store in local space
-            localStorage.setItem("cart", stringUpdatedItems)
-            setTotal(myTotal)
-
-            let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
-            console.log('totalItemPrice = ' + totalItemsPrice)
-            setTotalPrice(totalItemsPrice)
-
-            let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-            console.log('totalItemQuantity = ' + totalItemsQuantity)
-            setTotalItems(totalItemsQuantity)
-            props.addToCart(updatedItems, totalItemsPrice, totalItemsQuantity)
+            stringMyAddedItems = JSON.stringify(updatedItems)
+            localStorage.setItem("addedItems", stringMyAddedItems)
+            // let myTotal = total + addedItem.price
+            // setTotal(myTotal)
+            // 
+            // let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+            // console.log('totalItemPrice = ' + totalItemsPrice)
+            // setTotalPrice(totalItemsPrice)
+            // 
+            // let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+            // console.log('totalItemQuantity = ' + totalItemsQuantity)
+            // setTotalItems(totalItemsQuantity)
+            // props.addToCart(updatedItems, totalItemsPrice, totalItemsQuantity)
+            props.addToCart(updatedItems)
         } else {
-            addedItem.quantity = 1;
-            let stringAddedItem = JSON.stringify(addedItem)
-            console.log('string addedItem = ' + stringAddedItem)
-            updatedItems = itemsCopy.map(obj => [addedItem].find(o => o.id === obj.id) || obj)
-            let stringUpdatedItems= JSON.stringify(updatedItems)
-            console.log('string updatedItems = ' + stringUpdatedItems)
-            let myAddedItems = [...addedItems, addedItem]
-            let stringMyAddedItems = JSON.stringify(myAddedItems)
+            addedItem.amount = 1;
+            if (addedItems) {
+                updatedItems = [...addedItems, addedItem]
+                setAddedItems(updatedItems)
+            } else {
+                updatedItems = [addedItem]
+                setAddedItems(updatedItems)
+            }
+            stringMyAddedItems = JSON.stringify(updatedItems)
             console.log('string MyAddedItems = ' + stringMyAddedItems)
-            let myTotal = total + addedItem.price
-            setAddedItems(myAddedItems)
+            
             //make cart a string and store in local space
             localStorage.setItem("addedItems", stringMyAddedItems)
-            setCart(updatedItems)
-            //make cart a string and store in local space
-            localStorage.setItem("cart", stringUpdatedItems)
+
+            let myTotal = total + addedItem.price
             setTotal(myTotal)
 
-            let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
-            console.log('totalItemPrice = ' + totalItemsPrice)
-            setTotalPrice(totalItemsPrice)
+            // let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+            // console.log('totalItemPrice = ' + totalItemsPrice)
+            // setTotalPrice(totalItemsPrice)
 
-            let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-            console.log('totalItemQuantity = ' + totalItemsQuantity)
-            setTotalItems(totalItemsQuantity)
-            props.addToCart(myAddedItems, totalItemsPrice, totalItemsQuantity)
+            // let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+            // console.log('totalItemQuantity = ' + totalItemsQuantity)
+            // setTotalItems(totalItemsQuantity)
+            //props.addToCart(myAddedItems, totalItemsPrice, totalItemsQuantity)
+            props.addToCart(updatedItems)
         } 
     }
         
-    let button = null
     let itemString = 'item'
-    if (props.addedItems.length>1) {
+    if (addedItems.length>1) {
         itemString = 'items'
     }
-    if (props.addedItems.length > 0){
+    let button
+    if (addedItems.length > 0){
         button = (
             props.isAuth 
                 ? (
@@ -253,14 +237,14 @@ const Purchase = props => {
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
             {/* Title */}
             <div className="container">
-                <div className="page-header text-center border-bottom">
+                <div className="page-header text-center">
                     <h1>Shop</h1>
                 </div>
             </div>
-            <form action="/api/addImage" method="post" enctype="multipart/form-data">
-                <input type="file" name="avatar" />
-                <input type="submit" value="submit" class="btn btn-default" />    
-            </form>
+            {/*
+                <NewItem />
+                
+            */}
             {/*
             <div className='container'>
                 <div className={['page-header', 'text-center'].join(' ')}>
@@ -291,21 +275,20 @@ const Purchase = props => {
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
                     {button}
-                    {shop}
+                    {myShop}
                     {button}
                 </div>
             </div>
         </div>
     )
-}
+} 
 
 
 const mapStateToProps = state => {
     return {
-        items       : state.cart.items,
         addedItems  : state.cart.addedItems,
         totalItems  : state.cart.totalItems,
-        shop       : state.shop.items,
+        shop        : state.shop.items,
         isAuth      : state.auth.payload
     };
 };

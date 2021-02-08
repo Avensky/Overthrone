@@ -5,7 +5,7 @@ const initialState = {
     items: [],
     loading: false,
     posted: false,
-    itemById: []
+    itemById: [],
 };
 
 const newItemStart = (state, action) => {
@@ -35,7 +35,6 @@ const getItemsSuccess = (state, action) => {
         items: action.items,
         loading: false
     })}
-        
 
 const getItemByIdStart = (state, action) => {
     return updateObject( state, {
