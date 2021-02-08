@@ -155,7 +155,7 @@ const mapStateToProps = (state)=>{
 }
 const mapDispatchToProps = (dispatch)=>{
     return{
-        checkout         : (values)=>{ dispatch(actions.checkout(values))},
+        //checkout         : (values)=>{ dispatch(actions.checkout(values))},
         removeItem       : (id)=>{dispatch(removeItem(id))},
         addQuantity      : (id)=>{dispatch(addQuantity(id))},
         subtractQuantity : (id)=>{dispatch(subtractQuantity(id))}

@@ -14,8 +14,13 @@ const Wrapper = props => {
     //console.log('addedItems = '+ stringAddedItems)
     //let [ totalItems, setTotalItems] = useState(0)
     //let totalItems = props.addedItems.length
-    //let totalItems = props.addedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-    //console.log('totalItems = '+ totalItems)
+
+    // let cart 
+    // if (props.addedItems) {
+    //     cart = props.addedItems.reduce((a, b) => a + b.amount, 0)
+    //     //console.log('addedItems = '+ props.addedItems)
+    //     console.log('cart = '+ cart)
+    // }
 
     const [showSidebar, setShowSidebar] = useState(false)
     const closeSidebarHandler = () => {
@@ -74,8 +79,8 @@ const Wrapper = props => {
                 <Navbar 
                     isAuth={props.isAuth}
                     sidebarToggleClicked={sidebarToggleHandler}
-                    //items = {addedItems}
-                    //cart={totalItems}
+                    //items = {props.totalItems}
+                    cart={props.totalItems}
                 />
                 <Sidebar 
                     isAuth={props.isAuth}
@@ -95,6 +100,7 @@ const Wrapper = props => {
 const mapStateToProps = state => {
     return {
         addedItems  : state.cart.addedItems,
+        total       : state.cart.total,
         totalItems  : state.cart.totalItems,
         isAuth      : state.auth.payload
     }

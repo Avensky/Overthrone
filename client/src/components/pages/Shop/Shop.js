@@ -5,7 +5,7 @@ import classes from '../Pages.module.scss';
 import myClasses from './Shop.module.scss';
 import Item from './Items/Item/Item'
 import * as actions from '../../../store/actions/index';
-import NewItem from './NewItem/NewItem'
+// import NewItem from './NewItem/NewItem'
 import {useHistory} from 'react-router-dom'
 
 const Purchase = props => {
@@ -15,7 +15,7 @@ const Purchase = props => {
     console.log('localAddedItems = '+ localAddedItems)
     
     // addedItems
-    let [ addedItems, setAddedItems ] = useState(JSON.parse(localAddedItems))
+    let [ addedItems, setAddedItems ] = useState(JSON.parse(localAddedItems)||[])
     //if ( localAddedItems && !addedItems ) { setAddedItems(JSON.parse(localAddedItems)) }
   
     let stringAddedItems = JSON.stringify(addedItems)
@@ -37,11 +37,11 @@ const Purchase = props => {
     console.log('total = '+ total)
 
     //let [ totalItems, setTotalItems] = useState(props.totalItems)
-    let [ totalItems, setTotalItems] = useState()
-    console.log('totalItems = '+ totalItems)
-
-    let [ totalPrice, setTotalPrice ] = useState()
-    console.log('totalPrice = '+ totalPrice)
+    //let [ totalItems, setTotalItems] = useState()
+    //console.log('totalItems = '+ totalItems)
+    //
+    //let [ totalPrice, setTotalPrice ] = useState()
+    //console.log('totalPrice = '+ totalPrice)
     //console.log('shop = ' + JSON.stringify(props.shop))
 
     let myShop 
@@ -70,17 +70,23 @@ const Purchase = props => {
         if ( items.length === 0){ 
             console.log('fetchingData')
             fetchData() 
-        }   
+        }
     }, [])
 
     useEffect(()=> {
+        let updatedItems, totalItems 
         if (shop) {
-            let updatedItems
             if(addedItems){
                 updatedItems = shop.map( obj => addedItems.find(item => item._id === obj._id) || obj)
                 console.log('useEffect = ' + updatedItems)
-                //updatedItems = addedItems
-                //updatedItems = (updatedItems)
+
+                let myTotal = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+                console.log('totalItemPrice = ' + myTotal)
+                setTotal(myTotal)
+
+                totalItems = props.addedItems.reduce((a, b) => a + b.amount, 0)
+                console.log('totalItems = '+ totalItems)
+                props.onAddToCart(addedItems, myTotal, totalItems)
                 return setItems(updatedItems)
             } else {
                 return setItems(shop)
@@ -149,7 +155,7 @@ const Purchase = props => {
     const addToCart= ( id ) => {
         let addedItem = items.find(item=> item._id === id)
         let existed_item = addedItems.find(item=> id === item._id)
-        let updatedItems, stringMyAddedItems 
+        let updatedItems, stringMyAddedItems, cart
         if (existed_item) {
             addedItem.amount += 1
             updatedItems = addedItems.map( obj => [addedItem].find(item => item._id === obj._id) || obj)
@@ -157,18 +163,18 @@ const Purchase = props => {
             //make cart a string and store in local space
             stringMyAddedItems = JSON.stringify(updatedItems)
             localStorage.setItem("addedItems", stringMyAddedItems)
-            // let myTotal = total + addedItem.price
-            // setTotal(myTotal)
-            // 
-            // let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
-            // console.log('totalItemPrice = ' + totalItemsPrice)
-            // setTotalPrice(totalItemsPrice)
-            // 
+
+            let myTotal = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+            console.log('totalItemPrice = ' + myTotal)
+            setTotal(myTotal)
+            
             // let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
             // console.log('totalItemQuantity = ' + totalItemsQuantity)
             // setTotalItems(totalItemsQuantity)
             // props.addToCart(updatedItems, totalItemsPrice, totalItemsQuantity)
-            props.addToCart(updatedItems)
+            
+            cart = addedItems.reduce((a, b) => a + b.amount, 0)
+            props.onAddToCart(updatedItems, myTotal, cart)
         } else {
             addedItem.amount = 1;
             if (addedItems) {
@@ -184,18 +190,16 @@ const Purchase = props => {
             //make cart a string and store in local space
             localStorage.setItem("addedItems", stringMyAddedItems)
 
-            let myTotal = total + addedItem.price
+            let myTotal = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
+            console.log('totalItemPrice = ' + myTotal)
             setTotal(myTotal)
-
-            // let totalItemsPrice = updatedItems.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
-            // console.log('totalItemPrice = ' + totalItemsPrice)
-            // setTotalPrice(totalItemsPrice)
 
             // let totalItemsQuantity = updatedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
             // console.log('totalItemQuantity = ' + totalItemsQuantity)
             // setTotalItems(totalItemsQuantity)
             //props.addToCart(myAddedItems, totalItemsPrice, totalItemsQuantity)
-            props.addToCart(updatedItems)
+            cart = updatedItems.reduce((a, b) => a + b.amount, 0)
+            props.onAddToCart(addedItems, myTotal, cart)
         } 
     }
         
@@ -210,7 +214,7 @@ const Purchase = props => {
                 ? (
                 <div className={myClasses.dualGrid}>
                     <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
-                        <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${totalPrice}</p>
+                        <p className='one-line'>Cart Subtotal ({props.totalItems} {itemString}): ${props.total}</p>
                         <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
                     </div>
                     <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
@@ -222,7 +226,7 @@ const Purchase = props => {
                 : (
                 <div className={myClasses.dualGrid}>
                     <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
-                        <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${totalPrice}</p>
+                        <p className='one-line'>Cart Subtotal ({props.totalItems} {itemString}): ${props.total}</p>
                         <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
                     </div>
                     <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
@@ -288,6 +292,7 @@ const mapStateToProps = state => {
     return {
         addedItems  : state.cart.addedItems,
         totalItems  : state.cart.totalItems,
+        total       : state.cart.total,
         shop        : state.shop.items,
         isAuth      : state.auth.payload
     };
@@ -295,7 +300,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart           : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
+        onAddToCart         : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
         loadCart            : (cart)                           =>{ dispatch(actions.loadCart(cart))},
         getItems            : ()                               =>{ dispatch(actions.getItems())},
         // removeItem          : (id)=>{dispatch(actions.removeItem(id))},
