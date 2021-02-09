@@ -22,7 +22,8 @@ const initialState = {
     totalItems  : 0,
     totalPrice  : 0,
     checkout    : null,
-    error       : null
+    error       : null,
+    cart        : null
 }
 
 const addToCart= ( state, action ) => {
@@ -35,23 +36,18 @@ const addToCart= ( state, action ) => {
 }
 
 const removeItem = ( state, action ) => {
-    let itemToRemove        = state.addedItems.find(item=> action.id === item.id)
-    let quantityToRemove    = itemToRemove.quantity
-    let new_items           = state.addedItems.filter(item=> action.id !== item.id)
-    //let addedItem           = state.items.find(item=> item.id === action.id)
-    
-    //calculating the total
-    let newTotal = state.total - (itemToRemove.price * itemToRemove.quantity )
-    console.log(itemToRemove)
 
-    itemToRemove.quantity = 0;
+    let itemToRemove        = state.addedItems.find(item=> action.id === item._id)
+    let quantityToRemove    = itemToRemove.amount
+    let new_items           = state.addedItems.filter(item=> action.id !== item._id)
+    let newTotal            = state.total - (itemToRemove.price * itemToRemove.quantity )
+
     //store in local storage
     let stringNewItems= JSON.stringify(new_items)
     localStorage.setItem("addedItems", stringNewItems)
     return{
         ...state,
         addedItems: new_items,
-        //addedItems: [...state.addedItems, addedItem],
         total: newTotal,
         totalItems: state.totalItems - quantityToRemove
     }
@@ -119,9 +115,11 @@ const subShipping = ( state, action ) => {
 }
 
 const loadCart = ( state, action ) => {
+    console.log('reducer cart'+action.cart)
+    console.log('reducer stringcart'+JSON.stringify(action.cart))
     return {
         state,
-        items: action.cart
+        addedItems: action.cart
     }
 }
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 //import { Link } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
@@ -22,45 +22,33 @@ const Cart = props => {
     
     const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
     let total
-    let array = props.items
-    if ( array != '') {
-        total = array.reduce(reducer, 0)
-        console.log("total = " + array.reduce(reducer, 0))
-    }
-    
+   
     //to remove the item completely
-    const handleRemove              = (id)=>{ 
-        props.removeItem(id);
-    }
+    const handleRemove              = (id)=>{ props.removeItem(id)}
     //to add the quantity
-    const handleAddQuantity         = (id)=>{ 
-        props.addQuantity(id);
-    }
+    const handleAddQuantity         = (id)=>{ props.addQuantity(id)}
     //to substruct from the quantity
-    const handleSubtractQuantity    = (id)=>{ 
-        props.subtractQuantity(id);
-    }
-
+    const handleSubtractQuantity    = (id)=>{ props.subtractQuantity(id);}
     const history = useHistory()
     
     const purchaseHandler = () => {
-        if (props.isAuth) {
-            history.push('/contactData')
-        } else {
-//            this.props.onSetAuthRedirectPath('/checkout');
-            history.push('/authentication');
+        if (props.isAuth) {history.push('/contactData')
+        } else {history.push('/authentication');}
+    }
+
+    const purchaseCancelHandler = () => {setPurchasing(false)}
+
+    const purchaseContinueHandler = async (event) => {history.push('/cart')};
+
+    useEffect(() => {
+        const fetchData = async () => { props.loadCart() }
+        if ( props.items.length === 0){ 
+            console.log('fetchingData')
+            fetchData() 
         }
-    }
+    }, [])
 
-    const purchaseCancelHandler = () => {
-        setPurchasing(false)
-    }
 
-    const purchaseContinueHandler = async (event) => {
-        history.push('/cart')
-    };
-
-    
     let orderSummary = null
     if (props.items) {
         orderSummary = <OrderSummary 
@@ -70,23 +58,24 @@ const Cart = props => {
             purchaseContinued={purchaseContinueHandler}
         />;
     }
+
     let cartList = props.items;
-    let uniqueChars = [...new Set(cartList)];
+    console.log("cartList"+cartList)
     let addedItems = props.items.length ?
         (  
-            uniqueChars.map(item=>{
+            cartList.map(item=>{
                 return(
-                    <div className={myClasses.Cart} key={item.id}>
+                    <div className={myClasses.Cart} key={item._id}>
                         {/* Product */}
                         <div className={myClasses.Item}>
                             {/* Remove */}
                             <div className={myClasses.Remove}>
-                                <i className="material-icons" onClick={()=>{handleRemove(item.id)}}>clear</i>
+                                <i className="material-icons" onClick={()=>{handleRemove(item._id)}}>clear</i>
                             </div>
 
                             {/* Image */}
                             <div className={myClasses.CardThumbnail}>
-                                <img src={item.img} alt={item.alt} />
+                                <img src={'http://localhost:5000/'+item.imageData} alt={item.alt} />
                             </div>
                             
                             {/* Description */}
@@ -98,7 +87,7 @@ const Cart = props => {
                             {/* Quantity */}
                             <div className={myClasses.CardQuantity}>
                                 <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
-                                <p><b>{item.quantity}</b></p>
+                                <p><b>{item.amount}</b></p>
                                 <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleAddQuantity(item.id)}}>arrow_drop_up</i>                                   
                             </div>
 
@@ -108,11 +97,8 @@ const Cart = props => {
                     </div>
                 )
             })
-        ):
-
-            (  
-            <p>Nothing.</p>
-            )
+        )
+        :<p>Nothing.</p>
         return(
             <Auxiliary>
                 <Modal show={purchasing} modalClosed={purchaseCancelHandler}> 
@@ -148,17 +134,17 @@ const Cart = props => {
 
 const mapStateToProps = (state)=>{
     return{
-        items: state.cart.addedItems,
-        isAuth: state.auth.payload
+        items   : state.cart.addedItems,
+        isAuth  : state.auth.payload
         //addedItems: state.addedItems
     }
 }
 const mapDispatchToProps = (dispatch)=>{
     return{
-        //checkout         : (values)=>{ dispatch(actions.checkout(values))},
-        removeItem       : (id)=>{dispatch(removeItem(id))},
-        addQuantity      : (id)=>{dispatch(addQuantity(id))},
-        subtractQuantity : (id)=>{dispatch(subtractQuantity(id))}
+        loadCart         : (cart)   =>{ dispatch(actions.loadCart(cart))},
+        removeItem       : (id)     =>{dispatch(removeItem(id))},
+        addQuantity      : (id)     =>{dispatch(addQuantity(id))},
+        subtractQuantity : (id)     =>{dispatch(subtractQuantity(id))}
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Cart)

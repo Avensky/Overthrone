@@ -12,6 +12,7 @@ export const addToCart= (addedItems, total, totalItems)=>{
 }
 //remove item action
 export const removeItem=(id)=>{
+    console.log('removeItem id = '+ id)
     return{
         type: actionTypes.REMOVE_ITEM,
         id
@@ -32,15 +33,16 @@ export const addQuantity=(id)=>{
     }
 }
 
-export const loadCart = ( cart ) => {
-    //console.log('action cart = '    + cart)
-    let stringCart = JSON.stringify(cart).replace(/\\"/g, '"')
-    
+export const loadCart = ( values ) => {
+    // local storage
+    let stringCart = localStorage.getItem("addedItems")
+    console.log('stringCart = '+ stringCart)
+
     //console.log('action cart = '    + stringCart)
-    let fixedCart = JSON.parse(stringCart)
+    let cart = JSON.parse(stringCart)
 
     return{
         type: actionTypes.LOAD_CART,
-        cart: fixedCart
+        cart
     }
 }
