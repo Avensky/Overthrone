@@ -88,7 +88,7 @@ const Cart = props => {
                     <div className={myClasses.Cart}>
                         {/* Title */}
                         <div className={myClasses.Title}>
-                            <h1>Shopping Cart:</h1>
+                            <h1><a href="/cart">Shopping Cart</a></h1>
                         </div>
                         <div className={myClasses.Collection}>
                             {addedItems}

@@ -72,20 +72,20 @@ const addToCart = ( state, action ) => {
 }
 
 const removeItem = ( state, action ) => {
-
     let itemToRemove        = state.addedItems.find(item=> action.id === item._id)
     let quantityToRemove    = itemToRemove.amount
-    let new_items           = state.addedItems.filter(item=> action.id !== item._id)
-    let newTotal            = state.total - (itemToRemove.price * itemToRemove.quantity )
-
+    let addedItems          = state.addedItems.filter(item=> action.id !== item._id)
+    let newTotal            = state.total - (itemToRemove.price * itemToRemove.amount )
+    let shop                = state.items.map( obj => addedItems.find(item => item._id === obj._id) || obj)
     //store in local storage
-    let stringNewItems= JSON.stringify(new_items)
+    let stringNewItems= JSON.stringify(addedItems)
     localStorage.setItem("addedItems", stringNewItems)
     return{
         ...state,
-        addedItems: new_items,
+        addedItems: addedItems,
         total: newTotal,
-        totalItems: state.totalItems - quantityToRemove
+        totalItems: state.totalItems - quantityToRemove,
+        shop : shop
     }
 }
 
