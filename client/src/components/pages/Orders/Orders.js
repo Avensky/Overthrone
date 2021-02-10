@@ -9,8 +9,13 @@ import Spinner from '../../UI/Spinner/Spinner';
 
 const Orders = (props) => {
     useEffect(() => {
-        props.onFetchOrders(props.user);
-        console.log('userid = ' + props.user._id)
+        const fetchData = async () => {
+            props.onFetchOrders(props.user);
+        };
+        if ( props.orders.length === 0 ){
+          fetchData()
+        }
+        //console.log('userid = ' + props.user._id)
     }, [])
 
     let orders = <Spinner />;

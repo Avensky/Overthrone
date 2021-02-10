@@ -9,43 +9,15 @@ import * as actions from '../../../store/actions/index';
 import {useHistory} from 'react-router-dom'
 
 const Purchase = props => {
-    const { shop } = props
-    // local storage
-    let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
-    //console.log('localAddedItems = '+ localAddedItems)
-    
-    // addedItems
-    let [ addedItems, setAddedItems ] = useState(JSON.parse(localAddedItems)||[])
-    //if ( localAddedItems && !addedItems ) { setAddedItems(JSON.parse(localAddedItems)) }
-  
-    let stringAddedItems = JSON.stringify(addedItems)
-    //console.log('addedItems = '+ stringAddedItems)
+    useEffect(() => {
+        const getItems = async () => { props.getItems() }
+        if ( props.items.length === 0){ 
+            console.log('Fetching Items')
+            getItems() 
+        }
+    }, [])
 
-    // items
-    let [ items, setItems ]= useState([])
-
-    let stringItems = JSON.stringify(items)
-    //console.log('items = '+ stringItems)
-
-    //let new_items = items.map( obj => addedItems.find(item => item.id === obj.id) || obj)
-    //let [cart, setCart]= useState()
-    //let stringCart = JSON.stringify(cart)
-    //console.log('Cart = '+ stringCart)
-    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-    //let [ total, setTotal] = useState(props.items.reduce(reducer, 0))
-    let [ total, setTotal] = useState()
-    //console.log('total = '+ total)
-
-    //let [ totalItems, setTotalItems] = useState(props.totalItems)
-    //let [ totalItems, setTotalItems] = useState()
-    //console.log('totalItems = '+ totalItems)
-    //
-    //let [ totalPrice, setTotalPrice ] = useState()
-    //console.log('totalPrice = '+ totalPrice)
-    //console.log('shop = ' + JSON.stringify(props.shop))
-    const addToCart = (id) => {
-        props.addToCart(id)
-    }
+    const addToCart = (id) => {props.addToCart(id)}
     let myShop 
     if(props.shop){ 
         myShop = props.shop.map( item => {
@@ -70,22 +42,12 @@ const Purchase = props => {
 
     const history = useHistory()
     const purchaseHandler = () => {
-        if (props.isAuth) {
-//            setPurchasing(true)
-            history.push('/cart')
-        } else {
-//            this.props.onSetAuthRedirectPath('/checkout');
-            history.push('/authentication');
-        }
+        (props.isAuth) ? history.push('/cart') : history.push('/authentication')
     }
 
-    const viewCartHandler = () => {
-        history.push('/cart')
-    }
-    const checkoutHandler = () => {
-        history.push('/contactData')
-    }
-        
+    const viewCartHandler = () => {history.push('/cart')}
+    const checkoutHandler = () => {history.push('/')}
+    let addedItems = props.addedItems
     let itemString = 'item'
     if (addedItems.length>1) {
         itemString = 'items'
@@ -125,7 +87,7 @@ const Purchase = props => {
             {/* Title */}
             <div className="container">
                 <div className="page-header text-center">
-                    <h1>Shop</h1>
+                    <h1><a href='/shop'>Shop</a></h1>
                 </div>
             </div>
             {/*
@@ -161,7 +123,6 @@ const Purchase = props => {
             */}
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
-                    {button}
                     {myShop}
                     {button}
                 </div>
@@ -184,7 +145,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart         : (id)   =>{ dispatch(actions.addToCart(id))},
+        addToCart           : (id)   =>{ dispatch(actions.addToCart(id))},
+        getItems            : ()     =>{ dispatch(actions.getItems())},
         loadCart            : (cart) =>{ dispatch(actions.loadCart(cart))},
         // getItems            : ()     =>{ dispatch(actions.getItems())},
         // removeItem          : (id)=>{dispatch(actions.removeItem(id))},

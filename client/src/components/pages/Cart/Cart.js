@@ -11,14 +11,11 @@ import * as actions from '../../../store/actions/index';
 
 const Cart = props => {
     const [purchasing, setPurchasing] = useState(false);
-    
-    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-    let total
-   
+    //const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
     //to remove the item completely
     const handleRemove              = (id)=>{ props.removeItem(id)}
     //to add the quantity
-    const handleAddQuantity         = (id)=>{ props.addQuantity(id)}
+    const addToCart                 = (id)=>{ props.addToCart(id)}
     //to substruct from the quantity
     const handleSubtractQuantity    = (id)=>{ props.subtractQuantity(id);}
     const history = useHistory()
@@ -36,7 +33,7 @@ const Cart = props => {
     if (props.items) {
         orderSummary = <OrderSummary 
             items={props.items}
-            total={total}
+            total={props.total}
             purchaseCancelled={purchaseCancelHandler}
             purchaseContinued={purchaseContinueHandler}
         />;
@@ -69,9 +66,9 @@ const Cart = props => {
 
                             {/* Quantity */}
                             <div className={myClasses.CardQuantity}>
-                                <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item.id)}}>arrow_drop_down</i>
+                                <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item._id)}}>arrow_drop_down</i>
                                 <p><b>{item.amount}</b></p>
-                                <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleAddQuantity(item.id)}}>arrow_drop_up</i>                                   
+                                <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{addToCart(item._id)}}>arrow_drop_up</i>                                   
                             </div>
 
                             {/* Price */}
@@ -95,7 +92,7 @@ const Cart = props => {
                         </div>
                         <div className={myClasses.Collection}>
                             {addedItems}
-                            {total ? <h3>Total = ${total}</h3> : null}
+                            {props.total ? <h3>Total = ${props.total}</h3> : null}
                             <button 
                                 className='btn-primary btn'
                                 // disabled={!props.purchaseable}
@@ -118,6 +115,7 @@ const Cart = props => {
 const mapStateToProps = (state)=>{
     return{
         items   : state.cart.addedItems,
+        total   : state.cart.total,
         isAuth  : state.auth.payload
         //addedItems: state.addedItems
     }
@@ -126,7 +124,7 @@ const mapDispatchToProps = (dispatch)=>{
     return{
         loadCart         : (cart)   =>{ dispatch(actions.loadCart(cart))},
         removeItem       : (id)     =>{ dispatch(actions.removeItem(id))},
-        addQuantity      : (id)     =>{ dispatch(actions.addQuantity(id))},
+        addToCart        : (id)     =>{ dispatch(actions.addToCart(id))},
         subtractQuantity : (id)     =>{ dispatch(actions.subtractQuantity(id))}
     }
 }

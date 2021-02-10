@@ -153,7 +153,6 @@ const Profile = (props) =>{
                         <h1><span className="fa fa-anchor"></span> Profile Page</h1>
                     </div>
                 </div>
-                {address}
                 {local}
                 {facebook}
                 {twitter}
