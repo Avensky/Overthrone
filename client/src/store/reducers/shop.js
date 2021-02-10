@@ -21,21 +21,6 @@ const newItemSuccess = (state, action) => {
         loading: false,
         items: state.items.concat( newItem ) })}
 
-
-const getItemsStart = (state, action) => {
-    return updateObject( state, { 
-        loading: true })}
-    
-const getItemsFail = (state, action) => {
-    return updateObject( state, { 
-        loading: false })}
-  
-const getItemsSuccess = (state, action) => {
-    return updateObject(state, {
-        items: action.items,
-        loading: false
-    })}
-
 const getItemByIdStart = (state, action) => {
     return updateObject( state, {
         loading: true})}
@@ -66,14 +51,10 @@ const deleteItemSuccess = (state, action) => {
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
-        case actionTypes.NEW_ITEM_SUCCESS   : return newItemSuccess(state, action);
-        case actionTypes.NEW_ITEM_FAIL      : return newItemFail(state, action);
-        case actionTypes.NEW_ITEM_START     : return newItemStart(state, action);
-        
-        case actionTypes.GET_ITEMS_SUCCESS  : return getItemsSuccess(state, action);
-        case actionTypes.GET_ITEMS_FAIL     : return getItemsFail(state, action);
-        case actionTypes.GET_ITEMS_START    : return getItemsStart(state, action);
-        
+        case actionTypes.NEW_ITEM_SUCCESS        : return newItemSuccess(state, action);
+        case actionTypes.NEW_ITEM_FAIL           : return newItemFail(state, action);
+        case actionTypes.NEW_ITEM_START          : return newItemStart(state, action);
+              
         case actionTypes.DELETE_ITEM_SUCCESS     : return deleteItemSuccess(state, action);
         case actionTypes.DELETE_ITEM_FAIL        : return deleteItemFail(state, action);
         case actionTypes.DELETE_ITEM_START       : return deleteItemStart(state, action);

@@ -1,8 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux'
-//import { Link } from 'react-router-dom'
-import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
-import Recipe from './Recipe/Recipe'
 import classes from '../Pages.module.scss'
 import myClasses from './Cart.module.scss'
 //import Item from '../Shop/Items/Item/Item'
@@ -11,11 +8,6 @@ import OrderSummary from './OrderSummary/OrderSummary'
 import Modal from '../../UI/Modal/Modal'
 import { useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
-//import { loadStripe } from '@stripe/stripe-js';
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-//const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
-
 
 const Cart = props => {
     const [purchasing, setPurchasing] = useState(false);
@@ -40,15 +32,6 @@ const Cart = props => {
 
     const purchaseContinueHandler = async (event) => {history.push('/cart')};
 
-    useEffect(() => {
-        const fetchData = async () => { props.loadCart() }
-        if ( props.items.length === 0){ 
-            console.log('fetchingData')
-            fetchData() 
-        }
-    }, [])
-
-
     let orderSummary = null
     if (props.items) {
         orderSummary = <OrderSummary 
@@ -60,8 +43,8 @@ const Cart = props => {
     }
 
     let cartList = props.items;
-    console.log("cartList"+cartList)
-    let addedItems = props.items.length ?
+    //console.log("cartList"+cartList)
+    let addedItems = cartList.length ?
         (  
             cartList.map(item=>{
                 return(
@@ -142,9 +125,9 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
     return{
         loadCart         : (cart)   =>{ dispatch(actions.loadCart(cart))},
-        removeItem       : (id)     =>{dispatch(removeItem(id))},
-        addQuantity      : (id)     =>{dispatch(addQuantity(id))},
-        subtractQuantity : (id)     =>{dispatch(subtractQuantity(id))}
+        removeItem       : (id)     =>{ dispatch(actions.removeItem(id))},
+        addQuantity      : (id)     =>{ dispatch(actions.addQuantity(id))},
+        subtractQuantity : (id)     =>{ dispatch(actions.subtractQuantity(id))}
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Cart)

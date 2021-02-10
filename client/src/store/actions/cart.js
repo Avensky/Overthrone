@@ -1,13 +1,48 @@
 import axios from 'axios'
 import * as actionTypes from './actionTypes'
 
+/*******************************************
+ * Get Items from database
+*******************************************/
+export const getItemsSuccess = (items) => {
+    return {
+        type:  actionTypes.GET_ITEMS_SUCCESS,
+        items
+    }
+}
+export const getItemsFail = (error) => {
+    return {
+        type:  actionTypes.GET_ITEMS_FAIL, 
+        error
+    }
+}
+export const getItemsStart = () => {
+    return {
+        type:  actionTypes.GET_ITEMS_START
+    }
+}
+export const getItems = () => {
+    return dispatch => {
+        dispatch(getItemsStart())
+        axios.get( '/api/items')
+        .then( result => {
+            //console.log("result"+JSON.stringify(result))
+            const items = result.data
+                dispatch(getItemsSuccess(items));
+            } )
+            .catch( error => {
+                //console.log("reserrorult"+JSON.stringify(error))
+                dispatch(getItemsFail(error));
+            } 
+        )
+    }
+}
+
 //add cart action
-export const addToCart= (addedItems, total, totalItems)=>{
+export const addToCart= (id)=>{
     return{
         type: actionTypes.ADD_TO_CART,
-        addedItems, 
-        total, 
-        totalItems
+        id
     }
 }
 //remove item action
@@ -35,14 +70,7 @@ export const addQuantity=(id)=>{
 
 export const loadCart = ( values ) => {
     // local storage
-    let stringCart = localStorage.getItem("addedItems")
-    console.log('stringCart = '+ stringCart)
-
-    //console.log('action cart = '    + stringCart)
-    let cart = JSON.parse(stringCart)
-
     return{
         type: actionTypes.LOAD_CART,
-        cart
     }
 }

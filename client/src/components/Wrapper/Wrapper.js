@@ -8,70 +8,30 @@ import Background from './Background/Background';
 import * as actions from '../../store/actions/index';
 
 const Wrapper = props => {
-    //let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
-    //let [ addedItems, setAddedItems ] = useState([])
-    //let stringAddedItems = JSON.stringify(addedItems)
-    //console.log('addedItems = '+ stringAddedItems)
-    //let [ totalItems, setTotalItems] = useState(0)
-    //let totalItems = props.addedItems.length
-
-    // let cart 
-    // if (props.addedItems) {
-    //     cart = props.addedItems.reduce((a, b) => a + b.amount, 0)
-    //     //console.log('addedItems = '+ props.addedItems)
-    //     console.log('cart = '+ cart)
-    // }
-
     const [showSidebar, setShowSidebar] = useState(false)
-    const closeSidebarHandler = () => {
-        setShowSidebar(false)
-    }
-    
+    const closeSidebarHandler = () => {setShowSidebar(false)}
     // set state in a clean way by depending on a previous state
-    const sidebarToggleHandler = () => {
-        setShowSidebar(!showSidebar);
-    }
+    const sidebarToggleHandler = () => {setShowSidebar(!showSidebar);}
 
-    //let totalCounter = 0
-    //let totalItems = addedItems.map( (item) => totalCounter += item.quantity)
-    // let totalItems = addedItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+    useEffect(() => {
+        const getItems = async () => { props.getItems() }
+        if ( props.items.length === 0){ 
+            console.log('Fetching Items')
+            getItems() 
+        }
+    }, [])
 
-    //const calculateSum = (obj, field) => obj.map(items => items.attributes[field]).reduce((prev, curr) => prev + curr, 0);
+    useEffect(() => {
+        // let stringLocalAddedItems = localStorage.getItem("addedItems")
+        // console.log('loadCart stringLocalAddedItems = ' + stringLocalAddedItems)
+        const fetchCart = async () => { props.loadCart() }
+        //console.log('props.items = ' + props.items)
+        if ( props.items.length>0){ 
+            console.log('Fetching Cart')
+            fetchCart() 
+        }
+    }, [props.items])
 
-    //useEffect(() => {
-    //    let localAddedItemsCopy = addedItems
-    //    let localAddedItemsCopyString =  JSON.stringify(localAddedItemsCopy)
-    //    if (localAddedItems) { 
-    //        localAddedItemsCopy = [localAddedItems] 
-    //        // parse 
-    //        localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
-    //        setAddedItems(localAddedItemsCopy)
-    //        //localAddedItemsCopyString = JSON.stringify(localAddedItemsCopy)
-    //        //console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
-    //        props.addToCart(localAddedItemsCopy)
-    //    }
-    //    // console.log('local storage parseLocalCart = ' + parseLocalCart)
-    //    // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
-    //    // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
-    //    setAddedItems(localAddedItemsCopy)
-    //    console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
-    //    //console.log('added Items cross reference local = ' + localAddedItemsCopy)
-    //    props.addToCart(localAddedItemsCopy,null,)
-
-    //   // let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-    //   // console.log('totalItemQuantity = ' + totalItemsQuantity)
-    //    //setTotalItems(totalItemsQuantity)
-    //    //setTotalItems(localAddedItemsCopy.length)
-    //}, [])
-
-
-    // if (!addedItems) {
-    //     setAddedItems([])
-    // }
-    // console.log( 'prop items to nav = ' + addedItems)
-
-
-    
     return (    
         <Auxiliary>
             <div className = {classes.Layout}>
@@ -99,10 +59,12 @@ const Wrapper = props => {
 
 const mapStateToProps = state => {
     return {
-        addedItems  : state.cart.addedItems,
-        total       : state.cart.total,
-        totalItems  : state.cart.totalItems,
-        isAuth      : state.auth.payload
+        items             : state.cart.items,
+        shop              : state.cart.shop,
+        addedItems        : state.cart.addedItems,
+        total             : state.cart.total,
+        totalItems        : state.cart.totalItems,
+        isAuth            : state.auth.payload
     }
 }
 
@@ -110,6 +72,7 @@ const mapDispatchToProps = dispatch => {
     return {
         addToCart           : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
         getItems            : ()                               =>{ dispatch(actions.getItems())},
+        loadCart            : (cart)                           =>{ dispatch(actions.loadCart(cart))},
     }
 }
 

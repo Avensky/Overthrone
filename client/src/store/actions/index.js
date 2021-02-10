@@ -8,6 +8,7 @@ export {
 } from './auth';
 
 export {
+    getItems,
     addToCart,
     removeItem,
     subtractQuantity,
@@ -29,8 +30,6 @@ export {
 export {
     newItem,
     newItemStart,
-    getItems,
-    getItemsStart,
     getItemById,
     deleteItem, 
     updateItem,

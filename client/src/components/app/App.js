@@ -22,9 +22,6 @@ import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
 import ContactData   from '../pages/ContactData/ContactData'
 import Orders         from '../pages/Orders/Orders'
 import './App.scss'
-// import useHttp        from '../../hooks/http'
-// import axios          from 'axios'
-// import * as actionTypes from '../../store/actions/actionTypes'
 
 // const Auth = React.lazy(() => {
 //   return import('../pages/Auth/Auth');
@@ -32,77 +29,21 @@ import './App.scss'
 // <Route path="/authentication"      render={props => <Auth {...props} />} />
 
 import Auth from  '../pages/Auth/Auth'
+
 const App = props => {
   const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
   const { shop, data, fetchedUser, loading, submitted, isLoggedIn /*, loading, userLoading*/ } = props
-//  const [data, setData] = useState({ hits: [] });
-  // const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHttp();
-
-//  useEffect(()=> {
-//    const fetchData = async () => {
-//      const result = await axios('/api/fetchUser')
-//      .then( res => {
-//          console.log(res)
-//          setData(res.data);
-//      })
-//      .catch( error => {
-//        console.log(error)
-//        setData(error.data);
-//      });
-//    };
-//    fetchData()
-//  }, [])
-
-
-
-
-
-// const fetchItems = async () => {
-//   props.getItems()
-//   console.log('shop = ' + props.shop)
-// }
-// 
-// useEffect(()=> {
-//   if (!shop) fetchItems()
-// }, [shop])
-
-const fetchData = async () => {
-  props.onFetchUser()
-  console.log('user = ' + props.fetchedUser)
-}
 
 useEffect(()=> {
-    if ( !fetchedUser){
-      fetchData()
-    }
+  const fetchData = async () => {props.onFetchUser()}
+    if ( !fetchedUser){fetchData()}
   }, [fetchedUser])
 
-  // useEffect(()=> {
-  //   if (data) {
-  //     fetchData()
-  //   }
-  // }, [data])
-
-// useEffect(()=> {
-//     fetchData()
-// }, [data])
-
-//useEffect(()=> {
-//      fetchData()
-//  }, [])
-  
   // useEffect(()=> {
   //     if ( isLoggedIn && (authRedirectPath !== '/profile') ) {
   //         onSetAuthRedirectPath()
   //     }
   // }, [authRedirectPath, onSetAuthRedirectPath, submitted])
-    
-  // const fetchUserHandler = useCallback( () => {
-  //   sendRequest(
-  //     '/api/fetchUser',
-  //     'GET',
-  //   );
-  // }, [sendRequest]);
 
   let routes = (
     <Switch>
@@ -169,6 +110,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onAddToCart         : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
     onFetchUser           : () => dispatch(actions.fetchUser()),
     onSetAuthRedirectPath : () => dispatch(actions.setAuthRedirectPath('/profile')),
     getItems              : ()  =>{ dispatch(actions.getItems())},

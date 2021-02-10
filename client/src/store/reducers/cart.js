@@ -1,37 +1,77 @@
-import Item1 from '../images/item1.jpg'
-import Item2 from '../images/item2.jpg'
-import Item3 from '../images/item3.jpg'
-import Item4 from '../images/item4.jpg'
-import Item5 from '../images/item6.jpg'
-import Item6 from '../images/item6.jpg'
 //import { ADD_TO_CART,REMOVE_ITEM,SUB_QUANTITY,ADD_QUANTITY,ADD_SHIPPING } from '../actions/actionTypes/cart'
 import * as actionTypes from '../actions/actionTypes'
 import {updateObject} from '../../utility/utility'
 
 const initialState = {
-    items: [
-        {id:'price_1IFFnkELbEgFNgrjBSXLtJec',title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0 },
-        {id:'price_1IFFqOELbEgFNgrjxEAMOVGz',title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0 },
-        {id:'price_1IFFqwELbEgFNgrjE4MEjU6R',title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0 },
-        {id:'price_1IFFrvELbEgFNgrj8zRYYsTi',title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0 },
-        {id:'price_1IFFsnELbEgFNgrjUUlOQvQR',title:'Cropped-shoe', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
-        {id:'price_1IFFtgELbEgFNgrj7Xycyyhu',title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }    
-    ],
+    items       : [],
     addedItems  : [],
+    shop        : [],
     total       : 0.00,
     totalItems  : 0,
     totalPrice  : 0,
-    checkout    : null,
     error       : null,
-    cart        : null
+    loading     : false,
 }
 
-const addToCart= ( state, action ) => {
+const getItemsStart = (state, action) => {
+    return updateObject( state, { 
+        loading: true })}
+    
+const getItemsFail = (state, action) => {
+    return updateObject( state, { 
+        loading: false })}
+  
+const getItemsSuccess = (state, action) => {
+    //console.log('get items = ' + action.items)
+    return {
+        ...state,
+        items: action.items,
+        loading: false
+    }
+}
+
+const addToCart = ( state, action ) => {
+    let addedItem = state.items.find(item=> item._id === action.id)
+    console.log('addToCart addedItem = ' + JSON.stringify(addedItem))   
+    console.log('addToCart addedItems = ' + JSON.stringify(state.addedItems))   
+    let existed_item = state.addedItems.find(item=> action.id === item._id)
+    console.log('addToCart existed_item = ' + JSON.stringify(existed_item))
+    let stringMyAddedItems, myTotal, totalItems, shop, addedItems
+    if (existed_item) {
+        existed_item.amount += 1
+        //shop = state.items.map( obj => [addedItem].find(item => item._id === obj._id) || obj)
+        //console.log('addToCart items = ' + JSON.stringify(state.items))
+        addedItems  = state.addedItems.map( obj => [existed_item].find(item => item._id === obj._id) || obj)
+        console.log('addToCart addedItems = ' + JSON.stringify(addedItems))
+
+        shop        = state.shop.map( obj => [existed_item].find(item => item._id === obj._id) || obj)
+        console.log('addToCart shop if item exists = ' + JSON.stringify(shop))
+
+        //make cart a string and store in local space
+        stringMyAddedItems = JSON.stringify(addedItems)
+        localStorage.setItem("addedItems", stringMyAddedItems)
+        myTotal = addedItems.map(item => item.price*item.amount).reduce((prev, curr) => prev + curr, 0);
+        totalItems = addedItems.reduce((a, b) => a + b.amount, 0)
+    } else {
+        addedItem.amount = 1
+        shop = state.shop.map( obj => [addedItem].find(item => item._id === obj._id) || obj)
+        addedItems = [...state.addedItems, addedItem]
+        console.log('addToCart shop = ' + JSON.stringify(shop)) 
+        console.log('addToCart addedItems = ' + JSON.stringify(addedItems))
+
+
+        //make cart a string and store in local space
+        stringMyAddedItems = JSON.stringify(addedItems)
+        localStorage.setItem("addedItems", stringMyAddedItems)
+        myTotal = addedItems.map(item => item.price*item.amount).reduce((prev, curr) => prev + curr, 0);
+        totalItems = addedItems.reduce((a, b) => a + b.amount, 0)
+    } 
     return{
         ...state,
-        addedItems  : action.addedItems,
-        total       : action.total,
-        totalItems  : action.totalItems ,
+        addedItems  : addedItems,
+        total       : myTotal,
+        totalItems  : totalItems,
+        shop        : shop
     }
 }
 
@@ -115,11 +155,37 @@ const subShipping = ( state, action ) => {
 }
 
 const loadCart = ( state, action ) => {
-    console.log('reducer cart'+action.cart)
-    console.log('reducer stringcart'+JSON.stringify(action.cart))
+    let stringLocalAddedItems = localStorage.getItem("addedItems")
+    //console.log('loadCart stringLocalAddedItems = ' + stringLocalAddedItems)
+    let addedItems = []
+    let items = state.items
+    //console.log('loadCart state.items = ' + JSON.stringify(items))
+    let shop, totalItems, total
+
+    if (stringLocalAddedItems){
+        let localAddedItems = JSON.parse(stringLocalAddedItems)
+        addedItems = localAddedItems
+        console.log('loadCart state.addedItems = ' + JSON.stringify(addedItems))
+    }
+
+    if (items.length>0) {
+        if(addedItems.length>0){
+            //console.log('load shop = ' + JSON.stringify(items))
+            shop = state.items.map( obj => addedItems.find(item => item._id === obj._id) || obj)
+            console.log('load shop with addedItems = ' + JSON.stringify(shop))
+        } else {
+            shop = items
+            console.log('load shop without addedItems = ' + JSON.stringify(shop))
+        }
+    }
+    totalItems=addedItems.reduce((a, b) => a + b.amount, 0)
+    total = addedItems.map(item => item.price*item.amount).reduce((prev, curr) => prev + curr, 0);
     return {
-        state,
-        addedItems: action.cart
+        ...state,
+        addedItems  : addedItems,
+        totalItems  : totalItems,
+        total       : total,
+        shop        : shop
     }
 }
 
@@ -147,6 +213,10 @@ const checkoutSuccess = (state, action) => {
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
+        case actionTypes.GET_ITEMS_SUCCESS : return getItemsSuccess(state, action);
+        case actionTypes.GET_ITEMS_FAIL    : return getItemsFail(state, action);
+        case actionTypes.GET_ITEMS_START   : return getItemsStart(state, action);
+  
         case actionTypes.ADD_TO_CART       : return addToCart(state, action);
         case actionTypes.REMOVE_ITEM       : return removeItem(state, action);
         case actionTypes.ADD_QUANTITY      : return addQuantity(state, action);

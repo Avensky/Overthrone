@@ -39,40 +39,6 @@ export const newItem = (values) => {
     }
 }
 
-
-export const getItemsSuccess = (items) => {
-    return {
-        type:  actionTypes.GET_ITEMS_SUCCESS,
-        items: items
-    }
-}
-export const getItemsFail = (error) => {
-    return {
-        type:  actionTypes.GET_ITEMS_FAIL, 
-        error: error
-    }
-}
-export const getItemsStart = () => {
-    return {
-        type:  actionTypes.GET_ITEMS_START
-    }
-}
-export const getItems = () => {
-    return dispatch => {
-        dispatch(getItemsStart());
-        axios.get( '/api/items')
-        .then( result => {
-            //console.log("result"+JSON.stringify(result))
-            const items = result.data
-                dispatch(getItemsSuccess(items));
-            } )
-            .catch( error => {
-                //console.log("reserrorult"+JSON.stringify(error))
-                dispatch(getItemsFail(error));
-            } );
-    };
-}
-
 export const getItemByIdSuccess = (charById) => {
     return {
         type:  actionTypes.GET_ITEM_BY_ID_SUCCESS,
