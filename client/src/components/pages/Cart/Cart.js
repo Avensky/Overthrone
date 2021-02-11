@@ -9,10 +9,7 @@ import Modal from '../../UI/Modal/Modal'
 import { useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 import CheckoutHeader from '../Checkout/CheckoutHeader/CheckoutHeader';
-import { loadStripe } from '@stripe/stripe-js';
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
+import {purchaseContinueHandler} from '../../../utility/stripe'
 
 const Cart = props => {
     const [purchasing, setPurchasing] = useState(false);
@@ -20,68 +17,19 @@ const Cart = props => {
     const handleRemove              = (id)=>{ props.removeItem(id)}
     const addToCart                 = (id)=>{ props.addToCart(id)}
     const handleSubtractQuantity    = (id)=>{ props.subtractQuantity(id);}
-
     const viewCartHandler = () => {history.push('/shop')}
-    const checkoutHandler = () => {history.push('/')}
-
     const purchaseHandler = () => {
         props.isAuth ? setPurchasing(true) :history.push('/authentication')
     }
     const purchaseCancelHandler = () => {setPurchasing(false)}
-    const purchaseContinueHandler = async (event) => {
-        console.log('checkout start')        // Get Stripe.js instance
-        const stripe = await stripePromise;
-
-        let line_items = props.addedItems.map( item => {
-            let data = {
-                currency    : 'usd',
-                price       : item.priceid,
-                amount      : item.price*100,
-                quantity    : item.amount,
-                name        : item.name,
-                tax_rates: ['txr_1IFmGYELbEgFNgrjLX2kMXq6']
-            }
-            console.log('data = '+JSON.stringify(data))
-            return data
-        })
-
-        // Call your backend to create the Checkout Session
-        const response = await fetch('/api/checkout', { 
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-
-            //make sure to serialize your JSON body
-            body: JSON.stringify({
-                //currency: 'usd',
-                items: line_items,
-                userid: props.isAuth['_id']
-            })
-        })
-
-        const session = await response.json()
-        console.log(session);
-        // When the customer clicks on the button, redirect them to Checkout.
-        const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-        });
-
-        if (result.error) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `result.error.message`.
-        }
-    };
-
+    
     let orderSummary = null
     if (props.addedItems) {
         orderSummary = <OrderSummary 
             items={props.addedItems}
             total={props.total}
             purchaseCancelled={purchaseCancelHandler}
-            purchaseContinued={purchaseContinueHandler}
+            purchaseContinued={()=>purchaseContinueHandler(props.addedItems, props.isAuth)}
         />;
     }
 
@@ -133,7 +81,7 @@ const Cart = props => {
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
                     <div className={myClasses.Cart}>
                         {/* Title */}
-                        <div className={myClasses.Title}>
+                        <div className={["page-header text-center border-bottom"].join(' ')}>
                             <h1><a href="/cart">Shopping Cart</a></h1>
                         </div>
                         <CheckoutHeader
@@ -146,7 +94,7 @@ const Cart = props => {
                         />
                         <div className={myClasses.Collection}>
                             {addedItems}
-                            {props.total ? <h3>Total = ${props.total}</h3> : null}
+                            {props.total ? <h3>Subtotal = ${props.total}</h3> : null}
                             <button 
                                 className='btn-primary btn'
                                 type="button" role="link"

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-// import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
 import myClasses from './Shop.module.scss';
 import Item from './Items/Item/Item'
@@ -8,16 +7,27 @@ import * as actions from '../../../store/actions/index';
 // import NewItem from './NewItem/NewItem'
 import {useHistory} from 'react-router-dom'
 import CheckoutHeader from '../Checkout/CheckoutHeader/CheckoutHeader'
-
-const Purchase = props => {
-    useEffect(() => {
-        const getItems = async () => { props.getItems() }
-        if ( props.items.length === 0){ 
-            console.log('Fetching Items')
-            getItems() 
-        }
-    }, [])
+import {purchaseContinueHandler} from '../../../utility/stripe'
+import OrderSummary from '../OrderSummary/OrderSummary'
+import Modal from '../../UI/Modal/Modal'
+const Purchase = props => { 
+    const [purchasing, setPurchasing] = useState(false);
+    const history = useHistory()
     const addToCart = (id) => {props.addToCart(id)}
+    const purchaseHandler = () => {
+        props.isAuth ? setPurchasing(true) :history.push('/authentication')
+    }
+    const purchaseCancelHandler = () => {setPurchasing(false)}
+    const viewCartHandler = () => {history.push('/cart')}
+    let orderSummary = null
+    if (props.addedItems) {
+        orderSummary = <OrderSummary 
+            items={props.addedItems}
+            total={props.total}
+            purchaseCancelled={purchaseCancelHandler}
+            purchaseContinued={() => purchaseContinueHandler(props.addedItems, props.isAuth)}
+        />;
+    }
     let myShop 
     if(props.shop){
         myShop = props.shop.map( item => {
@@ -38,52 +48,23 @@ const Purchase = props => {
             />
         )}
     )}
+    
+    useEffect(() => {
+        const getItems = async () => { props.getItems() }
+        if ( props.items.length === 0){ 
+            console.log('Fetching Items')
+            getItems() 
+        }
+    }, [])
 
-    const history = useHistory()
-    const purchaseHandler = () => {
-        (props.isAuth) ? history.push('/cart') : history.push('/authentication')
-    }
-
-    const viewCartHandler = () => {history.push('/cart')}
-    const checkoutHandler = () => {history.push('/')}
-    let addedItems = props.addedItems
-    let itemString = 'item'
-    if (addedItems.length>1) {itemString = 'items'}
-    let button
-    if (addedItems.length > 0){
-        button = (
-            props.isAuth 
-                ? (
-                <div className={myClasses.dualGrid}>
-                    <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
-                        <p className='one-line'>Cart Subtotal ({props.totalItems} {itemString}): ${props.total}</p>
-                        <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
-                    </div>
-                    <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
-                        <button  className='btn-primary btn one-line' onClick={viewCartHandler}>View Cart</button>
-                        <button  className='btn-primary btn one-line' onClick={checkoutHandler}>Checkout</button>
-                    </div>
-                </div>
-                )
-                : (
-                <div className={myClasses.dualGrid}>
-                    <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
-                        <p className='one-line'>Cart Subtotal ({props.totalItems} {itemString}): ${props.total}</p>
-                        <p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>
-                    </div>
-                    <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
-                        <button  className='btn-primary btn one-line' onClick={viewCartHandler}>View Cart</button>
-                        <button  className='btn-primary btn one-line' onClick={purchaseHandler}>Sign in to Order</button>
-                    </div>
-                </div>
-                ) 
-        )
-    }   
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
+            <Modal show={purchasing} modalClosed={purchaseCancelHandler}> 
+                {orderSummary}
+            </Modal>
             {/* Title */}
             <div className="container">
-                <div className="page-header text-center">
+                <div className="page-header text-center border-bottom">
                     <h1><a href='/shop'>Shop</a></h1>
                 </div>
             </div>
@@ -121,7 +102,6 @@ const Purchase = props => {
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
                     <CheckoutHeader
-                        itemString={itemString}
                         totalItems={props.totalItems}
                         total={props.total}
                         viewTitle='View Cart'
@@ -130,7 +110,14 @@ const Purchase = props => {
                         isAuth={props.isAuth}
                     />
                     {myShop}
-                    {button}
+                    <button 
+                        className='btn-primary btn'
+                        type="button" role="link"
+                        onClick={purchaseHandler}>{
+                            props.isAuth 
+                                ? 'CONTINUE TO CHECKOUT' 
+                                : 'SIGN IN TO ORDER'}
+                    </button>
                 </div>
             </div>
         </div>
