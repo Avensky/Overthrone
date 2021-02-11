@@ -11,8 +11,8 @@ const Wrapper = props => {
     const [showSidebar, setShowSidebar] = useState(false)
     const closeSidebarHandler = () => {setShowSidebar(false)}
     // set state in a clean way by depending on a previous state
-    const sidebarToggleHandler = () => {setShowSidebar(!showSidebar);}
-
+    const sidebarToggleHandler = () => {setShowSidebar(!showSidebar)}
+    
     useEffect(() => {
         const getItems = async () => { props.getItems() }
         if ( props.items.length === 0){ 
@@ -22,10 +22,7 @@ const Wrapper = props => {
     }, [])
 
     useEffect(() => {
-        // let stringLocalAddedItems = localStorage.getItem("addedItems")
-        // console.log('loadCart stringLocalAddedItems = ' + stringLocalAddedItems)
         const fetchCart = async () => { props.loadCart() }
-        //console.log('props.items = ' + props.items)
         if ( props.items.length>0){ 
             console.log('Fetching Cart')
             fetchCart() 
@@ -70,9 +67,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart           : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
-        getItems            : ()                               =>{ dispatch(actions.getItems())},
-        loadCart            : (cart)                           =>{ dispatch(actions.loadCart(cart))},
+        getItems            : ()     =>{ dispatch(actions.getItems())},
+        loadCart            : (cart) =>{ dispatch(actions.loadCart(cart))}
     }
 }
 

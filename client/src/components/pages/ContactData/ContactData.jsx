@@ -16,157 +16,11 @@ import * as Yup from 'yup'
 import Address from '../profile/Address/Address'
 //import {useHistory} from 'react-router-dom'
 
-import Item1 from '../Shop/images/Image1.jpg'
-import Item2 from '../Shop/images/Image2.jpg'
-import Item3 from '../Shop/images/Image3.jpg'
-import Item4 from '../Shop/images/Image4.jpg'
-import Item5 from '../Shop/images/Image6.jpg'
-import Item6 from '../Shop/images/Image6.jpg'
-
-
-import { loadStripe } from '@stripe/stripe-js';
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
-
-
-
 const ContactData = props => {
-
-    let [localCart, setLocalCart] = useState(localStorage.getItem("cart"))
-    let [localAddedItems, setLocalAddedItems] = useState(localStorage.getItem("addedItems"))
-    
-        // console.log('Cart found in local storage ' + localCart)
-    let [items, setItems ]= useState([
-        {id:'price_1IFFnkELbEgFNgrjBSXLtJec',title:'Winter body',  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:110,  img: Item1, quantity: 0 },
-        {id:'price_1IFFqOELbEgFNgrjxEAMOVGz',title:'Adidas',       desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:80,   img: Item2, quantity: 0 },
-        {id:'price_1IFFqwELbEgFNgrjE4MEjU6R',title:'Vans',         desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:120,  img: Item3, quantity: 0 },
-        {id:'price_1IFFrvELbEgFNgrj8zRYYsTi',title:'White',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:260,  img: Item4, quantity: 0 },
-        {id:'price_1IFFsnELbEgFNgrjUUlOQvQR',title:'Cropped-shoe', desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:160,  img: Item5, quantity: 0 },
-        {id:'price_1IFFtgELbEgFNgrj7Xycyyhu',title:'Blues',        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, ex.",   price:90,   img: Item6, quantity: 0 }
-    ])
-    let stringItems = JSON.stringify(items)
-    // console.log('items = '+ stringItems)
-
-    let [ addedItems, setAddedItems ] = useState(props.addedItems)
-    let stringAddedItems = JSON.stringify(addedItems)
-    console.log('addedItems = '+ stringAddedItems)
-
-    let new_items = items.map( obj => addedItems.find(item => item.id === obj.id) || obj)
-    let [cart, setCart]= useState(new_items)
-    //let stringCart = JSON.stringify(cart)
-    //console.log('Cart = '+ stringCart)
-     // const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-    // let [ total, setTotal] = useState(props.items.reduce(reducer, 0))
-    //console.log('total = '+ total)
-
-    let [ totalItems, setTotalItems] = useState(props.totalItems)
-    console.log('totalItems = '+ totalItems)
-
-    let [ totalPrice, setTotalPrice ] = useState(0)
-    console.log('totalPrice = '+ totalPrice)
-
-
-
-
-
-
-    const [showForm, setShowForm]       = useState(false)
-    const [purchasing, setPurchasing]   = useState(false);
+    const [showForm, setShowForm] = useState(false)
     const history = useHistory()
-    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-    let total
-    let array = props.items
-    if ( array != '') {
-        total = array.reduce(reducer, 0)
-        console.log("total = " + array.reduce(reducer, 0))
-    }
-    
-    const purchaseHandler = () => {
-        if (props.isAuth) {
-            setPurchasing(true)
-        } else {
-//            this.props.onSetAuthRedirectPath('/checkout');
-            history.push('/authentication');
-        }
-    }
-    const purchaseCancelHandler = () => {
-        setPurchasing(false)
-    }
-
-    const purchaseContinueHandler = async (event) => {
-        // Get Stripe.js instance
-        const stripe = await stripePromise;
-
-        let line_items = addedItems.map( item => {
-            let data = {
-                    price: item.id,
-                    quantity : item.quantity,
-                    tax_rates: ['txr_1IFmGYELbEgFNgrjLX2kMXq6']
-            }
-        
-            return (
-                data
-            )
-        })
-
-        // Call your backend to create the Checkout Session
-        const response = await fetch('/api/checkout', { 
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-
-            //make sure to serialize your JSON body
-            body: JSON.stringify({
-              items: line_items,
-              address: user.addresses,
-              userid: props.user['_id']
-            })
-        })
-
-        const session = await response.json()
-        console.log(session);
-        // When the customer clicks on the button, redirect them to Checkout.
-        const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-        });
-
-        if (result.error) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `result.error.message`.
-        }
-    };
-
-    let orderSummary = null
-    if (props.items) {
-        orderSummary = <OrderSummary 
-            items={props.items}
-            total={total}
-            purchaseCancelled={purchaseCancelHandler}
-            purchaseContinued={purchaseContinueHandler}
-        />;
-    }
-
-//    const [authRedirectPath, onSetAuthRedirectPath] = useState('/')
-
-//    const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-//    const history = useHistory()
-//    let total
-//    let array = props.items
-//    if ( array != ''){
-//        total = array.reduce(reducer, 0)
-//        console.log("total = " + array.reduce(reducer, 0))
-//    }
-
     const showFormHanldler = () => {
-        if (showForm === false){
-            setShowForm(true)
-        } else {
-            setShowForm(false)
-        }
+        (showForm === false) ?setShowForm(true) : setShowForm(false)
     }
 
     const submitHandler = ( values, submitProps ) => {
@@ -178,6 +32,7 @@ const ContactData = props => {
         setShowForm(false)
         //history.push('/contactData');
     }
+    
     let userId 
     let user
     let initialValues = {
@@ -213,49 +68,6 @@ const ContactData = props => {
         }
     }
 
-    useEffect(() => { user = props.user},[props.user])
-    useEffect(() => {
-        let localCartCopy = '[]'
-        if (localCart) { localCartCopy = [localAddedItems] }
-        // console.log('local storage cart = ' + localCartCopy)
-
-        // parse 
-        let parseLocalCart = JSON.parse(localCartCopy)
-        // console.log('local storage parseLocalCart = ' + parseLocalCart)
-        let itemsCopy = items
-
-        let updatedItems = itemsCopy.map( obj => parseLocalCart.find(item => item.id === obj.id) || obj)
-        let stringUpdatedItems= JSON.stringify(updatedItems)
-        // console.log('Cart Items cross reference local = ' + stringUpdatedItems)
-        setCart(updatedItems)
-
-        let localAddedItemsCopy = addedItems
-        let localAddedItemsCopyString =  JSON.stringify(localAddedItemsCopy)
-        if (localAddedItems) { 
-            localAddedItemsCopy = [localAddedItems] 
-            // parse 
-            localAddedItemsCopy = JSON.parse(localAddedItemsCopy)
-            setAddedItems(localAddedItemsCopy)
-            //localAddedItemsCopyString = JSON.stringify(localAddedItemsCopy)
-            //console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
-            props.addToCart(localAddedItemsCopy)
-        }
-        // console.log('local storage parseLocalCart = ' + parseLocalCart)
-        // let updatedAddedItems = addedItemsCopy.map( obj => parseLocalAddedItems.find(item => item.id === obj.id) || obj)
-        // localAddedItemsCopy= JSON.stringify(localAddedItemsCopy)
-        setAddedItems(localAddedItemsCopy)
-        console.log('local storage added to addedItems= ' + localAddedItemsCopyString)
-
-        let totalItemsQuantity = localAddedItemsCopy.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
-        console.log('totalItemQuantity = ' + totalItemsQuantity)
-        setTotalItems(totalItemsQuantity)
-
-        let totalItemsPrice = localAddedItemsCopy.map(item => item.price*item.quantity).reduce((prev, curr) => prev + curr, 0);
-        console.log('totalItemPrice = ' + totalItemsPrice)
-        setTotalPrice(totalItemsPrice)
-    }, []) //only run once
-
-    
     const validationSchema = Yup.object({
         email: Yup.string().required('Required')
     })
@@ -579,9 +391,6 @@ const ContactData = props => {
 
     return (
         <Auxiliary>
-            <Modal show={purchasing} modalClosed={purchaseCancelHandler}> 
-                {orderSummary}
-            </Modal>
             <div className={[classes.Card, myClasses.ContactData].join(' ')}>
                 <div className="container">
                     <div className="page-header text-center">
@@ -596,15 +405,6 @@ const ContactData = props => {
                         </div>
                     </button>
                     {addressForm}
-                    <button 
-                        className='btn-primary btn'
-                        // disabled={!props.purchaseable}
-                        type="button" role="link"
-                        onClick={purchaseHandler}>{
-                            props.isAuth 
-                                ? 'CONTINUE TO CHECKOUT' 
-                                : 'SIGN IN TO ORDER'}
-                    </button>
                 </div>
             </div>
         </Auxiliary>
@@ -625,9 +425,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart           : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
         onNewAddress        : (values) => dispatch(actions.newAddress(values)),
-        onFetchUser         : () => dispatch(actions.fetchUser())
     }
 }
 

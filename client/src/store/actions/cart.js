@@ -26,12 +26,12 @@ export const getItems = () => {
         dispatch(getItemsStart())
         axios.get( '/api/items')
         .then( result => {
-            //console.log("result"+JSON.stringify(result))
+            console.log("result"+JSON.stringify(result))
             const items = result.data
                 dispatch(getItemsSuccess(items));
             } )
             .catch( error => {
-                //console.log("reserrorult"+JSON.stringify(error))
+                console.log("getItems error = "+JSON.stringify(error))
                 dispatch(getItemsFail(error));
             } 
         )
@@ -70,6 +70,7 @@ export const addQuantity=(id)=>{
 
 export const loadCart = ( values ) => {
     // local storage
+    console.log('loading cart')
     return{
         type: actionTypes.LOAD_CART,
     }

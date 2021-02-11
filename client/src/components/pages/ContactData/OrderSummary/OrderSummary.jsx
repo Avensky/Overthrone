@@ -7,7 +7,7 @@ const orderSummary = (props) => {
     const itemsSummary = props.items.map(item=>{
         return (
             <li key={item.id}>
-                * <span>{item.title}</span> x {item.quantity}
+                * <span>{item.name}</span> x {item.amount}
             </li>);
     });
 

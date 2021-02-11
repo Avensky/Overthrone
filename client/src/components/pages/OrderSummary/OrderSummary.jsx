@@ -1,13 +1,11 @@
 import React from 'react';
-import Auxiliary from '../../../../hoc/Auxiliary'
-import Button from '../../../UI/Button/Button';
-
+import Auxiliary from '../../../hoc/Auxiliary'
 
 const orderSummary = (props) => {
     const itemsSummary = props.items.map(item=>{
         return (
-            <li key={item.id}>
-                * <span>{item.title}</span> x {item.quantity}
+            <li key={item._id}>
+                * <span>{item.name}</span> x {item.amount}
             </li>);
     });
 

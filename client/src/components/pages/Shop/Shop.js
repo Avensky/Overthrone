@@ -7,6 +7,7 @@ import Item from './Items/Item/Item'
 import * as actions from '../../../store/actions/index';
 // import NewItem from './NewItem/NewItem'
 import {useHistory} from 'react-router-dom'
+import CheckoutHeader from '../Checkout/CheckoutHeader/CheckoutHeader'
 
 const Purchase = props => {
     useEffect(() => {
@@ -16,10 +17,9 @@ const Purchase = props => {
             getItems() 
         }
     }, [])
-
     const addToCart = (id) => {props.addToCart(id)}
     let myShop 
-    if(props.shop){ 
+    if(props.shop){
         myShop = props.shop.map( item => {
         return( 
             <Item
@@ -36,9 +36,8 @@ const Purchase = props => {
                 quantity    = {item.amount||0}
                 add         = {true}
             />
-        )
-    })}
-      
+        )}
+    )}
 
     const history = useHistory()
     const purchaseHandler = () => {
@@ -49,9 +48,7 @@ const Purchase = props => {
     const checkoutHandler = () => {history.push('/')}
     let addedItems = props.addedItems
     let itemString = 'item'
-    if (addedItems.length>1) {
-        itemString = 'items'
-    }
+    if (addedItems.length>1) {itemString = 'items'}
     let button
     if (addedItems.length > 0){
         button = (
@@ -123,6 +120,15 @@ const Purchase = props => {
             */}
             <div className={myClasses.Items}>
                 <div className={['box', myClasses.Items ].join(' ')}>
+                    <CheckoutHeader
+                        itemString={itemString}
+                        totalItems={props.totalItems}
+                        total={props.total}
+                        viewTitle='View Cart'
+                        view={viewCartHandler}
+                        checkout={purchaseHandler}
+                        isAuth={props.isAuth}
+                    />
                     {myShop}
                     {button}
                 </div>
@@ -130,7 +136,6 @@ const Purchase = props => {
         </div>
     )
 } 
-
 
 const mapStateToProps = state => {
     return {
@@ -148,10 +153,6 @@ const mapDispatchToProps = dispatch => {
         addToCart           : (id)   =>{ dispatch(actions.addToCart(id))},
         getItems            : ()     =>{ dispatch(actions.getItems())},
         loadCart            : (cart) =>{ dispatch(actions.loadCart(cart))},
-        // getItems            : ()     =>{ dispatch(actions.getItems())},
-        // removeItem          : (id)=>{dispatch(actions.removeItem(id))},
-        // addQuantity         : (id)=>{dispatch(actions.addQuantity(id))},
-        // subtractQuantity    : (id)=>{dispatch(actions.subtractQuantity(id))}
     }
 }
 

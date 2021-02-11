@@ -6,7 +6,7 @@ import Auxiliary from '../../../hoc/Auxiliary'
 import { useHistory } from 'react-router-dom'
 import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
 
-const Checkout = props => {    
+const Success = props => {    
     const history = useHistory()
     return (
         <Auxiliary>
@@ -53,4 +53,4 @@ const mapDispatchToProps = (dispatch)=>{
         subtractQuantity : (id)=>{dispatch(subtractQuantity(id))}
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Checkout)
+export default connect(mapStateToProps,mapDispatchToProps)(Success)
