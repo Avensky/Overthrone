@@ -10,14 +10,14 @@ export const purchaseContinueHandler = async (addedItems, isAuth, event) => {
 
     let line_items = addedItems.map( item => {
         let data = {
-            currency    : 'usd',
+            //currency    : 'usd',
             price       : item.priceid,
-            amount      : item.price*100,
+            //amount      : item.price*100,
             quantity    : item.amount,
-            name        : item.name,
+            //name        : item.name,
             tax_rates: ['txr_1IFmGYELbEgFNgrjLX2kMXq6']
         }
-        console.log('data = '+JSON.stringify(data))
+//        console.log('data = '+JSON.stringify(data))
         return data
     })
 
@@ -48,5 +48,6 @@ export const purchaseContinueHandler = async (addedItems, isAuth, event) => {
     // If `redirectToCheckout` fails due to a browser or network
     // error, display the localized error message to your customer
     // using `result.error.message`.
+    console.log(result.error.message)
     }
 };

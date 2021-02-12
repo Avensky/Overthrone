@@ -26,7 +26,7 @@ export const getItems = () => {
         dispatch(getItemsStart())
         axios.get( '/api/items')
         .then( result => {
-            console.log("result"+JSON.stringify(result))
+            //console.log("result"+JSON.stringify(result))
             const items = result.data
                 dispatch(getItemsSuccess(items));
             } )

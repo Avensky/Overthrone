@@ -14,10 +14,10 @@ const passport       = require('passport')
 const mongoose       = require('mongoose')
 const keys           = require('./config/keys')
 const userRouter     = require('./app/routes/userRoutes');
-const cors           = require("cors");
+//const cors           = require("cors");
 //const flash          = require('connect-flash')
 const endpointSecret ='whsec_8uBYP8hWJrpcTob7wWS1MWJsYcEIVSzR'
-const Stripe        = require('stripe');
+const Stripe         = require('stripe');
 const stripe         = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 
 //==============================================================================
@@ -103,13 +103,7 @@ app.use('/files', express.static("files"));
 
 
 
-app.use(bodyParser.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf
-  }
-}))
-
-
+app.use(bodyParser.json({ verify: ( req, res, buf ) => { req.rawBody = buf }}))
 
 const Order         = mongoose.model('Order')  
 
@@ -126,8 +120,8 @@ const createOrder =  async (session) => {
       expand: ['line_items'],
     },
   );
-  console.log("sessionRetrieve ", sessionRetrieve);
-  console.log("sessionRetrieve line_items", sessionRetrieve.line_items);
+  //console.log("sessionRetrieve ", sessionRetrieve);
+  //console.log("sessionRetrieve line_items", sessionRetrieve.line_items);
   let line_items = sessionRetrieve.line_items.data.map( item => {
     let line_item = {
       id                        : item.id,
@@ -159,7 +153,7 @@ const createOrder =  async (session) => {
     }
     return line_item
   })
-  console.log('line_items = ' + JSON.stringify(line_items))
+  // console.log('line_items = ' + JSON.stringify(line_items))
 
   Order.findOneAndUpdate({'sessionid' : session.id},{
   $set:{
@@ -217,6 +211,7 @@ const createOrder =  async (session) => {
       //res.send('updated successfully!');
     }
     else {
+      console.log(err.message)
       //res.err(err.message);
     }
   })
@@ -263,15 +258,14 @@ app.post('/webhook', (req, res) => {
     //console.log('rawBody = ' + payload)
     //console.log('sig = ' + sig)
     //console.log('endpointSecret = ' + endpointSecret)
-    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-    
+    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret)
 	} catch (err) {
     console.log('Webhook Error = '+ err.message)
-	  return res.status(400).send(`Webhook Error: ${err.message}`);
+	  return res.status(400).send(`Webhook Error: ${err.message}`)
   }
   
-    // Successfully constructed event
-    console.log('✅ Success:', event.id);
+  // Successfully constructed event
+  console.log('✅ Success:', event.id);
 	
 	switch (event.type) {
 		case 'checkout.session.completed': {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import classes from '../Pages.module.scss'
 import myClasses from './Checkout.module.scss'
@@ -8,6 +8,10 @@ import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/i
 
 const Success = props => {    
     const history = useHistory()
+    useEffect(() => {
+        localStorage.removeItem('addedItems')
+    },[])
+
     return (
         <Auxiliary>
             <div className={[classes.Card, myClasses.Shop].join(' ')}>
