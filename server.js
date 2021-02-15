@@ -3,8 +3,9 @@
 //==============================================================================
 const express        = require('express')
 const app            = express()
+const dotenv	     = require('dotenv').config()
 const PORT           = process.env.PORT || 5000;
-const dotenv         = require('dotenv');
+console.log('PORT = '+ PORT)
 //const morgan         = require('morgan');
 //const helmet         = require('helmet');
 const bodyParser     = require('body-parser')
@@ -30,8 +31,6 @@ require('./app/models/shop');
 require('./app/models/orders');
 require('./config/passport')(passport); // pass passport for configuration
 
-dotenv.config({ path: './config/config.env' });
-
 mongoose.Promise = global.Promise;// connect to our database
 
 mongoose.connect(keys.mongoURI, { 
@@ -42,7 +41,9 @@ mongoose.connect(keys.mongoURI, {
 })
   .then(connect => console.log('connected to mongodb'))
   .catch(err => console.log('could not connect to mongodb', err))
-module.exports = {mongoose}
+module.exports = {
+	mongoose
+}
 
 // allow files to be stored in files directory
 app.use('/files', express.static("files"));
@@ -273,7 +274,7 @@ app.post('/webhook', (req, res) => {
       // let body = req.body
       // let userid = req.body.userid
       // let shipping = req.body.address
-      // console.log('webhook session = ' + JSON.stringify(session))
+d      // console.log('webhook session = ' + JSON.stringify(session))
       // console.log('webhook userid = ' + JSON.stringify(userid))
       // console.log('webhook shipping = ' + JSON.stringify(shipping))
 		  // Save an order in your database, marked as 'awaiting payment'
@@ -329,6 +330,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
+
 // app.use(flash()); // use connect-flash for flash messages stored in session
 //==============================================================================
 // routes ======================================================================
@@ -344,6 +346,7 @@ require('./app/routes/shopRoutes')(app);
 // launch ======================================================================
 //==============================================================================
 if (process.env.NODE_ENV === 'production') {
+  console.log("node env = "+process.env.NODE_ENV)
   // Express will serve up production assets
   // like our main.js file, or main.css file!
   app.use(express.static('client/build'));

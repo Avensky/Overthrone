@@ -10,6 +10,7 @@ config/dev.js
 config/secrets.js
 .env.development
 .env.production
+.env
 # testing
 /coverage
 
