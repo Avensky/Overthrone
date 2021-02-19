@@ -6,13 +6,12 @@ const Character             = mongoose.model('Character')
 
 
 module.exports = function(app) {
-app.get('/api/characters', (req,res) =>{          //get all characters info from db
+app.get('/api/characters', (req,res, next) =>{          //get all characters info from db
     Character.find({},(err,doc)=>{
-        if(doc)
-            res.json(doc);
-        else {
-            res.err(err);
+        if (doc) {
+            return res.json(doc);
         }
+        res.status(404).send('Error '+err);
     })
 });
 

@@ -21,7 +21,7 @@ module.exports = function(app) {
             if(doc)
                 res.json(doc);
             else {
-                res.err(err);
+                res.status(404).send('Ops!'+err)
             }
         })
     });

@@ -11,6 +11,7 @@ config/secrets.js
 .env.development
 .env.production
 .env
+INSTRUCTIONS.md
 # testing
 /coverage
 
@@ -28,3 +29,5 @@ my-react-blog.code-workspace
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
