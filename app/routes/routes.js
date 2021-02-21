@@ -198,19 +198,22 @@ app.post('/api/checkout', async (req, res) => {
     	// LOGIN ===============================
 		// =====================================
 		// process the login form
-		app.post('/auth/login', 
-			passport.authenticate('local-login', {
-				//successRedirect : '/profile', // redirect to the secure profile section
-				//failureRedirect : '/authentication', // redirect back to the signup page if there is an error
-				//failureFlash 	: true // allow flash messages
-			}), (req, res) => {
-				// If this function gets called, authentication was successful.
-				// `req.user` contains the authenticated user.
-				console.log('Message sent!')
-				res.send(200)
-				// res.sendStatus(200)
-			}
-		);
+		app.post('/auth/login', function(req, res, next) {
+			passport.authenticate('local-login', //{
+				//successRedirect : '/', // redirect to the secure profile section
+				//failureRedirect : '/', // redirect back to the signup page if there is an error
+				//failureFlash : true // allow flash messages
+			//}
+			function(err, user, info) {
+			  if (err) { return next(err); }
+			  if (!user) { return res.send(info); }
+			  req.logIn(user, function(err) {
+				if (err) { return next(err); }
+				//return res.redirect('/profile/' + user.username);
+				return res.send(200)
+			  });
+			})(req, res, next);
+		});
 
 		// =====================================
 		// SIGNUP ==============================
@@ -224,19 +227,23 @@ app.post('/api/checkout', async (req, res) => {
     // REGISTER ============================
     // =====================================
 		// process the signup form
-		app.post('/auth/signup', 
-			passport.authenticate('local-signup', {
-				successRedirect : '/', // redirect to the secure profile section
-				failureRedirect : '/', // redirect back to the signup page if there is an error
-				failureFlash : true // allow flash messages
-			}), (req, res) => {
-				// If this function gets called, authentication was successful.
-				// `req.user` contains the authenticated user.
-				console.log('Message sent!')
-				res.send(200)
-				// res.sendStatus(200)
-			}
-		);
+		app.post('/auth/signup', function(req, res, next) {
+			passport.authenticate('local-signup', //{
+				//successRedirect : '/', // redirect to the secure profile section
+				//failureRedirect : '/', // redirect back to the signup page if there is an error
+				//failureFlash : true // allow flash messages
+			//}
+			function(err, user, info) {
+			  if (err) { return next(err); }
+			  if (!user) { return res.send(info); }
+			  req.logIn(user, function(err) {
+				if (err) { return next(err); }
+				// return res.redirect('/profile/' + user.username);
+				return res.send(200)
+			  });
+			})(req, res, next);
+		});
+		
 
 		// app.post('/auth/signup', function(req, res, next) {
 		// 	passport.authenticate('local-signup', function(err, user, info) {
@@ -256,7 +263,7 @@ app.post('/api/checkout', async (req, res) => {
 
 		// process the signup form
 		app.post('/api/signup', passport.authenticate('local-signup', {
-			successRedirect : '/', // redirect to the secure profile section
+			successRedirect : '/profile', // redirect to the secure profile section
 			failureRedirect : '/signup', // redirect back to the signup page if there is an error
 			failureFlash : true // allow flash messages
 		}));

@@ -90,13 +90,13 @@ module.exports         = function(passport) {
             //  to know if the email address is in use.
             User.findOne({'local.email': email}, function(err, existingUser) {
 
+                // check to see if there's already a user with that email
+                if (existingUser) 
+                return done(null, false, {message: 'That email is already taken.'});
+
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
-
-                // check to see if there's already a user with that email
-                if (existingUser) 
-                    return done(null, false, {message: 'That email is already taken.'});
 
                 //  If we're logged in, we're connecting a new local account.
                 if(req.user) {

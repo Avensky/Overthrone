@@ -103,6 +103,7 @@ const mapStateToProps = state => {
     fetchedUser       : state.auth.payload,
     submitted         : state.auth.submitted,
     data              : state.auth.addressData,
+    error              : state.auth.error,
     authRedirectPath  : state.auth.authRedirectPath,
     shop              : state.shop.items,
   };

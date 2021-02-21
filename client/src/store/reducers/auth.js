@@ -8,6 +8,7 @@ const initialState = {
     loading: false,
     userLoading: false,
     payload: null,
+    message: null,
     authRedirectPath: '/',
     submitted: false,
     addressData: null,
@@ -17,7 +18,8 @@ const authStart = ( state, action ) => {
     return updateObject( state, { 
         error: null, 
         loading: true, 
-        submitted: false
+        submitted: false,
+        authRedirectPath: '/'
     });
 };
 
@@ -27,13 +29,15 @@ const authSuccess = (state, action) => {
         userId: action.userId,
         error: null,
         loading: false,
-        submitted: true
+        submitted: true,
+        authRedirectPath: "/profile"
      });
 };
 
 const authFail = (state, action) => {
     return updateObject( state, {
         error: action.error,
+        message: action.error.message,
         loading: false,
         submitted: true
     });

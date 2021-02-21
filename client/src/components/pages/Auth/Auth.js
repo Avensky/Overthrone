@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useForm } from "react-hook-form";
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
@@ -10,7 +10,7 @@ import * as actions from '../../../store/actions/index';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Persist } from 'formik-persist'
+//import { Persist } from 'formik-persist'
 import * as Yup from 'yup'
 
 const Auth = props => {
@@ -23,13 +23,9 @@ const Auth = props => {
        // props.onFbAuth()
     }
 
-    const loginToggleHandler = () => {
-        setAuthLogin(true)
-    }
+    const loginToggleHandler = () => {setAuthLogin(true)}
 
-    const registerToggleHandler = () => {
-        setAuthLogin(false)
-    }
+    const registerToggleHandler = () => {setAuthLogin(false)}
 
     const submitHandler = ( values, submitProps ) => {
         console.log('Form data', values)
@@ -38,6 +34,11 @@ const Auth = props => {
         submitProps.setSubmitting(false)
         submitProps.resetForm()
     }
+
+    useEffect(()=> {
+        const fetchData = async () => {props.onFetchUser()}
+          if ( !props.fetchedUser){fetchData()}
+        }, [props.fetchedUser, props.authRedirectPath])
 
     // let act = 'login';
     // if (!authLogin) {
@@ -53,56 +54,7 @@ const Auth = props => {
         email: Yup.string().required('Required')
       })
     
-    let loader = (
-        <Auxiliary>
-            <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={submitHandler}
-            enableReinitialize> 
-            { formik => 
-            <Form>
-                <Field 
-                    type="email" 
-                    name="email" 
-                    placeholder="Email Address"
-                    className={myClasses.AuthInput}
-                />
-                <ErrorMessage name="email" component="div" />
-                <Field 
-                    type="password" 
-                    name="password" 
-                    placeholder="Password"
-                    className={myClasses.AuthInput}
-                />
-                <ErrorMessage name="password" component="div" />
-                <button  
-                    className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
-                    type='submit'
-                    disabled={!formik.isValid || formik.isSubmitting }
-                >
-                    <div className={myClasses.BtnDiv}>
-                        <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
-                    </div>
-                </button>
-            </Form>}
-        </Formik>
-        <div className={classes.CardTitle}>Or continue with:</div>
-            <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
-                <a  
-                    href="/auth/facebook"
-                    onClick={socialAuthHandler}
-                ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
-            </button>
-            <button className={[myClasses.Btn, "btn-info"].join(' ')}>
-                <a href="/auth/twitter"><div className={myClasses.BtnDiv}><span className="fa fa-twitter" /> Twitter</div></a>
-            </button>
-            <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
-                <a href="/auth/google"><div className={myClasses.BtnDiv}><span className="fa fa-google-plus" /> Google+</div></a>
-            </button>
-        </Auxiliary>
-    )
-
+    let loader
     if ( props.loading || (props.submitted && props.userLoading)) {
         //form = <Spinner />
         loader = <Spinner />
@@ -117,9 +69,9 @@ const Auth = props => {
     //     );
     // }
     
-    let flash = false;
+    let message = false;
     if ( props.token ) {
-        flash = <p>{props.token.message}</p>
+        message = <p>{props.token.message}</p>
     }
 
     let authRedirect = null;
@@ -139,28 +91,68 @@ const Auth = props => {
     }
     
     return(
-        <Auxiliary>
-            <div className={[classes.Card, myClasses.Auth].join(' ')}>
+       <div className={[classes.Card, myClasses.Auth].join(' ')}>
             {authRedirect}
-            
-            
-                <div className={myClasses.AuthNav}>
-                    <button 
-                        onClick={loginToggleHandler}
-                        className={selected}
-                    ><h1><span className="fa fa-sign-in" /> Login</h1>
-                    </button>
+            <div className={myClasses.AuthNav}>
+                <button 
+                    onClick={loginToggleHandler}
+                    className={selected}
+                ><h1><span className="fa fa-sign-in" /> Login</h1>
+                </button>
 
-                    <button 
-                        onClick={registerToggleHandler}
-                        className={unselected}
-                    ><h1><span className="fa fa-user" /> Signup</h1>
-                    </button>   
-                </div>
-                {loader}
-                {flash}
-            </div> 
-        </Auxiliary>
+                <button 
+                    onClick={registerToggleHandler}
+                    className={unselected}
+                ><h1><span className="fa fa-user" /> Signup</h1>
+                </button>   
+            </div>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={submitHandler}
+                enableReinitialize> 
+                { formik => 
+                <Form>
+                    {message}
+                    <Field 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email Address"
+                        className={myClasses.AuthInput}
+                    />
+                    <ErrorMessage name="email" component="div" />
+                    <Field 
+                        type="password" 
+                        name="password" 
+                        placeholder="Password"
+                        className={myClasses.AuthInput}
+                    />
+                    <ErrorMessage name="password" component="div" />
+                    <button  
+                        className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
+                        type='submit'
+                        disabled={!formik.isValid || formik.isSubmitting }
+                    >
+                        <div className={myClasses.BtnDiv}>
+                            <span className={[authLogin ? 'fa fa-sign-in' : 'fa fa-user'].join(' ')}></span> {authLogin ? 'Sign In' : 'Sign Up'}
+                        </div>
+                    </button>
+                </Form>}
+            </Formik>
+            <div className={classes.CardTitle}>Or continue with:</div>
+            <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
+                <a  
+                    href="/auth/facebook"
+                    onClick={socialAuthHandler}
+                ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
+            </button>
+            <button className={[myClasses.Btn, "btn-info"].join(' ')}>
+                <a href="/auth/twitter"><div className={myClasses.BtnDiv}><span className="fa fa-twitter" /> Twitter</div></a>
+            </button>
+            <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
+                <a href="/auth/google"><div className={myClasses.BtnDiv}><span className="fa fa-google-plus" /> Google+</div></a>
+            </button>
+        </div> 
     )
     
 }
