@@ -16,7 +16,7 @@ const orderSummary = (props) => {
             <ul>
                 {itemsSummary}
             </ul> 
-            <p><strong>Total Price: ${props.total}</strong></p>
+            <p><strong>Subtotal: ${props.total}</strong></p>
             <p>Continue to Checkout?</p>
             <div className="spread">
             <button 
