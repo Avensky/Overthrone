@@ -8,6 +8,11 @@ const bcrypt    = require('bcrypt');
 
 // define the schema for our user model
 const userSchema = new mongoose.Schema({
+  role: {
+    type          : String,
+    enum          : ['user', 'admin'],
+    // default       : 'user'
+  },
   addresses: {
     name: {
       type          : String,

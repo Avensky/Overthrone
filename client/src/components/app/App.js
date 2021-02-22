@@ -13,6 +13,7 @@ import Authors        from '../pages/Authors/Authors'
 import Characters     from '../pages/Characters/Characters'
 import Sovereignty    from '../pages/Sovereignty/Sovereignty'
 import Shop           from '../pages/Shop/Shop'
+import ShopAdmin      from '../admin/Shop/ShopAdmin'
 import Details        from '../pages/Shop/Details/Details'
 import Cart           from '../pages/Cart/Cart'
 import Checkout       from '../pages/Checkout/Success'
@@ -66,6 +67,32 @@ useEffect(()=> {
   )
 
   if (props.fetchedUser) {
+    if (props.fetchedUser.role === 'admin') {
+      routes = (
+        <Switch>
+          <Route path="/orders"               component={Orders} />
+          <Route path="/checkout"             component={Checkout} />
+          <Route path="/authentication"       render={props => <Auth {...props} />} />
+          <Route path="/contactData"          component={ContactData} />
+          <Route path="/signup"               component={Signup} />
+          <Route path="/books"                component={Books} />
+          <Route path="/authors"              component={Authors} />
+          <Route path="/characters"           component={Characters} />
+          <Route path="/sovereignty"          component={Sovereignty} />
+          <Route path="/faqs"                 component={Faqs} />
+          <Route path="/shop"                 component={Shop} />
+          <Route path="/shopAdmin"            component={ShopAdmin} />
+          <Route path="/home"                 component={Home} />          
+          <Route path="/cart"                 component={Cart} />                
+          <Route path='/details/:id'    exact component={Details} />
+          <Route path='/CharacterList/' exact component={CharacterList} />
+          <Route path="/profile/"             component={Profile} />
+          <Route path="/connectlocal"         component={Connect} />
+          <Route path="/"                     component={Books} />             
+        </Switch>
+      )
+    } else {
+
     routes = (
       <Switch>
         <Route path="/orders"               component={Orders} />
@@ -88,6 +115,7 @@ useEffect(()=> {
         <Route path="/"                     component={Books} />             
       </Switch>
     )
+    }
   }
 
   return( 

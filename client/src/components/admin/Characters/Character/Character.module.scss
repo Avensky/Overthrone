@@ -1,0 +1,30 @@
+.Character {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2vh;
+    //border-bottom: 1px solid ;
+    margin-bottom: 3vh;
+}
+
+.Line {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1vw;
+    margin: 0 1vw;
+}
+.MidLine {
+    display: flex;
+}
+
+.Left {
+    width: 20%;
+}
+
+.Right {
+    width: 80%;
+}
+
+.Character button {
+    width: 50%;
+}
