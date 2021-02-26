@@ -10,13 +10,13 @@ const item = props => {
     <div className={myClasses.Item} key={props.id}>        
         {/* Description */}
         <div className={myClasses.CardDescription}>
-            <p className={myClasses.CardTitle}><b>{props.title}</b></p>
+            <p className={myClasses.CardTitle}>{props.title}</p>
         
         </div>
 
         {/* Quantity */}
         <div className={myClasses.CardQuantity}>
-            <p><b>{props.quantity}</b></p>
+            <p>{props.quantity}</p>
             {props.add === true
                 ? <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')}onClick={props.clicked}>add</i>
                 : null
@@ -24,7 +24,7 @@ const item = props => {
         </div>
 
         {/* Price */}
-        <div className={["text-center", myClasses.CardPrice].join(' ')}><p><b>${props.price}</b></p></div>
+        <div className={["text-center", myClasses.CardPrice].join(' ')}><p>${props.price}</p></div>
     </div>
 )}
 export default item;

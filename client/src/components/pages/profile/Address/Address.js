@@ -34,7 +34,7 @@ const Address = props => {
                 <div className="flex">
                     { props.city        ? <strong>{props.city},&nbsp;  <br /></strong>    : null }
                     { props.state       ? <strong>{props.state}&nbsp;  <br /></strong>    : null }
-                    { props.zipCode     ? <strong>{props.zipCode}&nbsp;<br /></strong>  : null }
+                    { props.postal_code     ? <strong>{props.postal_code}&nbsp;<br /></strong>  : null }
                 </div>
                 { props.email       ? <strong>   {props.email}<br /></strong>    : null }
             </div>

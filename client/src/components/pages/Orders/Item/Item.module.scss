@@ -1,10 +1,12 @@
 .Item {
-    padding: 1vh 0;
+    //padding: 1vh 0;
     display: grid;
+    height: 3vh;
     gap: 2vw;
-    grid-template-columns: 1fr .25fr .25fr;
+    grid-template-columns: 10fr 2fr 2fr;
     grid-template-areas: 
     "desc quant price";
+    align-items: center;
 }
 
 
@@ -71,7 +73,7 @@ img {
 @media only screen and (min-width: 600px) {
     /* For tablets: */
     .Item {
-        grid-template-columns: .5fr 1.5fr .25fr .25fr;
+        grid-template-columns: 10fr 2fr 2fr;
     }
        
     img {
@@ -85,7 +87,7 @@ img {
 @media only screen and (min-width: 1025px) {
     /* For desktop: */
     .Item {
-        grid-template-columns: 1fr 350px 1fr 1fr;
+        grid-template-columns: 10fr 4fr 4fr;
     }
        
     img {

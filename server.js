@@ -179,7 +179,7 @@ const createOrder =  async (session) => {
       customer_email                : session.customer_email,        
       livemode                      : session.livemode,
       locale                        : session.locale,                
-      metadata                      : session.metadata,
+      //metadata                      : session.metadata,
       mode                          : session.mode,
       payment_intent                : session.payment_intent,        
       payment_method_types          : session.payment_method_types,  

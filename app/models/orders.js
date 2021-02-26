@@ -71,7 +71,7 @@ const orderSchema = new mongoose.Schema({
       currency                : {type          : String},
       livemode                : {type          : Boolean},
       //lookup_key              : null,
-      metadata                : {},
+      //metadata                : {},
       //nickname                : null,
       product                 : {type          : String},
       //recurring               : null,

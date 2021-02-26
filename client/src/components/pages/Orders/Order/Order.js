@@ -39,7 +39,8 @@ const Order = props => {
 
     return (        
         <div className={myClasses.Order}>
-            <p>Ordered on : {date} at : {time}</p><br />
+            <p>Ordered on : {date}</p> 
+            <p>at : {time}</p>
             <p>Order ID : {props.sessionid}</p>
             <div className={myClasses.bigbox}>
                 <div className={myClasses.box}>

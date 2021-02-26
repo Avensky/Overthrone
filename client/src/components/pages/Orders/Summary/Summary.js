@@ -23,22 +23,22 @@ const Summary = props => {
                 <span> {props.link}</span>
             </h3>
             <div>
-                {props.amount_subtotal ? <p>Item(s) Subtotal: {props.amount_subtotal }<br /></p>:null}
-                {props.shippingHandling ? <p>Shipping N Handling: {props.shippingHandling }<br /></p>:null}
-                {props.tax? <p>Estimated Tax: {props.tax }<br /></p>:null}
-                {props.amount_total? <p>Total: {props.amount_total }<br /></p>:null}
+                {props.amount_subtotal ? <p>Item(s) Subtotal: {props.amount_subtotal }</p>:null}
+                {props.shippingHandling ? <p>Shipping N Handling: {props.shippingHandling }</p>:null}
+                {props.tax? <p>Estimated Tax: {props.tax }</p>:null}
+                {props.amount_total? <p>Total: {props.amount_total }</p>:null}
       
-                { props.name        ? <p>   {props.name}<br /></p>     : null }
+                { props.name        ? <p>   {props.name}</p>     : null }
                 { props.phone       ? <p>Phone:</p>    : null }
-                { props.phone       ? <p>   {props.phone}<br /></p>    : null }
-                { props.address     ? <p>   {props.address}<br /></p>  : null }
-                { props.address2    ? <p>   {props.address2}<br /></p> : null }
+                { props.phone       ? <p>   {props.phone}</p>    : null }
+                { props.address     ? <p>   {props.address}</p>  : null }
+                { props.address2    ? <p>   {props.address2}</p> : null }
                 <div className="flex">
-                    { props.city        ? <p>{props.city},&nbsp;  <br /></p>    : null }
-                    { props.state       ? <p>{props.state}&nbsp;  <br /></p>    : null }
-                    { props.zipCode     ? <p>{props.zipCode}&nbsp;<br /></p>  : null }
+                    { props.city        ? <p>{props.city},&nbsp;  </p>    : null }
+                    { props.state       ? <p>{props.state}&nbsp;  </p>    : null }
+                    { props.zipCode     ? <p>{props.zipCode}&nbsp;</p>  : null }
                 </div>
-                { props.email       ? <p>   {props.email}<br /></p>    : null }
+                { props.email       ? <p>   {props.email}</p>    : null }
             </div>
             <br />
         </div>

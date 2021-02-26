@@ -44,7 +44,7 @@ const Orders = (props) => {
     }
     return (
         <div>            
-            <div className={[classes.Card, myClasses.Profile].join(' ')}>
+            <div className={[classes.Card, myClasses.Orders].join(' ')}>
                 <div className="container">
                     <div className="page-header text-center">
                         <h1>Order History Page</h1>

@@ -1,4 +1,5 @@
 .Auth {       
+    font-family: 'Chalkduster'!important;
     padding-top: 3vh;
     text-align: center;
     align-items: center;
@@ -47,6 +48,7 @@
 }
 
 .Btn {
+    font-family: 'Chalkduster'!important;
     color: rgb(255, 255, 255);   
     width: 100%;
     margin: .5vh 0;
@@ -70,6 +72,7 @@
     color: rgb(23, 4, 53);
     color: rgb(255, 255, 255);   
     font-weight: bold;
+    font-family: 'Chalkduster'!important;
     white-space: nowrap;
     border-bottom-color: transparent;
     border-bottom-width: 3px;
@@ -88,7 +91,7 @@
 }
 
 
-  @media only screen and (min-width: 600px) {
+@media only screen and (min-width: 600px) {
     /* For tablets: */
     .Auth {
         margin: 0 20vw 0;
