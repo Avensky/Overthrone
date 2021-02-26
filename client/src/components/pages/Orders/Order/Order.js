@@ -33,8 +33,8 @@ const Order = props => {
     let date = months[dateObj.getMonth()] + ' ' + dateObj.getDate() + ', ' + dateObj.getFullYear()
     
     let time
-    dateObj.getHours() > 12
-        ? time = dateObj.getHours()-12 + ':' + dateObj.getMinutes() + 'pm'
+    dateObj.getHours() > 11
+        ? time = (dateObj.getHours() === 12 ? dateObj.getHours() : dateObj.getHours() -12 )+ ':' + dateObj.getMinutes() + 'pm'
         : time = dateObj.getHours() + ':' + dateObj.getMinutes() + 'am'
 
     return (        
