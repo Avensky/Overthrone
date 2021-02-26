@@ -274,7 +274,7 @@ app.post('/webhook', (req, res) => {
       // let body = req.body
       // let userid = req.body.userid
       // let shipping = req.body.address
-d      // console.log('webhook session = ' + JSON.stringify(session))
+      // console.log('webhook session = ' + JSON.stringify(session))
       // console.log('webhook userid = ' + JSON.stringify(userid))
       // console.log('webhook shipping = ' + JSON.stringify(shipping))
 		  // Save an order in your database, marked as 'awaiting payment'

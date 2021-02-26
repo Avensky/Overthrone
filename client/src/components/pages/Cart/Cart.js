@@ -84,7 +84,7 @@ const Cart = props => {
                 <div className={[classes.Card, myClasses.Shop].join(' ')}>
                     <div className={myClasses.Cart}>
                         {/* Title */}
-                        <div className={["page-header text-center border-bottom"].join(' ')}>
+                        <div className={["page-header text-center"].join(' ')}>
                             <h1><a href="/cart">Shopping Cart</a></h1>
                         </div>
                         <CheckoutHeader
