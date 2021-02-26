@@ -118,6 +118,7 @@ a {
 
 .dualGrid {
     //width: 100%;
+    min-height: 7vh;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-areas: 

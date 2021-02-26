@@ -8,12 +8,22 @@ const CheckoutHeader = (props) => {
     const header = (
         <div className={myClasses.dualGrid}>
             <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
-                <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${total}</p>
+                {props.totalItems
+                    ? <p className='one-line'>Cart Subtotal ({totalItems} {itemString}): ${total}</p>
+                    : null
+                }
+                
                 {/*<p className='one-line'>Add $5.21 to get FREE U.S. Shipping</p>*/}
             </div>
             <div className={[myClasses.dualBtn, myClasses.dualRight].join(' ')}>
-                <button  className='btn-primary btn one-line' onClick={props.view}>{props.viewTitle}</button>
-                <button  className='btn-primary btn one-line' onClick={props.checkout}>{props.isAuth? 'Checkout':'Sign in to Order'}</button>
+                {props.view
+                    ? <button  className='btn-primary btn one-line' onClick={props.view}>{props.viewTitle}</button>
+                    : null
+                }
+                {props.totalItems 
+                    ?<button  className='btn-primary btn one-line' onClick={props.checkout}>{props.isAuth? 'Checkout':'Sign in to Order'}</button>
+                    :null
+                }
             </div>
         </div>
     )

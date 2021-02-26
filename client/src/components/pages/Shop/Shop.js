@@ -115,6 +115,19 @@ const Purchase = props => {
         }
     }, [])
 
+
+    let view
+    props.totalItems > 0
+        ? view = viewCartHandler
+        : view = null
+
+    let checkout
+    props.totalItems > 0
+        ? checkout = purchaseHandler
+        : checkout = null
+
+
+
     return(
         <div className={[classes.Card, myClasses.Shop].join(' ')}>
             <Modal show={purchasing} modalClosed={purchaseCancelHandler}> 
@@ -122,7 +135,7 @@ const Purchase = props => {
             </Modal>
             {/* Title */}
             <div className="container">
-                <div className="page-header text-center border-bottom">
+                <div className="page-header text-center">
                     <h1><a href='/shop'>Shop</a></h1>
                 </div>
             </div>
@@ -163,19 +176,22 @@ const Purchase = props => {
                         totalItems={props.totalItems}
                         total={props.total}
                         viewTitle='View Cart'
-                        view={viewCartHandler}
-                        checkout={purchaseHandler}
+                        view={view}
+                        checkout={checkout}
                         isAuth={props.isAuth}
                     />
                     {myShop}
-                    <button 
-                        className='btn-primary btn'
-                        type="button" role="link"
-                        onClick={purchaseHandler}>{
-                            props.isAuth 
-                                ? 'CONTINUE TO CHECKOUT' 
-                                : 'SIGN IN TO ORDER'}
-                    </button>
+                    {props.totalItems > 0
+                        ?  (<button 
+                                className='btn-primary btn'
+                                type="button" role="link"
+                                onClick={purchaseHandler}>{
+                                    props.isAuth 
+                                        ? 'CONTINUE TO CHECKOUT' 
+                                        : 'SIGN IN TO ORDER'}
+                            </button>)
+                        : null
+                    }
                 </div>
             </div>
         </div>

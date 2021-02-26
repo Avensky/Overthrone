@@ -72,7 +72,10 @@ const Cart = props => {
                 )
             })
         )
-        :<p>Nothing.</p>
+        :null
+
+
+        
         return(
             <Auxiliary>
                 <Modal show={purchasing} modalClosed={purchaseCancelHandler}> 
@@ -95,14 +98,17 @@ const Cart = props => {
                         <div className={myClasses.Collection}>
                             {addedItems}
                             {props.total ? <h3>Subtotal = ${props.total}</h3> : null}
-                            <button 
-                                className='btn-primary btn'
-                                type="button" role="link"
-                                onClick={purchaseHandler}>{
-                                    props.isAuth 
-                                        ? 'CONTINUE TO CHECKOUT' 
-                                        : 'SIGN IN TO ORDER'}
-                            </button>
+                            {props.totalItems  > 0
+                                ?  (<button 
+                                        className='btn-primary btn'
+                                        type="button" role="link"
+                                        onClick={purchaseHandler}>{
+                                            props.isAuth 
+                                                ? 'CONTINUE TO CHECKOUT' 
+                                                : 'SIGN IN TO ORDER'}
+                                    </button>)
+                                : null
+                            }
                         </div>
                     </div>
                 </div>
