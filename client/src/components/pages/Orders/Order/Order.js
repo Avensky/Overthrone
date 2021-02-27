@@ -35,10 +35,11 @@ const Order = props => {
     let time
     dateObj.getHours() > 11
         ? time = (dateObj.getHours() === 12 ? dateObj.getHours() : dateObj.getHours() -12 )+ ':' + dateObj.getMinutes() + 'pm'
-        : time = dateObj.getHours() + ':' + dateObj.getMinutes() + 'am'
+        : time = (  dateObj.getHours() < 1 ? dateObj.getHours()+12 :dateObj.getHours()) + ':' + dateObj.getMinutes() + 'am'
 
     return (        
         <div className={myClasses.Order}>
+            
             <p>Ordered on : {date}</p> 
             <p>at : {time}</p>
             <p>Order ID : {props.sessionid}</p>
@@ -65,8 +66,8 @@ const Order = props => {
                     />
                 </div>
             </div>
-            <div className={items}>
-                <p>Items:  </p>
+            <div className={myClasses.Items}>
+                <h3>Items</h3>
                 {items}
             </div>
         </div>

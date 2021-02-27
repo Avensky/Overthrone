@@ -16,7 +16,7 @@ const item = props => {
 
         {/* Quantity */}
         <div className={myClasses.CardQuantity}>
-            <p>{props.quantity}</p>
+            <p>x{props.quantity}</p>
             {props.add === true
                 ? <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')}onClick={props.clicked}>add</i>
                 : null

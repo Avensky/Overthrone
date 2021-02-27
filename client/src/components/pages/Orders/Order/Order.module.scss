@@ -1,13 +1,14 @@
 .Order {
     margin: 0 0 2vh;
     //width: 100%;
-    //height: 100%;
+    height: 100%;
     display: block;
     padding: 2vh 2vw;
     background-color: #271e00;
 }
 
 .Order p {
+    margin: 0;
     //display: inline;
     // overflow: hidden;
     word-break: break-all;

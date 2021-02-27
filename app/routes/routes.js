@@ -207,7 +207,7 @@ module.exports = function(app, passport) {
 				//res.err(err.message);
 				res.status(404).send('Ops! Orders not found');
 			}
-		})
+		}).sort({ date: -1 })
 	});
 
 // =============================================================================

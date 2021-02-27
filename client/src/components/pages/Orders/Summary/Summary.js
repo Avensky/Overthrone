@@ -19,7 +19,6 @@ const Summary = props => {
     return (
         <div className={[myClasses.Card, myClasses.Link].join(' ')}>
             <h3>
-                <span className={["fa", props.icon, 'my-' + props.mystyle].join(' ')} />
                 <span> {props.link}</span>
             </h3>
             <div>
