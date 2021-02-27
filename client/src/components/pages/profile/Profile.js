@@ -77,7 +77,7 @@ const Profile = (props) =>{
                 link="Local"
                 userLink={false}
                 email={props.payload['local'].email}
-                token={props.payload['local'].token}
+                //token={props.payload['local'].token}
                 name={props.payload['local'].name}
                 icon="fa-user"
                 mystyle="auth-btn"
@@ -93,7 +93,7 @@ const Profile = (props) =>{
                 link="Facebook"
                 userLink={false}
                 email={props.payload['facebook'].email}
-                token={props.payload['facebook'].token}
+                //token={props.payload['facebook'].token}
                 name={props.payload['facebook'].name}
                 icon="fa-facebook"
                 mystyle="btn-primary"
@@ -111,7 +111,7 @@ const Profile = (props) =>{
                 displayName={props.payload['twitter'].displayName}
                 //token       = "token"
                 username={props.payload['twitter'].username}
-                token={props.payload['twitter'].token}
+                //token={props.payload['twitter'].token}
                 icon="fa-twitter"
                 mystyle="btn-info"
                 provider='/connect/twitter' 
@@ -136,7 +136,7 @@ const Profile = (props) =>{
                 link="Google"
                 userLink={false}
                 email={props.payload['google'].email}
-                token={props.payload['google'].token}
+                //token={props.payload['google'].token}
                 name={props.payload['google'].name}
                 icon="fa-google-plus"
                 mystyle="btn-danger"
