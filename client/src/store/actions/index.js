@@ -4,7 +4,8 @@ export {
     fbAuth,
     setAuthRedirectPath,
     newAddress,
-    newAddressStart
+    newAddressStart,
+    connect
 } from './auth';
 
 export {

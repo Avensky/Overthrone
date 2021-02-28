@@ -100,12 +100,15 @@ module.exports         = function(passport) {
 
                 //  If we're logged in, we're connecting a new local account.
                 if(req.user) {
+                    console.log('req.user ', req.user);
                     var user            = req.user;
                     user.local.email    = email;
                     user.local.password = user.generateHash(password);
                     user.save(function(err) {
-                        if (err)
+                        if (err){
+                            console.log(err)
                             throw err;
+                        }
                         return done(null, user);
                     });
                 } 

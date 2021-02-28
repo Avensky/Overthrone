@@ -50,7 +50,6 @@ useEffect(()=> {
     <Switch>
       <Route path="/checkout"             component={Checkout} />
       <Route path="/authentication"       component={Auth} />
-      <Route path="/connectLocal"         component={ConnectLocal} />
       <Route path="/signup"               component={Signup} />
       <Route path="/books"                component={Books} />
       <Route path="/authors"              component={Authors} />
@@ -87,7 +86,8 @@ useEffect(()=> {
           <Route path='/details/:id'    exact component={Details} />
           <Route path='/CharacterList/' exact component={CharacterList} />
           <Route path="/profile/"             component={Profile} />
-          <Route path="/connectlocal"         component={Connect} />
+          <Route path="/connect"              component={Connect} />
+          <Route path="/connectLocal"         component={ConnectLocal} />
           <Route path="/"                     component={Books} />             
         </Switch>
       )
@@ -111,7 +111,8 @@ useEffect(()=> {
         <Route path='/details/:id'    exact component={Details} />
         <Route path='/CharacterList/' exact component={CharacterList} />
         <Route path="/profile/"             component={Profile} />
-        <Route path="/connectlocal"         component={Connect} />
+        <Route path="/connect"              component={Connect} />
+        <Route path="/connectLocal"         component={ConnectLocal} />
         <Route path="/"                     component={Books} />             
       </Switch>
     )

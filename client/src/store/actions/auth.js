@@ -77,7 +77,6 @@ export const auth = (values, authLogin) => {
     }
 }
 
-
 export const authStart = () => {
     return {
         type: actionTypes.AUTH_START
@@ -98,6 +97,60 @@ export const authFail = (error) => {
         error   : error,
     };
 };
+
+
+
+
+export const connect = (values,  ) => {
+    console.log('values = '+values);
+    //console.log('connect = '+connect);
+    return dispatch => {
+        dispatch(connectStart());
+        let url = '/connect/local';     
+        axios.post(url, values)
+            .then(response => {
+                console.log('response = '+JSON.stringify(response));
+                //console.log('response = '+response);
+                const data = response.data;
+                dispatch(connectSuccess(data)) 
+             })
+             .catch(err => {
+                 console.log('err = '+err);
+                 dispatch(connectFail(err));
+             });
+    }
+}
+
+export const connectStart = () => {
+    return {
+        type: actionTypes.CONNECT_START
+    };
+};
+
+export const connectSuccess = (token, userId) => {
+    return {
+        type    : actionTypes.CONNECT_SUCCESS,
+        idToken : token,
+        userId  : userId
+    };
+};
+
+export const connectFail = (error) => {
+    return {
+        type    : actionTypes.CONNECT_FAIL,
+        error   : error,
+    };
+};
+
+
+
+
+
+
+
+
+
+
 
 export const fbAuth = () => {
     return dispatch => {

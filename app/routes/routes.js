@@ -449,14 +449,6 @@ app.post('/api/checkout', async (req, res) => {
 		// 	})(req, res, next);
 		//   });
 
-		// process the signup form
-		app.post('/api/signup', passport.authenticate('local-signup', {
-			successRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/signup', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
-		}));
-
-
     // =====================================
     // FACEBOOK ROUTES =====================
     // =====================================
@@ -512,11 +504,22 @@ app.post('/api/checkout', async (req, res) => {
 		//	//res.render('connect-local.ejs', { message: req.flash('loginMessage') });
 		//	res.render('/authentication')
 		//});
-		app.post('/connect/local', passport.authenticate('local-signup', {
-			successRedirect : '/shop', // redirect to the secure profile section
-			failureRedirect : '/connectlocal', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
-		}));
+		app.post('/connect/local', function(req, res, next) {
+			passport.authenticate('local-signup', //{
+			//successRedirect : '/profile', // redirect to the secure profile section
+			//failureRedirect : '/connectLocal', // redirect back to the signup page if there is an error
+			//failureFlash : true // allow flash messages
+		//}
+			function(err, user, info) {
+				if (err) { return next(err); }
+				if (!user) { return res.send(info); }
+				req.logIn(user, function(err) {
+				if (err) { return next(err); }
+				//return res.redirect('/profile');
+				return res.send(200)
+				});
+			})(req, res, next);
+		});
 
 	// facebook -------------------------------
 

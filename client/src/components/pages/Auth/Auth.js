@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
-import Auxiliary from '../../../hoc/Auxiliary';
+//import Auxiliary from '../../../hoc/Auxiliary';
 import * as actions from '../../../store/actions/index';
 // import {updateObject, checkValidity} from '../../../utility/utility';
 // import Input from '../../UI/Input/Input';
@@ -18,10 +18,10 @@ const Auth = props => {
     const [authLogin, setAuthLogin] = useState(true)
     // const [socialLogin, setSocialLogin] = useState(false)
 
-    const socialAuthHandler = () => {
+    //const socialAuthHandler = () => {
     //    setSocialLogin(true)
-       // props.onFbAuth()
-    }
+    //    props.onFbAuth()
+    //}
 
     const loginToggleHandler = () => {setAuthLogin(true)}
 
@@ -52,7 +52,7 @@ const Auth = props => {
     }
     const validationSchema = Yup.object({
         email: Yup.string().required('Required')
-      })
+    })
     
     let loader
     if ( props.loading || (props.submitted && props.userLoading)) {
@@ -143,7 +143,7 @@ const Auth = props => {
             <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
                 <a  
                     href="/auth/facebook"
-                    onClick={socialAuthHandler}
+                    //onClick={socialAuthHandler}
                 ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
             </button>
             <button className={[myClasses.Btn, "btn-info"].join(' ')}>

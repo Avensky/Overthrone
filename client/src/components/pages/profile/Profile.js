@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import Auxiliary from '../../../hoc/Auxiliary';
 import Link from './Link/Link';
@@ -11,11 +11,12 @@ const Profile = (props) =>{
     let address, local, facebook, twitter, google = '';
     const user = props.payload
     const history = useHistory()
+    const editAddressHandler = () => {history.push('/contactData')}
 
-    const editAddressHandler = () => {
-        history.push('/contactData')
-    }
-
+    useEffect(()=> {
+        const fetchData = async () => {props.onFetchUser()}
+          if ( props.authRedirectPath !== '/'){fetchData()}
+    }, [])
 
     address = (
         <Address 
@@ -49,7 +50,7 @@ const Profile = (props) =>{
             userLink={true}
             icon="fa-user"
             mystyle="auth-btn"
-            provider='/connectlocal' 
+            provider='/connectLocal' 
             providerUnlink='/unlink/local' />)
     
     facebook = (
@@ -172,7 +173,9 @@ const Profile = (props) =>{
 
 const mapStateToProps = state => {
     return {
-        payload: state.auth.payload,
+        payload           : state.auth.payload,
+        fetchedUser       : state.auth.payload,
+        authRedirectPath  : state.auth.authRedirectPath,
     }
 }
 
