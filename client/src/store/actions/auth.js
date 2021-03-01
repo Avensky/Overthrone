@@ -28,7 +28,7 @@ export const fetchUser = () => {
         dispatch(fetchUserStart());
         axios.get('/api/fetchUser')
         .then( result => {
-            console.log(result)
+           //console.log(result)
             const payload = result.data
             dispatch(fetchUserSuccess(payload));
         })
@@ -57,21 +57,21 @@ export const checkLoginTimeout = (expirationTime) => {
 };
 
 export const auth = (values, authLogin) => {
-    console.log('values = '+JSON.stringify(values));
-    console.log('authLogin = '+authLogin);
+    //console.log('values = '+JSON.stringify(values));
+    //console.log('authLogin = '+authLogin);
     return dispatch => {
         dispatch(authStart());
         let url = '/auth/login';
         if (!authLogin) { url = '/auth/signup'; }       
         axios.post(url, values)
             .then(response => {
-                console.log('response = '+JSON.stringify(response));
+                //console.log('response = '+JSON.stringify(response));
                 //console.log('response = '+response);
                 const data = response.data;
                 dispatch(authSuccess(data)) 
              })
              .catch(err => {
-                 console.log('err = '+err);
+                 //console.log('err = '+err);
                  dispatch(authFail(err));
              });
     }
@@ -102,20 +102,20 @@ export const authFail = (error) => {
 
 
 export const connect = (values,  ) => {
-    console.log('values = '+values);
+    //console.log('values = '+values);
     //console.log('connect = '+connect);
     return dispatch => {
         dispatch(connectStart());
         let url = '/connect/local';     
         axios.post(url, values)
             .then(response => {
-                console.log('response = '+JSON.stringify(response));
+                //console.log('response = '+JSON.stringify(response));
                 //console.log('response = '+response);
                 const data = response.data;
                 dispatch(connectSuccess(data)) 
              })
              .catch(err => {
-                 console.log('err = '+err);
+                 //console.log('err = '+err);
                  dispatch(connectFail(err));
              });
     }
@@ -205,17 +205,17 @@ export const newAddressSuccess = (addressData) => {
 export const newAddress = (values) => {
     return dispatch => {
         dispatch(newAddressStart())
-        console.log('New Address Start');
+       //console.log('New Address Start');
         axios.post('/api/addAddress', values)
             .then(response => {
-                console.log('Axios Start');
-                console.log(response);
+               //console.log('Axios Start');
+               //console.log(response);
                 const data = response.data;
-                console.log(data);
+               //console.log(data);
                 dispatch(newAddressSuccess(data))
         })
         .catch(error => {
-            console.log(error);
+           //console.log(error);
             dispatch(newAddressFail(error))
         })    
     }

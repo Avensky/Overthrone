@@ -567,7 +567,9 @@ app.post('/api/checkout', async (req, res) => {
 
 	// local -----------------------------------
 	app.get('/unlink/local', function(req, res) {
+		//console.log('unlink')
 		var user            = req.user;
+		//console.log('user',user)
 		user.local.email    = undefined;
 		user.local.password = undefined;
 		user.save(function(err) {

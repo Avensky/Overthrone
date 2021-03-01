@@ -28,8 +28,8 @@ const Auth = props => {
     const registerToggleHandler = () => {setAuthLogin(false)}
 
     const submitHandler = ( values, submitProps ) => {
-        console.log('Form data', values)
-        console.log('submitProps', submitProps)
+        //console.log('Form data', values)
+        //console.log('submitProps', submitProps)
         props.onAuth( values, authLogin)
         submitProps.setSubmitting(false)
         submitProps.resetForm()

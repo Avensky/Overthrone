@@ -106,7 +106,7 @@ const fetchUserStart = (state, action) => {
 }
 
 const fetchUserSuccess = (state, action) => {
-    console.log(action);
+   //console.log(action);
     return updateObject(state, {
         payload: action.payload,
         error: null,
