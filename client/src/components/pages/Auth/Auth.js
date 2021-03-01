@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Auth.module.scss';
-//import Auxiliary from '../../../hoc/Auxiliary';
+import Auxiliary from '../../../hoc/Auxiliary';
 import * as actions from '../../../store/actions/index';
 // import {updateObject, checkValidity} from '../../../utility/utility';
 // import Input from '../../UI/Input/Input';
@@ -48,11 +48,34 @@ const Auth = props => {
 
     const initialValues = {
         email: '', 
-        password: ''
+        password: '',
+        confirm_password: '',
     }
-    const validationSchema = Yup.object({
-        email: Yup.string().required('Required')
-    })
+    let validationSchema
+    if (authLogin === true) {    
+        validationSchema = Yup.object({
+            email: Yup.string()
+                .email("Invalid email format")
+                .required("Required!"),
+            password: Yup.string()
+                .min(8, "Minimum 8 characters")
+                .max(15, "Maximum 15 characters")
+                .required("Required!"),
+        })
+    } else {
+        validationSchema = Yup.object({
+            email: Yup.string()
+                .email("Invalid email format")
+                .required("Required!"),
+            password: Yup.string()
+                .min(8, "Minimum 8 characters")
+                .max(15, "Maximum 15 characters")
+                .required("Required!"),
+            confirm_password: Yup.string()
+                .oneOf([Yup.ref("password")], "Password's do not match")
+                .required("Required!")
+        })
+    }
     
     let loader
     if ( props.loading || (props.submitted && props.userLoading)) {
@@ -89,6 +112,54 @@ const Auth = props => {
         unselected = myClasses.AuthToggle
 
     }
+
+    let form 
+    if (authLogin === true) {    
+        form = (
+            <Auxiliary>
+                <Field 
+                    type="email" 
+                    name="email" 
+                    placeholder="Email Address"
+                    className={myClasses.AuthInput}
+                />
+                <ErrorMessage name="email" component="div" />
+                <Field 
+                    type="password" 
+                    name="password" 
+                    placeholder="Password"
+                    className={myClasses.AuthInput}
+                />
+                <ErrorMessage name="password" component="div" />
+            </Auxiliary>
+        )
+    } else {
+        form = (
+            <Auxiliary>
+                <Field 
+                    type="email" 
+                    name="email" 
+                    placeholder="Email Address"
+                    className={myClasses.AuthInput}
+                />
+                <ErrorMessage name="email" component="div" />
+                <Field 
+                    type="password" 
+                    name="password" 
+                    placeholder="Password"
+                    className={myClasses.AuthInput}
+                />
+                <ErrorMessage name="password" component="div" />
+                <Field 
+                    type="password" 
+                    name="confirm_password" 
+                    placeholder="Confirm Password"
+                    className={myClasses.AuthInput}
+                />
+                <ErrorMessage name="confirm_password" component="div" />
+            </Auxiliary>
+        )
+    }
     
     return(
        <div className={[classes.Card, myClasses.Auth].join(' ')}>
@@ -114,20 +185,7 @@ const Auth = props => {
                 { formik => 
                 <Form>
                     {message}
-                    <Field 
-                        type="email" 
-                        name="email" 
-                        placeholder="Email Address"
-                        className={myClasses.AuthInput}
-                    />
-                    <ErrorMessage name="email" component="div" />
-                    <Field 
-                        type="password" 
-                        name="password" 
-                        placeholder="Password"
-                        className={myClasses.AuthInput}
-                    />
-                    <ErrorMessage name="password" component="div" />
+                    {form}
                     <button  
                         className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                         type='submit'

@@ -44,9 +44,9 @@ module.exports         = function(passport) {
         //session: false
     },
     function(req, email, password, done) {
-        console.log("req" + req.body)
-        console.log('email = ' + req.body.email)
-        console.log('password = ' + req.body.password)
+        // console.log("req" + req.body)
+        // console.log('email = ' + req.body.email)
+        // console.log('password = ' + req.body.password)
         // asynchronous
         process.nextTick(function() {
             User.findOne({ 'local.email' :  email }, function(err, user) {
@@ -82,7 +82,7 @@ module.exports         = function(passport) {
         //session: false    
     },
     function(req, email, password, done) {
-        console.log('user signup');
+        //console.log('user signup');
         // asynchronous
         process.nextTick(function() {
 
@@ -90,6 +90,10 @@ module.exports         = function(passport) {
             //  to know if the email address is in use.
             User.findOne({'local.email': email}, function(err, existingUser) {
 
+                // check to see if passwords match
+                if (password!== req.body.confirm_password) 
+                return done(null, false, {message: "Password's do not match"});
+                
                 // check to see if there's already a user with that email
                 if (existingUser) 
                 return done(null, false, {message: 'That email is already taken.'});
@@ -100,14 +104,16 @@ module.exports         = function(passport) {
 
                 //  If we're logged in, we're connecting a new local account.
                 if(req.user) {
-                    console.log('req.user ', req.user);
+                    //console.log('req.user ', req.user);
                     var user            = req.user;
                     user.local.email    = email;
                     user.local.password = user.generateHash(password);
                     user.save(function(err) {
                         if (err){
-                            console.log(err)
-                            throw err;
+                            //console.log(err)
+                            //throw err;
+                            return done(null, false, {message: err.message});
+
                         }
                         return done(null, user);
                     });
@@ -120,11 +126,11 @@ module.exports         = function(passport) {
                     newUser.local.email    = email;
                     newUser.local.password = newUser.generateHash(password);
                     // save the user
-                    console.log(newUser)
+                    //console.log(newUser)
                     newUser.save(function(err) {
                         if (err)
-                            throw err;
-
+                            //throw err;
+                            return done(null, false, {message: err.message});
                         return done(null, newUser);
                     });
                 }
@@ -379,10 +385,10 @@ module.exports         = function(passport) {
                     where: { username: jwt_payload.id }
                 }).then( user => {
                     if (user) {
-                        console.log("user found in db in passport")
+                        //console.log("user found in db in passport")
                         done(null, user)
                     } else {
-                        console.log("user not found in db")
+                        //console.log("user not found in db")
                         done(null, false)
                     }
                 })

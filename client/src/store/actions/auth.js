@@ -57,7 +57,7 @@ export const checkLoginTimeout = (expirationTime) => {
 };
 
 export const auth = (values, authLogin) => {
-    console.log('values = '+values);
+    console.log('values = '+JSON.stringify(values));
     console.log('authLogin = '+authLogin);
     return dispatch => {
         dispatch(authStart());

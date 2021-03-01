@@ -9,12 +9,12 @@ const stripe         = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
 module.exports = function(app, passport) {
 	const fulfillOrder = (session) => {
 		// TODO: fill me in
-		console.log("Fulfilling order", session);
+		//console.log("Fulfilling order", session);
 	}
 	
 	const createOrder =  async (session) => {
 	  // TODO: fill me in
-	  console.log("Creating order", session);
+	  //console.log("Creating order", session);
 	  const sessionRetrieve = await stripe.checkout.sessions.retrieve(
 		session.id, {
 		  expand: ['line_items'],
@@ -129,7 +129,7 @@ module.exports = function(app, passport) {
 		//const payload = request.rawBody;
 		//console.log('rawBody' + JSON.stringify(payload))
 	  	//console.log('webhook body' + JSON.stringify(req.body))
-	 	console.log('body' + JSON.stringify(req.body))
+	 	//console.log('body' + JSON.stringify(req.body))
 	  	//console.log('user = ' + req.user)
 		const sig = req.headers['stripe-signature'];
 	  
@@ -142,7 +142,7 @@ module.exports = function(app, passport) {
 		//console.log('endpointSecret = ' + endpointSecret)
 		event = stripe.webhooks.constructEvent(payload, sig, endpointSecret)
 		} catch (err) {
-		console.log('Webhook Error = '+ err.message)
+		//console.log('Webhook Error = '+ err.message)
 		  return res.status(400).send(`Webhook Error: ${err.message}`)
 	  }
 	  
@@ -196,7 +196,7 @@ module.exports = function(app, passport) {
 
 	app.post('/api/orders', (req,res) =>{          //get all faqs info from db
 		let id = req.body
-		console.log( 'id = ' + JSON.stringify(id))		
+		//console.log( 'id = ' + JSON.stringify(id))		
 		Order.find({$and:[
 			{ 'userid' : id._id},
 			{ 'payment_status' : 'paid'}
@@ -234,7 +234,7 @@ app.post('/api/checkout', async (req, res) => {
 	let userid = req.body.userid
 	// let shipping = req.body.address
 	// let body = JSON.stringify(req.body.items)
-	console.log('checkout items = ' + JSON.stringify(body))
+	//console.log('checkout items = ' + JSON.stringify(body))
 	// console.log('server userid = ' + JSON.stringify(userid))
 	// console.log('server shipping = ' + JSON.stringify(shipping))
 	
@@ -260,7 +260,7 @@ app.post('/api/checkout', async (req, res) => {
 	  })
 	  orderObj.save((err)=>{
 		if(err){
-		console.log(err);
+		//console.log(err);
 		res.send('Unable to save order data!');
 		}
 		else

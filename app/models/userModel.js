@@ -5,6 +5,7 @@ const crypto    = require('crypto');
 const mongoose  = require('mongoose');
 const validator = require('validator');
 const bcrypt    = require('bcrypt');
+const SALT_WORK_FACTOR = 10;
 
 // define the schema for our user model
 const userSchema = new mongoose.Schema({
@@ -47,33 +48,28 @@ const userSchema = new mongoose.Schema({
   local: {
     email: {
       type          : String,
-      required      : [false, 'Please provide your email'],
+      required      : [true, 'Please provide your email'],
       unique        : true,
       lowercase     : true,
       validate      : [validator.isEmail, 'Please provide a valid email']
     },
-    role: {
-      type          : String,
-      enum          : ['user', 'guide', 'lead-guide', 'admin'],
-      // default       : 'user'
-    },
     password: {
       type          : String,
-      required      : [false, 'Please provide a password'],
+      required      : [true, 'Please provide a password'],
       minlength     : 8,
       select        : true
     },
-    passwordConfirm: {
-      type          : String,
-      required      : [false, 'Please confirm your password'],
-      validate: {
-        // This only works on CREATE and SAVE!!!
-        validator: function(el) {
-          return el === this.password;
-        },
-        message: 'Passwords are not the same!'
-      }
-    },
+    // passwordConfirm: {
+    //   type          : String,
+    //   required      : [true, 'Please confirm your password'],
+    //   validate: {
+    //     // This only works on CREATE and SAVE!!!
+    //     validator: function(el) {
+    //       return el === this.password;
+    //     },
+    //     message: 'Passwords are not the same!'
+    //   }
+    //},
     passwordChangedAt     : Date,
     passwordResetToken    : String,
     passwordResetExpires  : Date,
@@ -104,6 +100,16 @@ const userSchema = new mongoose.Schema({
 });
 
 //  userSchema.pre('save', async function(next) {
+//    if (!this.isModified('password')) return next();
+//    try {
+//      const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+//      this.password = await bcrypt.hash(this.password, salt);
+//      return next();
+//    } catch (err) {
+//      return next(err);
+//    }
+//  })
+
 //    // Only run this function if password was actually modified
 //    if (!this.isModified('password')) return next();//  
 
@@ -175,10 +181,10 @@ userSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-  console.log("password check = " + password);
-  console.log("local user check = " + this.local);
-  console.log("local pass check = " + this.local.password);
-  console.log("local email check = " + this.local.email);
+//  console.log("password check = " + password);
+//  console.log("local user check = " + this.local);
+//  console.log("local pass check = " + this.local.password);
+//  console.log("local email check = " + this.local.email);
   return bcrypt.compareSync(password, this.local.password);
 };
 
