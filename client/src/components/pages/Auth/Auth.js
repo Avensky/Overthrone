@@ -60,7 +60,7 @@ const Auth = props => {
             password: Yup.string()
                 .min(8, "Minimum 8 characters")
                 .max(15, "Maximum 15 characters")
-                .required("Required!"),
+                .required("Required!")
         })
     } else {
         validationSchema = Yup.object({
@@ -70,10 +70,14 @@ const Auth = props => {
             password: Yup.string()
                 .min(8, "Minimum 8 characters")
                 .max(15, "Maximum 15 characters")
-                .required("Required!"),
+                .required("Password is required!")  
+                .matches(
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+                ),                       
             confirm_password: Yup.string()
-                .oneOf([Yup.ref("password")], "Password's do not match")
-                .required("Required!")
+                .oneOf([Yup.ref("password")], "Passwords  must match")
+                .required("Password confirm is required!")
         })
     }
     
