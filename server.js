@@ -129,7 +129,7 @@ require('./app/routes/characterRoutes.js')(app); // load our routes and pass in 
 require('./app/routes/userRoutes');
 require('./app/routes/shopRoutes')(app);
 
-// app.use('/api/v1/users', userRouter);
+app.use('/api/v1/users', userRouter);
 //==============================================================================
 // launch ======================================================================
 //==============================================================================

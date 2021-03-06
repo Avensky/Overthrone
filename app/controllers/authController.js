@@ -1,7 +1,10 @@
+const mongoose      = require('mongoose')
+const User          = mongoose.model('User')
+
 const crypto                = require('crypto');
 const { promisify }         = require('util');
 const jwt                   = require('jsonwebtoken');
-const User                  = require('../models/userModel');
+//const User                  = require('../models/userModel');
 const catchAsync            = require('./../utils/catchAsync');
 const AppError              = require('./../utils/appError');
 const Email                 = require('./../utils/email');
@@ -167,7 +170,7 @@ exports.restrictTo = (...roles) => {
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({ 'local.email': req.body.email });
   if (!user) {
     return next(new AppError('There is no user with email address.', 404));
   }
@@ -215,10 +218,10 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError('Token is invalid or has expired', 400));
   }
-  user.password = req.body.password;
-  user.passwordConfirm = req.body.passwordConfirm;
-  user.passwordResetToken = undefined;
-  user.passwordResetExpires = undefined;
+  user.local.password = req.body.password;
+  user.local.passwordConfirm = req.body.passwordConfirm;
+  user.local.passwordResetToken = undefined;
+  user.local.passwordResetExpires = undefined;
   await user.save();
 
   // 3) Update changedPasswordAt property for the user
@@ -236,8 +239,8 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   }
 
   // 3) If so, update password
-  user.password = req.body.password;
-  user.passwordConfirm = req.body.passwordConfirm;
+  user.local.password = req.body.password;
+  user.local.passwordConfirm = req.body.passwordConfirm;
   await user.save();
   // User.findByIdAndUpdate will NOT work as intended!
 

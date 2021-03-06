@@ -34,7 +34,20 @@ const connectLocal = props => {
         password: ''
     }
     const validationSchema = Yup.object({
-        email: Yup.string().required('Required')
+        email: Yup.string()
+            .email("Invalid email format")
+            .required("Required!"),
+        password: Yup.string()
+            .min(8, "Minimum 8 characters")
+            .max(15, "Maximum 15 characters")
+            .required("Password is required!")  
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+            ),                       
+        confirm_password: Yup.string()
+            .oneOf([Yup.ref("password")], "Passwords  must match")
+            .required("Password confirm is required!")
     })
     
     let loader
@@ -72,6 +85,13 @@ const connectLocal = props => {
                         className={myClasses.AuthInput}
                     />
                     <ErrorMessage name="password" component="div" />
+                    <Field 
+                        type="password" 
+                        name="confirm_password" 
+                        placeholder="Confirm Password"
+                        className={myClasses.AuthInput}
+                    />
+                    <ErrorMessage name="confirm_password" component="div" />
                     <button  
                         className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                         type='submit'
