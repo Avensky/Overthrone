@@ -3,7 +3,7 @@
 //==============================================================================
 const express        = require('express')
 const app            = express()
-const dotenv	       = require('dotenv').config()
+const dotenv	       = require('dotenv').config({path:__dirname+'/config/config.env'})
 const PORT           = process.env.PORT || 5000;
 //console.log('PORT = '+ PORT)
 //const morgan         = require('morgan');

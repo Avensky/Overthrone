@@ -1,6 +1,6 @@
-const mongoose      = require('mongoose')
-const User          = mongoose.model('User')
-
+const mongoose              = require('mongoose')
+const User                  = require('./../models/userModel');
+//const User                  = mongoose.model('User')
 const crypto                = require('crypto');
 const { promisify }         = require('util');
 const jwt                   = require('jsonwebtoken');
@@ -174,16 +174,17 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError('There is no user with email address.', 404));
   }
-
+  //console.log('user', user)
   // 2) Generate the random reset token
   const resetToken = user.createPasswordResetToken();
+  //console.log('resetToken', resetToken)
   await user.save({ validateBeforeSave: false });
 
+  console.log('user token', user)
   // 3) Send it to user's email
   try {
-    const resetURL = `${req.protocol}://${req.get(
-      'host'
-    )}/api/v1/users/resetPassword/${resetToken}`;
+    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
+    console.log('resetURL', resetURL)
     await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
@@ -191,8 +192,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       message: 'Token sent to email!'
     });
   } catch (err) {
-    user.passwordResetToken = undefined;
-    user.passwordResetExpires = undefined;
+    user.local.passwordResetToken = undefined;
+    user.local.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
     return next(

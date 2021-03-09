@@ -99,40 +99,33 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-//  userSchema.pre('save', async function(next) {
-//    if (!this.isModified('password')) return next();
-//    try {
-//      const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-//      this.password = await bcrypt.hash(this.password, salt);
-//      return next();
-//    } catch (err) {
-//      return next(err);
-//    }
-//  })
 
-//    // Only run this function if password was actually modified
-//    if (!this.isModified('password')) return next();//  
+userSchema.pre('save', async function(next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();//  
 
-//    // Hash the password with cost of 12
-//    this.password = await bcrypt.hash(this.password, 12);// 
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);// 
 
-//    // Delete passwordConfirm field
-//    this.passwordConfirm = undefined;
-//    next();
-//  });// 
+  // Delete passwordConfirm field
+  this.passwordConfirm = undefined;
+  next();
+});// 
 
-//  userSchema.pre('save', function(next) {
-//    if (!this.isModified('password') || this.isNew) return next();//  
 
-//    this.passwordChangedAt = Date.now() - 1000;
-//    next();
-//  });// 
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) return next();//  
 
-//  userSchema.pre(/^find/, function(next) {
-//    // this points to the current query
-//    this.find({ active: { $ne: false } });
-//    next();
-//  });
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});// 
+
+
+userSchema.pre(/^find/, function(next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
+  next();
+});
 
 //==============================================================================
 // methods =====================================================================
@@ -160,16 +153,17 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
 };
 
 userSchema.methods.createPasswordResetToken = function() {
+  console.log('resetToken model started');
   const resetToken = crypto.randomBytes(32).toString('hex');
 
-  this.passwordResetToken = crypto
+  this.local.passwordResetToken = crypto
     .createHash('sha256')
     .update(resetToken)
     .digest('hex'); 
 
-  // console.log({ resetToken }, this.passwordResetToken);
+  console.log('resetToken model', resetToken);
 
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  this.local.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
 };
