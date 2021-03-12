@@ -35,7 +35,7 @@ const navbar = ( props ) => {
                     {cart}
                     {props.isAuth !== null
                         ? <NavLink to="/profile"   ><h2><span className="fa fa-user" /></h2></NavLink>
-                        :<NavLink to="/authentication"   ><h2><span className="fa fa-sign-in" /></h2></NavLink>}                                      
+                        :<NavLink exact to="/authentication"   ><h2><span className="fa fa-sign-in" /></h2></NavLink>}                                      
                 </h2>
                 <div className={[myClasses.Logo, myClasses.Mobile].join(' ')}>
                     <NavLink  to="/">

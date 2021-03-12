@@ -64,6 +64,11 @@ input::selection         { background-color: transparent !important; }
 }
 
 .text-center        { text-align: center; }
+.text-right         { text-align: right; }
+
+.pointer {
+  cursor: pointer;
+}
 
 .border-bottom {
   border-bottom: 3px solid #E1E8EE;
@@ -92,3 +97,4 @@ button {
   //white-space: nowrap; 
   overflow: hidden;
 }
+

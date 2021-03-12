@@ -49,7 +49,9 @@ useEffect(()=> {
   let routes = (
     <Switch>
       <Route path="/checkout"             component={Checkout} />
-      <Route path="/authentication"       component={Auth} />
+      <Route exact path="/authentication"       render={props => <Auth {...props} />} />
+      <Route exact path="/authentication/api/v1/users/resetPassword/:token"       
+                                          render={props => <Auth {...props} />} />
       <Route path="/signup"               component={Signup} />
       <Route path="/books"                component={Books} />
       <Route path="/authors"              component={Authors} />
@@ -72,6 +74,7 @@ useEffect(()=> {
           <Route path="/orders"               component={Orders} />
           <Route path="/checkout"             component={Checkout} />
           <Route path="/authentication"       render={props => <Auth {...props} />} />
+          <Route path="/authentication/api/v1/users/resetPassword/:token"       render={props => <Auth {...props} />} />
           <Route path="/contactData"          component={ContactData} />
           <Route path="/signup"               component={Signup} />
           <Route path="/books"                component={Books} />

@@ -56,24 +56,34 @@ export const checkLoginTimeout = (expirationTime) => {
     };
 };
 
-export const auth = (values, authLogin) => {
-    //console.log('values = '+JSON.stringify(values));
+export const auth = (values, auth, token) => {
+    console.log('values = '+JSON.stringify(values));
     //console.log('authLogin = '+authLogin);
     return dispatch => {
         dispatch(authStart());
-        let url = '/auth/login';
-        if (!authLogin) { url = '/auth/signup'; }       
-        axios.post(url, values)
-            .then(response => {
-                //console.log('response = '+JSON.stringify(response));
-                //console.log('response = '+response);
-                const data = response.data;
-                dispatch(authSuccess(data)) 
-             })
-             .catch(err => {
-                 //console.log('err = '+err);
-                 dispatch(authFail(err));
-             });
+        let url
+        switch (auth) {
+            case auth='login':
+                url = '/auth/login'
+                break;
+            case auth='register':
+                url = '/auth/signup'
+                break;
+            case auth='forgot-password':
+                url = 'api/v1/users/forgotPassword'
+                break;
+            case auth='reset-password':
+                url = 'api/v1/users/resetPassword/'+token
+                console.log('url',url)
+                break;
+        }
+        let method
+        auth === 'reset-password'
+            ? method = axios.patch
+            : method = axios.post
+        method(url, values)
+            .then(response => {dispatch(authSuccess(response.data)) })
+            .catch(err => {dispatch(authFail(err));});
     }
 }
 

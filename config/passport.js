@@ -34,6 +34,49 @@ module.exports         = function(passport) {
     });
 
     // =========================================================================
+    // resetpassword =============================================================
+    // =========================================================================
+    passport.use('reset-password', new LocalStrategy({
+        // by default, local strategy uses username and password, we will override with email
+        //usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+        //session: false
+    },
+    function(req, password, done) {
+        console.log("req" + req.body)
+        // console.log('email = ' + req.body.email)
+        // console.log('password = ' + req.body.password)
+        // asynchronous
+        process.nextTick(function() {
+            //User.findOne({ 'local.email' :  email }, function(err, user) {
+            User.findOne({ 'local.passwordResetToken': hashedToken, 'local.passwordResetExpires': { $gt: Date.now() }}, function(err, user) {
+                //console.log('local email = ' + user.local.email)
+                //console.log('local password = ' + user.local.password)
+                // if there are any errors, return the error
+                if (err)
+                    return done(err);
+
+                // if no user is found, return the message
+                if (!user)
+                    return done(null, false, {message: 'Oops! Email not found.'});
+
+                if (!user.validPassword(password))
+                    return done(null, false, {message: 'Oops! Wrong password.'});
+
+                // all is well, return user
+                else
+                    return done(null, user);
+            });
+        });
+
+    }));
+
+
+
+
+
+    // =========================================================================
     // LOCAL LOGIN =============================================================
     // =========================================================================
     passport.use('local-login', new LocalStrategy({

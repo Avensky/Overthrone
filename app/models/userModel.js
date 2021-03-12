@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
       type          : String,
       //required      : [true, 'Please provide a password'],
       minlength     : 8,
-      select        : true
+      select        : false
     },
     passwordConfirm: {
       type          : String,
@@ -65,7 +65,10 @@ const userSchema = new mongoose.Schema({
       validate: {
         // This only works on CREATE and SAVE!!!
         validator: function(el) {
-          return el === this.password;
+          console.log('validator')
+          console.log('validator el',el)
+          console.log('validator this.password',this.local.password)
+          return el === this.local.password;
         },
         message: 'Passwords are not the same!'
       }
@@ -103,6 +106,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function(next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();//  
+  console.log('isModified - Only run this function if password was actually modified')
 
   // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);// 
@@ -114,8 +118,9 @@ userSchema.pre('save', async function(next) {
 
 
 userSchema.pre('save', function(next) {
+  
   if (!this.isModified('password') || this.isNew) return next();//  
-
+  console.log('!isModified')
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });// 
@@ -131,14 +136,13 @@ userSchema.pre(/^find/, function(next) {
 // methods =====================================================================
 //==============================================================================
 
-userSchema.methods.correctPassword = async function(
-  candidatePassword,
-  userPassword
-) {
+userSchema.methods.correctPassword = async function(candidatePassword,userPassword) {
+  console.log('correct password check')
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
+  console.log('passwordChangedAt')
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
       this.passwordChangedAt.getTime() / 1000,
@@ -153,7 +157,7 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
 };
 
 userSchema.methods.createPasswordResetToken = function() {
-  console.log('resetToken model started');
+  console.log('resetToken started');
   const resetToken = crypto.randomBytes(32).toString('hex');
 
   this.local.passwordResetToken = crypto
@@ -161,7 +165,7 @@ userSchema.methods.createPasswordResetToken = function() {
     .update(resetToken)
     .digest('hex'); 
 
-  console.log('resetToken model', resetToken);
+  console.log('resetToken', resetToken);
 
   this.local.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
@@ -170,14 +174,15 @@ userSchema.methods.createPasswordResetToken = function() {
 
 // generating a hash
 userSchema.methods.generateHash = function(password) {
+  console.log('generateHash')
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-//  console.log("password check = " + password);
+console.log("password check = " + password);
 //  console.log("local user check = " + this.local);
-//  console.log("local pass check = " + this.local.password);
+console.log("local pass check = " + this.local.password);
 //  console.log("local email check = " + this.local.email);
   return bcrypt.compareSync(password, this.local.password);
 };

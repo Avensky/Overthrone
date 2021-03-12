@@ -6,7 +6,13 @@ const Stripe        = require('stripe');
 const endpointSecret ='whsec_8uBYP8hWJrpcTob7wWS1MWJsYcEIVSzR'
 //const Stripe         = require('stripe');
 const stripe         = Stripe('sk_test_wW4sfPcu5VmY5BKqyP6zpdkK00qDrwAYXT');
+const crypto                = require('crypto');
+//const catchAsync            = require('./../utils/catchAsync');
+const AppError              = require('./../utils/appError');
+const Email                 = require('./../utils/email');
+
 module.exports = function(app, passport) {
+
 	const fulfillOrder = (session) => {
 		// TODO: fill me in
 		//console.log("Fulfilling order", session);
@@ -121,6 +127,7 @@ module.exports = function(app, passport) {
 	// TODO: fill me in
 	console.log("Emailing customer", session);
 	}
+
 	  
 	//app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
 	app.post('/webhook', (req, res) => {
@@ -218,6 +225,43 @@ module.exports = function(app, passport) {
 //		res.render('index.ejs');
 //	});
 
+//const signToken = id => {
+//	return jwt.sign({ id }, process.env.JWT_SECRET, {
+//	  expiresIn: process.env.JWT_EXPIRES_IN })
+//}
+  
+const createSendToken = (user, statusCode, req, res) => {
+	console.log('user',user)
+	console.log('statusCode',statusCode)
+
+	req.logIn(user, function(err) {
+		if (err) { return next(err); }
+		//return res.redirect('/profile/' + user.username);
+		return res.send(200)
+	})
+
+
+//const token = signToken(user._id);
+//
+//res.cookie('jwt', token, {
+//	expires: new Date(
+//	Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+//	),
+//	httpOnly: true,
+//	secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
+//});
+//
+//// Remove password from output
+//user.password = undefined;
+//
+//res.status(statusCode).json({
+//	status: 'success',
+//	token,
+//	data: {
+//	user
+//	}
+//});
+};
 
 app.post('/api/checkout', async (req, res) => {
 	let body = req.body.items
@@ -333,6 +377,48 @@ app.post('/api/checkout', async (req, res) => {
 		});
 	});
 
+	//app.post('/forgotPassword', authController.forgotPassword);
+
+			// user.local.password = req.body.password;
+			// user.local.passwordConfirm = req.body.confirm_password;
+			// console.log('req.body.password',req.body.password)
+			// console.log('req.body.confirm_password',req.body.confirm_password)
+			// user.local.passwordResetToken = undefined;
+			// user.local.passwordResetExpires = undefined;
+			// user.save();
+		
+			// 3) Update changedPasswordAt property for the user
+			// 4) Log the user in, send JWT
+			// createSendToken(user, 200, req, res);
+
+
+	app.patch('/auth/resetPassword/:token', async (req, res, next) => {
+		// 1) Get user based on the token
+		console.log('resetPassword start')
+		console.log('req.params.token',req.params.token)
+		const hashedToken = crypto
+		.createHash('sha256')
+		.update(req.params.token)
+		.digest('hex');
+		console.log('hashedToken',hashedToken)
+		const user = await User.findOne({ 
+			'local.passwordResetToken': hashedToken, 
+			'local.passwordResetExpires': { $gt: Date.now() }
+		})
+		console.log('passwordResetToken user',user)
+		// 2) If token has not expired, and there is user, set the new password
+		if (!user) {
+			return next(new AppError('Token is invalid or has expired', 400));
+		}
+		user.local.password = req.body.password;
+		user.local.passwordConfirm = req.body.passwordConfirm;
+		user.local.passwordResetToken = undefined;
+		user.local.passwordResetExpires = undefined;
+		await user.save();
+		// 3) Update changedPasswordAt property for the user
+		// 4) Log the user in, send JWT
+		createSendToken(user, 200, req, res);
+	})
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================
