@@ -230,16 +230,22 @@ module.exports = function(app, passport) {
 //	  expiresIn: process.env.JWT_EXPIRES_IN })
 //}
   
-const createSendToken = (user, statusCode, req, res) => {
+const createSendToken = (user, statusCode, req, res, next) => {
 	console.log('user',user)
 	console.log('statusCode',statusCode)
 
 	req.logIn(user, function(err) {
-		if (err) { return next(err); }
+		if (err) { return res.err }
 		//return res.redirect('/profile/' + user.username);
-		return res.send(200)
+		//return res.send(200)
+		return	res.status(statusCode).json({
+			status: 'success',
+			token,
+			data: {
+			user
+			}
+		});
 	})
-
 
 //const token = signToken(user._id);
 //
@@ -377,20 +383,41 @@ app.post('/api/checkout', async (req, res) => {
 		});
 	});
 
-	//app.post('/forgotPassword', authController.forgotPassword);
-
-			// user.local.password = req.body.password;
-			// user.local.passwordConfirm = req.body.confirm_password;
-			// console.log('req.body.password',req.body.password)
-			// console.log('req.body.confirm_password',req.body.confirm_password)
-			// user.local.passwordResetToken = undefined;
-			// user.local.passwordResetExpires = undefined;
-			// user.save();
-		
-			// 3) Update changedPasswordAt property for the user
-			// 4) Log the user in, send JWT
-			// createSendToken(user, 200, req, res);
-
+	app.post('/auth/forgotPassword', async (req, res, next) => {
+		// 1) Get user based on POSTed email
+		const user = await User.findOne({ 'local.email': req.body.email });
+		if (!user) {
+		  return next(new AppError('There is no user with email address.', 404));
+		}
+		//console.log('user', user)
+		// 2) Generate the random reset token
+		const resetToken = user.createPasswordResetToken();
+		//console.log('resetToken', resetToken)
+		await user.save({ validateBeforeSave: false });
+	  
+		//console.log('user token', user)
+		// 3) Send it to user's email
+		try {
+		  //const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
+		  const resetURL = `${req.protocol}://${req.get('host')}/authentication/api/v1/users/resetPassword/${resetToken}`;
+		  console.log('resetURL', resetURL)
+		  await new Email(user, resetURL).sendPasswordReset();
+	  
+		  res.status(200).json({
+			status: 'success',
+			message: 'Password reset token sent to email! Link is valid for 10 minutes!'
+		  });
+		} catch (err) {
+		  user.local.passwordResetToken = undefined;
+		  user.local.passwordResetExpires = undefined;
+		  await user.save({ validateBeforeSave: false });
+	  
+		  return next(
+			new AppError('There was an error sending the email. Try again later!'),
+			500
+		  );
+		}
+	  });
 
 	app.patch('/auth/resetPassword/:token', async (req, res, next) => {
 		// 1) Get user based on the token

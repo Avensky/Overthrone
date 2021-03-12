@@ -70,10 +70,10 @@ export const auth = (values, auth, token) => {
                 url = '/auth/signup'
                 break;
             case auth='forgot-password':
-                url = 'api/v1/users/forgotPassword'
+                url = '/auth/forgotPassword'
                 break;
             case auth='reset-password':
-                url = 'api/v1/users/resetPassword/'+token
+                url = ('/auth/resetPassword/'+token)
                 console.log('url',url)
                 break;
         }
