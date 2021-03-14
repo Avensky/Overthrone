@@ -73,13 +73,13 @@ const Auth = props => {
                 password: ''
             };
             validationSchema = Yup.object({
-                    email: Yup.string()
-                        .email("Invalid email format")
-                        .required("Required!"),
-                    password: Yup.string()
-                        .min(8, "Minimum 8 characters")
-                        .max(15, "Maximum 15 characters")
-                        .required("Required!")
+                email: Yup.string()
+                    .email("Invalid email format")
+                    .required("Required!"),
+                password: Yup.string()
+                    .min(8, "Minimum 8 characters")
+                    .max(15, "Maximum 15 characters")
+                    .required("Required!")
             });
 
             selected = [myClasses.AuthToggle, myClasses.AuthSelected].join(' ')
@@ -324,7 +324,6 @@ const mapStateToProps = state => {
         isAuthenticated     : state.auth.payload,
         authRedirectPath    : state.auth.authRedirectPath,
         token               : state.auth.token
-        
     };
 };
 

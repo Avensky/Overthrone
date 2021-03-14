@@ -36,13 +36,7 @@ module.exports         = function(passport) {
     // =========================================================================
     // resetpassword =============================================================
     // =========================================================================
-    passport.use('reset-password', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
-        //usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        //session: false
-    },
+    passport.use('reset-password', new LocalStrategy({},
     function(req, password, done) {
         console.log("req" + req.body)
         // console.log('email = ' + req.body.email)
@@ -88,13 +82,11 @@ module.exports         = function(passport) {
     },
     function(req, email, password, done) {
         // console.log("req" + req.body)
-        // console.log('email = ' + req.body.email)
-        // console.log('password = ' + req.body.password)
         // asynchronous
         process.nextTick(function() {
+            //console.log('searching for user')
             User.findOne({ 'local.email' :  email }, function(err, user) {
-                //console.log('local email = ' + user.local.email)
-                //console.log('local password = ' + user.local.password)
+
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
@@ -133,17 +125,17 @@ module.exports         = function(passport) {
             //  to know if the email address is in use.
             User.findOne({'local.email': email}, function(err, existingUser) {
 
-                // check to see if passwords match
-                if (password!== req.body.confirm_password) 
-                return done(null, false, {message: "Password's do not match"});
+                // if there are any errors, return the error
+                if (err)
+                return done(err);
+
+                // // check to see if passwords match
+                // if (password !== req.body.confirm_password) 
+                // return done(null, false, {message: "Password's do not match"});
                 
                 // check to see if there's already a user with that email
                 if (existingUser) 
                 return done(null, false, {message: 'That email is already taken.'});
-
-                // if there are any errors, return the error
-                if (err)
-                    return done(err);
 
                 //  If we're logged in, we're connecting a new local account.
                 if(req.user) {

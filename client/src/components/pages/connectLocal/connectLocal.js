@@ -25,13 +25,14 @@ const connectLocal = props => {
     if ( props.token ) {message = <p>{props.token.message}</p>}
 
     let authRedirect = null;
-    if ( props.authRedirectPath !== '/' ) {
+    if (props.authRedirectPath !== '/') {
          authRedirect = <Redirect to={props.authRedirectPath} />
     }
     
     const initialValues = {
         email: '', 
-        password: ''
+        password: '',
+        confirm_password: ''
     }
     const validationSchema = Yup.object({
         email: Yup.string()

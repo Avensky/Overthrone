@@ -111,7 +111,7 @@ export const authFail = (error) => {
 
 
 
-export const connect = (values,  ) => {
+export const connect = (values) => {
     //console.log('values = '+values);
     //console.log('connect = '+connect);
     return dispatch => {
@@ -121,8 +121,7 @@ export const connect = (values,  ) => {
             .then(response => {
                 //console.log('response = '+JSON.stringify(response));
                 //console.log('response = '+response);
-                const data = response.data;
-                dispatch(connectSuccess(data)) 
+                dispatch(connectSuccess(response.data)) 
              })
              .catch(err => {
                  //console.log('err = '+err);

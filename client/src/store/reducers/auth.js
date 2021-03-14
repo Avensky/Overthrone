@@ -59,14 +59,22 @@ const connectStart = ( state, action ) => {
 };
 
 const connectSuccess = (state, action) => {
-    return updateObject( state, { 
-        //token: action.idToken,
-        //userId: action.userId,
-        error: null,
-        loading: false,
-        //submitted: true,
-        authRedirectPath: "/profile"
+    console.log(action.idToken)
+    if (action.idToken === 'OK'){
+        return updateObject( state, { 
+            token: action.idToken,
+            error: null,
+            loading: false,
+            authRedirectPath: '/profile'
+         });
+    } else {
+        return updateObject( state, { 
+            token: action.idToken,
+            error: null,
+            loading: false,
+            authRedirectPath:"/"
      });
+    }
 };
 
 const connectFail = (state, action) => {
