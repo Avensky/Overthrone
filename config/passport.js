@@ -6,6 +6,7 @@ const GoogleStrategy   = require('passport-google-oauth20').Strategy;
 const JwtStrategy      = require('passport-jwt').Strategy;
 const ExtractJwt       = require('passport-jwt').ExtractJwt;
 const mongoose         = require('mongoose')
+const Email            = require('../app/utils/email');
 
 
 // load up the user model
@@ -168,6 +169,10 @@ module.exports         = function(passport) {
                             return done(null, false, {message: err.message});
                         return done(null, newUser);
                     });
+                    
+                    const url = `${req.protocol}://${req.get('host')}/authentication`;
+                    console.log(url);
+                    new Email(newUser, url).sendWelcome();
                 }
 
             });
