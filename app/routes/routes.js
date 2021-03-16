@@ -231,7 +231,7 @@ const signToken = id => {
 }
   
 const createSendToken = (user, statusCode, req, res) => {
-	console.log('user',user)
+	console.log('createSendToken user',user)
 	console.log('statusCode',statusCode)
 
 	req.logIn(user, function(err) {
@@ -414,13 +414,40 @@ app.post('/api/checkout', async (req, res) => {
 	  });
 
 	app.patch('/auth/resetPassword/:token', async (req, res, next) => {
+		console.log('resetPassword start')
+		// passport.authenticate('reset-password', //{
+		// 		//successRedirect : '/', // redirect to the secure profile section
+		// 		//failureRedirect : '/', // redirect back to the signup page if there is an error
+		// 		//failureFlash : true // allow flash messages
+		// //}
+		// function(err, user, info) {
+		// 	console.log("resetPassword")
+		// 	if (err) {
+		// 		console.log("err",err)
+		// 		return next(err); 
+		// 	}
+		// 	if (!user) { 
+		// 		console.log("info",info)
+		// 		return res.send(info); 
+		// 	}
+		// 	req.logIn(user, function(err) {
+		// 		if (err) { 
+		// 			console.log("err",err)
+		// 		  	return next(err); 
+		// 		}
+		// 	  // return res.redirect('/profile/' + user.username);
+		// 	  console.log("user",user)
+		// 	  return res.send(200)
+		// 	});
+		//   })(req, res, next);
+
 		// 1) Get user based on the token
 		console.log('resetPassword start')
 		console.log('req.params.token',req.params.token)
 		const hashedToken = crypto
-		.createHash('sha256')
-		.update(req.params.token)
-		.digest('hex');
+			.createHash('sha256')
+			.update(req.params.token)
+			.digest('hex');
 		console.log('hashedToken',hashedToken)
 		const user = await User.findOne({ 
 			'local.passwordResetToken': hashedToken, 
@@ -431,11 +458,19 @@ app.post('/api/checkout', async (req, res) => {
 		if (!user) {
 			return next(new AppError('Token is invalid or has expired', 400));
 		}
-		user.local.password = req.body.password;
-		user.local.passwordConfirm = req.body.passwordConfirm;
+
+		user.correctPassword(req.body.password,req.body.confirm_password)
+		console.log('req',req.body)
+		user.local.password = user.generateHash(req.body.password);
+		user.local.passwordConfirm = user.generateHash(req.body.confirm_password);
 		user.local.passwordResetToken = undefined;
 		user.local.passwordResetExpires = undefined;
 		await user.save();
+
+		const url = `${req.protocol}://${req.get('host')}/authentication`;
+		console.log(url);
+		new Email(user, url).sendWelcome();
+
 		// 3) Update changedPasswordAt property for the user
 		// 4) Log the user in, send JWT
 		createSendToken(user, 200, req, res);
