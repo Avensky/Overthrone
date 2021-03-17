@@ -13,6 +13,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 //import { Persist } from 'formik-persist'
 import * as Yup from 'yup'
 
+
 const Auth = props => {
     //const { authRedirectPath, onSetAuthRedirectPath, submitted, isAuthenticated, isLoggedIn } = props
     const [auth, setAuth] = useState('login')
@@ -20,6 +21,11 @@ const Auth = props => {
     const [token, setToken] = useState(props.match.params.token)
     console.log('token',token)
     // const [socialLogin, setSocialLogin] = useState(false)
+
+    const [passwordComfirmShown, setPasswordComfirmShown] = useState(false);    
+    const togglePasswordComfirmVisiblity = () => {setPasswordComfirmShown(passwordComfirmShown ? false : true)}
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePasswordVisiblity = () => {setPasswordShown(passwordShown ? false : true)}
 
     //const socialAuthHandler = () => {
     //    setSocialLogin(true)
@@ -64,7 +70,7 @@ const Auth = props => {
     // }
     // const [formValues, setFormValues] = useState(null)
 
-    let initialValues, validationSchema, selected, unselected, form, button, authSelector, socialAuth
+    let initialValues, validationSchema, selected, unselected, form, button, authSelector, socialAuth, loader
 
     switch (auth) {
         case 'login': 
@@ -97,28 +103,35 @@ const Auth = props => {
                 ><h1><span className="fa fa-user" /> Signup</h1>
                 </button>   
             </div>
-            form = (
-                <Auxiliary>
-                    <Field 
-                        type="email" 
-                        name="email" 
-                        placeholder="Email Address"
-                        className={myClasses.AuthInput}
-                    />
+            props.loading
+                ? form = <Spinner />
+                : form = <Auxiliary>
+                    <div className='flex'>
+                        <Field 
+                            type="email" 
+                            name="email" 
+                            placeholder="Email Address"
+                            className={myClasses.AuthInput}
+                        />                        
+                    </div>
                     <ErrorMessage name="email" component="div" />
-                    <Field 
-                        type="password" 
-                        name="password" 
-                        placeholder="Password"
-                        className={myClasses.AuthInput}
-                    />
+                    <div className='flex'>
+                        <Field 
+                            type={passwordShown ? "text" : "password"}
+                            name="password" 
+                            placeholder="Password"
+                            className={myClasses.AuthInput}
+                        /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
+                    </div>
                     <ErrorMessage name="password" component="div" />
-                    <a onClick={forgotPasswordHandler} className='text-right pointer'>Forgot Password?</a>                    
+                    <div className='text-right'><a onClick={forgotPasswordHandler} className='text-right pointer'>Forgot Password?</a> </div>    
+                    <br />               
                 </Auxiliary>
-            );
-            button = <div className={myClasses.BtnDiv}><span className={['fa fa-sign-in'].join(' ')}></span>Sign In</div>
+            button = <div className={myClasses.BtnDiv}><span className={['fa fa-sign-in'].join(' ')}></span> Sign In</div>
             socialAuth = <Auxiliary>
+                <br />
                 <div className={classes.CardTitle}>Or continue with:</div>
+                <br />
                 <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
                     <a  
                         href="/auth/facebook"
@@ -170,28 +183,36 @@ const Auth = props => {
                 ><h1><span className="fa fa-user" /> Signup</h1>
                 </button>   
             </div>
-            form = <Auxiliary>
-                <Field 
-                    type="email" 
-                    name="email" 
-                    placeholder="Email Address"
-                    className={myClasses.AuthInput}
-                />
+            props.loading || props.submitted && props.userLoading
+                ? form = <Spinner />
+                : form = <Auxiliary>
+                <div className='flex'>
+                    <Field 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email Address"
+                        className={myClasses.AuthInput}
+                    />                        
+                </div>
                 <ErrorMessage name="email" component="div" />
-                <Field 
-                    type="password" 
-                    name="password" 
-                    placeholder="Password"
-                    className={myClasses.AuthInput}
-                />
+                <div className='flex'>
+                    <Field 
+                        type={passwordShown ? "text" : "password"}
+                        name="password" 
+                        placeholder="Password"
+                        className={myClasses.AuthInput}
+                    /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
+                </div>
                 <ErrorMessage name="password" component="div" />
-                <Field 
-                    type="password" 
-                    name="confirm_password" 
-                    placeholder="Confirm Password"
-                    className={myClasses.AuthInput}
-                />
-                <ErrorMessage name="confirm_password" component="div" />
+                <div className='flex'>
+                    <Field 
+                        type={passwordComfirmShown ? "text" : "password"}
+                        name="confirm_password" 
+                        placeholder="Confirm Password"
+                        className={myClasses.AuthInput}
+                    /><span class={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
+                </div>
+                <ErrorMessage name="confirm_password" component="div" />              
             </Auxiliary>
             button = <div className={myClasses.BtnDiv}><span className={['fa fa-user'].join(' ')}></span>Sign Up</div>
             break
@@ -207,15 +228,17 @@ const Auth = props => {
             selected = [myClasses.AuthToggle].join(' ')
             unselected = myClasses.AuthToggle
             authSelector = <h2>Enter an email address to reset password.</h2>
-            form = <Auxiliary>
-                <Field 
-                    type="email" 
-                    name="email" 
-                    placeholder="Email Address"
-                    className={myClasses.AuthInput}
-                />
-                <ErrorMessage name="email" component="div" />
-            </Auxiliary>
+            props.loading || props.submitted && props.userLoading
+                ? form = <Spinner />
+                : form = <Auxiliary>
+                    <Field 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email Address"
+                        className={myClasses.AuthInput}
+                    />
+                    <ErrorMessage name="email" component="div" />
+                </Auxiliary>
             button = <div className={myClasses.BtnDiv}><span className={['fa fa-user'].join(' ')}></span>Forgot Password</div>
             break
         case 'reset-password': 
@@ -241,31 +264,30 @@ const Auth = props => {
             authSelector = <Auxiliary>
                 <h2>Create a new password!</h2>
             </Auxiliary>
-            form = <Auxiliary>
-                <Field 
-                    type="password" 
-                    name="password" 
-                    placeholder="Password"
-                    className={myClasses.AuthInput}
-                />
-                <ErrorMessage name="password" component="div" />
-                <Field 
-                    type="password" 
-                    name="confirm_password" 
-                    placeholder="Confirm Password"
-                    className={myClasses.AuthInput}
-                />
-                <ErrorMessage name="confirm_password" component="div" />
-            </Auxiliary>
+            props.loading || props.submitted && props.userLoading
+                ? form = <Spinner />
+                : form = <Auxiliary>
+                    <div className='flex'>
+                        <Field 
+                            type={passwordShown ? "text" : "password"}
+                            name="password" 
+                            placeholder="Password"
+                            className={myClasses.AuthInput}
+                        /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
+                    </div>
+                    <ErrorMessage name="password" component="div" />
+                    <div className='flex'>
+                        <Field 
+                            type={passwordComfirmShown ? "text" : "password"}
+                            name="confirm_password" 
+                            placeholder="Confirm Password"
+                            className={myClasses.AuthInput}
+                        /><span class={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
+                    </div>
+                    <ErrorMessage name="confirm_password" component="div" />     
+                </Auxiliary>
             button = <div className={myClasses.BtnDiv}><span className={['fa fa-user'].join(' ')}></span>Reset Password</div>    
             break
-    }
-
-    let loader
-    if ( props.loading || (props.submitted && props.userLoading)) {
-        //form = <Spinner />
-        loader = <Spinner />
-
     }
 
     // let errorMessage = null;
