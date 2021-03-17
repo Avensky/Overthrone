@@ -13,7 +13,12 @@ const Email                 = require('./../utils/email');
 
 module.exports = function(app, passport) {
 
-	const fulfillOrder = (session) => {
+	const fulfillOrder = (req,session) => {
+		console.log('session',session)
+		const url = `${req.protocol}://${req.get('host')}/authentication`;
+		console.log(url);
+		const email = session.customer_details.email
+		new Email(req.user, email, url).sendReceipt();
 		// TODO: fill me in
 		//console.log("Fulfilling order", session);
 	}
@@ -174,7 +179,7 @@ module.exports = function(app, passport) {
 			  // you're still waiting for funds to be transferred from the customer's
 			  // account.
 			  if (session.payment_status === 'paid') {
-				fulfillOrder(session);
+				fulfillOrder(req, session);
 			  }
 		
 			  break;
@@ -395,7 +400,8 @@ app.post('/api/checkout', async (req, res) => {
 		  //const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
 		  const resetURL = `${req.protocol}://${req.get('host')}/authentication/api/v1/users/resetPassword/${resetToken}`;
 		  console.log('resetURL', resetURL)
-		  await new Email(user, resetURL).sendPasswordReset();
+		  const email = user.local.email
+		  await new Email(user, email, resetURL).sendPasswordReset();
 	  
 		  res.status(200).json({
 			status: 'success',
@@ -469,7 +475,8 @@ app.post('/api/checkout', async (req, res) => {
 
 		const url = `${req.protocol}://${req.get('host')}/authentication`;
 		console.log(url);
-		new Email(user, url).sendWelcome();
+		const email = user.local.email
+		new Email(user, email, url).sendResetComfirmation();
 
 		// 3) Update changedPasswordAt property for the user
 		// 4) Log the user in, send JWT

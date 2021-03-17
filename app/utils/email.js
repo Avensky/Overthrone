@@ -3,8 +3,10 @@ const pug = require('pug');
 const htmlToText = require('html-to-text');
 
 module.exports = class Email {
-  constructor(user, url) {
-    this.to = user.local.email;
+
+
+  constructor(user, email, url) {
+    this.to = email;
     //this.firstName = user.name.split(' ')[0];
     this.url = url;
     this.from = `Team Overthrone <${process.env.EMAIL_FROM}>`;
@@ -70,11 +72,16 @@ module.exports = class Email {
     await this.send('welcome', 'Welcome to the Overthrone Family!');
   }
 
+  async sendReceipt() {
+    await this.send('receipt', 'Thank you for your purchase!');
+  }
+
+  async sendResetComfirmation() {
+    await this.send('resetComfirmation', 'Password was changed!');
+  }
+
   async sendPasswordReset() {
     console.log('sendPasswordReset')
-    await this.send(
-      'passwordReset',
-      'Your password reset token (valid for only 10 minutes)'
-    );
+    await this.send('passwordReset','Your password reset token is only valid for 10 minutes');
   }
 };

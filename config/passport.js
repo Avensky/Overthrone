@@ -94,7 +94,8 @@ module.exports         = function(passport) {
                     });
                     const url = `${req.protocol}://${req.get('host')}/authentication`;
                     console.log(url);
-                    new Email(newUser, url).sendWelcome();
+                    const email = user.local.email
+                    new Email(newUser, email, url).sendWelcome();
                 }
             })
         });
@@ -206,7 +207,7 @@ module.exports         = function(passport) {
                     
                     const url = `${req.protocol}://${req.get('host')}/authentication`;
                     console.log(url);
-                    new Email(newUser, url).sendWelcome();
+                    new Email(newUser, email, url).sendWelcome();
                 }
 
             });
