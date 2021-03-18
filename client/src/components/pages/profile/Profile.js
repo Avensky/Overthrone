@@ -51,7 +51,8 @@ const Profile = (props) =>{
             icon="fa-user"
             mystyle="auth-btn"
             provider='/connectLocal' 
-            providerUnlink='/unlink/local' />)
+            providerUnlink='/unlink/local' 
+        />)
     
     facebook = (
         <Link
@@ -154,10 +155,22 @@ const Profile = (props) =>{
                         <h1><span className="fa fa-anchor"></span> Profile Page</h1>
                     </div>
                 </div>
-                {local}
-                {facebook}
-                {twitter}
-                {google}
+                {props.payload.local 
+                    ? local
+                    : null
+                }
+                {props.payload.facebook 
+                    ? facebook
+                    : null 
+                }
+                {props.payload.twitter 
+                    ? twitter
+                    : null
+                }
+                {props.payload.google 
+                    ? google
+                    : null
+                }
 
             </div>
         </Auxiliary>

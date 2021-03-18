@@ -39,9 +39,10 @@ const Link = props => {
                     </div>
                 </div>
             </Modal>            
-        { props.userLink
-                ? <a href={props.provider} className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a> 
-                : <a onClick={unlinkHandler} className="btn btn-default">Unlink</a>
+        {   // props.userLink
+            //     ? <a href={props.provider} className={["btn", props.mystyle].join(' ')}>Connect {props.link}</a> 
+            //     : <a onClick={unlinkHandler} className="btn btn-default">Unlink</a>
+            
             }
         </div>
         

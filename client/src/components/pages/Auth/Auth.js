@@ -96,7 +96,6 @@ const Auth = props => {
                     className={selected}
                 ><h1><span className="fa fa-sign-in" /> Login</h1>
                 </button>
-
                 <button 
                     onClick={registerToggleHandler}
                     className={unselected}
@@ -114,7 +113,7 @@ const Auth = props => {
                             className={myClasses.AuthInput}
                         />                        
                     </div>
-                    <ErrorMessage name="email" component="div" />
+                    <ErrorMessage className='color-orange'name="email" component="div" />
                     <div className='flex'>
                         <Field 
                             type={passwordShown ? "text" : "password"}
@@ -123,28 +122,30 @@ const Auth = props => {
                             className={myClasses.AuthInput}
                         /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
                     </div>
-                    <ErrorMessage name="password" component="div" />
-                    <div className='text-right'><a onClick={forgotPasswordHandler} className='text-right pointer'>Forgot Password?</a> </div>    
-                    <br />               
+                    <ErrorMessage className='color-orange'name="password" component="div" />
+                    <br />
+                    <div className='text-right'><a onClick={forgotPasswordHandler} className='text-right pointer'>Forgot Password?</a> </div>
                 </Auxiliary>
             button = <div className={myClasses.BtnDiv}><span className={['fa fa-sign-in'].join(' ')}></span> Sign In</div>
-            socialAuth = <Auxiliary>
-                <br />
-                <div className={classes.CardTitle}>Or continue with:</div>
-                <br />
-                <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
-                    <a  
-                        href="/auth/facebook"
-                        //onClick={socialAuthHandler}
-                    ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
-                </button>
-                <button className={[myClasses.Btn, "btn-info"].join(' ')}>
-                    <a href="/auth/twitter"><div className={myClasses.BtnDiv}><span className="fa fa-twitter" /> Twitter</div></a>
-                </button>
-                <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
-                    <a href="/auth/google"><div className={myClasses.BtnDiv}><span className="fa fa-google-plus" /> Google+</div></a>
-                </button>
-            </Auxiliary>
+            !props.loading
+                ? socialAuth = <Auxiliary>
+                    <br />
+                    <div className={classes.CardTitle}>Or continue with:</div>
+                    <br />
+                    <button type='submit' className={[myClasses.Btn, "btn-primary"].join(' ')}>
+                        <a  
+                            href="/auth/facebook"
+                            //onClick={socialAuthHandler}
+                        ><div className={myClasses.BtnDiv}><span className="fa fa-facebook" /> Facebook</div></a>
+                    </button>
+                    <button className={[myClasses.Btn, "btn-info"].join(' ')}>
+                        <a href="/auth/twitter"><div className={myClasses.BtnDiv}><span className="fa fa-twitter" /> Twitter</div></a>
+                    </button>
+                    <button className={[myClasses.Btn, "btn-danger"].join(' ')}>
+                        <a href="/auth/google"><div className={myClasses.BtnDiv}><span className="fa fa-google-plus" /> Google+</div></a>
+                    </button>
+                </Auxiliary>
+                : socialAuth = null
             break
         case 'register': 
             initialValues = {
@@ -194,7 +195,7 @@ const Auth = props => {
                         className={myClasses.AuthInput}
                     />                        
                 </div>
-                <ErrorMessage name="email" component="div" />
+                <ErrorMessage className='color-orange'name="email" component="div" />
                 <div className='flex'>
                     <Field 
                         type={passwordShown ? "text" : "password"}
@@ -203,7 +204,7 @@ const Auth = props => {
                         className={myClasses.AuthInput}
                     /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
                 </div>
-                <ErrorMessage name="password" component="div" />
+                <ErrorMessage className='color-orange'name="password" component="div" />
                 <div className='flex'>
                     <Field 
                         type={passwordComfirmShown ? "text" : "password"}
@@ -212,7 +213,7 @@ const Auth = props => {
                         className={myClasses.AuthInput}
                     /><span class={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
                 </div>
-                <ErrorMessage name="confirm_password" component="div" />              
+                <ErrorMessage className='color-orange'name="confirm_password" component="div" />              
             </Auxiliary>
             button = <div className={myClasses.BtnDiv}><span className={['fa fa-user'].join(' ')}></span>Sign Up</div>
             break
@@ -227,7 +228,12 @@ const Auth = props => {
             });
             selected = [myClasses.AuthToggle].join(' ')
             unselected = myClasses.AuthToggle
-            authSelector = <h2>Enter an email address to reset password.</h2>
+            authSelector = (
+                <div>
+                    <h2>Password Reset</h2>
+                    <p className='text-left'>Enter an email address to get a password reset  link</p>
+                </div>
+            )
             props.loading || props.submitted && props.userLoading
                 ? form = <Spinner />
                 : form = <Auxiliary>
@@ -237,7 +243,7 @@ const Auth = props => {
                         placeholder="Email Address"
                         className={myClasses.AuthInput}
                     />
-                    <ErrorMessage name="email" component="div" />
+                    <ErrorMessage className='color-orange'name="email" component="div" />
                 </Auxiliary>
             button = <div className={myClasses.BtnDiv}><span className={['fa fa-user'].join(' ')}></span>Forgot Password</div>
             break
@@ -275,7 +281,7 @@ const Auth = props => {
                             className={myClasses.AuthInput}
                         /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
                     </div>
-                    <ErrorMessage name="password" component="div" />
+                    <ErrorMessage className='color-orange'name="password" component="div" />
                     <div className='flex'>
                         <Field 
                             type={passwordComfirmShown ? "text" : "password"}
@@ -284,7 +290,7 @@ const Auth = props => {
                             className={myClasses.AuthInput}
                         /><span class={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
                     </div>
-                    <ErrorMessage name="confirm_password" component="div" />     
+                    <ErrorMessage className='color-orange'name="confirm_password" component="div" />     
                 </Auxiliary>
             button = <div className={myClasses.BtnDiv}><span className={['fa fa-user'].join(' ')}></span>Reset Password</div>    
             break
@@ -300,7 +306,7 @@ const Auth = props => {
     
     let message = false;
     if ( props.token ) {
-        message = <p>{props.token.message}</p>
+        message = <p className='color-orange'>{props.token.message}</p>
     }
 
     let authRedirect = null;
@@ -312,6 +318,7 @@ const Auth = props => {
        <div className={[classes.Card, myClasses.Auth].join(' ')}>
             {authRedirect}
             {authSelector}
+            <br />
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -321,6 +328,7 @@ const Auth = props => {
                 <Form>
                     {message}
                     {form}
+                    <br />
                     <button  
                         className={[myClasses.Btn, myClasses.AuthBtn, 'auth-btn' ].join(' ')}
                         type='submit'
