@@ -20,7 +20,7 @@ import Checkout       from '../pages/Checkout/Success'
 import Home           from '../pages/Home/Home'
 import Faqs           from '../pages/Faqs/Faqs'
 import CharacterList  from '../pages/Characters/CharacterList/CharacterList'
-import ContactData   from '../pages/ContactData/ContactData'
+import ContactData    from '../pages/ContactData/ContactData'
 import Orders         from '../pages/Orders/Orders'
 import './App.scss'
 

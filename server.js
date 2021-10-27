@@ -134,7 +134,6 @@ app.use('/api/v1/users', userRouter);
 // launch ======================================================================
 //==============================================================================
 if (process.env.NODE_ENV === 'production') {
-  console.log("node env = "+process.env.NODE_ENV)
   // Express will serve up production assets
   // like our main.js file, or main.css file!
   app.use(express.static('client/build'));
@@ -148,8 +147,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const server = app.listen(PORT, (err) =>{
-  if(!err)
+  if(!err){
       console.log('server started running on: ' + PORT);
+      console.log("node env = "+process.env.NODE_ENV)
+    }
   else
       console.log('unable to start server');    
 })
