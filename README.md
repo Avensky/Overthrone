@@ -10,7 +10,7 @@ We will be using Passport to authenticate users locally, with Facebook, Twitter,
 
 If you would like to download the code and try it for yourself:
 
-1. Clone the repo: `git clone git@github.com:Avensky/urielzacarias.com.git`
+1. Clone the repo: `git clone git@github.com:Avensky/Overthrone.git`
 2. Install server packages: `npm install`
 3. Install client packages: cd client `npm install` 
 4. Go to the config folder and copy the contents of prod.js to a new file called dev.js 
