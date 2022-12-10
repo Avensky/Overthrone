@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request: 
+    branches: [ master ]
+
+jobs: 
+  getCode:
+    runs-on: self-hosted
+    steps:
+    - name: Get Code
+      uses: actions/checkout@v3
+    - name: Use Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.18.1
+    - run: |
+        npm ci
+        cd client
+        npm ci
+        npm run build
+        pm2 stop 3
+        pm2 start 3
+        pm2 save
+        sudo service nginx restart
