@@ -36,7 +36,10 @@ const App = props => {
   const { shop, data, fetchedUser, loading, submitted, isLoggedIn /*, loading, userLoading*/ } = props
 
 useEffect(()=> {
-  const fetchData = async () => {props.onFetchUser()}
+  const fetchData = async () => {
+    console.log('fetching users...')
+    props.onFetchUser()
+  }
     if ( !fetchedUser){fetchData()}
   }, [fetchedUser])
 
@@ -132,7 +135,7 @@ const mapStateToProps = state => {
     isLoggedIn        : state.auth.user,
     loading           : state.auth.loading,
     userLoading       : state.auth.userLoading,
-    fetchedUser       : state.auth.payload,
+    fetchedUser       : state.auth.user,
     submitted         : state.auth.submitted,
     data              : state.auth.addressData,
     error              : state.auth.error,
@@ -143,7 +146,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddToCart         : (addedItems, total, totalItems)  =>{ dispatch(actions.addToCart(addedItems, total, totalItems))},
+    addQuantity         : (id)  =>{ dispatch(actions.addQuantity(id))},
     onFetchUser           : () => dispatch(actions.fetchUser()),
     onSetAuthRedirectPath : () => dispatch(actions.setAuthRedirectPath('/profile')),
     getItems              : ()  =>{ dispatch(actions.getItems())},

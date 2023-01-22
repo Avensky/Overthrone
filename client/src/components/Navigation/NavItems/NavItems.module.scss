@@ -17,20 +17,17 @@
     text-align: center;
 }
 
-.NavItem a {
-    color: #8F5C2C;
-    text-decoration: none;
-    width: 100%;
-    box-sizing: border-box;
+.NavItem {
+
 }
 
 .NavItem P {
     margin: 0;
 }
 
-.NavItem a:hover
-.NavItem a:active,
-.NavItem a.active {
+.NavItem:hover
+.NavItem:active,
+.NavItem.active {
     color: rgb(161, 131, 103);
 }
 
@@ -43,18 +40,19 @@
         align-items: center;
     }
     
-    .NavItem a {
+    .NavItem {
         color: white;
         height: 100%;
         // font-size: 1.5rem;
         padding: 1.6vh 1vw;
         border-bottom: 4px solid transparent;
         align-items: center;
+        cursor: pointer;
     }
     
-    .NavItem a:hover,
-    .NavItem a:active,
-    .NavItem a.active {
+    .NavItem:hover,
+    .NavItem:active,
+    .NavItem.active {
         background-color: rgb(126, 49, 250);
         border-bottom: 4px solid #40A4C8;
         color: white;

@@ -196,7 +196,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart           : (id)   =>{ dispatch(actions.addToCart(id))},
+        addToCart           : (id)   =>{ dispatch(actions.addQuantity(id))},
         getItems            : ()     =>{ dispatch(actions.getItems())},
         loadCart            : (cart) =>{ dispatch(actions.loadCart(cart))},
     }

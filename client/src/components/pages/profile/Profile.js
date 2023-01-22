@@ -186,8 +186,8 @@ const Profile = (props) =>{
 
 const mapStateToProps = state => {
     return {
-        payload           : state.auth.payload,
-        fetchedUser       : state.auth.payload,
+        payload           : state.auth.user,
+        fetchedUser       : state.auth.user,
         authRedirectPath  : state.auth.authRedirectPath,
     }
 }

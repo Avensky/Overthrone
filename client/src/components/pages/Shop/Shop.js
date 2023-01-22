@@ -19,75 +19,32 @@ const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
 
 
 const Purchase = props => { 
-    
-    
-    const purchaseContinueHandler = async (addedItems, isAuth, event) => {
-        console.log('checkout start')        // Get Stripe.js instance
-        const stripe = await stripePromise;
-    
-        let line_items = addedItems.map( item => {
-            let data = {
-                //currency    : 'usd',
-                price       : item.priceid,
-                //amount      : item.price*100,
-                quantity    : item.amount,
-                //name        : item.name,
-                tax_rates: ['txr_1IFmGYELbEgFNgrjLX2kMXq6']
-            }
-    //        console.log('data = '+JSON.stringify(data))
-            return data
-        })
-    
-        // Call your backend to create the Checkout Session
-        const response = await fetch('/api/checkout', { 
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-    
-            //make sure to serialize your JSON body
-            body: JSON.stringify({
-                //currency: 'usd',
-                items: line_items,
-                userid: isAuth['_id']
-            })
-        })
-    
-        const session = await response.json()
-        console.log(session);
-        // When the customer clicks on the button, redirect them to Checkout.
-        const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-        });
-    
-        if (result.error) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `result.error.message`.
-        console.log(result.error.message)
-        }
-    };
-    
     const [purchasing, setPurchasing] = useState(false);
     const history = useHistory()
     const addToCart = (id) => {props.addToCart(id)}
+
     const purchaseHandler = () => {
         props.isAuth ? setPurchasing(true) :history.push('/authentication')
     }
+
     const purchaseCancelHandler = () => {setPurchasing(false)}
     const viewCartHandler = () => {history.push('/cart')}
+
     let orderSummary = null
-    if (props.addedItems) {
+    if (props.cart) {
         orderSummary = <OrderSummary 
-            items={props.addedItems}
+            items={props.cart}
             total={props.total}
             purchaseCancelled={purchaseCancelHandler}
-            purchaseContinued={() => purchaseContinueHandler(props.addedItems, props.isAuth)}
+            purchaseContinued={() => props.checkout(props.cart, props.isAuth)}
+            isAuth={props.isAuth}
         />;
     }
-    let myShop 
-    if(props.shop){
+
+    let myShop
+
+    if(props.shop.length>0){
+        console.log('props.shop = ', props.shop);
         myShop = props.shop.map( item => {
         return( 
             <Item
@@ -101,20 +58,11 @@ const Purchase = props => {
                 clicked     = {() => addToCart(item._id)}
                 desc        = {item.desc}
                 price       = {item.price}
-                quantity    = {item.amount||0}
+                quantity    = {item.orderAmt||0}
                 add         = {true}
             />
         )}
     )}
-    
-    useEffect(() => {
-        const getItems = async () => { props.getItems() }
-        if ( props.items.length === 0){ 
-            console.log('Fetching Items')
-            getItems() 
-        }
-    }, [])
-
 
     let view
     props.totalItems > 0
@@ -186,7 +134,7 @@ const Purchase = props => {
                                 className='btn-primary btn'
                                 type="button" role="link"
                                 onClick={purchaseHandler}>{
-                                    props.isAuth 
+                                    props.isAuth !== null
                                         ? 'CONTINUE TO CHECKOUT' 
                                         : 'SIGN IN TO ORDER'}
                             </button>)
@@ -200,20 +148,22 @@ const Purchase = props => {
 
 const mapStateToProps = state => {
     return {
-        addedItems  : state.cart.addedItems,
+        cart        : state.cart.cart,
         totalItems  : state.cart.totalItems,
         items       : state.cart.items,
         total       : state.cart.total,
         shop        : state.cart.shop,
-        isAuth      : state.auth.payload
+        isAuth      : state.auth.user,
+        totalPrice: state.shop.totalPrice,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart           : (id)   =>{ dispatch(actions.addToCart(id))},
+        addToCart           : (id)   =>{ dispatch(actions.addQuantity(id))},
         getItems            : ()     =>{ dispatch(actions.getItems())},
         loadCart            : (cart) =>{ dispatch(actions.loadCart(cart))},
+        checkout            : (cart, user) => {dispatch(actions.checkout(cart, user));}
     }
 }
 

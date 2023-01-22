@@ -30,7 +30,7 @@ const navbar = ( props ) => {
             <div className={[myClasses.MobileLinks, myClasses.Mobile].join(' ')}>
                 <h2 className={classes.line}>
                     {props.isAuth !== null
-                        ? <div className={myClasses.NavItem}><a  href="/auth/logout">Logout </a></div>
+                        ? <div className={myClasses.NavItem} onClick={props.logout}>Logout </div>
                         : null}          
                     {cart}
                     {props.isAuth !== null
@@ -47,7 +47,7 @@ const navbar = ( props ) => {
                 </div>
             </div>
             <div className={myClasses.DesktopOnly}>
-                <NavItems isAuthenticated={props.isAuth} cart={props.cart}/>
+                <NavItems isAuthenticated={props.isAuth} cart={props.cart} logout={props.logout}/>
             </div>
         </div>
     )

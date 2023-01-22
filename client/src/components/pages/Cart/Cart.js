@@ -13,13 +13,14 @@ import {purchaseContinueHandler} from '../../../utility/stripe'
 
 const Cart = props => {
     const [purchasing, setPurchasing] = useState(false);
+    const url = 'https://caring-vegan.s3.us-west-2.amazonaws.com/';
     const history = useHistory()
     const handleRemove              = (id)=>{ props.removeItem(id)}
-    const addToCart                 = (id)=>{ props.addToCart(id)}
-    const handleSubtractQuantity    = (id)=>{ props.subtractQuantity(id);}
+    const addToCart                 = (id)=>{ props.addQuantity(id)}
+    const handleSubtractQuantity    = (id)=>{ props.subQuantity(id);}
     const viewCartHandler = () => {history.push('/shop')}
     const purchaseHandler = () => {
-        props.isAuth ? setPurchasing(true) :history.push('/authentication')
+        props.isAuth!==null ? setPurchasing(true) :history.push('/authentication')
     }
     const purchaseCancelHandler = () => {setPurchasing(false)}
     
@@ -29,7 +30,8 @@ const Cart = props => {
             items={props.addedItems}
             total={props.total}
             purchaseCancelled={purchaseCancelHandler}
-            purchaseContinued={()=>purchaseContinueHandler(props.addedItems, props.isAuth)}
+            purchaseContinued={() => props.checkout(props.cart, props.isAuth)}
+            isAuth={props.isAuth}
         />;
     }
 
@@ -49,7 +51,7 @@ const Cart = props => {
 
                             {/* Image */}
                             <div className={myClasses.CardThumbnail}>
-                                <img src={'http://localhost:5000/'+item.imageData} alt={item.alt} />
+                                <img src={url+item.imageData} alt={item.alt} />
                             </div>
                             
                             {/* Description */}
@@ -61,7 +63,7 @@ const Cart = props => {
                             {/* Quantity */}
                             <div className={myClasses.CardQuantity}>
                                 <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{handleSubtractQuantity(item._id)}}>arrow_drop_down</i>
-                                <p><b>{item.amount}</b></p>
+                                <p><b>{item.orderAmt}</b></p>
                                 <i className={["material-icons", myClasses.MaterialIcons, classes.noselect].join(' ')} onClick={()=>{addToCart(item._id)}}>arrow_drop_up</i>                                   
                             </div>
 
@@ -103,7 +105,7 @@ const Cart = props => {
                                         className='btn-primary btn'
                                         type="button" role="link"
                                         onClick={purchaseHandler}>{
-                                            props.isAuth 
+                                            props.isAuth !== null
                                                 ? 'CONTINUE TO CHECKOUT' 
                                                 : 'SIGN IN TO ORDER'}
                                     </button>)
@@ -120,19 +122,21 @@ const Cart = props => {
 
 const mapStateToProps = (state)=>{
     return{
-        addedItems   : state.cart.addedItems,
+        cart   : state.cart.cart,
+        addedItems   : state.cart.cart,
         total        : state.cart.total,
         totalItems   : state.cart.totalItems,
-        isAuth       : state.auth.payload
+        isAuth       : state.auth.user
         //addedItems: state.addedItems
     }
 }
 const mapDispatchToProps = (dispatch)=>{
     return{
-        loadCart         : (cart)   =>{ dispatch(actions.loadCart(cart))},
-        removeItem       : (id)     =>{ dispatch(actions.removeItem(id))},
-        addToCart        : (id)     =>{ dispatch(actions.addToCart(id))},
-        subtractQuantity : (id)     =>{ dispatch(actions.subtractQuantity(id))}
+        loadCart    : (cart)   =>{ dispatch(actions.loadCart(cart))},
+        removeItem  : (id)     =>{ dispatch(actions.removeFromCart(id))},
+        addQuantity : (id)     =>{ dispatch(actions.addQuantity(id))},
+        subQuantity : (id)     =>{ dispatch(actions.subQuantity(id))},
+        checkout    : (cart, user) => {dispatch(actions.checkout(cart, user));}
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Cart)

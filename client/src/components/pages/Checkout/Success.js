@@ -1,16 +1,16 @@
-import React, {useEffect} from 'react'
-import { connect } from 'react-redux'
-import classes from '../Pages.module.scss'
-import myClasses from './Checkout.module.scss'
-import Auxiliary from '../../../hoc/Auxiliary'
-import { useHistory } from 'react-router-dom'
-import { removeItem,addQuantity,subtractQuantity} from '../../../store/actions/index'
+import React, {useEffect} from 'react';
+import { connect } from 'react-redux';
+import classes from '../Pages.module.scss';
+import myClasses from './Checkout.module.scss';
+import Auxiliary from '../../../hoc/Auxiliary';
+import { useHistory } from 'react-router-dom';
+import * as actions from '../../../store/actions/index';
 
 const Success = props => {    
-    const history = useHistory()
+    const history = useHistory();
     useEffect(() => {
-        localStorage.removeItem('addedItems')
-    },[])
+        localStorage.removeItem('addedItems');
+    },[]);
 
     return (
         <Auxiliary>
@@ -35,8 +35,8 @@ const Success = props => {
                 </div>
             </div>
         </Auxiliary>
-    )
-}
+    );
+};
 
 
 
@@ -45,13 +45,15 @@ const mapStateToProps = (state)=>{
         items: state.cart.addedItems,
         isAuth: state.auth.payload
         //addedItems: state.addedItems
-    }
-}
+    };
+};
+
 const mapDispatchToProps = (dispatch)=>{
     return{
-        removeItem       : (id)=>{dispatch(removeItem(id))},
-        addQuantity      : (id)=>{dispatch(addQuantity(id))},
-        subtractQuantity : (id)=>{dispatch(subtractQuantity(id))}
-    }
-}
-export default connect(mapStateToProps,mapDispatchToProps)(Success)
+        removeItem       : (id)=>{dispatch(actions.removeFromCart(id))},
+        addQuantity      : (id)=>{dispatch(actions.addQuantity(id))},
+        subQuantity      : (id)=>{dispatch(actions.subQuantity(id))}
+    };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Success);

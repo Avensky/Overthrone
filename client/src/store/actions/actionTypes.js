@@ -1,11 +1,15 @@
 //Types should be in const to avoid typos and duplication since it's a string and could be easily miss spelled
 export const ADD_TO_CART             = 'ADD_TO_CART'
-export const REMOVE_ITEM             = 'REMOVE_ITEM'
+export const REMOVE_FROM_CART        = 'REMOVE_FROM_CART'
 export const SUB_QUANTITY            = 'SUB_QUANTITY'
 export const ADD_QUANTITY            = 'ADD_QUANTITY'
 export const ADD_SHIPPING            = 'ADD_SHIPPING'
 export const SUB_SHIPPING            = 'SUB_SHIPPING'
 export const LOAD_CART               = 'LOAD_CART'
+
+export const LOGOUT_START              = 'LOGOUT_START';
+export const LOGOUT_SUCCESS            = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAIL               = 'LOGOUT_FAIL';
 
 export const FETCH_USER_START        = 'FETCH_USER_START'
 export const FETCH_USER_SUCCESS      = 'FETCH_USER_SUCCESS'

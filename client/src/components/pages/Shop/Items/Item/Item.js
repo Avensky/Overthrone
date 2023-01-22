@@ -5,13 +5,13 @@ import myClasses from './Item.module.scss';
 
 //{classes.CardThumbnail}
 const item = props => {
-      
+    const url = 'https://caring-vegan.s3.us-west-2.amazonaws.com/';
     return  (
     <div className={myClasses.Item} key={props.id}>
         {/* Image */}
         <div className={myClasses.CardThumbnail}>
             <Link to={'/shop/itemfull/' + props.id}>
-                <img src={'http://localhost:5000/'+props.image} alt={props.alt}/>
+                <img src={url+props.image} alt={props.alt}/>
             </Link>
         </div>
         

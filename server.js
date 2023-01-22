@@ -1,22 +1,22 @@
 //==============================================================================
 // set up ======================================================================
 //==============================================================================
-const express        = require('express')
-const app            = express()
-const dotenv	       = require('dotenv').config({path:__dirname+'/config/config.env'})
+const express        = require('express');
+const app            = express();
 const PORT           = process.env.PORT3 || 5000;
-//console.log('PORT = '+ PORT)
+//console.log('PORT = '+ PORT);
 //const morgan         = require('morgan');
 //const helmet         = require('helmet');
-const bodyParser     = require('body-parser')
+const bodyParser     = require('body-parser');
 //const cookieParser   = require('cookie-parser');
-const session        = require('express-session')
-const passport       = require('passport')
-const mongoose       = require('mongoose')
-const keys           = require('./config/keys')
+const session        = require('express-session');
+const passport       = require('passport');
+const mongoose       = require('mongoose');
+const MongoStore 	= require('connect-mongo');
+const keys           = require('./config/keys');
 const userRouter     = require('./app/routes/userRoutes');
 //const cors           = require("cors");
-//const flash          = require('connect-flash')
+//const flash          = require('connect-flash');
 
 
 //==============================================================================
@@ -27,27 +27,21 @@ require('./app/models/character');
 require('./app/models/faq');
 require('./app/models/shop');
 require('./app/models/orders');
-require('./config/passport')(passport); // pass passport for configuration
+require('./app/models/products');
+require('./app/models/users');
+require('./app/controllers/passport')(passport); // pass passport for configuration
 
-mongoose.Promise = global.Promise;// connect to our database
+// connect to database
+main().catch((err) => console.log('💥Failed to connect to MongoDb', err));
 
-mongoose.connect(keys.mongoURI, { 
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true 
-})
-  .then(connect => console.log('connected to mongodb'))
-  .catch(err => console.log('could not connect to mongodb', err))
-module.exports = {
-	mongoose
-}
-
-// allow files to be stored in files directory
-app.use('/files', express.static("files"));
+async function main() {
+	mongoose.set('strictQuery', false);
+	await mongoose.connect(keys.mongoURI, { 
+		autoIndex: process.env.NODE_ENV === 'production' ? false : true,
+	});
+};
 
 // set up cors to allow us to accept requests from our client
-
 
 // Set security HTTP headers
 // app.use(helmet());
@@ -112,9 +106,14 @@ app.use(session({
   secret: 'ilovescotchscotchyscotchscotch',   // session secret
   resave: false,
   saveUninitialized: false,
-  cookie: {
-      maxAge: 30*24*60*60*1000,
-  }}));
+  store: new MongoStore ({
+    client: mongoose.connection.getClient(),
+    collectionName: "sessions",
+    stringify: false,
+    ttl: 14 * 24 * 60 * 60, // = 14 days. Default)
+    // crypto: {secret: 'squirrel'}
+  })
+}));
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -127,7 +126,7 @@ require('./app/routes/routes.js')(app, passport); // load our routes and pass in
 require('./app/routes/characterRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 // require('./app/routes/faqRoutes.js')(app); // load our routes and pass in our app and fully configured passport
 require('./app/routes/userRoutes');
-require('./app/routes/shopRoutes')(app);
+require('./app/routes/shopRoutes');
 
 app.use('/api/v1/users', userRouter);
 //==============================================================================
@@ -144,13 +143,13 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
-}
+};
 
 const server = app.listen(PORT, (err) =>{
   if(!err){
       console.log('server started running on: ' + PORT);
-      console.log("node env = "+process.env.NODE_ENV)
+      console.log("node env = "+process.env.NODE_ENV);
     }
   else
       console.log('unable to start server');    
-})
+});

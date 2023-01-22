@@ -21,7 +21,11 @@ const CheckoutHeader = (props) => {
                     : null
                 }
                 {props.totalItems 
-                    ?<button  className='btn-primary btn one-line' onClick={props.checkout}>{props.isAuth? 'Checkout':'Sign in to Order'}</button>
+                    ?<button  className='btn-primary btn one-line' onClick={props.checkout}>{
+                        props.isAuth !== null
+                        ? 'Checkout'
+                        :'Sign in to Order'}
+                    </button>
                     :null
                 }
             </div>

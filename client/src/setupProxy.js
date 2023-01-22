@@ -6,7 +6,7 @@ module.exports = function (app) {
     ["/api", "/api/v1/users", "/auth", "connect", "/unlink", "/connect", "/webhook"],
     createProxyMiddleware({
       target: keys.proxyTarget,
-      //changeOrigin: true,
+      changeOrigin: true,
     })
   );
 };

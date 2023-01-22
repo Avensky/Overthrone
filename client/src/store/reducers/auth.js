@@ -2,44 +2,35 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../utility/utility';
 
 const initialState = {
-    token: null,
-    userId: null,
     error: null,
     loading: false,
-    userLoading: false,
-    payload: null,
-    message: null,
-    authRedirectPath: '/',
-    submitted: false,
+    user: null,
+    message:'',
     addressData: null,
 };
 
+// auth
 const authStart = ( state, action ) => {
     return updateObject( state, { 
         error: null, 
-        loading: true, 
-        submitted: false,
-        authRedirectPath: '/'
+        loading: true,
     });
 };
 
 const authSuccess = (state, action) => {
+    console.log('user.data', action.data)
     return updateObject( state, { 
-        token: action.idToken,
-        userId: action.userId,
+        user: action.data.user,
+        message: action.data.message,
         error: null,
         loading: false,
-        submitted: true,
-        authRedirectPath: "/profile"
      });
 };
 
 const authFail = (state, action) => {
     return updateObject( state, {
         error: action.error,
-        message: action.error.message,
         loading: false,
-        submitted: true
     });
 };
 
@@ -109,24 +100,22 @@ const fbAuthFail = (state, action) => {
 const fetchUserStart = (state, action) => {
     return updateObject(state, {
         error: null,
-        userLoading: true
+        loading: true
     })
 }
 
 const fetchUserSuccess = (state, action) => {
-   //console.log(action);
+   console.log('fetchUserSuccess = ', action.data);
     return updateObject(state, {
-        payload: action.payload,
+        user: action.data.user,
         error: null,
         loading: false,
-        userLoading: false
     })
 }
 const fetchUserFail = (state, action) => {
     return updateObject( state, {
         error: action.error,
         loading: false,
-        userLoading: false
     });
 }
 
@@ -157,28 +146,61 @@ const newAddressSuccess = (state, action) => {
         addressData: action.addressData 
     })}
 
+    // logout
+const logoutStart = (state, action) => {
+    console.log('logout start');
+    return updateObject(state, {
+        error: null,
+    });
+};
+
+const logoutSuccess = (state, action) => {
+    console.log('logout success');
+    return updateObject(state, {
+        message: null,
+        user:null, 
+        error: null,
+        loading: false,
+    });
+};
+const logoutFail = (state, action) => {
+    console.log('logout fail');
+    return updateObject( state, {
+        error: action.error,
+        loading: false,
+    });
+};
+
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.FETCH_USER_START       : return fetchUserStart(state, action);
         case actionTypes.FETCH_USER_SUCCESS     : return fetchUserSuccess(state, action);
         case actionTypes.FETCH_USER_FAIL        : return fetchUserFail(state, action);
+        
         case actionTypes.FB_AUTH_START          : return fbAuthStart(state, action);
         case actionTypes.FB_AUTH_SUCCESS        : return fbAuthSuccess(state, action);
         case actionTypes.FB_AUTH_FAIL           : return fbAuthFail(state, action);
+        
         case actionTypes.AUTH_START             : return authStart(state, action);
         case actionTypes.AUTH_SUCCESS           : return authSuccess(state, action);
         case actionTypes.AUTH_FAIL              : return authFail(state, action);
-        case actionTypes.AUTH_LOGOUT            : return authLogout(state, action);
+        
+        case actionTypes.LOGOUT_START             : return logoutStart(state, action);
+        case actionTypes.LOGOUT_SUCCESS           : return logoutSuccess(state, action);
+        case actionTypes.LOGOUT_FAIL              : return logoutFail(state, action);
+        
         case actionTypes.CONNECT_START          : return connectStart(state, action);
         case actionTypes.CONNECT_SUCCESS        : return connectSuccess(state, action);
         case actionTypes.CONNECT_FAIL           : return connectFail(state, action);
+        
         case actionTypes.SET_AUTH_REDIRECT_PATH : return setAuthRedirectPath(state,action);
+        
         case actionTypes.NEW_ADDRESS_START      : return newAddressStart(state, action);
         case actionTypes.NEW_ADDRESS_SUCCESS    : return newAddressSuccess(state, action);     
         case actionTypes.NEW_ADDRESS_FAIL       : return newAddressFail(state, action);     
         default:
             return state;
-    }
+    };
 };
 
 export default reducer;

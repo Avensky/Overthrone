@@ -6,47 +6,71 @@ import * as actionTypes from './actionTypes'
 export const fetchUserStart = () => {
     return {
         type: actionTypes.FETCH_USER_START
-    }
+    };
 };
 
-export const fetchUserSuccess = (payload) => {
+export const fetchUserSuccess = (data) => {
     return {
         type: actionTypes.FETCH_USER_SUCCESS,
-        payload: payload
-    }
+        data
+    };
 };
 
 export const fetchUserFail = (error) => {
     return {
         type: actionTypes.FETCH_USER_FAIL,
         error: error
-    }
+    };
 };
 
 export const fetchUser = () => {
     return dispatch => {
         dispatch(fetchUserStart());
         axios.get('/api/fetchUser')
-        .then( result => {
-           //console.log(result)
-            const payload = result.data
-            dispatch(fetchUserSuccess(payload));
-        })
-        .catch( error => {
-                dispatch(fetchUserFail(error));
-        });
-    }
-}
+            .then( result => {
+            //console.log(result)
+                const data = result.data
+                dispatch(fetchUserSuccess(data));
+            })
+            .catch( error => {
+                    dispatch(fetchUserFail(error));
+            });
+    };
+};
 
-export const logout = () => {
-    axios.get('/auth/logout')
-    //localStorage.removeItem('token');
-    //localStorage.removeItem('expirationDate');
-    //localStorage.removeItem('userId');
+//logout
+export const logoutStart = () => {
     return {
-        type: actionTypes.LOGOUT
-    }
-}
+        type: actionTypes.LOGOUT_START
+    };
+};
+
+export const logoutSuccess = (message) => {
+    return {
+        type: actionTypes.LOGOUT_SUCCESS,
+        message
+    };
+};
+
+export const logoutFail = (error) => {
+    return {
+        type: actionTypes.LOGOUT_FAIL,
+        error: error
+    };
+};
+export const logout = () => {
+    return dispatch => {
+        dispatch(logoutStart());
+        axios.get('/api/logout')
+            .then( result => {
+                const data = result.data;
+                dispatch(logoutSuccess(data));
+            })
+            .catch( error => {
+                dispatch(logoutFail(error));
+            });
+    };
+};
 
 export const checkLoginTimeout = (expirationTime) => {
     return dispatch => {
@@ -64,28 +88,28 @@ export const auth = (values, auth, token) => {
         let url
         switch (auth) {
             case auth='login':
-                url = '/auth/login'
+                url = '/api/login'
                 break;
             case auth='register':
-                url = '/auth/signup'
+                url = '/api/signup'
                 break;
             case auth='forgot-password':
-                url = '/auth/forgotPassword'
+                url = '/api/forgotPassword'
                 break;
             case auth='reset-password':
-                url = ('/auth/resetPassword/'+token)
-                console.log('url',url)
+                url = ('/api/resetPassword/'+token)
+                console.log('url',url);
                 break;
         }
         let method
         auth === 'reset-password'
             ? method = axios.patch
             : method = axios.post
-        method(url, values)
-            .then(response => {dispatch(authSuccess(response.data)) })
+        axios.post(url, values)
+            .then(response => {dispatch(authSuccess(response.data.info)) })
             .catch(err => {dispatch(authFail(err));});
-    }
-}
+    };
+};
 
 export const authStart = () => {
     return {
@@ -93,11 +117,10 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (data) => {
     return {
         type    : actionTypes.AUTH_SUCCESS,
-        idToken : token,
-        userId  : userId
+        data
     };
 };
 
@@ -127,8 +150,8 @@ export const connect = (values) => {
                  //console.log('err = '+err);
                  dispatch(connectFail(err));
              });
-    }
-}
+    };
+};
 
 export const connectStart = () => {
     return {

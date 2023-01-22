@@ -120,7 +120,7 @@ const Auth = props => {
                             name="password" 
                             placeholder="Password"
                             className={myClasses.AuthInput}
-                        /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
+                        /><span className={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
                     </div>
                     <ErrorMessage className='color-orange'name="password" component="div" />
                     <br />
@@ -202,7 +202,7 @@ const Auth = props => {
                         name="password" 
                         placeholder="Password"
                         className={myClasses.AuthInput}
-                    /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
+                    /><span className={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
                 </div>
                 <ErrorMessage className='color-orange'name="password" component="div" />
                 <div className='flex'>
@@ -211,7 +211,7 @@ const Auth = props => {
                         name="confirm_password" 
                         placeholder="Confirm Password"
                         className={myClasses.AuthInput}
-                    /><span class={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
+                    /><span className={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
                 </div>
                 <ErrorMessage className='color-orange'name="confirm_password" component="div" />              
             </Auxiliary>
@@ -279,7 +279,7 @@ const Auth = props => {
                             name="password" 
                             placeholder="Password"
                             className={myClasses.AuthInput}
-                        /><span class={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
+                        /><span className={passwordShown ? "fa fa-eye-slash" : "fa fa-eye"}  onClick={togglePasswordVisiblity} ></span>
                     </div>
                     <ErrorMessage className='color-orange'name="password" component="div" />
                     <div className='flex'>
@@ -288,7 +288,7 @@ const Auth = props => {
                             name="confirm_password" 
                             placeholder="Confirm Password"
                             className={myClasses.AuthInput}
-                        /><span class={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
+                        /><span className={passwordComfirmShown ? "fa fa-eye-slash" : "fa fa-eye"} onClick={togglePasswordComfirmVisiblity} ></span>
                     </div>
                     <ErrorMessage className='color-orange'name="confirm_password" component="div" />     
                 </Auxiliary>
@@ -311,7 +311,7 @@ const Auth = props => {
 
     let authRedirect = null;
     if ( props.isAuthenticated ) {
-        authRedirect = <Redirect to={props.authRedirectPath} />
+        authRedirect = <Redirect to='/' />
     }
 
     return(
@@ -351,7 +351,7 @@ const mapStateToProps = state => {
         submitted           : state.auth.submitted,
         error               : state.auth.error,
         isLoggedIn          : state.auth.user,
-        isAuthenticated     : state.auth.payload,
+        isAuthenticated     : state.auth.user,
         authRedirectPath    : state.auth.authRedirectPath,
         token               : state.auth.token
     };

@@ -5,16 +5,17 @@ export {
     setAuthRedirectPath,
     newAddress,
     newAddressStart,
-    connect
+    connect,
+    logout
 } from './auth';
 
 export {
     getItems,
-    addToCart,
-    removeItem,
-    subtractQuantity,
+    removeFromCart,
     addQuantity,
-    loadCart
+    subQuantity,
+    loadCart,
+    checkout
 } from './cart';
 
 export {
