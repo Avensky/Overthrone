@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import Auxiliary from '../../../../hoc/Auxiliary';
 import Faq from '../Faq/Faq';
@@ -8,46 +8,41 @@ import myClasses from './FaqList.module.scss';
 import * as actions from '../../../../store/actions/index';
 //import FaqEdit from './FaqEdit/FaqEdit';
 //import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
+const Faqs =(props)=> {
+    const [faqs, setFaqs] = useState([]);
+    
 
-
-
-class Faqs extends Component {
-    state = {
-        faqs : []
-    }
-
-    componentDidMount() {
-        console.log(this.props)
+    useEffect(()=> {
+        console.log(props);
         
-        const faqs = this.props.faqs;
+        const faqs = props.faqs;
         const updatedFaqs = faqs.map( faq => {
             return {
                 ...faq,
-            }
+            };
         });
-        this.setState({ faqs: updatedFaqs})
-    }
+        setFaqs(updatedFaqs);
+    },[]);
 
-    deleteFaqHandler = (id) => {
-        this.props.onDeleteFaq(id);
-    }
+    const deleteFaqHandler = (id) => {
+        props.onDeleteFaq(id);
+    };
+        let content = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
 
-    render () {
-        let faqs = <p style={{textAlign: 'center'}}>Something went wrong!</p>
-
-        if (!this.props.error) {
-            faqs = this.props.faqs.map( faq => {
+        if (!props.error) {
+            content = props.faqs.map( faq => {
                 return (
                     <Faq
                         key         = {faq._id}  
                         id          = {faq._id}          
                         question        = {faq.question}
                         answer         = {faq.answer}
-                        deleteClick  = {() => this.deleteFaqHandler(faq._id)}
+                        deleteClick  = {() => deleteFaqHandler(faq._id)}
                     />
-                )
-            })
+                );
+            });
         }
 
         return(
@@ -55,14 +50,14 @@ class Faqs extends Component {
                 <div className={myClasses.Items}>
                     <div className={['box', myClasses.Items ].join(' ')}></div>
                     {/* <NewFaq /> */}
-                    {faqs}
+                    {content}
                 </div>
 
             </Auxiliary>
             
-        )
-    }
-}
+        );
+    
+};
 
 const mapStateToProps = state => {
     return {
@@ -76,7 +71,13 @@ const mapDispatchToProps = dispatch => {
         onGetFaqs: () => dispatch( actions.getFaqs()),
         onGetFaqById: (id) => dispatch( actions.getFaqById(id)),
         onDeleteFaq: (id) => dispatch( actions.deleteFaq(id))
-    }
-}
+    };
+};
+
+Faqs.propTypes = {
+    faqs:PropTypes.any,
+    onDeleteFaq:PropTypes.func,
+    error:PropTypes.any,
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(Faqs);

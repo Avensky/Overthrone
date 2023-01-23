@@ -18,14 +18,14 @@ const Sovereinty = props => {
              Iusto ipsum aliquam obcaecati a ullam fuga dolorem dolores, eius, beatae corporis repudiandae quibusdam ab natus? Voluptates unde quaerat quas, placeat, blanditiis hic totam harum tempore assumenda ullam voluptatibus quod.
            </section>
             </div>
-        )
+        );
 
         return(
             <Auxiliary className='Home'>
                 {body}
             </Auxiliary>
-        )
-    }
+        );
+    };
 
 
 const mapStateToProps = state => {
@@ -35,7 +35,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-    }
-}
+    };
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(Sovereinty);

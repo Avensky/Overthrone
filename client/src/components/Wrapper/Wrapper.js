@@ -6,6 +6,7 @@ import Navbar from '../Navigation/Navbar/Navbar';
 import Sidebar from '../Navigation/Sidebar/Sidebar';
 import Background from './Background/Background';
 import * as actions from '../../store/actions/index';
+import PropTypes from 'prop-types';
 
 const Wrapper = props => {
     const [showSidebar, setShowSidebar] = useState(false);
@@ -14,20 +15,20 @@ const Wrapper = props => {
     const sidebarToggleHandler = () => {setShowSidebar(!showSidebar);};
     const logout = async() => {await props.logout();};
     useEffect(() => {
-        const getItems = async () => { props.getItems() }
+        const getItems = async () => { props.getItems(); };
         if ( props.items.length === 0){ 
-            console.log('Fetching Items')
-            getItems() 
+            console.log('Fetching Items');
+            getItems(); 
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
-        const fetchCart = async () => { props.loadCart() }
+        const fetchCart = async () => { props.loadCart(); };
         if ( props.items.length>0){ 
-            console.log('Fetching Cart')
-            fetchCart() 
+            console.log('Fetching Cart');
+            fetchCart(); 
         }
-    }, [props.items])
+    }, [props.items]);
 
     return (    
         <Auxiliary>
@@ -53,8 +54,8 @@ const Wrapper = props => {
 
             </div>
         </Auxiliary>
-    )
-}
+    );
+};
 
 const mapStateToProps = state => {
     return {
@@ -70,11 +71,20 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getItems            : ()     =>{ dispatch(actions.getItems())},
-        loadCart            : (cart) =>{ dispatch(actions.loadCart(cart))},
-        logout              : () =>{ dispatch(actions.logout())},
+        getItems            : ()     =>{ dispatch(actions.getItems());},
+        loadCart            : (cart) =>{ dispatch(actions.loadCart(cart));},
+        logout              : () =>{ dispatch(actions.logout());},
     };
 };
 
+Wrapper.propTypes={
+    loadCart:PropTypes.any,
+    items:PropTypes.any,
+    isAuth:PropTypes.any,
+    totalItems:PropTypes.any,
+    children:PropTypes.any,
+    getItems:PropTypes.any,
+    logout:PropTypes.func,
+};
 
-export default connect ( mapStateToProps, mapDispatchToProps )( Wrapper )
+export default connect ( mapStateToProps, mapDispatchToProps )( Wrapper );

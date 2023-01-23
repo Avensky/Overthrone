@@ -19,7 +19,7 @@ const Books = () => {
                 published="12-02-1990"
             />
         </div>
-    )  
-}
+    );  
+};
 
 export default Books;

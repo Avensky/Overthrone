@@ -33,5 +33,5 @@ const item = props => {
         {/* Price */}
         <div className={["text-center", myClasses.CardPrice].join(' ')}><p><b>${props.price}</b></p></div>
     </div>
-)}
+);};
 export default item;

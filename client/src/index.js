@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './components/app/App';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store';
 
@@ -16,7 +16,7 @@ const app = (
         </BrowserRouter>
     </Provider>
   //</React.StrictMode>
-)
+);
 
 
 ReactDOM.render(app, document.getElementById('root') );

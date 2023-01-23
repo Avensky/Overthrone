@@ -14,7 +14,7 @@ const navbar = ( props ) => {
                 <span className={["fa", "fa-shopping-cart", classes.left, classes.inline].join(' ')}/>
                 <h3 className={classes.inline}>({props.cart})</h3>
             </NavLink > 
-        )
+        );
     }
     // let auth;
     // console.log(props.isAuth)
@@ -50,8 +50,8 @@ const navbar = ( props ) => {
                 <NavItems isAuthenticated={props.isAuth} cart={props.cart} logout={props.logout}/>
             </div>
         </div>
-    )
-}
+    );
+};
 
 
 export default navbar;

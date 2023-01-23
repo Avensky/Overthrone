@@ -1,6 +1,6 @@
-import React from 'react'
-import classes from '../../Pages.module.scss'
-import myClasses from './Add.module.scss'
+import React from 'react';
+import classes from '../../Pages.module.scss';
+import myClasses from './Add.module.scss';
 //import Auxiliary from '../../../../hoc/Auxiliary';
 
 const add = props => (
@@ -17,6 +17,6 @@ const add = props => (
             on {props.published}
         </div>
     </div>
-)
+);
 
 export default add;

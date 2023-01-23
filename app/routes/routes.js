@@ -3,6 +3,7 @@ const shopController   = require('../controllers/shopController');
 const stripeController   = require('../controllers/stripeController');
 const mongoose          = require('mongoose');
 const Users             = mongoose.model('Users');
+const Order             = mongoose.model('Order');
 const Email             = require('./../utils/email');
 const crypto            = require('crypto');
 const keys              = require('../../config/keys');

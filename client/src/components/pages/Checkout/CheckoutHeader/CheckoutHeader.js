@@ -1,10 +1,12 @@
-import React from 'react'
-import myClasses from './CheckoutHeader.module.scss'
+import React from 'react';
+import myClasses from './CheckoutHeader.module.scss';
+import PropTypes from 'prop-types';
+
 const CheckoutHeader = (props) => {
-    let itemString = 'item'
-    if (props.totalItems !== 1) {itemString = 'items'}
-    let totalItems = props.totalItems || 0
-    let total = props.total || 0
+    let itemString = 'item';
+    if (props.totalItems !== 1) {itemString = 'items';}
+    let totalItems = props.totalItems || 0;
+    let total = props.total || 0;
     const header = (
         <div className={myClasses.dualGrid}>
             <div className={[myClasses.dualBtn, myClasses.dualLeft].join(' ')}>
@@ -30,8 +32,17 @@ const CheckoutHeader = (props) => {
                 }
             </div>
         </div>
-    )
-    return header
-}
+    );
+    return header;
+};
 
-export default CheckoutHeader
+CheckoutHeader.propTypes={
+    totalItems: PropTypes.number,
+    total: PropTypes.number,
+    view: PropTypes.any,
+    viewTitle: PropTypes.any,
+    checkout: PropTypes.func,
+    isAuth: PropTypes.any,
+};
+
+export default CheckoutHeader;

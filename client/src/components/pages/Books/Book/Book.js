@@ -1,6 +1,6 @@
-import React from 'react'
-import classes from '../../Pages.module.scss'
-import myClasses from './Book.module.scss'
+import React from 'react';
+import classes from '../../Pages.module.scss';
+import myClasses from './Book.module.scss';
 import myImg from '../../../../assets/images/book2.jpg';
 //import Auxiliary from '../../../../hoc/Auxiliary';
 
@@ -18,6 +18,6 @@ const book = props => (
             on {props.published}
         </div>
     </div>
-)
+);
 
 export default book;

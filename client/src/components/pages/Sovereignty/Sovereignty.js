@@ -46,14 +46,14 @@ const Sovereinty = props => {
                     <p>When the Shadows began their attacks again in the reign of Blaise, Lithura-29, chaos set in. There was great fear, almost an undercurrent of panic, throughout the Sovereignty. The Worlds needed and demanded protection, and the Sovereignty increased its military branches, its Lithe Guard Army, Navy, Air & Space,  and Planetary Defenses. Soon it became a de facto militarized state that needed more resources from the Worlds, increased tariffs to pay for military expenditures, and finally declared a ‘State of Emergency’ on all Worlds, giving the Sovereignty dictatorship-like powers of enforcement. Currently, there are 313 planets in the Coalition and 29 in DeadSpace.</p>
                 </div>
             </div>
-        )
+        );
 
         return(
             <Auxiliary>
                 {body}
             </Auxiliary>
-        )
-    }
+        );
+    };
 
 
 const mapStateToProps = state => {
@@ -63,7 +63,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-    }
-}
+    };
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(Sovereinty);

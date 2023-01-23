@@ -12,6 +12,7 @@ export const checkoutStart = () => {
     type: actionTypes.CHECKOUT_START,
   };
 };
+
 export const checkoutSuccess = async (id) => {
   // Get Stripe.js instance
   const stripe = await stripePromise;
@@ -101,11 +102,11 @@ export const getItems = () => {
         axios.get( '/api/items')
         .then( result => {
             //console.log("result"+JSON.stringify(result))
-            const items = result.data
+            const items = result.data;
                 dispatch(getItemsSuccess(items));
             } )
             .catch( error => {
-                console.log("getItems error = "+JSON.stringify(error))
+                console.log("getItems error = "+JSON.stringify(error));
                 dispatch(getItemsFail(error));
             }
         );

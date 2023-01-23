@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 //import { Route, Switch } from 'react-router-dom';
 import Auxiliary from '../../../../hoc/Auxiliary';
@@ -6,55 +6,52 @@ import Auxiliary from '../../../../hoc/Auxiliary';
 import myClasses from './ItemFull.module.scss';
 import * as actions from '../../../../store/actions/index';
 //import Details from '../Details/Details';
-import Item from '../Items/Item/Item'
+import Item from '../Items/Item/Item';
+import PropTypes from 'prop-types';
 
-class ItemFull extends Component {
+const ItemFull =(props)=> {
+        const [id,setId]= useState(null);
+        const [loadedItem,setLoadedItem] =useState(null);
 
-    state = {
-        id: null,
-        loadedItem: null
-    }
+    useEffect(()=> {
+        console.log(props);
+        loadData();
+    },[]);
 
-    componentDidMount () {
-        console.log(this.props);
-        this.loadData();
-    }z
-
-    loadData () {
-        if ( this.props.match.params.id ) {
-            if ( !this.state.loadedItem || (this.state.loadedItem && this.state.loadedItem.id !== +this.props.match.params.id) ) {
-                const itemId = this.props.match.params.id;
-                this.setState({ loadedItem: this.props.items[itemId]});
+    const loadData=()=> {
+        if ( props.match.params.id ) {
+            if ( !state.loadedItem || (state.loadedItem && state.loadedItem.id !== +props.match.params.id) ) {
+                const itemId = props.match.params.id;
+                setLoadedItem( props.items[itemId]);
             }
         }
-    }
+    };
 
     handleClick = (id)=>{
-        this.props.addToCart(id); 
-    }
+        props.addToCart(id); 
+    };
 
-    render () {
         let details = <p style={{textAlign: 'center'}}>Please select an item!</p>;
         
-        if ( this.props.match.params.id ) {
+        if ( props.match.params.id ) {
             details = <p style={{ textAlign: 'center' }}>Loading...!</p>;
         }
 
-        if ( this.state.loadedItem) {
+        if ( state.loadedItem) {
             details = <Item
                 class   = 'myClasses.DetailsItem'
-                img     = {this.state.loadedItem.img}
-                id      = {this.state.loadedItem.id}
-                key     = {this.state.loadedItem.id}
-                alt     = {this.state.loadedItem.title}
-                title   = {this.state.loadedItem.title}
-                link    = {"/shop/itemfull/" + this.state.loadedItem.id}
+                img     = {state.loadedItem.img}
+                id      = {state.loadedItem.id}
+                key     = {state.loadedItem.id}
+                alt     = {state.loadedItem.title}
+                title   = {state.loadedItem.title}
+                link    = {"/shop/itemfull/" + state.loadedItem.id}
                 to      = "/"
-                clicked = {() => this.handleClick(this.state.loadedItem.id)}
-                desc    = {this.state.loadedItem.desc}
-                price   = {this.state.loadedItem.price}
+                clicked = {() => handleClick(state.loadedItem.id)}
+                desc    = {state.loadedItem.desc}
+                price   = {state.loadedItem.price}
                 className="Delete"
-            />
+            />;
         }
         return(
             <Auxiliary>
@@ -62,9 +59,9 @@ class ItemFull extends Component {
                     {details}
                 </div>
             </Auxiliary>
-        )
-    }
-}
+        );
+    
+};
 
 const mapStateToProps = state => {
     return {
@@ -74,8 +71,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart: ( id ) => { dispatch( actions.addToCart( id ) ) }
-    }
-}
+        addToCart: ( id ) => { dispatch( actions.addToCart( id ) ); }
+    };
+};
+
+ItemFull.propTypes={
+    match:PropTypes.any,
+    items:PropTypes.array,
+    addToCart:PropTypes.func,
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(ItemFull);

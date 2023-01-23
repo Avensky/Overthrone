@@ -50,9 +50,9 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        removeItem       : (id)=>{dispatch(actions.removeFromCart(id))},
-        addQuantity      : (id)=>{dispatch(actions.addQuantity(id))},
-        subQuantity      : (id)=>{dispatch(actions.subQuantity(id))}
+        removeItem       : (id)=>{dispatch(actions.removeFromCart(id));},
+        addQuantity      : (id)=>{dispatch(actions.addQuantity(id));},
+        subQuantity      : (id)=>{dispatch(actions.subQuantity(id));}
     };
 };
 

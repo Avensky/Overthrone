@@ -5,18 +5,20 @@ import Link from './Link/Link';
 import classes from '../Pages.module.scss';
 import myClasses from './Profile.module.scss';
 import * as actions from '../../../store/actions/index';
-import Address from './Address/Address'
-import { useHistory }from 'react-router-dom'
+import Address from './Address/Address';
+import { useHistory }from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 const Profile = (props) =>{
     let address, local, facebook, twitter, google = '';
-    const user = props.payload
-    const history = useHistory()
-    const editAddressHandler = () => {history.push('/contactData')}
+    const user = props.payload;
+    const history = useHistory();
+    const editAddressHandler = () => {history.push('/contactData');};
 
     useEffect(()=> {
-        const fetchData = async () => {props.onFetchUser()}
-          if ( props.authRedirectPath !== '/'){fetchData()}
-    }, [])
+        const fetchData = async () => {props.onFetchUser();};
+          if ( props.authRedirectPath !== '/'){fetchData();}
+    }, []);
 
     address = (
         <Address 
@@ -24,7 +26,7 @@ const Profile = (props) =>{
             userLink ={true}
             provider ='/contactData'
         />
-    )
+    );
 
     if (props.payload['addresses']) {
         address = (
@@ -42,7 +44,7 @@ const Profile = (props) =>{
                 zipCode  = {user.addresses.zipCode}
                 email    = {user.addresses.email}
             />
-        )
+        );
     }
     local = (
         <Link 
@@ -52,7 +54,7 @@ const Profile = (props) =>{
             mystyle="auth-btn"
             provider='/connectLocal' 
             providerUnlink='/unlink/local' 
-        />)
+        />);
     
     facebook = (
         <Link
@@ -61,7 +63,7 @@ const Profile = (props) =>{
             icon="fa-facebook"
             mystyle="btn-primary"
             provider='/connect/facebook'
-            providerUnlink='/unlink/facebook' />)
+            providerUnlink='/unlink/facebook' />);
     
     google = (
         <Link
@@ -70,7 +72,7 @@ const Profile = (props) =>{
             icon="fa-google-plus"
             mystyle="btn-danger"
             provider='/connect/google'
-            providerUnlink='/unlink/google' />)
+            providerUnlink='/unlink/google' />);
 
     if (props.payload['local']) {
         local = (
@@ -85,7 +87,7 @@ const Profile = (props) =>{
                 mystyle="auth-btn"
                 provider='/authentication' 
                 providerUnlink='/unlink/local' 
-        />)
+        />);
     }
     
     if (props.payload['facebook'] && props.payload['facebook'].token) {
@@ -101,7 +103,7 @@ const Profile = (props) =>{
                 mystyle="btn-primary"
                 provider='/connect/facebook' 
                 providerUnlink='/unlink/facebook' 
-        />)
+        />);
     }
 
     if (props.payload['twitter'] && props.payload['twitter'].token) {
@@ -118,7 +120,7 @@ const Profile = (props) =>{
                 mystyle="btn-info"
                 provider='/connect/twitter' 
                 providerUnlink='/unlink/twitter' 
-        />)
+        />);
     } else {
         twitter = (
             <Link
@@ -128,7 +130,7 @@ const Profile = (props) =>{
                 mystyle="btn-info"
                 provider='/connect/twitter'
                 providerUnlink='/unlink/twitter' />
-        )
+        );
     }
 
     if (props.payload['google'] && props.payload['google'].token) {
@@ -144,7 +146,7 @@ const Profile = (props) =>{
                 mystyle="btn-danger"
                 provider='/connect/google'
                 providerUnlink='/unlink/google'
-        />)
+        />);
     }
 
     let body = (
@@ -174,28 +176,33 @@ const Profile = (props) =>{
 
             </div>
         </Auxiliary>
-    )
+    );
 
     return (
         <Auxiliary>
             {body}
         </Auxiliary>
-    )
+    );
     
-}
+};
 
 const mapStateToProps = state => {
     return {
         payload           : state.auth.user,
         fetchedUser       : state.auth.user,
         authRedirectPath  : state.auth.authRedirectPath,
-    }
-}
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
         onFetchUser: () => dispatch(actions.fetchUser()),
-    }
-}
+    };
+};
 
+Profile.propTypes={
+    payload:PropTypes.any,
+    onFetchUser:PropTypes.any,
+    authRedirectPath:PropTypes.string,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

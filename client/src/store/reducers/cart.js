@@ -17,17 +17,19 @@ const initialState = {
 
 const getItemsStart = (state, action) => {
     return updateObject( state, { 
-        loading: true })}
+        loading: true 
+    });
+};
     
 const getItemsFail = (state, action) => {
     return updateObject( state, { 
-        loading: false }
-        );
-    };
+        loading: false 
+    });
+};
   
 const getItemsSuccess = (state, action) => {
-    console.log('get items = ' + JSON.stringify(action.items))
-    const items = JSON.stringify(action.items)
+    console.log('get items = ' + JSON.stringify(action.items));
+    const items = JSON.stringify(action.items);
     return {
         ...state,
         items: action.items,
@@ -44,20 +46,20 @@ const removeFromCart = ( state, action ) => {
     const totalPrice = getTotalPrice(updatedCart);
     const totalItems = getTotalItems(updatedCart);
 
-    let items = state.items
+    let items = state.items;
     let shop;
     //console.log('load shop = ' + (items));
     if (items.length>0) {
         console.log('load shop = ' + (items));
         if(updatedCart.length>0){
-            console.log('load shop = ' + (items))
-            shop = items.map( obj => updatedCart.find(item => item._id === obj._id) || obj)
-            console.log('load shop with cart = ' + JSON.stringify(shop))
+            console.log('load shop = ' + (items));
+            shop = items.map( obj => updatedCart.find(item => item._id === obj._id) || obj);
+            console.log('load shop with cart = ' + JSON.stringify(shop));
         } else {
-            shop = items
-            console.log('load shop without cart = ' + JSON.stringify(shop))
-        }
-    }
+            shop = items;
+            console.log('load shop without cart = ' + JSON.stringify(shop));
+        };
+    };
 
     return {
         ...state,
@@ -81,7 +83,7 @@ const addQuantity = ( state, action ) => {
     let cart=[];
     if (state.cart){
         cart = copyArray(state.cart);
-    }
+    };
 
     console.log('cart = ', cart);
 
@@ -101,8 +103,8 @@ const addQuantity = ( state, action ) => {
             console.log('updatedCart = ', updatedCart);            
         } else {
             updatedCart = cart;
-        }
-    }
+        };
+    };
 
     //if no such item in cart copy original
     if (!cartItem) {
@@ -111,22 +113,22 @@ const addQuantity = ( state, action ) => {
         cartItem.orderAmt = 1;
         updatedCart = [...cart, cartItem];
         console.log('updatedCart = ', updatedCart);
-    }
+    };
 
-    let items = state.items
+    let items = state.items;
     let shop;
     //console.log('load shop = ' + (items));
     if (items.length>0) {
         //console.log('load shop = ' + (items));
         if(updatedCart.length>0){
             //console.log('load shop = ' + (items))
-            shop = items.map( obj => updatedCart.find(item => item._id === obj._id) || obj)
-            console.log('load shop with cart = ' + JSON.stringify(shop))
+            shop = items.map( obj => updatedCart.find(item => item._id === obj._id) || obj);
+            console.log('load shop with cart = ' + JSON.stringify(shop));
         } else {
-            shop = items
-            console.log('load shop without cart = ' + JSON.stringify(shop))
-        }
-    }
+            shop = items;
+            console.log('load shop without cart = ' + JSON.stringify(shop));
+        };
+    };
 
     storeLocally('cart', updatedCart);
     const totalPrice = getTotalPrice(updatedCart);
@@ -141,7 +143,8 @@ const addQuantity = ( state, action ) => {
         totalItems  : totalItems,
         shop        : shop
         };
-}
+};
+
 const subQuantity = ( state, action ) => {
     const cart = copyArray(state.cart);
     let cartItem = findItem(cart, action.id);
@@ -156,20 +159,20 @@ const subQuantity = ( state, action ) => {
     storeLocally('cart', updatedCart);
 
 
-    let items = state.items
+    let items = state.items;
     let shop;
     //console.log('load shop = ' + (items));
     if (items.length>0) {
         //console.log('load shop = ' + (items));
         if(updatedCart.length>0){
             //console.log('load shop = ' + (items))
-            shop = items.map( obj => updatedCart.find(item => item._id === obj._id) || obj)
-            console.log('load shop with cart = ' + JSON.stringify(shop))
+            shop = items.map( obj => updatedCart.find(item => item._id === obj._id) || obj);
+            console.log('load shop with cart = ' + JSON.stringify(shop));
         } else {
-            shop = items
-            console.log('load shop without cart = ' + JSON.stringify(shop))
-        }
-    }
+            shop = items;
+            console.log('load shop without cart = ' + JSON.stringify(shop));
+        };
+    };
 
 
     const totalPrice = getTotalPrice(updatedCart);
@@ -211,11 +214,11 @@ const loadCart = ( state, action ) => {
         //console.log('load shop = ' + (items));
         if(array.length>0){
             //console.log('load shop = ' + (items))
-            shop = state.items.map( obj => array.find(item => item._id === obj._id) || obj)
+            shop = state.items.map( obj => array.find(item => item._id === obj._id) || obj);
             console.log('load shop with cart = ' + JSON.stringify(shop));
         }
     } else {
-        shop = items
+        shop = items;
         console.log('load shop without cart = ' + JSON.stringify(shop));
     };
 
@@ -237,25 +240,22 @@ const loadCart = ( state, action ) => {
 
 const checkoutStart = (state, action) => {
     return updateObject (state, {
-            error: null,
-            loading: true,
-        }
-    );
+        error: null,
+        loading: true,
+    });
 };
 
 const checkoutFail = (state, action) => {
     return updateObject(state, {
-            loading: false,
-            error: action.error
-        }
-    );
+        loading: false,
+        error: action.error
+    });
 };
 const checkoutSuccess = (state, action) => {
     return updateObject(state, {
-            loading: false,
-            checkout: action.response
-        }
-    );
+        loading: false,
+        checkout: action.response
+    });
 };
 
 const reducer = ( state = initialState, action ) => {

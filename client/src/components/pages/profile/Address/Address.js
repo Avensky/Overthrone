@@ -2,18 +2,19 @@ import React, { useState }  from 'react';
 import myClasses from './Address.module.scss';
 import Modal from  '../../../UI/Modal/Modal';
 // import classes from '../../Pages.module.scss'
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Address = props => {
-    const [unlink, setUnlink] = useState(false)
+    const [unlink, setUnlink] = useState(false);
 
-    const unlinkHandler = () => { setUnlink(true) }
+    const unlinkHandler = () => { setUnlink(true); };
 
-    const cancelHandler = () => { setUnlink(false) }
-    const history = useHistory()
+    const cancelHandler = () => { setUnlink(false); };
+    const history = useHistory();
     const editHandler = () => {
         history.push('/contactData');
-    }
+    };
 
     // const continueHandler = () => {
     //     const href = props.providerUnlink;
@@ -52,7 +53,22 @@ const Address = props => {
         { props.providerUnlink ? <a onClick={unlinkHandler} className="btn btn-default">Edit</a> :null}
         </div>
         
-    )
-}
+    );
+};
+
+Address.propTypes={
+    link:PropTypes.string,
+    name:PropTypes.string,
+    phone:PropTypes.string,
+    address:PropTypes.string,
+    address2:PropTypes.string,
+    city:PropTypes.string,
+    state:PropTypes.string,
+    postal_code:PropTypes.string,
+    email:PropTypes.string,
+    providerUnlink:PropTypes.string,
+    provider:PropTypes.string,
+    mystyle:PropTypes.string,
+};
 
 export default Address;

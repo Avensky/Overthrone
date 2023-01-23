@@ -1,78 +1,74 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 //  import {Redirect} from 'react-router-dom';
 // import Layout from '../../Layout/Layout';
 // import Header from '../../Layout/Header/Header';
 // import Auxiliary from '../../../../hoc/Auxiliary'
 import classes from '../../Pages.module.scss';
-import myClasses from './NewFaq.module.scss'
+import myClasses from './NewFaq.module.scss';
 import {connect} from 'react-redux';
 import * as actions from '../../../../store/actions/index';
 // import axios from '../../../axios';
+import PropTypes from 'prop-types';
 
-class NewFaq extends Component {
-    state = {
-        faqForm:{
-            question: {
-                value: '',
-                validation: {
-                    required: true,
-                }
-            },
-            answer: {
-                value: '',
-                validation: {
-                    required: true,
-                }
-            }
-        },
-        error: null
-    }
+const NewFaq =(props)=> {
 
-    componentDidMount () {
-        console.log(this.props);
-    }
+    const [question, setQuestion ]=useState( {
+        value: '',
+        validation: {
+            required: true,
+        }
+    });
 
+    const [answer, setAnswer] =useState( {
+        value: '',
+        validation: {
+            required: true,
+        }
+    });
+
+    const [error, setError]= useState( null);
+    
     newFaqHandler = (event) => {
         event.preventDefault();
-        //this.props.onSetAuthRedirectPath('/checkout');
-//        this.props.history.push('/faqs');
-//         const author =  this.props.payload.username;
-        this.props.onNewFaq(
-            this.state.faqForm.question.value, 
-            this.state.faqForm.answer.value, 
+        //props.onSetAuthRedirectPath('/checkout');
+//        props.history.push('/faqs');
+//         const author =  props.payload.username;
+        props.onNewFaq(
+            question.value, 
+            answer.value, 
         );
-    }
+    };
 
     inputChangedHandler = ( event, controlName ) => {
         const updatedControls = {
-            ...this.state.faqForm,
+            ...state.faqForm,
             [controlName]: {
-                ...this.state.faqForm[controlName],
+                ...state.faqForm[controlName],
                 value: event.target.value,
-//                valid: this.checkValidity( event.target.value, this.state.faqForm[controlName].validation ),
+//                valid: checkValidity( event.target.value, state.faqForm[controlName].validation ),
                 touched: true
             }
         };
-        this.setState( { faqForm: updatedControls } );
-    }
+        setState( { faqForm: updatedControls } );
+    };
 
-    render () {
+
         let errorMessage = null;
-        if (this.props.error) {
+        if (props.error) {
             errorMessage = (
-                <p>{this.props.error.message}</p>
+                <p>{props.error.message}</p>
             );
         }
 
         let form = (
-            <form onSubmit={this.newFaqHandler}>
+            <form onSubmit={newFaqHandler}>
                 <legend>Add a Faq</legend>
                 {errorMessage}
                 <div className={myClasses.MidLine}>
                     <label className={myClasses.Left}>Question: </label> 
                     <input 
                         type="text" 
-                        onChange={(event) => this.inputChangedHandler( event, "question")}
+                        onChange={(event) => inputChangedHandler( event, "question")}
                         //placeholder="Name"
                         className={myClasses.Right}
                     />
@@ -85,7 +81,7 @@ class NewFaq extends Component {
                         rows="4" 
                         //placeholder="Bio"
                         className={myClasses.Right}
-                        onChange={(event) => this.inputChangedHandler( event, "answer")}
+                        onChange={(event) => inputChangedHandler( event, "answer")}
                     />
                 </div>
                 <div className={myClasses.MidLine}>
@@ -93,7 +89,7 @@ class NewFaq extends Component {
                     <button className={["auth-btn", classes.btn, myClasses.Right].join(' ')}>Add Faq</button>
                 </div>
                            </form>
-        )
+        );
         
         return (
             <div className={myClasses.NewFaq}>
@@ -101,8 +97,8 @@ class NewFaq extends Component {
                 {form}                
             </div>     
         );
-    }
-}
+    
+};
 
 const mapStateToProps = state => {
     return {
@@ -110,12 +106,18 @@ const mapStateToProps = state => {
         isLoggedIn: state.auth.payload !== null,
         payload: state.auth.payload,
         userId: state.auth.userId,
-    }
-}
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
         onNewFaq: (question, answer) => dispatch(actions.newFaq(question, answer)),
-    }
-}
+    };
+};
+
+NewFaq.propTypes={
+    onNewFaq:PropTypes.func,
+    error:PropTypes.any,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(NewFaq);

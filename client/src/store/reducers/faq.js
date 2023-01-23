@@ -9,59 +9,80 @@ const initialState = {
 };
 
 const newFaqStart = (state, action) => {
-    return updateObject( state, { posted: false });}
+    return updateObject( state, { posted: false });
+};
 
 const newFaqFail = (state, action) => {
     return updateObject( state, { 
-        loading: false })}
+        loading: false 
+    });
+};
   
 const newFaqSuccess = (state, action) => {
-    const newFaq = updateObject(action.faqData, { id: action.faqId })
+    const newFaq = updateObject(action.faqData, { id: action.faqId });
     return updateObject(state, {
         loading: false,
-        faqs: state.faqs.concat( newFaq ) })}
+        faqs: state.faqs.concat( newFaq )
+    });
+};
 
 
 const getFaqsStart = (state, action) => {
     return updateObject( state, { 
-        loading: true })}
+        loading: true 
+    });
+};
     
 const getFaqsFail = (state, action) => {
     return updateObject( state, { 
-        loading: false })}
+        loading: false 
+    });
+};
   
 const getFaqsSuccess = (state, action) => {
     return updateObject(state, {
         faqs: action.faqs,
-        loading: false}
-        )}
+        loading: false
+    });
+};
         
 
 const getFaqByIdStart = (state, action) => {
     return updateObject( state, {
-        loading: true})}
+        loading: true
+    });
+};
 
 const getFaqByIdFail = (state, action) => {
     return updateObject( state, {
-        loading: false})}
+        loading: false
+    });
+};
 
 const getFaqByIdSuccess = (state, action) => {
     return updateObject( state, {
         faqById: action.faqById,
-        loading: false,})}
-
+        loading: false,
+    });
+};
 
 const deleteFaqStart = (state, action) => {
     return updateObject( state, {
-        loading: true})}
+        loading: true
+    });
+};
 
 const deleteFaqFail = (state, action) => {
     return updateObject( state, {
-        loading: false})}
+        loading: false
+    });
+};
 
 const deleteFaqSuccess = (state, action) => {
     return updateObject( state, {
-        loading: false,})}
+        loading: false,
+    });
+};
 
 
 
@@ -84,7 +105,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.GET_FAQ_BY_ID_START    : return getFaqByIdStart(state, action);
         
         default: return state;
-    }
+    };
 };
 
 export default reducer;

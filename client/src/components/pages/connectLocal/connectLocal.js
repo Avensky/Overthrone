@@ -2,38 +2,38 @@ import React from 'react';
 import {connect} from 'react-redux';
 //import Auxiliary from '../../../hoc/Auxiliary';
 import classes from '../Pages.module.scss';
-import myClasses from './ConnectLocal.module.scss'
+import myClasses from './ConnectLocal.module.scss';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 //import { Redirect } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 //import { Persist } from 'formik-persist'
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 const connectLocal = props => {
     const submitHandler = ( values, submitProps ) => {
-        console.log('Form data', values)
-        console.log('submitProps', submitProps)
+        console.log('Form data', values);
+        console.log('submitProps', submitProps);
         //debugger
-        props.onConnect(values)
-        submitProps.setSubmitting(false)
-        submitProps.resetForm()
-    }
+        props.onConnect(values);
+        submitProps.setSubmitting(false);
+        submitProps.resetForm();
+    };
 
     let message = false;
-    if ( props.token ) {message = <p>{props.token.message}</p>}
+    if ( props.token ) {message = <p>{props.token.message}</p>;}
 
     let authRedirect = null;
     if (props.authRedirectPath !== '/') {
-         authRedirect = <Redirect to={props.authRedirectPath} />
+         authRedirect = <Redirect to={props.authRedirectPath} />;
     }
     
     const initialValues = {
         email: '', 
         password: '',
         confirm_password: ''
-    }
+    };
     const validationSchema = Yup.object({
         email: Yup.string()
             .email("Invalid email format")
@@ -49,12 +49,12 @@ const connectLocal = props => {
         confirm_password: Yup.string()
             .oneOf([Yup.ref("password")], "Passwords  must match")
             .required("Password confirm is required!")
-    })
+    });
     
-    let loader
+    let loader;
     if ( props.loading || (props.submitted && props.userLoading)) {
         //form = <Spinner />
-        loader = <Spinner />
+        loader = <Spinner />;
 
     }
 
@@ -105,8 +105,8 @@ const connectLocal = props => {
                 </Form>}
             </Formik>
         </div>
-    )
-}
+    );
+};
 
 
 const mapStateToProps = state => {
@@ -123,7 +123,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onConnect              : (values)   => dispatch(actions.connect(values)),
-    }
-}
+    };
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(connectLocal);

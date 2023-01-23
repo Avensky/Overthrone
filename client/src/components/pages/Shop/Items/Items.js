@@ -9,6 +9,7 @@ import * as actions from '../../../../store/actions/index';
 // import Details from '../Details/Details';
 // import { Link } from 'react-router-dom';
 import Search from '../../../Search/Search';
+import PropTypes from 'prop-types';
 
 const Items = props => {
 
@@ -29,7 +30,7 @@ const Items = props => {
     const handleClick = ( id ) => {
         props.addToCart(id); 
 //        props.history.push('/shop/itemfull/' + id);
-    }
+    };
     let items = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
         if ( !props.items ) {
             items = props.items.map( item => {
@@ -46,8 +47,8 @@ const Items = props => {
                         desc    = {item.desc}
                         price   = {item.price}
                     />
-                )
-            })
+                );
+            });
         }
         return(
             <Auxiliary>
@@ -78,8 +79,8 @@ const Items = props => {
                 </div>
 
             </Auxiliary>
-        )
-    }
+        );
+    };
 
 
 const mapStateToProps = state => {
@@ -90,8 +91,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart: ( id ) => { dispatch( actions.addToCart( id ) ) }
-    }
-}
+        addToCart: ( id ) => { dispatch( actions.addToCart( id ) ); }
+    };
+};
+
+Items.propTypes={
+    addToCart:PropTypes.func,
+    items:PropTypes.array,
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(Items);

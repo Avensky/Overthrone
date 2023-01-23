@@ -22,7 +22,7 @@ jobs:
         cd client
         npm ci
         npm run build
-        pm2 stop 3
-        pm2 start 3
+        pm2 stop Overthrone
+        pm2 start Overthrone
         pm2 save
         sudo service nginx restart

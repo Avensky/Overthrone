@@ -3,7 +3,7 @@ import classes from '../../Pages.module.scss';
 import myClasses from './Faq.module.scss';
 import Auxiliary from '../../../../hoc/Auxiliary';
 
-let assignedClasses = [myClasses.Faq].join(' ')
+let assignedClasses = [myClasses.Faq].join(' ');
 
 const faq = props => (
     <Auxiliary>
@@ -16,6 +16,6 @@ const faq = props => (
             </div>
         </div>
     </Auxiliary>
-)
+);
 
 export default faq;

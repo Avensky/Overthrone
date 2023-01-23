@@ -1,6 +1,6 @@
-import React from 'react'
-import classes from '../../Pages.module.scss'
-import myClasses from './Character.module.scss'
+import React from 'react';
+import classes from '../../Pages.module.scss';
+import myClasses from './Character.module.scss';
 //import { Link } from 'react-router-dom';
 //import myImg from '../../../../assets/images/character.jpg';
 
@@ -34,6 +34,6 @@ const character = props => (
         */}
 
     </div>
-)
+);
 
 export default character;

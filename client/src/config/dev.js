@@ -3,4 +3,4 @@ module.exports = {
     taxRates                : 'txr_1JB319GhmYf089678Co4Kjze',
 
     proxyTarget:'http://192.168.100.17:5000'
-}
+};

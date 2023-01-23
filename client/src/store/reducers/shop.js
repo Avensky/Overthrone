@@ -9,43 +9,59 @@ const initialState = {
 };
 
 const newItemStart = (state, action) => {
-    return updateObject( state, { posted: false });}
+    return updateObject( state, { posted: false });
+};
 
 const newItemFail = (state, action) => {
     return updateObject( state, { 
-        loading: false })}
+        loading: false
+    });
+};
   
 const newItemSuccess = (state, action) => {
-    const newItem = updateObject(action.itemData, { id: action.itemId })
+    const newItem = updateObject(action.itemData, { id: action.itemId });
     return updateObject(state, {
         loading: false,
 //        items: state.items.concat( newItem ) 
-    })}
+    });
+};
 
 const getItemByIdStart = (state, action) => {
     return updateObject( state, {
-        loading: true})}
+        loading: true
+    });
+};
 
 const getItemByIdFail = (state, action) => {
     return updateObject( state, {
-        loading: false})}
+        loading: false
+    });
+};
 
 const getItemByIdSuccess = (state, action) => {
     return updateObject( state, {
         itemById: action.itemById,
-        loading: false,})}
+        loading: false,
+    });
+};
 
 const deleteItemStart = (state, action) => {
     return updateObject( state, {
-        loading: true})}
+        loading: true
+    });
+};
 
 const deleteItemFail = (state, action) => {
     return updateObject( state, {
-        loading: false})}
+        loading: false
+    });
+};
 
 const deleteItemSuccess = (state, action) => {
     return updateObject( state, {
-        loading: false,})}
+        loading: false,
+    });
+};
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
@@ -62,7 +78,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.GET_ITEM_BY_ID_START    : return getItemByIdStart(state, action);
         
         default: return state;
-    }
+    };
 };
 
 export default reducer;

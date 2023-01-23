@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Order from './Order/Order';
 import classes from '../Pages.module.scss';
@@ -6,6 +6,7 @@ import myClasses from './Orders.module.scss';
 //import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../UI/Spinner/Spinner';
+import PropTypes from 'prop-types';
 
 const Orders = (props) => {
     useEffect(() => {
@@ -13,15 +14,15 @@ const Orders = (props) => {
             props.onFetchOrders(props.user);
         };
         if ( props.orders.length === 0 ){
-          fetchData()
+          fetchData();
         }
         //console.log('userid = ' + props.user._id)
-    }, [])
+    }, []);
 
     let orders = <Spinner />;
     if ( !props.loading ) {
         orders = props.orders.map( order => {
-            let line_items = order.line_items
+            let line_items = order.line_items;
             return <Order
                 key             = {order.sessionid}
                 date            = {order.date}
@@ -37,10 +38,9 @@ const Orders = (props) => {
                 state           = {order.shipping.address.state}
                 postal_code     = {order.shipping.address.postal_code}
                 email           = {order.customer_details.email}
-                amount_total    = {order.amount_total}
                 amount_subtotal = {order.amount_subtotal}
-            />
-        })
+            />;
+        });
     }
     return (
         <div>            
@@ -55,7 +55,7 @@ const Orders = (props) => {
         </div>
     );
 
-}
+};
 
 const mapStateToProps = state => {
     return {
@@ -69,6 +69,13 @@ const mapDispatchToProps = dispatch => {
     return {
         onFetchOrders: (user) => dispatch( actions.fetchOrders(user) )
     };
+};
+
+Orders.propTypes = {
+    onFetchOrders: PropTypes.func,
+    user: PropTypes.any,
+    orders: PropTypes.any,
+    loading: PropTypes.bool,
 };
 
 export default connect( mapStateToProps, mapDispatchToProps )( Orders);

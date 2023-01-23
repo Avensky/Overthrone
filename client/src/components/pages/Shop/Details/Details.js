@@ -1,78 +1,77 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
 import { connect } from 'react-redux';
 import Item from '../Items/Item/Item';
 import myClasses from './Details.module.scss';
 // import classes from '../../Pages.module.scss';
 // import * as actions from '../../../../store/actions/index';
+import PropTypes from 'prop-types';
 
-class Details extends Component {
+const Details =(props)=> {
+    const [id, setID] = useState( null);
+    const [loadedItem, setLoadedItem] = useState( null);
 
-    state = {
-        id: null,
-        loadedItem: null
-    }
+    useEffect( ()=> {
+        console.log(props);
+        loadData();
+    },[]);
 
-    componentDidMount () {
-        console.log(this.props);
-        this.loadData();
-    }
 
-    componentDidUpdate() {
-        this.loadData();
-    }
-
-    loadData () {
-        if ( this.props.match.params.id ) {
-            if ( !this.state.loadedItem || (this.state.loadedItem && this.state.loadedItem.id !== +this.props.match.params.id) ) {
-                const itemId = this.props.match.params.id - 1;
-                this.setState({ loadedItem: this.props.items[itemId]});
-            }
-        }
-    }
+    const loadData = () =>{
+        if ( props.match.params.id ) {
+            if ( !loadedItem || (loadedItem && loadedItem.id !== +props.match.params.id) ) {
+                const itemId = props.match.params.id - 1;
+                setLoadedItem( props.items[itemId]);
+            };
+        };
+    };
 
 //    deletePostHandler = () => {
-//        axios.delete('/posts/' + this.props.match.params.id)
+//        axios.delete('/posts/' + props.match.params.id)
 //            .then(response => {
 //                console.log(response);
 //            });
 //    }
 
-    render (){
         let details = <p style={{textAlign: 'center'}}>Please select an item!</p>;
         
-        if ( this.props.match.params.id ) {
+        if ( props.match.params.id ) {
             details = <p style={{ textAlign: 'center' }}>Loading...!</p>;
         }
 
-        if ( this.state.loadedItem) {
+        if ( loadedItem) {
             details = <Item
                 class   = 'myClasses.DetailsItem'
-                img     = {this.state.loadedItem.img}
-                id      = {this.state.loadedItem.id}
-                key     = {this.state.loadedItem.id}
-                alt     = {this.state.loadedItem.title}
-                title   = {this.state.loadedItem.title}
+                img     = {loadedItem.img}
+                id      = {loadedItem.id}
+                key     = {loadedItem.id}
+                alt     = {loadedItem.title}
+                title   = {loadedItem.title}
                 to      = "/"
-                clicked = {() => this.handleClick(this.state.loadedItem.id)}
-                desc    = {this.state.loadedItem.desc}
-                price   = {this.state.loadedItem.price}
+                clicked = {() => {}}
+                desc    = {loadedItem.desc}
+                price   = {loadedItem.price}
                 className="Delete"
-            />
+            />;
         }
         return (
             <div className={myClasses.Item}>
                 {details}
             </div>
-        )
-    }
+        );
+    
 
-}
+};
+
 const mapStateToProps = state => {
     return {
         items: state.cart.items
     };
 };
 
+Details.propTypes = {
+    match: PropTypes.any,
+    items: PropTypes.array,
+};
 
 export default connect ( mapStateToProps ) ( Details ) ;

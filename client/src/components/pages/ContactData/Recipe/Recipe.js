@@ -1,19 +1,19 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import myClasses from './Recipe.module.scss'
+import React from 'react';
+import { connect } from 'react-redux';
+import myClasses from './Recipe.module.scss';
 //import { addShipping } from './actions/cartActions'
 
 import StripeCheckout from 'react-stripe-checkout';
-
+import PropTypes from 'prop-types';
 
 const Recipe = props => {
-    let array = props.addedItems
-    console.log('array = ' + array)
+    let array = props.addedItems;
+    console.log('array = ' + array);
     const reducer = (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.quantity * currentValue.price);
-    let total
+    let total;
     if ( array !== ''){
-        total = array.reduce(reducer, 0)
-        console.log("total = " + array.reduce(reducer, 0))
+        total = array.reduce(reducer, 0);
+        console.log("total = " + array.reduce(reducer, 0));
     }
     return(
         <div className={myClasses.Recipe}>
@@ -36,22 +36,26 @@ const Recipe = props => {
                 />
             </div>
         </div>
-    )
+    );
 
-}
+};
 
 const mapStateToProps = (state)=>{
     return{
         addedItems: state.cart.addedItems,
         total: state.cart.total
-    }
-}
+    };
+};
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        addShipping: ()=>{dispatch({type: 'ADD_SHIPPING'})},
-        substractShipping: ()=>{dispatch({type: 'SUB_SHIPPING'})}
-    }
-}
+        addShipping: ()=>{dispatch({type: 'ADD_SHIPPING'});},
+        substractShipping: ()=>{dispatch({type: 'SUB_SHIPPING'});}
+    };
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(Recipe)
+Recipe.propTypes = {
+    addedItems: PropTypes.array,
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Recipe);

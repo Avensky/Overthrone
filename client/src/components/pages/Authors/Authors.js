@@ -43,7 +43,7 @@ const Authors = props => {
                 author="J.M. Prigot"
             />
         </div>
-    )
-}
+    );
+};
 
 export default Authors;

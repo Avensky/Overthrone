@@ -1,5 +1,5 @@
 import React from 'react';
-import myClasses from './NavItems.module.scss'
+import myClasses from './NavItems.module.scss';
 import NavItem from './NavItem/NavItem';
 import classes from '../../pages/Pages.module.scss';
 

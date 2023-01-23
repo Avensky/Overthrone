@@ -2,35 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import classes from '../Pages.module.scss';
 import myClasses from './Shop.module.scss';
-import Item from './Items/Item/Item'
+import Item from './Items/Item/Item';
 import * as actions from '../../../store/actions/index';
 // import NewItem from './NewItem/NewItem'
-import {useHistory} from 'react-router-dom'
-import CheckoutHeader from '../Checkout/CheckoutHeader/CheckoutHeader'
+import {useHistory} from 'react-router-dom';
+import CheckoutHeader from '../Checkout/CheckoutHeader/CheckoutHeader';
 //import {purchaseContinueHandler} from '../../../utility/stripe'
-import OrderSummary from '../OrderSummary/OrderSummary'
-import Modal from '../../UI/Modal/Modal'
-
-
-import { loadStripe } from '@stripe/stripe-js';
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_v4y6jC0D3v8NiKZpKLfjru4300g9fG6D5X');
-
+import OrderSummary from '../OrderSummary/OrderSummary';
+import Modal from '../../UI/Modal/Modal';
+import PropTypes from 'prop-types';
 
 const Purchase = props => { 
     const [purchasing, setPurchasing] = useState(false);
-    const history = useHistory()
-    const addToCart = (id) => {props.addToCart(id)}
+    const history = useHistory();
+    const addToCart = (id) => {props.addToCart(id);};
 
     const purchaseHandler = () => {
-        props.isAuth ? setPurchasing(true) :history.push('/authentication')
-    }
+        props.isAuth ? setPurchasing(true) :history.push('/authentication');
+    };
 
-    const purchaseCancelHandler = () => {setPurchasing(false)}
-    const viewCartHandler = () => {history.push('/cart')}
+    const purchaseCancelHandler = () => {setPurchasing(false);};
+    const viewCartHandler = () => {history.push('/cart');};
 
-    let orderSummary = null
+    let orderSummary = null;
     if (props.cart) {
         orderSummary = <OrderSummary 
             items={props.cart}
@@ -41,7 +35,7 @@ const Purchase = props => {
         />;
     }
 
-    let myShop
+    let myShop;
 
     if(props.shop.length>0){
         console.log('props.shop = ', props.shop);
@@ -61,18 +55,18 @@ const Purchase = props => {
                 quantity    = {item.orderAmt||0}
                 add         = {true}
             />
-        )}
-    )}
+        );}
+    );}
 
-    let view
+    let view;
     props.totalItems > 0
         ? view = viewCartHandler
-        : view = null
+        : view = null;
 
-    let checkout
+    let checkout;
     props.totalItems > 0
         ? checkout = purchaseHandler
-        : checkout = null
+        : checkout = null;
 
 
 
@@ -143,8 +137,8 @@ const Purchase = props => {
                 </div>
             </div>
         </div>
-    )
-} 
+    );
+}; 
 
 const mapStateToProps = state => {
     return {
@@ -160,11 +154,21 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart           : (id)   =>{ dispatch(actions.addQuantity(id))},
-        getItems            : ()     =>{ dispatch(actions.getItems())},
-        loadCart            : (cart) =>{ dispatch(actions.loadCart(cart))},
+        addToCart           : (id)   =>{ dispatch(actions.addQuantity(id));},
+        getItems            : ()     =>{ dispatch(actions.getItems());},
+        loadCart            : (cart) =>{ dispatch(actions.loadCart(cart));},
         checkout            : (cart, user) => {dispatch(actions.checkout(cart, user));}
-    }
-}
+    };
+};
+
+Purchase.propTypes={
+    addToCart:PropTypes.func,
+    isAuth:PropTypes.any,
+    shop:PropTypes.any,
+    cart:PropTypes.any,
+    total:PropTypes.number,
+    totalItems:PropTypes.number,
+    checkout:PropTypes.func,
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(Purchase);

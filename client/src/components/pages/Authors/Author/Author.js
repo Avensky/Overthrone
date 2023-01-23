@@ -1,6 +1,6 @@
-import React from 'react'
-import classes from '../../Pages.module.scss'
-import myClasses from './Author.module.scss'
+import React from 'react';
+import classes from '../../Pages.module.scss';
+import myClasses from './Author.module.scss';
 // import myImg from '../../../../assets/images/author.jpg';
 
 // <figure className={classes.CardThumbnail}>
@@ -18,6 +18,6 @@ const author = props => (
             {props.content3}<br />
         </div>
     </div>
-)
+);
 
 export default author;

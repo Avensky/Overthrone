@@ -13,6 +13,8 @@
     "axios-https-proxy-fix": "^0.17.1",
     "bootstrap": "^4.5.2",
     "cors": "^2.8.5",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.32.1",
     "formik": "^2.1.5",
     "formik-persist": "^1.1.0",
     "http-proxy-middleware": "^1.0.3",
@@ -35,6 +37,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "lint": "eslint --ext js,ts,tsx src",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

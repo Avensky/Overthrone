@@ -6,7 +6,7 @@ const initialState = {
     data: null,
     extra: null,
     identifier: null
-}
+};
 
 const httpReducer = (currHttpState, action ) => {
     switch (action.type) {
@@ -44,14 +44,14 @@ const httpReducer = (currHttpState, action ) => {
             return response.json();
         })
         .then( responseData => {
-            console.log(responseData)
-            const payload = responseData.data
+            console.log(responseData);
+            const payload = responseData.data;
             // dispatch(fetchUserSuccess(payload));
             dispatchHttp({ 
                 type: 'RESPONSE', 
                 responseData:responseData,
                 extra: reqExtra 
-            })
+            });
         })
         .catch( error => {
             dispatchHttp({type: 'ERROR',errorMessage: 'Something went wrong'});

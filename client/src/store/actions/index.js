@@ -57,4 +57,4 @@ export {
 export {
     fetchOrders,
     fetchOrdersStart,
-} from './orders'
+} from './orders';

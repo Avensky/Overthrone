@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
-import Auxiliary from '../../../../hoc/Auxiliary'
-import myClasses from './Order.module.scss'
-import Address from '../../profile/Address/Address'
-import Summary from '../Summary/Summary'
-import Item from '../Item/Item'
+import React, {useState} from 'react';
+import Auxiliary from '../../../../hoc/Auxiliary';
+import myClasses from './Order.module.scss';
+import Address from '../../profile/Address/Address';
+import Summary from '../Summary/Summary';
+import Item from '../Item/Item';
+import PropTypes from 'prop-types';
 
 const Order = props => {
-    console.log('prop.items.map = ', props.items)
+    console.log('prop.items.map = ', props.items);
     let items = props.items.map(item=> {
         return(
             <Item
@@ -23,19 +24,19 @@ const Order = props => {
                 price       = {item.price.unit_amount/100*item.quantity}
                 quantity    = {item.quantity}
             />
-        )
-    })
+        );
+    });
 
-    let getDate = Date.parse(props.date)
-    let dateObj = new Date(props.date)
+    let getDate = Date.parse(props.date);
+    let dateObj = new Date(props.date);
     var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    let date = months[dateObj.getMonth()] + ' ' + dateObj.getDate() + ', ' + dateObj.getFullYear()
+    let date = months[dateObj.getMonth()] + ' ' + dateObj.getDate() + ', ' + dateObj.getFullYear();
     
-    let time
+    let time;
     dateObj.getHours() > 11
         ? time = (dateObj.getHours() === 12 ? dateObj.getHours() : dateObj.getHours() -12 )+ ':' + dateObj.getMinutes() + 'pm'
-        : time = (  dateObj.getHours() < 1 ? dateObj.getHours()+12 :dateObj.getHours()) + ':' + dateObj.getMinutes() + 'am'
+        : time = (  dateObj.getHours() < 1 ? dateObj.getHours()+12 :dateObj.getHours()) + ':' + dateObj.getMinutes() + 'am';
 
     return (        
         <div className={myClasses.Order}>
@@ -71,7 +72,23 @@ const Order = props => {
                 {items}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Order 
+Order.propTypes = {
+    items: PropTypes.any,
+    date: PropTypes.any,
+    sessionid: PropTypes.any,
+    name: PropTypes.string,
+    phone: PropTypes.string,
+    line1: PropTypes.string,
+    line2: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    postal_code: PropTypes.string,
+    email: PropTypes.string,
+    amount_subtotal: PropTypes.string,
+    amount_total: PropTypes.string,
+};
+
+export default Order; 

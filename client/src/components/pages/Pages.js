@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 // import classes from '../../Pages.module.scss'
 
 const Pages = props => (
@@ -7,6 +7,6 @@ const Pages = props => (
             <h3>Books</h3>
         </div>
     </div>
-)
+);
 
 export default Pages;

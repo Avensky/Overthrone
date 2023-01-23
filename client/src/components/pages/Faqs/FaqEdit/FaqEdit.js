@@ -1,117 +1,95 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 //import Auxiliary from '../../../../hoc/Auxiliary';
 import classes from '../../Pages.module.scss';
 import myClasses from './FaqEdit.module.scss';
 import * as actions from '../../../../store/actions/index';
+import PropTypes from 'prop-types';
 
-
-class FaqEdit extends Component {
-    state = {
-        faqForm:{
-            question: {
-                //value: this.props.faq.name,
+const FaqEdit =(props)=> {
+    const [question, setQuestion]=useState( {
+                //value: props.faq.name,
                 validation: {
                     required: true,
                 }
-            },
-            answer: {
-                //value: this.props.faq.age,
+            });
+
+            const [answer, setAnswer] =useState( {
+                value: '',
                 validation: {
                     required: true,
                 }
-            },
-        },
-        error: null,
-        id: null,
-        loadedItem: null
-    }
+            });
+        
+            const [error, setError]= useState( null);
+            const [id, setId]= useState( null);
+            const [loadedItem, setLoadedItem]= useState( null);
+    
 
-    componentDidMount () {
-        console.log(this.props);
-        this.loadData();
-        if (!this.props.faq){
-            this.props.history.push('/faqs');
+    useEffect( () =>{
+        console.log(props);
+        loadData();
+        if (!props.faq){
+            props.history.push('/faqs');
         }
-    }
+    });
 
 
-    loadData () {
-        if ( this.props.match.params.id ) {
-            if ( !this.state.loadedItem || (this.state.loadedItem && this.state.loadedItem.id !== +this.props.match.params.id) ) {
-                const itemId = this.props.match.params.id;
-                this.props.onGetFaqById(itemId);
-                this.setState({ loadedItem: this.props.faq });
-                console.log("faq: " + this.props.faq)
+    const loadData = () => {
+        if ( props.match.params.id ) {
+            if ( !loadedItem || (loadedItem && loadedItem.id !== +props.match.params.id) ) {
+                const itemId = props.match.params.id;
+                props.onGetFaqById(itemId);
+                setLoadedItem( props.faq );
+                console.log("faq: " + props.faq);
             }
         }
-    }
+    };
 
-    updateFaqHandler = (event) => {
+    const updateFaqHandler = (event) => {
 //        event.preventDefault();
-        //this.props.onSetAuthRedirectPath('/checkout');
-//        this.props.history.push('/faqs');
-//         const author =  this.props.payload.username;
-        this.props.onUpdateFaq(
-            this.state.faqForm.name.value, 
-            this.state.faqForm.age.value, 
-            this.state.faqForm.relatives.value, 
-            this.state.faqForm.bio.value
-        );
-    }
+        //props.onSetAuthRedirectPath('/checkout');
+//        props.history.push('/faqs');
+//         const author =  props.payload.username;
+        props.onUpdateFaq(question.value, answer.value);
+    };
 
-    inputChangedHandler = ( event, controlName ) => {
-        const updatedControls = {
-            ...this.state.faqForm,
-            [controlName]: {
-                ...this.state.faqForm[controlName],
-                value: event.target.value,
-//                valid: this.checkValidity( event.target.value, this.state.faqForm[controlName].validation ),
-                touched: true
-            },
-            date: {
-                ...this.state.faqForm.date,
-                value: new Date()
-            }
-        };
-        this.setState( { faqForm: updatedControls } );
-    }
+    const inputChangedHandler = ( event, controlName ) => {};
 
-    deleteFaqHandler = () => {
-        const id = this.props.faq._id;
-        console.log(id)
-        this.props.onDeleteFaq(id)
-    }
-
-    render () {       
+    const deleteFaqHandler = () => {
+        const id = props.faq._id;
+        console.log(id);
+        props.onDeleteFaq(id);
+    };
+    
         let form = <p style={{textAlign: 'center'}}>Please Select a Faq!</p>;
         
-        if ( this.props.match.params.id ) {
+        if ( props.match.params.id ) {
             form = <p style={{ textAlign: 'center' }}>Loading...!</p>;
         }
 
-        if ( this.state.loadedItem) {
+        if ( loadedItem) {
         form = (
-            <form onSubmit={this.updateFaqHandler}>
+            <form onSubmit={updateFaqHandler}>
                 <legend>Update a Faq</legend>
                 <div className = {myClasses.Line}>
                     <label className={myClasses.Left}>Name: </label>
                     <input 
                         type                = "text"
                         name                = "name"
-                        //value       = {this.props.faq.name} 
-                        defaultValue        = {this.props.faq.name}
+                        //value       = {props.faq.name} 
+                        defaultValue        = {props.faq.name}
                         className           ={myClasses.Right}
-                        onChange            = {(event) => this.inputChangedHandler( event, "name")}
+                        onChange            = {(event) => inputChangedHandler( event, "name")}
                     />
                 </div>
                 <div className = {myClasses.Line}>
                     <label className={myClasses.Left}>Age: </label>
                     <input 
                         type                ="text" 
-                        defaultValue        = {this.props.faq.age}
+                        defaultValue        = {props.faq.age}
                         className           ={myClasses.Right}
-                        onChange            ={(event) => this.inputChangedHandler( event, "age")}
+                        onChange            ={(event) => inputChangedHandler( event, "age")}
                 
                     /> 
                 </div>
@@ -119,41 +97,41 @@ class FaqEdit extends Component {
                     <label className={myClasses.Left}>Bio: </label>
                     <textarea
                         type                ="textarea"
-                        defaultValue        = {this.props.faq.bio}
+                        defaultValue        = {props.faq.bio}
                         className           ={myClasses.Right}
                         rows                ="4" 
-                        onChange            ={(event) => this.inputChangedHandler( event, "bio")}/>
+                        onChange            ={(event) => inputChangedHandler( event, "bio")}/>
                 </div>
                 <div className = {myClasses.Line}>
                     <label className={myClasses.Left}>Relatives: </label>
                     <input 
                         type                = "text" 
-                        defaultValue        = {this.props.faq.relatives}
+                        defaultValue        = {props.faq.relatives}
                         className           ={myClasses.Right}
-                        onChange            ={(event) => this.inputChangedHandler( event, "relatives")}
+                        onChange            ={(event) => inputChangedHandler( event, "relatives")}
                     
                     />
                 </div>
                 <div className="MidLine">
                     <button 
                         className={["btn-warning", classes.btn].join(' ')}
-                        onClick={() => this.updateFaqHandler()}
+                        onClick={() => updateFaqHandler()}
                     >UPDATE</button>
                     <button 
                         className={["btn-danger", classes.btn].join(' ')}
-                        onClick={() => this.deleteFaqHandler()}
+                        onClick={() => deleteFaqHandler()}
                     >DELETE</button>
                 </div>
             </form>
-        )}
+        );}
 
         
 
         return(
             form
-        )
-    }
-}
+        );
+    
+};
 
 const mapStateToProps = state => {
     return {
@@ -167,7 +145,16 @@ const mapDispatchToProps = dispatch => {
         onGetFaqById: (id) => dispatch( actions.getFaqById(id)),
         onDeleteFaq: (id) => dispatch( actions.deleteFaq(id)),
         onUpdateFaq: (id, name, age, relatives, bio) => dispatch(actions.updateFaq(id, name, age, relatives, bio))
-    }
-}
+    };
+};
+
+FaqEdit.propTypes={
+    onGetFaqById: PropTypes.func,
+    faq: PropTypes.any,
+    match: PropTypes.any,
+    history: PropTypes.any,
+    onDeleteFaq: PropTypes.func,
+    onUpdateFaq: PropTypes.func,
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(FaqEdit);

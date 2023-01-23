@@ -5,7 +5,7 @@ import classes from '../Pages.module.scss';
 import myClasses from './Faqs.module.scss';
 // import Faq from './Faq/Faq';
 // import Headline from './Headline/Headline';
-import * as actions from '../../../store/actions/index'
+import * as actions from '../../../store/actions/index';
 // import NewFaq from './NewFaq/NewFaq';
 import FaqList from './FaqList/FaqList';
 import FaqEdit from './FaqEdit/FaqEdit';
@@ -160,7 +160,7 @@ const Faqs = props => {
                     <p>J.M. Prigot.</p>
                 </div>
             </div>
-        )
+        );
 
     return(
         <div className={[classes.Card, myClasses.Faqs].join(' ')}>
@@ -179,8 +179,8 @@ const Faqs = props => {
             </Switch>
             {/* <hr />  */}
         </div>
-        )
-    }
+        );
+    };
 
 
 const mapStateToProps = state => {
@@ -192,7 +192,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetFaqs: () => dispatch( actions.getFaqs())
-    }
-}
+    };
+};
 
 export default connect (mapStateToProps, mapDispatchToProps)(Faqs);

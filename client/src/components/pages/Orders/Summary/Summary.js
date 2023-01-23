@@ -2,15 +2,16 @@ import React, { useState }  from 'react';
 import myClasses from './Summary.module.scss';
 import Modal from  '../../../UI/Modal/Modal';
 // import classes from '../../Pages.module.scss'
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Summary = props => {
-    const [unlink, setUnlink] = useState(false)
+    const [unlink, setUnlink] = useState(false);
 
-    const unlinkHandler = () => { setUnlink(true) }
+    const unlinkHandler = () => { setUnlink(true); };
 
-    const cancelHandler = () => { setUnlink(false) }
-    const history = useHistory()
+    const cancelHandler = () => { setUnlink(false); };
+    const history = useHistory();
     
     // const continueHandler = () => {
     //     const href = props.providerUnlink;
@@ -41,7 +42,23 @@ const Summary = props => {
             </div>
             <br />
         </div>
-    )
-}
+    );
+};
+
+Summary.propTypes = {
+    link : PropTypes.string,
+    amount_subtotal : PropTypes.string,
+    shippingHandling : PropTypes.string,
+    tax : PropTypes.string,
+    amount_total : PropTypes.string,
+    name : PropTypes.string,
+    phone : PropTypes.string,
+    address : PropTypes.string,
+    address2 : PropTypes.string,
+    city : PropTypes.string,
+    state : PropTypes.string,
+    zipCode : PropTypes.string,
+    email : PropTypes.string,
+};
 
 export default Summary;

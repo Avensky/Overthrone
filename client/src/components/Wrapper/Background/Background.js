@@ -7,7 +7,7 @@ const background = () => {
     return (
     <div className={classes.BackgroundWrapper}>
         <img src={myImg} alt="crystal necklace"/>
-    </div>)
-}
+    </div>);
+};
 
 export default background;
