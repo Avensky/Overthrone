@@ -1,7 +1,7 @@
 import React from 'react';
 // import classes from '../../Pages.module.scss'
 
-const Pages = props => (
+const Pages = (props) => (
     <div className="container">
         <div className="page-header text-center">
             <h3>Books</h3>

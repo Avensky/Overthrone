@@ -1,12 +1,12 @@
 import React from 'react';
-import classes from '../../Pages.module.scss';
+import classes from '../../pages/Pages.module.scss';
 import myClasses from './Add.module.scss';
-//import Auxiliary from '../../../../hoc/Auxiliary';
+// import Auxiliary from '../../../../hoc/Auxiliary';
 
-const add = props => (
+const add = (props) => (
     <div className={myClasses.Add}>
         <figure className={classes.CardThumbnail}>
-            <img src={myImg} alt="add cover"/>
+            <img alt="add cover"/>
         </figure>
         <div className={classes.CardTitle}>
             {props.title}

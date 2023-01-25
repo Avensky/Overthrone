@@ -1,162 +1,123 @@
-import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import * as actionTypes from './actionTypes';
 
-export const newItemStart  = () =>{
-    return{
-        type: actionTypes.NEW_ITEM_START
-    };
+export const newItemStart = () => ({
+  type: actionTypes.NEW_ITEM_START,
+});
+
+export const newItemFail = (error) => ({
+  type: actionTypes.NEW_ITEM_FAIL,
+  error,
+});
+
+export const newItemSuccess = (itemData) => ({
+  type: actionTypes.NEW_ITEM_SUCCESS,
+  itemData,
+});
+
+export const newItem = (values) => (dispatch) => {
+  dispatch(newItemStart());
+
+  axios.post('/api/addImage', values)
+    .then((response) => {
+      // console.log(response);
+      const { data } = response;
+      // console.log(data);
+      dispatch(newItemSuccess(data));
+    })
+    .catch((error) => {
+      // console.log(error);
+      dispatch(newItemFail(error));
+    });
 };
 
-export const newItemFail = (error) => {
-    return {
-        type: actionTypes.NEW_ITEM_FAIL,
-        error: error
-    };
+export const getItemByIdSuccess = (charById) => ({
+  type: actionTypes.GET_ITEM_BY_ID_SUCCESS,
+  charById,
+});
+
+export const getItemByIdFail = (error) => ({
+  type: actionTypes.GET_ITEM_BY_ID_FAIL,
+  error,
+});
+
+export const getItemByIdStart = () => ({
+  type: actionTypes.GET_ITEM_BY_ID_START,
+});
+
+export const getItemById = (id) => (dispatch) => {
+  dispatch(getItemByIdStart());
+  axios.get(`/api/getitemDetails/${id}`)
+    .then((result) => {
+      // console.log(result);
+      const charById = result.data;
+      //            const fetchedPostsById = {id: id}
+      //            const obj = {...post, ...fetchedPostsById}
+      dispatch(getItemByIdSuccess(charById));
+    })
+    .catch((error) => {
+      dispatch(getItemByIdFail(error));
+    });
 };
 
-export const newItemSuccess = (itemData) => {
-    return {
-        type: actionTypes.NEW_ITEM_SUCCESS,
-        itemData: itemData
-    };
+export const updateItemStart = () => ({
+  type: actionTypes.UPDATE_ITEM_START,
+});
+
+export const updateItemFail = (error) => ({
+  type: actionTypes.UPDATE_ITEM_FAIL,
+  error,
+});
+
+export const updateItemSuccess = (itemData) => ({
+  type: actionTypes.UPDATE_ITEM_SUCCESS,
+  itemData,
+});
+
+export const updateItem = (id, name, age, relatives, bio) => (dispatch) => {
+  dispatch(updateItemStart());
+
+  const itemData = {
+    id,
+    name,
+    age,
+    relatives,
+    bio,
+  };
+
+  axios.delete(`/api/updateitem/${itemData}`)
+    .then((response) => {
+      // console.log(response);
+      dispatch(updateItemSuccess(itemData));
+    })
+    .catch((error) => {
+      // console.log(error);
+      dispatch(updateItemFail(error));
+    });
 };
 
-export const newItem = (values) => {
-    return dispatch => {
-        dispatch(newItemStart());
+export const deleteItemStart = () => ({
+  type: actionTypes.DELETE_ITEM_START,
+});
 
-        axios.post('/api/addImage', values)
-            .then(response => {
-                console.log(response);
-                const data = response.data;
-                console.log(data);
-                dispatch(newItemSuccess(data));
-        })
-        .catch(error => {
-            console.log(error);
-            dispatch(newItemFail(error));
-        });
-    };
+export const deleteItemFail = (error) => ({
+  type: actionTypes.DELETE_ITEM_FAIL,
+  error,
+});
+
+export const deleteItemSuccess = () => ({
+  type: actionTypes.DELETE_ITEM_SUCCESS,
+});
+
+export const deleteItem = (id) => (dispatch) => {
+  dispatch(deleteItemStart());
+  axios.delete(`/api/deleteitem/${id}`)
+    .then((response) => {
+      // console.log(response);
+      dispatch(deleteItemSuccess());
+    })
+    .catch((error) => {
+      // console.log(error);
+      dispatch(deleteItemFail(error));
+    });
 };
-
-export const getItemByIdSuccess = (charById) => {
-    return {
-        type:  actionTypes.GET_ITEM_BY_ID_SUCCESS,
-        charById: charById,
-    };
-};
-
-export const getItemByIdFail = (error) => {
-    return {
-        type:  actionTypes.GET_ITEM_BY_ID_FAIL, 
-        error: error
-    };
-};
-
-export const getItemByIdStart = () => {
-    return {
-        type:  actionTypes.GET_ITEM_BY_ID_START
-    };
-};
-
-export const getItemById = (id) => {
-    return dispatch => {
-        dispatch(getItemByIdStart());
-        axios.get( '/api/getitemDetails/' + id)
-        .then( result => {
-            console.log(result);
-            const charById = result.data;
-//            const fetchedPostsById = {id: id}
-//            const obj = {...post, ...fetchedPostsById}
-            dispatch(getItemByIdSuccess(charById));
-        })
-        .catch( error => {
-            dispatch(getItemByIdFail(error));
-        });
-    };
-};
-
-
-
-export const updateItemStart  = () =>{
-    return{
-        type: actionTypes.UPDATE_ITEM_START
-    };
-};
-
-export const updateItemFail = (error) => {
-    return {
-        type: actionTypes.UPDATE_ITEM_FAIL,
-        error: error
-    };
-};
-
-export const updateItemSuccess = (itemData) => {
-    return {
-        type: actionTypes.UPDATE_ITEM_SUCCESS,
-        itemData: itemData
-    };
-};
-    
-export const updateItem = (id, name, age, relatives, bio) => {
-    return dispatch => {
-        dispatch(updateItemStart());
-
-        const itemData = {
-            id          : id,
-            name        : name, 
-            age         : age, 
-            relatives   : relatives,
-            bio         : bio, 
-        };
-
-        axios.delete('/api/updateitem/'+ itemData)
-            .then(response => {
-                console.log(response);
-                dispatch(updateItemSuccess(itemData));
-        })
-        .catch(error => {
-            console.log(error);
-            dispatch(updateItemFail(error));
-        }); 
-    };
-};
-
-
-
-export const deleteItemStart  = () =>{
-    return{
-        type: actionTypes.DELETE_ITEM_START
-    };
-};
-
-export const deleteItemFail = (error) => {
-    return {
-        type: actionTypes.DELETE_ITEM_FAIL,
-        error: error
-    };
-};
-
-export const deleteItemSuccess = () => {
-    return {
-        type: actionTypes.DELETE_ITEM_SUCCESS,
-    };
-};
-    
-export const deleteItem = (id) => {
-    return dispatch => {
-        dispatch(deleteItemStart());
-        axios.delete('/api/deleteitem/'+ id)
-            .then(response => {
-                console.log(response);
-                dispatch(deleteItemSuccess());
-        })
-        .catch(error => {
-            console.log(error);
-            dispatch(deleteItemFail(error));
-        });
-    };
-};
-
-
-

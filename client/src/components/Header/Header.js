@@ -1,8 +1,7 @@
 import React from 'react';
-import classes from'./Header.module.scss';
+import classes from './Header.module.scss';
 
-const header = (props) => {
-    return (
+const header = (props) => (
         <div className={classes.Header}>
             <div className={classes.HeaderLeft}>
                 <h2>{props.children}</h2>
@@ -14,7 +13,6 @@ const header = (props) => {
             </div>
         </div>
     </div>
-    );
-};
+);
 
 export default header;

@@ -1,0 +1,29 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime"
+    ],
+    "overrides": [
+    ],
+    "parser":"@babel/eslint-parser",
+    "parserOptions": {
+        "requireConfigFile": false,
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
+        "no-unused-vars": "off",
+        "default-param-last": 0,
+        "no-unused-expressions": ["error", { "allowTernary": true }],
+        "linebreak-style": 0
+    }
+}

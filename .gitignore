@@ -7,6 +7,8 @@ client/node_modules
 .pnp.js
 config/config.env
 config/dev.js
+client/src/config/dev.js
+dev.js
 config/secrets.js
 .env.development
 .env.production

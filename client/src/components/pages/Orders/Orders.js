@@ -1,49 +1,49 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Order from './Order/Order';
 import classes from '../Pages.module.scss';
 import myClasses from './Orders.module.scss';
-//import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+// import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../UI/Spinner/Spinner';
-import PropTypes from 'prop-types';
 
 const Orders = (props) => {
-    useEffect(() => {
-        const fetchData = async () => {
-            props.onFetchOrders(props.user);
-        };
-        if ( props.orders.length === 0 ){
-          fetchData();
-        }
-        //console.log('userid = ' + props.user._id)
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      props.onFetchOrders(props.user);
+    };
+    if (props.orders.length === 0) {
+      fetchData();
+    }
+    // console.log('userid = ' + props.user._id)
+  }, []);
 
-    let orders = <Spinner />;
-    if ( !props.loading ) {
-        orders = props.orders.map( order => {
-            let line_items = order.line_items;
-            return <Order
-                key             = {order.sessionid}
-                date            = {order.date}
-                amount_total    = {order.amount_total}
-                sessionid       = {order.sessionid}
-                shipping        = {order.shipping}
-                items           = {line_items}
-                name            = {order.shipping.name}
-                phone           = {order.shipping.address.phone}
-                line1           = {order.shipping.address.line1}
-                line2           = {order.shipping.address.line2}
-                city            = {order.shipping.address.city}
-                state           = {order.shipping.address.state}
-                postal_code     = {order.shipping.address.postal_code}
-                email           = {order.customer_details.email}
+  let orders = <Spinner />;
+  if (!props.loading) {
+    orders = props.orders.map((order) => {
+      const { lineItems } = order;
+      return <Order
+                key = {order.sessionid}
+                date = {order.date}
+                amount_total = {order.amount_total}
+                sessionid = {order.sessionid}
+                shipping = {order.shipping}
+                items = {lineItems}
+                name = {order.shipping.name}
+                phone = {order.shipping.address.phone}
+                line1 = {order.shipping.address.line1}
+                line2 = {order.shipping.address.line2}
+                city = {order.shipping.address.city}
+                state = {order.shipping.address.state}
+                postal_code = {order.shipping.address.postal_code}
+                email = {order.customer_details.email}
                 amount_subtotal = {order.amount_subtotal}
             />;
-        });
-    }
-    return (
-        <div>            
+    });
+  }
+  return (
+        <div>
             <div className={[classes.Card, myClasses.Orders].join(' ')}>
                 <div className="container">
                     <div className="page-header text-center">
@@ -53,29 +53,24 @@ const Orders = (props) => {
             {orders}
             </div>
         </div>
-    );
-
+  );
 };
 
-const mapStateToProps = state => {
-    return {
-        orders            : state.orders.orders,
-        loading           : state.orders.loading,
-        user              : state.auth.payload,
-    };
-};
+const mapStateToProps = (state) => ({
+  orders: state.orders.orders,
+  loading: state.orders.loading,
+  user: state.auth.payload,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onFetchOrders: (user) => dispatch( actions.fetchOrders(user) )
-    };
-};
+const mapDispatchToProps = (dispatch) => ({
+  onFetchOrders: (user) => dispatch(actions.fetchOrders(user)),
+});
 
 Orders.propTypes = {
-    onFetchOrders: PropTypes.func,
-    user: PropTypes.any,
-    orders: PropTypes.any,
-    loading: PropTypes.bool,
+  onFetchOrders: PropTypes.func,
+  user: PropTypes.any,
+  orders: PropTypes.any,
+  loading: PropTypes.bool,
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( Orders);
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

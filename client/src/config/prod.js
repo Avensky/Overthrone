@@ -1,6 +1,6 @@
 module.exports = {
-    stripePublishableKey    : process.env.STRIPE_PUBLISHABLE_KEY,
-    taxRates                : process.env.TAX_RATES,
+  stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  taxRates: process.env.TAX_RATES,
 
-    proxyTarget: "http://localhost:3003" 
+  proxyTarget: 'http://localhost:3003',
 };

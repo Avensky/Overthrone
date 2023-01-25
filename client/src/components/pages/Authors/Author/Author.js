@@ -6,9 +6,9 @@ import myClasses from './Author.module.scss';
 // <figure className={classes.CardThumbnail}>
 // <img src={myImg} alt="author cover"/>
 // </figure>
-const author = props => (
+const author = (props) => (
     <div className={myClasses.Author}>
-  
+
         <div className={classes.CardTitle}>
             {props.author}
         </div>

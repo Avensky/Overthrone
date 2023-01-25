@@ -2,9 +2,9 @@ import React from 'react';
 import classes from '../../Pages.module.scss';
 import myClasses from './Book.module.scss';
 import myImg from '../../../../assets/images/book2.jpg';
-//import Auxiliary from '../../../../hoc/Auxiliary';
+// import Auxiliary from '../../../../hoc/Auxiliary';
 
-const book = props => (
+const book = (props) => (
     <div className={myClasses.Book}>
         <figure className={classes.CardThumbnail}>
             <img src={myImg} alt="book cover"/>

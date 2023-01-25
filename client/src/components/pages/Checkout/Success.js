@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import classes from '../Pages.module.scss';
 import myClasses from './Checkout.module.scss';
 import Auxiliary from '../../../hoc/Auxiliary';
-import { useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 
-const Success = props => {    
-    const history = useHistory();
-    useEffect(() => {
-        localStorage.removeItem('addedItems');
-    },[]);
+const Success = (props) => {
+  const history = useHistory();
+  useEffect(() => {
+    localStorage.removeItem('addedItems');
+  }, []);
 
-    return (
+  return (
         <Auxiliary>
             <div className={[classes.Card, myClasses.Shop].join(' ')}>
                 <div className={myClasses.Cart}>
@@ -22,9 +22,9 @@ const Success = props => {
                             <h1>Checkout</h1>
                         </div>
                     </div>
-                    <div className={myClasses.Progress}>    
+                    <div className={myClasses.Progress}>
                         <title>Thanks for your order!</title>
-                    
+
                         <h1>Thanks for your order!</h1>
                         <p>
                             We appreciate your business!
@@ -35,25 +35,19 @@ const Success = props => {
                 </div>
             </div>
         </Auxiliary>
-    );
+  );
 };
 
+const mapStateToProps = (state) => ({
+  items: state.cart.addedItems,
+  isAuth: state.auth.payload,
+  // addedItems: state.addedItems
+});
 
+const mapDispatchToProps = (dispatch) => ({
+  removeItem: (id) => { dispatch(actions.removeFromCart(id)); },
+  addQuantity: (id) => { dispatch(actions.addQuantity(id)); },
+  subQuantity: (id) => { dispatch(actions.subQuantity(id)); },
+});
 
-const mapStateToProps = (state)=>{
-    return{
-        items: state.cart.addedItems,
-        isAuth: state.auth.payload
-        //addedItems: state.addedItems
-    };
-};
-
-const mapDispatchToProps = (dispatch)=>{
-    return{
-        removeItem       : (id)=>{dispatch(actions.removeFromCart(id));},
-        addQuantity      : (id)=>{dispatch(actions.addQuantity(id));},
-        subQuantity      : (id)=>{dispatch(actions.subQuantity(id));}
-    };
-};
-
-export default connect(mapStateToProps,mapDispatchToProps)(Success);
+export default connect(mapStateToProps, mapDispatchToProps)(Success);

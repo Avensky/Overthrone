@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom';
 import myClasses from './NavItem.module.scss';
 // import classes from '../../../pages/Pages.module.scss';
 
-const navigationItem = ( props ) => (
+const navigationItem = (props) => (
     <li className={myClasses.NavItem}>
-            <NavLink 
+            <NavLink
                 to={props.link}
                 exact={props.exact}
                 activeClassName={myClasses.active}
