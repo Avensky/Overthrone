@@ -25,6 +25,7 @@
         "no-unused-vars": "off",
         "default-param-last": 0,
         "no-unused-expressions": ["error", { "allowTernary": true }],
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "import/no-unresolved": "off"
     }
 }
