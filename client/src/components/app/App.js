@@ -46,9 +46,9 @@ const App = (props) => {
   let routes = (
     <Switch>
       <Route path="/checkout" component={Checkout} />
-      <Route exact path="/authentication" component={<Auth />} />
+      <Route exact path="/authentication" component={Auth} />
       <Route exact path="/authentication/api/v1/users/resetPassword/:token"
-        component={<Auth />} />
+        component={Auth} />
       <Route path="/books" component={Books} />
       <Route path="/authors" component={Authors} />
       <Route path="/characters" component={Characters} />
@@ -68,8 +68,8 @@ const App = (props) => {
         <Switch>
           <Route path="/orders" component={Orders} />
           <Route path="/checkout" component={Checkout} />
-          <Route path="/authentication" component={<Auth />} />
-          <Route path="/authentication/api/v1/users/resetPassword/:token" component={<Auth />} />
+          <Route path="/authentication" component={Auth} />
+          <Route path="/authentication/api/v1/users/resetPassword/:token" component={Auth} />
           <Route path="/contactData" component={ContactData} />
           <Route path="/books" component={Books} />
           <Route path="/authors" component={Authors} />
@@ -91,7 +91,7 @@ const App = (props) => {
       <Switch>
         <Route path="/orders" component={Orders} />
         <Route path="/checkout" component={Checkout} />
-        <Route path="/authentication" component={<Auth />} />
+        <Route path="/authentication" component={Auth} />
         <Route path="/contactData" component={ContactData} />
         <Route path="/books" component={Books} />
         <Route path="/authors" component={Authors} />

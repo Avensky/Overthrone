@@ -31,7 +31,7 @@ const navbar = (props) => {
             <div className={[myClasses.MobileLinks, myClasses.Mobile].join(' ')}>
                 <h2 className={classes.line}>
                     {props.isAuth !== null
-                      ? <div className={myClasses.NavItem} onClick={props.logout}>Logout </div>
+                      ? <div className={[myClasses.NavItem, myClasses.logout].join(' ')} onClick={props.logout}>Logout </div>
                       : null}
                     {cart}
                     {props.isAuth !== null

@@ -14,21 +14,25 @@ const Wrapper = (props) => {
   // set state in a clean way by depending on a previous state
   const sidebarToggleHandler = () => { setShowSidebar(!showSidebar); };
   const logout = async () => { await props.logout(); };
+  const getItems = async () => { await props.getItems(); };
+  const fetchCart = async () => { await props.loadCart(); };
+  const fetchData = async () => { await props.onFetchUser(); };
   useEffect(() => {
-    const getItems = async () => { props.getItems(); };
-    if (props.items.length === 0) {
-      // console.log('Fetching Items');
-      getItems();
-    }
-  }, []);
-
-  useEffect(() => {
-    const fetchCart = async () => { props.loadCart(); };
+    // console.log('useEffect');
     if (props.items.length > 0) {
       // console.log('Fetching Cart');
       fetchCart();
     }
+
+    if (props.items.length === 0) {
+      // console.log('Fetching Items');
+      getItems();
+    }
   }, [props.items]);
+
+  useEffect(() => {
+    if (!props.isAuth) { fetchData(); }
+  }, [props.isAuth]);
 
   return (
         <Auxiliary>
@@ -60,8 +64,8 @@ const Wrapper = (props) => {
 const mapStateToProps = (state) => ({
   items: state.cart.items,
   shop: state.cart.shop,
-  addedItems: state.cart.addedItems,
-  cart: state.cart.cart,
+  // addedItems: state.cart.addedItems,
+  // cart: state.cart.cart,
   total: state.cart.total,
   totalItems: state.cart.totalItems,
   isAuth: state.auth.user,
@@ -69,18 +73,21 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getItems: () => { dispatch(actions.getItems()); },
-  loadCart: (cart) => { dispatch(actions.loadCart(cart)); },
+  loadCart: () => { dispatch(actions.loadCart()); },
   logout: () => { dispatch(actions.logout()); },
+  onFetchUser: () => dispatch(actions.fetchUser()),
 });
 
 Wrapper.propTypes = {
-  loadCart: PropTypes.any,
-  items: PropTypes.any,
+  loadCart: PropTypes.func,
+  items: PropTypes.array,
+  shop: PropTypes.array,
   isAuth: PropTypes.any,
-  totalItems: PropTypes.any,
+  totalItems: PropTypes.number,
   children: PropTypes.any,
-  getItems: PropTypes.any,
+  getItems: PropTypes.func,
   logout: PropTypes.func,
+  onFetchUser: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wrapper);

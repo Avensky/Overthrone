@@ -15,7 +15,6 @@ export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 export const FETCH_USER_START = 'FETCH_USER_START';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAIL = 'FETCH_USER_FAIL';
-export const FETCH_USER = 'FETCH_USER';
 
 export const SIGNUP_START = 'SIGNUP_START';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
@@ -55,7 +54,6 @@ export const NEW_ITEM = 'NEW_ITEM';
 export const GET_ITEMS_START = 'GET_ITEMS_START';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_FAIL = 'GET_ITEMS_FAIL';
-export const GET_ITEMS = 'GET_ITEMS';
 
 export const GET_ITEM_BY_ID_START = 'GET_ITEM_BY_ID_START';
 export const GET_ITEM_BY_ID_SUCCESS = 'GET_ITEM_BY_ID_SUCCESS';

@@ -61,11 +61,6 @@ const Auth = (props) => {
     submitProps.resetForm();
   };
 
-  useEffect(() => {
-    const fetchData = async () => { props.onFetchUser(); };
-    if (!props.fetchedUser) { fetchData(); }
-  }, [props.fetchedUser, props.authRedirectPath]);
-
   // let act = 'login';
   // if (!auth) {
   //     act = 'signup'
@@ -437,7 +432,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchUser: () => dispatch(actions.fetchUser()),
   onAuth: (values, auth, token) => dispatch(actions.auth(values, auth, token)),
   onFbAuth: () => dispatch(actions.fbAuth()),
   onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/profile')),

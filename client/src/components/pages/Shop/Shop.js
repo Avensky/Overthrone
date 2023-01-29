@@ -27,33 +27,33 @@ const Purchase = (props) => {
   let orderSummary = null;
   if (props.cart) {
     orderSummary = <OrderSummary
-            items={props.cart}
-            total={props.total}
-            purchaseCancelled={purchaseCancelHandler}
-            purchaseContinued={() => props.checkout(props.cart, props.isAuth)}
-            isAuth={props.isAuth}
-        />;
+      items={props.cart}
+      total={props.totalPrice}
+      purchaseCancelled={purchaseCancelHandler}
+      purchaseContinued={() => props.checkout(props.cart, props.isAuth)}
+      isAuth={props.isAuth}
+    />;
   }
 
   let myShop;
-
-  if (props.shop.length > 0) {
+  // console.log('props.shop = ', (props.shop));
+  if (props.shop) {
     // console.log('props.shop = ', props.shop);
     myShop = props.shop.map((item) => (
-            <Item
-                image = {item.imageData}
-                key = {item._id}
-                id = {item._id}
-                alt = {item.title}
-                title = {item.title}
-                link = {'/shop/'}
-                to = "/"
-                clicked = {() => addToCart(item._id)}
-                desc = {item.desc}
-                price = {item.price}
-                quantity = {item.orderAmt || 0}
-                add = {true}
-            />
+      <Item
+        image = {item.imageData}
+        key = {item._id}
+        id = {item._id}
+        alt = {item.title}
+        title = {item.title}
+        link = {'/shop/'}
+        to = "/"
+        clicked = {() => addToCart(item._id)}
+        desc = {item.desc}
+        price = {item.price}
+        quantity = {item.orderAmt || 0}
+        add = {true}
+      />
     ));
   }
 
@@ -114,7 +114,7 @@ const Purchase = (props) => {
             <div className={['box', myClasses.Items].join(' ')}>
                 <CheckoutHeader
                     totalItems={props.totalItems}
-                    total={props.total}
+                    total={props.totalPrice}
                     viewTitle='View Cart'
                     view={view}
                     checkout={checkout}
@@ -145,22 +145,22 @@ const mapStateToProps = (state) => ({
   total: state.cart.total,
   shop: state.cart.shop,
   isAuth: state.auth.user,
-  totalPrice: state.shop.totalPrice,
+  totalPrice: state.cart.totalPrice,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addToCart: (id) => { dispatch(actions.addQuantity(id)); },
   getItems: () => { dispatch(actions.getItems()); },
-  loadCart: (cart) => { dispatch(actions.loadCart(cart)); },
+  loadCart: () => { dispatch(actions.loadCart()); },
   checkout: (cart, user) => { dispatch(actions.checkout(cart, user)); },
 });
 
 Purchase.propTypes = {
   addToCart: PropTypes.func,
   isAuth: PropTypes.any,
-  shop: PropTypes.any,
-  cart: PropTypes.any,
-  total: PropTypes.number,
+  shop: PropTypes.array,
+  cart: PropTypes.array,
+  totalPrice: PropTypes.number,
   totalItems: PropTypes.number,
   checkout: PropTypes.func,
 };

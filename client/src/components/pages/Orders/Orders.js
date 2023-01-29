@@ -11,7 +11,7 @@ import Spinner from '../../UI/Spinner/Spinner';
 const Orders = (props) => {
   useEffect(() => {
     const fetchData = async () => {
-      props.onFetchOrders(props.user);
+      props.onFetchOrders(props.user._id);
     };
     if (props.orders.length === 0) {
       fetchData();
@@ -20,50 +20,51 @@ const Orders = (props) => {
   }, []);
 
   let orders = <Spinner />;
-  if (!props.loading) {
+  if (!props.loading && (props.orders.length > 0)) {
     orders = props.orders.map((order) => {
-      const { lineItems } = order;
       return <Order
-                key = {order.sessionid}
-                date = {order.date}
-                amount_total = {order.amount_total}
-                sessionid = {order.sessionid}
-                shipping = {order.shipping}
-                items = {lineItems}
-                name = {order.shipping.name}
-                phone = {order.shipping.address.phone}
-                line1 = {order.shipping.address.line1}
-                line2 = {order.shipping.address.line2}
-                city = {order.shipping.address.city}
-                state = {order.shipping.address.state}
-                postal_code = {order.shipping.address.postal_code}
-                email = {order.customer_details.email}
-                amount_subtotal = {order.amount_subtotal}
-            />;
+        key={order.sessionid}
+        order = {order}
+        date = {order.date}
+        amount_total = {order.amount_total}
+        sessionid = {order.sessionid}
+        shipping = {order.shipping}
+        items = {order.line_items}
+        name = {order.shipping.name}
+        phone = {order.shipping.address.phone}
+        line1 = {order.shipping.address.line1}
+        line2 = {order.shipping.address.line2}
+        city = {order.shipping.address.city}
+        state = {order.shipping.address.state}
+        postal_code = {order.shipping.address.postal_code}
+        email = {order.customer_details.email}
+        amount_subtotal = {order.amount_subtotal}
+      />;
     });
   }
+
   return (
-        <div>
-            <div className={[classes.Card, myClasses.Orders].join(' ')}>
-                <div className="container">
-                    <div className="page-header text-center">
-                        <h1>Order History Page</h1>
-                    </div>
+    <div>
+        <div className={[classes.Card, myClasses.Orders].join(' ')}>
+            <div className="container">
+                <div className="page-header text-center">
+                    <h1>Order History Page</h1>
                 </div>
-            {orders}
             </div>
+          {orders}
         </div>
+    </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   orders: state.orders.orders,
   loading: state.orders.loading,
-  user: state.auth.payload,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchOrders: (user) => dispatch(actions.fetchOrders(user)),
+  onFetchOrders: (id) => dispatch(actions.fetchOrders(id)),
 });
 
 Orders.propTypes = {

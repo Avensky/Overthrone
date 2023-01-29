@@ -7,7 +7,7 @@ import myClasses from './Item.module.scss';
 const item = (props) => {
   const url = 'https://caring-vegan.s3.us-west-2.amazonaws.com/';
   return (
-    <div className={myClasses.Item} key={props.id}>
+    <div className={myClasses.Item}>
         {/* Image */}
         <div className={myClasses.CardThumbnail}>
             <Link to={`/shop/itemfull/${props.id}`}>

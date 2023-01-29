@@ -6,11 +6,11 @@ import myImg from '../../../../assets/images/book2.jpg';
 
 const book = (props) => (
     <div className={myClasses.Book}>
-        <figure className={classes.CardThumbnail}>
+        {/* <figure className={classes.CardThumbnail}>
             <img src={myImg} alt="book cover"/>
-        </figure>
+        </figure> */}
         <div className={classes.CardTitle}>
-            {props.title}
+            <h2>{props.title}</h2>
         </div>
         <div className={classes.CardDescription}>{props.content}</div>
         <div className={classes.CardDetails}>

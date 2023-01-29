@@ -21,106 +21,109 @@ const Profile = (props) => {
   }, []);
 
   address = (
-        <Address
-            link ='Address'
-            userLink ={true}
-            provider ='/contactData'
-        />
+    <Address
+      link ='Address'
+      userLink ={true}
+      provider ='/contactData'
+    />
   );
 
   if (props.payload.addresses) {
     address = (
-            <Address
-                clicked = {() => editAddressHandler()}
-                link ='Shipping Address'
-                userLink ={true}
-                provider ='/contactData'
-                name = {user.addresses.name}
-                phone = {user.addresses.phone}
-                address = {user.addresses.address1}
-                address2 = {user.addresses.address2}
-                city = {user.addresses.city}
-                state = {user.addresses.state}
-                zipCode = {user.addresses.zipCode}
-                email = {user.addresses.email}
-            />
+      <Address
+        clicked = {() => editAddressHandler()}
+        link ='Shipping Address'
+        userLink ={true}
+        provider ='/contactData'
+        name = {user.addresses.name}
+        phone = {user.addresses.phone}
+        address = {user.addresses.address1}
+        address2 = {user.addresses.address2}
+        city = {user.addresses.city}
+        state = {user.addresses.state}
+        zipCode = {user.addresses.zipCode}
+        email = {user.addresses.email}
+      />
     );
   }
   local = (
-        <Link
-            link="Local"
-            userLink={true}
-            icon="fa-user"
-            mystyle="auth-btn"
-            provider='/connectLocal'
-            providerUnlink='/unlink/local'
-        />);
+    <Link
+      link="Local"
+      userLink={true}
+      icon="fa-user"
+      mystyle="auth-btn"
+      provider='/connectLocal'
+      providerUnlink='/unlink/local'
+    />);
 
   facebook = (
-        <Link
-            link="Facebook"
-            userLink={true}
-            icon="fa-facebook"
-            mystyle="btn-primary"
-            provider='/connect/facebook'
-            providerUnlink='/unlink/facebook' />);
+    <Link
+      link="Facebook"
+      userLink={true}
+      icon="fa-facebook"
+      mystyle="btn-primary"
+      provider='/connect/facebook'
+      providerUnlink='/unlink/facebook' />);
 
   google = (
-        <Link
-            link="Google"
-            userLink={true}
-            icon="fa-google-plus"
-            mystyle="btn-danger"
-            provider='/connect/google'
-            providerUnlink='/unlink/google' />);
+    <Link
+      link="Google"
+      userLink={true}
+      icon="fa-google-plus"
+      mystyle="btn-danger"
+      provider='/connect/google'
+      providerUnlink='/unlink/google' />);
 
   if (props.payload.local) {
     local = (
-            <Link
-                id={props.payload._id}
-                link="Local"
-                userLink={false}
-                email={props.payload.local.email}
-                // token={props.payload['local'].token}
-                name={props.payload.local.name}
-                icon="fa-user"
-                mystyle="auth-btn"
-                provider='/authentication'
-                providerUnlink='/unlink/local'
-        />);
+      <Link
+        id={props.payload._id}
+        link="Local"
+        userLink={false}
+        email={props.payload.local.email}
+        // token={props.payload['local'].token}
+        name={props.payload.local.name}
+        icon="fa-user"
+        mystyle="auth-btn"
+        provider='/authentication'
+        providerUnlink='/unlink/local'
+      />
+    );
   }
 
   if (props.payload.facebook && props.payload.facebook.token) {
     facebook = (
-            <Link
-                id={props.payload.facebook.id}
-                link="Facebook"
-                userLink={false}
-                email={props.payload.facebook.email}
-                // token={props.payload['facebook'].token}
-                name={props.payload.facebook.name}
-                icon="fa-facebook"
-                mystyle="btn-primary"
-                provider='/connect/facebook'
-                providerUnlink='/unlink/facebook'
-        />);
+      <Link
+        id={props.payload.facebook.id}
+        link="Facebook"
+        userLink={false}
+        email={props.payload.facebook.email}
+        // token={props.payload['facebook'].token}
+        name={props.payload.facebook.name}
+        icon="fa-facebook"
+        mystyle="btn-primary"
+        provider='/connect/facebook'
+        providerUnlink='/unlink/facebook'
+      />
+    );
   }
 
   if (props.payload.twitter && props.payload.twitter.token) {
     twitter = (
-            <Link
-                id={props.payload.twitter.id}
-                link="Twitter"
-                userLink={false}
-                displayName={props.payload.twitter.displayName}
-                // token       = "token"
-                username={props.payload.twitter.username}
-                // token={props.payload['twitter'].token}
-                icon="fa-twitter"
-                mystyle="btn-info"
-                provider='/connect/twitter'
-                providerUnlink='/unlink/twitter'
-        />);
+      <Link
+        id={props.payload.twitter.id}
+        link="Twitter"
+        userLink={false}
+        displayName={props.payload.twitter.displayName}
+        // token       = "token"
+        username={props.payload.twitter.username}
+        // token={props.payload['twitter'].token}
+        icon="fa-twitter"
+        mystyle="btn-info"
+        provider='/connect/twitter'
+        providerUnlink='/unlink/twitter'
+      />
+    );
   } else {
     twitter = (
             <Link
@@ -179,7 +182,29 @@ const Profile = (props) => {
   );
 
   return (
-    { body }
+    <div className={[classes.Card, myClasses.Profile].join(' ')}>
+      <div className="container">
+        <div className="page-header text-center">
+            <h1><span className="fa fa-anchor"></span> Profile Page</h1>
+        </div>
+      </div>
+      {props.payload.local
+        ? local
+        : null
+      }
+      {props.payload.facebook
+        ? facebook
+        : null
+      }
+      {props.payload.twitter
+        ? twitter
+        : null
+      }
+      {props.payload.google
+        ? google
+        : null
+      }
+    </div>
   );
 };
 
@@ -195,7 +220,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Profile.propTypes = {
   payload: PropTypes.any,
-  onFetchUser: PropTypes.any,
+  onFetchUser: PropTypes.func,
   authRedirectPath: PropTypes.string,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

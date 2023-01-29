@@ -6,38 +6,41 @@ import {
 
 const initialState = {
   items: [],
-  products: [],
-  product: null,
+  item: {},
   cart: [],
   shop: [],
   total: 0.00,
   totalItems: 0,
   totalPrice: 0,
-  error: null,
+  error: '',
   loading: false,
 };
 
-const getItemsStart = (state, action) => updateObject(state, {
-  loading: true,
-});
+const getItemsStart = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+    error: null,
+  });
+};
 
-const getItemsFail = (state, action) => updateObject(state, {
-  loading: false,
-});
+const getItemsFail = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: action.error,
+  });
+};
 
 const getItemsSuccess = (state, action) => {
-  // console.log(`get items = ${JSON.stringify(action.items)}`);
-  const items = JSON.stringify(action.items);
-  return {
-    ...state,
+  // const items = action.items;
+  // console.log('reducer getItemsSuccess = ', action.items);
+  return updateObject(state, {
     items: action.items,
-    products: action.items,
     loading: false,
-  };
+  });
 };
 
 const removeFromCart = (state, action) => {
-  const cart = copyArray(state.cart);
+  const { cart } = state;
   const updatedCart = removeItem(cart, action.id);
 
   storeLocally('cart', updatedCart);
@@ -59,18 +62,20 @@ const removeFromCart = (state, action) => {
     }
   }
 
-  return {
-    ...state,
-    cart: updatedCart,
-    totalPrice,
-    totalItems,
-    shop,
-  };
+  return updateObject(
+    state,
+    {
+      cart: updatedCart,
+      totalPrice,
+      totalItems,
+      shop,
+    },
+  );
 };
 
 const addQuantity = (state, action) => {
   // get products
-  const products = copyArray(state.products);
+  const products = copyArray(state.items);
   // console.log('products = ', products);
 
   // get product data
@@ -134,13 +139,15 @@ const addQuantity = (state, action) => {
   const totalItems = getTotalItems(updatedCart);
   // console.log('total items = ', totalItems);
 
-  return {
-    ...state,
-    cart: updatedCart,
-    totalPrice,
-    totalItems,
-    shop,
-  };
+  return updateObject(
+    state,
+    {
+      cart: updatedCart,
+      totalPrice,
+      totalItems,
+      shop,
+    },
+  );
 };
 
 const subQuantity = (state, action) => {
@@ -192,58 +199,72 @@ const subShipping = (state, action) => ({
   total: state.total - 6,
 });
 
+/* ******************************************************************************
+ * Get Cart and update shop
+******************************************************************************* */
 const loadCart = (state, action) => {
-  // get cart from local storage
-  const arrayString = localStorage.getItem('cart');
-  let array; let
-    shop = [];
-  if (arrayString) {
-    array = JSON.parse(arrayString);
-  }
-
   const { items } = state;
-  // console.log('load shop = ' + (items));
-  if (items.length > 0 && array) {
-    // console.log('load shop = ' + (items));
-    if (array.length > 0) {
-      // console.log('load shop = ' + (items))
-      shop = state.items.map((obj) => array.find((item) => item._id === obj._id) || obj);
+  let { cart } = state;
+  let shop = items;
+
+  // get cart from local storage
+  const cartString = localStorage.getItem('cart');
+  if (cartString) cart = JSON.parse(cartString);
+  // console.log('loadCart = ', cart);
+
+  // if items exist setup a shop
+  // console.log('loadShop with items = ', items);
+  if ((items.length > 0)) {
+    // if cart found in browser, load it
+    if (cart.length > 0) {
+      shop = items.map((obj) => cart.find((item) => item._id === obj._id) || obj);
       // console.log(`load shop with cart = ${JSON.stringify(shop)}`);
+    } else {
+      shop = items;
     }
-  } else {
-    shop = items;
-    // console.log(`load shop without cart = ${JSON.stringify(shop)}`);
   }
 
   let totalItems = 0;
   let totalPrice = 0;
-  if (array) {
-    totalItems = getTotalItems(array);
-    totalPrice = getTotalPrice(array);
+  if (cart.length > 0) {
+    totalItems = getTotalItems(cart);
+    totalPrice = getTotalPrice(cart);
   }
 
-  return {
-    ...state,
-    totalItems,
-    totalPrice,
-    cart: array,
-    shop,
-  };
+  // console.log('shop ', shop);
+  // console.log('cart ', cart);
+  // console.log('totalItems ', totalItems);
+  // console.log('totalPrice ', totalPrice);
+
+  return updateObject(
+    state,
+    {
+      totalItems,
+      totalPrice,
+      cart,
+      shop,
+    },
+  );
 };
 
-const checkoutStart = (state, action) => updateObject(state, {
-  error: null,
-  loading: true,
-});
-
-const checkoutFail = (state, action) => updateObject(state, {
-  loading: false,
-  error: action.error,
-});
-const checkoutSuccess = (state, action) => updateObject(state, {
-  loading: false,
-  checkout: action.response,
-});
+const checkoutStart = (state, action) => {
+  return updateObject(state, {
+    error: null,
+    loading: true,
+  });
+};
+const checkoutFail = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: action.error,
+  });
+};
+const checkoutSuccess = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    checkout: action.response,
+  });
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {

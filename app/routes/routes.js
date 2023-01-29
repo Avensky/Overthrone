@@ -18,7 +18,7 @@ module.exports = function(app, passport) {
 
 	app.post('/api/orders', (req,res) =>{          //get all faqs info from db
 		let id = req.body
-		//console.log( 'id = ' + JSON.stringify(id))		
+		console.log('id = ' + JSON.stringify(id));	
 		Order.find({$and:[
 			{ 'userid' : id._id},
 			{ 'payment_status' : 'paid'}

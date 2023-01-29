@@ -64,11 +64,11 @@ Address.propTypes = {
   address2: PropTypes.string,
   city: PropTypes.string,
   state: PropTypes.string,
-  postal_code: PropTypes.string,
   email: PropTypes.string,
   providerUnlink: PropTypes.string,
   provider: PropTypes.string,
   mystyle: PropTypes.string,
+  postal_code: PropTypes.number,
 };
 
 export default Address;

@@ -66,33 +66,41 @@ export const checkout = (cart, user, event) => {
 /** *****************************************
  * Get Items from database
 ****************************************** */
-export const getItemsSuccess = (items) => ({
-  type: actionTypes.GET_ITEMS_SUCCESS,
-  items,
-});
+export function getItemsSuccess(items) {
+  return {
+    type: actionTypes.GET_ITEMS_SUCCESS,
+    items,
+  };
+}
 
-export const getItemsFail = (error) => ({
-  type: actionTypes.GET_ITEMS_FAIL,
-  error,
-});
+export function getItemsFail(error) {
+  return {
+    type: actionTypes.GET_ITEMS_FAIL,
+    error,
+  };
+}
 
-export const getItemsStart = () => ({
-  type: actionTypes.GET_ITEMS_START,
-});
+export function getItemsStart() {
+  return {
+    type: actionTypes.GET_ITEMS_START,
+  };
+}
 
-export const getItems = () => (dispatch) => {
-  dispatch(getItemsStart());
-  axios.get('/api/items')
-    .then((result) => {
-      // // console.log("result"+JSON.stringify(result))
-      const items = result.data;
-      dispatch(getItemsSuccess(items));
-    })
-    .catch((error) => {
-      // console.log(`getItems error = ${JSON.stringify(error)}`);
-      dispatch(getItemsFail(error));
-    });
-};
+export function getItems() {
+  return (dispatch) => {
+    dispatch(getItemsStart());
+    axios.get('/api/items')
+      .then((res) => {
+        // const result = JSON.stringify(res.data);
+        dispatch(getItemsSuccess(res.data));
+      })
+      .catch((err) => {
+        // const error = JSON.stringify(err);
+        // console.log(`getItems error = ${JSON.stringify(error)}`);
+        dispatch(getItemsFail(err));
+      });
+  };
+}
 
 // add cart action
 export const addToCart = (id) => ({
@@ -120,9 +128,10 @@ export const addQuantity = (id) => ({
   id,
 });
 
-export const loadCart = (values) => ({
-  // local storage
-  // console.log('loading cart');
-  type: actionTypes.LOAD_CART,
-
-});
+export function loadCart() {
+  return {
+    // local storage
+    // console.log('loading cart');
+    type: actionTypes.LOAD_CART,
+  };
+}
